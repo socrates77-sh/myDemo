@@ -1,5 +1,5 @@
 ;list
-	#include mc30p011.inc               ; processor specific variable definitions
+	#include 0311.inc               ; processor specific variable definitions
 	__CONFIG _CONFIG0, (_FCPU_4T & _WDT_OFF)
 	__CONFIG _CONFIG1, ( _SMT_OFF & _CP_ALL)
 

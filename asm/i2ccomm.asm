@@ -1,4 +1,4 @@
-#include mc30p011.inc 
+#include 0311.inc 
 #include  "i2ccomm.inc"       
 
 #define  FOSC        D'8000000'

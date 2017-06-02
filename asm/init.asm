@@ -1,4 +1,4 @@
-#include "mc30p011.inc"
+#include "0311.inc"
 
 	GLOBAL	init_timer1
 	GLOBAL	init_ports
