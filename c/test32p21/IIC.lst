@@ -1,0 +1,1104 @@
+gpasm-1.4.0 (Sep 22 2013)    IIC.asm            2013-12-11  14:50:47         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                      00004 ; This file was generated Wed Dec 11 14:50:47 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "IIC.c"
+                      00009         list    p=32p21
+                      00010         radix dec
+                      00011         include "mc32p21.inc"
+                      00001                 LIST
+                      00002 ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00261                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _STATUSbits
+                      00016         extern  _MCRbits
+                      00017         extern  _INTEbits
+                      00018         extern  _INTFbits
+                      00019         extern  _IOP0bits
+                      00020         extern  _OEP0bits
+                      00021         extern  _PUP0bits
+                      00022         extern  _ANSELbits
+                      00023         extern  _IOP1bits
+                      00024         extern  _OEP1bits
+                      00025         extern  _PUP1bits
+                      00026         extern  _KBIMbits
+                      00027         extern  _T0CRbits
+                      00028         extern  _T1CRbits
+                      00029         extern  _LVDCRbits
+                      00030         extern  _OSCMbits
+                      00031         extern  _ADCR0bits
+                      00032         extern  _ADCR1bits
+                      00033         extern  _ABuf
+                      00034         extern  _StatusBuf
+                      00035         extern  _Keycode
+                      00036         extern  _DisplayMode
+                      00037         extern  _MasterTime_1ms
+                      00038         extern  _MasterTime_10ms
+                      00039         extern  _MasterTime_100ms
+                      00040         extern  _MasterTime_1s
+                      00041         extern  _sleeptime
+                      00042         extern  _key_cnt
+                      00043         extern  _key_time
+                      00044         extern  _key_press_time
+                      00045         extern  _short_press_time
+                      00046         extern  _BAT_avgAD
+                      00047         extern  _Load_avgAD
+                      00048         extern  _Last_BATAD
+                      00049         extern  _Load_avgAD2
+                      00050         extern  _NoLoadCount
+                      00051         extern  _ZNB602Register
+                      00052         extern  _Flag
+                      00053         extern  _Flag1
+                      00054         extern  _INDF
+                      00055         extern  _INDF0
+                      00056         extern  _INDF1
+                      00057         extern  _INDF2
+                      00058         extern  _HIBYTE
+                      00059         extern  _FSR
+                      00060         extern  _FSR0
+                      00061         extern  _FSR1
+                      00062         extern  _PCL
+                      00063         extern  _STATUS
+                      00064         extern  _MCR
+                      00065         extern  _INDF3
+                      00066         extern  _INTE
+                      00067         extern  _INTF
+                      00068         extern  _IOP0
+                      00069         extern  _OEP0
+                      00070         extern  _PUP0
+                      00071         extern  _ANSEL
+                      00072         extern  _IOP1
+                      00073         extern  _OEP1
+                      00074         extern  _PUP1
+                      00075         extern  _KBIM
+                      00076         extern  _T0CR
+                      00077         extern  _T0CNT
+                      00078         extern  _T0LOAD
+                      00079         extern  _T0DATA
+                      00080         extern  _T1CR
+                      00081         extern  _T1CNT
+                      00082         extern  _T1LOAD
+                      00083         extern  _T1DATA
+                      00084         extern  _LVDCR
+                      00085         extern  _OSCM
+                      00086         extern  _ADCR0
+                      00087         extern  _ADCR1
+                      00088         extern  _ADRH
+                      00089         extern  _ADRL
+                      00090         extern  _OSCAL
+                      00091         extern  __gptrget1
+                      00092         extern  __gptrput1
+                      00093 
+                      00094         extern STK06
+                      00095         extern STK05
+                      00096         extern STK04
+                      00097         extern STK03
+                      00098         extern STK02
+                      00099         extern STK01
+                      00100         extern STK00
+                      00101 ;--------------------------------------------------------
+                      00102 ; global declarations
+                      00103 ;--------------------------------------------------------
+                      00104         global  _Delayus
+                      00105         global  _IIC_Start
+                      00106         global  _IIC_Stop
+                      00107         global  _IIC_Host_Receive_Ack
+                      00108         global  _IIC_Host_Send_Ack
+                      00109         global  _IIC_Send_Byte
+                      00110         global  _IIC_Receive_Byte
+                      00111         global  _IIC_Host_to_Slave_Writer
+                      00112         global  _IIC_Host_to_Slave_Read
+                      00113 
+                      00114 ;--------------------------------------------------------
+                      00115 ; global definitions
+                      00116 ;--------------------------------------------------------
+                      00117 ;--------------------------------------------------------
+                      00118 ; absolute symbol definitions
+                      00119 ;--------------------------------------------------------
+                      00120 ;--------------------------------------------------------
+                      00121 ; compiler-defined variables
+                      00122 ;--------------------------------------------------------
+                      00123 UDL_IIC_0       udata
+0000                  00124 r0x1001 res     1
+0000                  00125 r0x1002 res     1
+0001                  00126 r0x1003 res     1
+0001                  00127 r0x1005 res     1
+0002                  00128 r0x1006 res     1
+0002                  00129 r0x100A res     1
+0003                  00130 r0x1009 res     1
+0003                  00131 r0x1004 res     1
+0004                  00132 r0x1015 res     1
+0004                  00133 r0x1016 res     1
+0005                  00134 r0x1019 res     1
+0005                  00135 r0x1018 res     1
+0006                  00136 r0x1017 res     1
+0006                  00137 r0x101A res     1
+0007                  00138 r0x100B res     1
+0007                  00139 r0x100C res     1
+0008                  00140 r0x100F res     1
+0008                  00141 r0x100E res     1
+0009                  00142 r0x100D res     1
+0009                  00143 r0x1010 res     1
+000A                  00144 r0x1011 res     1
+000A                  00145 r0x1012 res     1
+000B                  00146 r0x1014 res     1
+                      00147 ;--------------------------------------------------------
+                      00148 ; initialized data
+                      00149 ;--------------------------------------------------------
+                      00150 ;--------------------------------------------------------
+                      00151 ; overlayable items in internal ram 
+                      00152 ;--------------------------------------------------------
+                      00153 ;       udata_ovr
+                      00154 ;--------------------------------------------------------
+                      00155 ; code
+                      00156 ;--------------------------------------------------------
+                      00157 code_IIC        code
+                      00158 ;***
+                      00159 ;  pBlock Stats: dbName = C
+                      00160 ;***
+                      00161 ;entry:  _IIC_Host_to_Slave_Read        ;Function start
+                      00162 ; 2 exit points
+                      00163 ;has an exit
+                      00164 ;functions called:
+                      00165 ;   _IIC_Start
+                      00166 ;   _IIC_Send_Byte
+                      00167 ;   _IIC_Send_Byte
+                      00168 ;   _IIC_Start
+                      00169 ;   _IIC_Send_Byte
+                      00170 ;   _IIC_Receive_Byte
+                      00171 ;   __gptrput1
+                      00172 ;   _IIC_Host_Send_Ack
+                      00173 ;   _IIC_Receive_Byte
+                      00174 ;   __gptrput1
+                      00175 ;   _IIC_Host_Send_Ack
+                      00176 ;   _IIC_Stop
+                      00177 ;   _IIC_Start
+                      00178 ;   _IIC_Send_Byte
+                      00179 ;   _IIC_Send_Byte
+                      00180 ;   _IIC_Start
+                      00181 ;   _IIC_Send_Byte
+                      00182 ;   _IIC_Receive_Byte
+                      00183 ;   __gptrput1
+                      00184 ;   _IIC_Host_Send_Ack
+                      00185 ;   _IIC_Receive_Byte
+                      00186 ;   __gptrput1
+                      00187 ;   _IIC_Host_Send_Ack
+                      00188 ;   _IIC_Stop
+                      00189 ;15 compiler assigned registers:
+                      00190 ;   r0x100B
+                      00191 ;   STK00
+                      00192 ;   r0x100C
+                      00193 ;   STK01
+                      00194 ;   r0x100D
+                      00195 ;   STK02
+                      00196 ;   r0x100E
+                      00197 ;   STK03
+                      00198 ;   r0x100F
+                      00199 ;   STK04
+                      00200 ;   r0x1010
+                      00201 ;   r0x1011
+                      00202 ;   r0x1012
+                      00203 ;   r0x1013
+                      00204 ;   r0x1014
+                      00205 ;; Starting pCode block
+0000                  00206 _IIC_Host_to_Slave_Read ;Function start
+                      00207 ; 2 exit points
+                      00208 ;       .line   108; "IIC.c"    uchar IIC_Host_to_Slave_Read(uchar ID,uchar addr,uchar *str,uchar datacnt)
+0000   5600           00209         MOVRA   r0x100B
+0001   5800           00210         MOVAR   STK00
+0002   5600           00211         MOVRA   r0x100C
+0003   5800           00212         MOVAR   STK01
+0004   5600           00213         MOVRA   r0x100D
+0005   5800           00214         MOVAR   STK02
+0006   5600           00215         MOVRA   r0x100E
+0007   5800           00216         MOVAR   STK03
+0008   5600           00217         MOVRA   r0x100F
+0009   5800           00218         MOVAR   STK04
+000A   5600           00219         MOVRA   r0x1010
+                      00220 ;       .line   111; "IIC.c"    IIC_Start();
+000B   8000           00221         CALL    _IIC_Start
+                      00222 ;       .line   112; "IIC.c"    IIC_Send_Byte(ID);
+000C   5800           00223         MOVAR   r0x100B
+000D   8000           00224         CALL    _IIC_Send_Byte
+                      00225 ;       .line   113; "IIC.c"    if(F_IIC_ASK == 0) return 0;
+000E   FA00           00226         JBCLR   _Flag1,5
+000F   A000           00227         GOTO    _00187_DS_
+0010   3C00           00228         MOVAI   0x00
+0011   A000           00229         GOTO    _00196_DS_
+0012                  00230 _00187_DS_
+                      00231 ;       .line   114; "IIC.c"    IIC_Send_Byte(addr);
+0012   5800           00232         MOVAR   r0x100C
+0013   8000           00233         CALL    _IIC_Send_Byte
+                      00234 ;       .line   115; "IIC.c"    if(F_IIC_ASK == 0) return 0;
+0014   FA00           00235         JBCLR   _Flag1,5
+0015   A000           00236         GOTO    _00189_DS_
+0016   3C00           00237         MOVAI   0x00
+0017   A000           00238         GOTO    _00196_DS_
+0018                  00239 _00189_DS_
+                      00240 ;       .line   116; "IIC.c"    IIC_Start();
+0018   8000           00241         CALL    _IIC_Start
+                      00242 ;       .line   117; "IIC.c"    IIC_Send_Byte(ID+1);
+0019   6600           00243         INCR    r0x100B
+001A   5800           00244         MOVAR   r0x100B
+001B   8000           00245         CALL    _IIC_Send_Byte
+                      00246 ;       .line   118; "IIC.c"    if(F_IIC_ASK == 0) return 0;
+001C   FA00           00247         JBCLR   _Flag1,5
+001D   A000           00248         GOTO    _00202_DS_
+001E   3C00           00249         MOVAI   0x00
+001F   A000           00250         GOTO    _00196_DS_
+0020                  00251 _00202_DS_
+                      00252 ;       .line   119; "IIC.c"    for(i=0;i<datacnt-1;i++)
+0020   5800           00253         MOVAR   r0x100F
+0021   5600           00254         MOVRA   r0x100B
+0022   5800           00255         MOVAR   r0x100E
+0023   5600           00256         MOVRA   r0x100C
+0024   5800           00257         MOVAR   r0x100D
+0025   5600           00258         MOVRA   r0x100F
+0026   7600           00259         CLRR    r0x100E
+0027                  00260 _00192_DS_
+0027   5800           00261         MOVAR   r0x1010
+0028   5600           00262         MOVRA   r0x100D
+0029   7600           00263         CLRR    r0x1011
+002A   3CFF           00264         MOVAI   0xff
+002B   7E00           00265         ADDRA   r0x100D
+002C   E187           00266         JBSET   STATUS,0
+002D   6E00           00267         DECR    r0x1011
+002E   5800           00268         MOVAR   r0x100E
+002F   5600           00269         MOVRA   r0x1012
+                      00270 ;;1     CLRR    r0x1013
+0030   3C00           00271         MOVAI   0x00
+0031   3F80           00272         ADDAI   0x80
+0032   5600           00273         MOVRA   r0x1014
+0033   5800           00274         MOVAR   r0x1011
+0034   3F80           00275         ADDAI   0x80
+0035   4800           00276         RSUBAR  r0x1014
+0036   E587           00277         JBSET   STATUS,2
+0037   A000           00278         GOTO    _00209_DS_
+0038   5800           00279         MOVAR   r0x100D
+0039   4800           00280         RSUBAR  r0x1012
+003A                  00281 _00209_DS_
+003A   F187           00282         JBCLR   STATUS,0
+003B   A000           00283         GOTO    _00195_DS_
+                      00284 ;;genSkipc:3246: created from rifx:0028608C
+                      00285 ;       .line   121; "IIC.c"    *str = IIC_Receive_Byte();
+003C   8000           00286         CALL    _IIC_Receive_Byte
+003D   5600           00287         MOVRA   r0x100D
+003E   5800           00288         MOVAR   r0x100D
+003F   5600           00289         MOVRA   STK02
+0040   5800           00290         MOVAR   r0x100B
+0041   5600           00291         MOVRA   STK01
+0042   5800           00292         MOVAR   r0x100C
+0043   5600           00293         MOVRA   STK00
+0044   5800           00294         MOVAR   r0x100F
+0045   8000           00295         CALL    __gptrput1
+                      00296 ;       .line   122; "IIC.c"    IIC_Host_Send_Ack(0);
+0046   3C00           00297         MOVAI   0x00
+0047   8000           00298         CALL    _IIC_Host_Send_Ack
+                      00299 ;       .line   123; "IIC.c"    str++;
+0048   6600           00300         INCR    r0x100B
+0049   F587           00301         JBCLR   STATUS,2
+004A   6600           00302         INCR    r0x100C
+004B   F587           00303         JBCLR   STATUS,2
+004C   6600           00304         INCR    r0x100F
+                      00305 ;       .line   119; "IIC.c"    for(i=0;i<datacnt-1;i++)
+004D   6600           00306         INCR    r0x100E
+004E   A000           00307         GOTO    _00192_DS_
+004F                  00308 _00195_DS_
+                      00309 ;       .line   125; "IIC.c"    *str = IIC_Receive_Byte();
+004F   8000           00310         CALL    _IIC_Receive_Byte
+0050   5600           00311         MOVRA   r0x100E
+0051   5800           00312         MOVAR   r0x100E
+0052   5600           00313         MOVRA   STK02
+0053   5800           00314         MOVAR   r0x100B
+0054   5600           00315         MOVRA   STK01
+0055   5800           00316         MOVAR   r0x100C
+0056   5600           00317         MOVRA   STK00
+0057   5800           00318         MOVAR   r0x100F
+0058   8000           00319         CALL    __gptrput1
+                      00320 ;       .line   126; "IIC.c"    IIC_Host_Send_Ack(1);
+0059   3C01           00321         MOVAI   0x01
+005A   8000           00322         CALL    _IIC_Host_Send_Ack
+                      00323 ;       .line   127; "IIC.c"    IIC_Stop();
+005B   8000           00324         CALL    _IIC_Stop
+                      00325 ;       .line   128; "IIC.c"    return 1;
+005C   3C01           00326         MOVAI   0x01
+005D                  00327 _00196_DS_
+005D   000C           00328         RETURN  
+                      00329 ; exit point of _IIC_Host_to_Slave_Read
+                      00330 
+                      00331 ;***
+                      00332 ;  pBlock Stats: dbName = C
+                      00333 ;***
+                      00334 ;entry:  _IIC_Host_to_Slave_Writer      ;Function start
+                      00335 ; 2 exit points
+                      00336 ;has an exit
+                      00337 ;functions called:
+                      00338 ;   _IIC_Start
+                      00339 ;   _IIC_Send_Byte
+                      00340 ;   _IIC_Send_Byte
+                      00341 ;   __gptrget1
+                      00342 ;   _IIC_Send_Byte
+                      00343 ;   _IIC_Stop
+                      00344 ;   _IIC_Start
+                      00345 ;   _IIC_Send_Byte
+                      00346 ;   _IIC_Send_Byte
+                      00347 ;   __gptrget1
+                      00348 ;   _IIC_Send_Byte
+                      00349 ;   _IIC_Stop
+                      00350 ;11 compiler assigned registers:
+                      00351 ;   r0x1015
+                      00352 ;   STK00
+                      00353 ;   r0x1016
+                      00354 ;   STK01
+                      00355 ;   r0x1017
+                      00356 ;   STK02
+                      00357 ;   r0x1018
+                      00358 ;   STK03
+                      00359 ;   r0x1019
+                      00360 ;   STK04
+                      00361 ;   r0x101A
+                      00362 ;; Starting pCode block
+005E                  00363 _IIC_Host_to_Slave_Writer       ;Function start
+                      00364 ; 2 exit points
+                      00365 ;       .line   90; "IIC.c"     uchar IIC_Host_to_Slave_Writer(uchar ID,uchar addr,uchar *str,uchar datacnt)
+005E   5600           00366         MOVRA   r0x1015
+005F   5800           00367         MOVAR   STK00
+0060   5600           00368         MOVRA   r0x1016
+0061   5800           00369         MOVAR   STK01
+0062   5600           00370         MOVRA   r0x1017
+0063   5800           00371         MOVAR   STK02
+0064   5600           00372         MOVRA   r0x1018
+0065   5800           00373         MOVAR   STK03
+0066   5600           00374         MOVRA   r0x1019
+0067   5800           00375         MOVAR   STK04
+0068   5600           00376         MOVRA   r0x101A
+                      00377 ;       .line   93; "IIC.c"     IIC_Start();
+0069   8000           00378         CALL    _IIC_Start
+                      00379 ;       .line   94; "IIC.c"     IIC_Send_Byte(ID);
+006A   5800           00380         MOVAR   r0x1015
+006B   8000           00381         CALL    _IIC_Send_Byte
+                      00382 ;       .line   95; "IIC.c"     if(F_IIC_ASK == 0) return 0;
+006C   FA00           00383         JBCLR   _Flag1,5
+006D   A000           00384         GOTO    _00166_DS_
+006E   3C00           00385         MOVAI   0x00
+006F   A000           00386         GOTO    _00175_DS_
+0070                  00387 _00166_DS_
+                      00388 ;       .line   96; "IIC.c"     IIC_Send_Byte(addr);
+0070   5800           00389         MOVAR   r0x1016
+0071   8000           00390         CALL    _IIC_Send_Byte
+                      00391 ;       .line   97; "IIC.c"     if(F_IIC_ASK == 0) return 0;
+0072   FA00           00392         JBCLR   _Flag1,5
+0073   A000           00393         GOTO    _00181_DS_
+0074   3C00           00394         MOVAI   0x00
+0075   A000           00395         GOTO    _00175_DS_
+0076                  00396 _00181_DS_
+                      00397 ;       .line   98; "IIC.c"     for(i=0;i<datacnt;i++)
+0076   5800           00398         MOVAR   r0x1019
+0077   5600           00399         MOVRA   r0x1015
+0078   5800           00400         MOVAR   r0x1018
+0079   5600           00401         MOVRA   r0x1016
+007A   5800           00402         MOVAR   r0x1017
+007B   5600           00403         MOVRA   r0x1019
+007C   7600           00404         CLRR    r0x1018
+007D                  00405 _00171_DS_
+007D   5800           00406         MOVAR   r0x101A
+007E   4800           00407         RSUBAR  r0x1018
+007F   F187           00408         JBCLR   STATUS,0
+0080   A000           00409         GOTO    _00174_DS_
+                      00410 ;;genSkipc:3246: created from rifx:0028608C
+                      00411 ;       .line   100; "IIC.c"    IIC_Send_Byte(*str);
+0081   5800           00412         MOVAR   r0x1015
+0082   5600           00413         MOVRA   STK01
+0083   5800           00414         MOVAR   r0x1016
+0084   5600           00415         MOVRA   STK00
+0085   5800           00416         MOVAR   r0x1019
+0086   8000           00417         CALL    __gptrget1
+0087   5600           00418         MOVRA   r0x1017
+0088   5800           00419         MOVAR   r0x1017
+0089   8000           00420         CALL    _IIC_Send_Byte
+                      00421 ;       .line   101; "IIC.c"    if(F_IIC_ASK == 0) return 0;
+008A   FA00           00422         JBCLR   _Flag1,5
+008B   A000           00423         GOTO    _00170_DS_
+008C   3C00           00424         MOVAI   0x00
+008D   A000           00425         GOTO    _00175_DS_
+008E                  00426 _00170_DS_
+                      00427 ;       .line   102; "IIC.c"    str++;
+008E   6600           00428         INCR    r0x1015
+008F   F587           00429         JBCLR   STATUS,2
+0090   6600           00430         INCR    r0x1016
+0091   F587           00431         JBCLR   STATUS,2
+0092   6600           00432         INCR    r0x1019
+                      00433 ;       .line   98; "IIC.c"     for(i=0;i<datacnt;i++)
+0093   6600           00434         INCR    r0x1018
+0094   A000           00435         GOTO    _00171_DS_
+0095                  00436 _00174_DS_
+                      00437 ;       .line   104; "IIC.c"    IIC_Stop();
+0095   8000           00438         CALL    _IIC_Stop
+                      00439 ;       .line   105; "IIC.c"    return 1;
+0096   3C01           00440         MOVAI   0x01
+0097                  00441 _00175_DS_
+0097   000C           00442         RETURN  
+                      00443 ; exit point of _IIC_Host_to_Slave_Writer
+                      00444 
+                      00445 ;***
+                      00446 ;  pBlock Stats: dbName = C
+                      00447 ;***
+                      00448 ;entry:  _IIC_Receive_Byte      ;Function start
+                      00449 ; 2 exit points
+                      00450 ;has an exit
+                      00451 ;functions called:
+                      00452 ;   _Delayus
+                      00453 ;   _Delayus
+                      00454 ;   _Delayus
+                      00455 ;   _Delayus
+                      00456 ;   _Delayus
+                      00457 ;   _Delayus
+                      00458 ;4 compiler assigned registers:
+                      00459 ;   r0x1003
+                      00460 ;   r0x1004
+                      00461 ;   r0x1005
+                      00462 ;   r0x1006
+                      00463 ;; Starting pCode block
+0098                  00464 _IIC_Receive_Byte       ;Function start
+                      00465 ; 2 exit points
+                      00466 ;       .line   73; "IIC.c"     uchar i,DataTemp = 0;
+0098   7600           00467         CLRR    r0x1003
+                      00468 ;       .line   74; "IIC.c"     SCL = 0;
+0099   D000           00469         BCLR    _IOP1bits,0
+                      00470 ;       .line   75; "IIC.c"     SET_I2C_DATA_INPUT;
+009A   D000           00471         BCLR    _OEP0bits,0
+                      00472 ;       .line   76; "IIC.c"     Delayus(IIC_Freq);
+009B   3C02           00473         MOVAI   0x02
+009C   8000           00474         CALL    _Delayus
+                      00475 ;       .line   77; "IIC.c"     for(i=0;i<8;i++)
+009D   7600           00476         CLRR    r0x1004
+                      00477 ;;unsigned compare: left < lit(0x8=8), size=1
+009E                  00478 _00157_DS_
+009E   3C08           00479         MOVAI   0x08
+009F   4800           00480         RSUBAR  r0x1004
+00A0   F187           00481         JBCLR   STATUS,0
+00A1   A000           00482         GOTO    _00160_DS_
+                      00483 ;;genSkipc:3246: created from rifx:0028608C
+                      00484 ;       .line   79; "IIC.c"     DataTemp <<= 1; 
+00A2   D187           00485         BCLR    STATUS,0
+00A3   5200           00486         RLR     r0x1003
+                      00487 ;       .line   80; "IIC.c"     SCL = 1;
+00A4   C000           00488         BSET    _IOP1bits,0
+                      00489 ;       .line   81; "IIC.c"     Delayus(IIC_Freq);
+00A5   3C02           00490         MOVAI   0x02
+00A6   8000           00491         CALL    _Delayus
+                      00492 ;       .line   82; "IIC.c"     if(SDA==1)
+00A7   7600           00493         CLRR    r0x1005
+00A8   F000           00494         JBCLR   _IOP0bits,0
+00A9   6600           00495         INCR    r0x1005
+                      00496 ;;105   MOVAR   r0x1005
+                      00497 ;;103   MOVRA   r0x1006
+                      00498 ;;104   MOVAR   r0x1006
+00AA   5800           00499         MOVAR   r0x1005
+00AB   3901           00500         XORAI   0x01
+00AC   E587           00501         JBSET   STATUS,2
+00AD   A000           00502         GOTO    _00156_DS_
+                      00503 ;       .line   83; "IIC.c"     {DataTemp += 1;}
+00AE   6600           00504         INCR    r0x1003
+00AF                  00505 _00156_DS_
+                      00506 ;       .line   84; "IIC.c"     SCL = 0;
+00AF   D000           00507         BCLR    _IOP1bits,0
+                      00508 ;       .line   85; "IIC.c"     Delayus(IIC_Freq);      
+00B0   3C02           00509         MOVAI   0x02
+00B1   8000           00510         CALL    _Delayus
+                      00511 ;       .line   77; "IIC.c"     for(i=0;i<8;i++)
+00B2   6600           00512         INCR    r0x1004
+00B3   A000           00513         GOTO    _00157_DS_
+00B4                  00514 _00160_DS_
+                      00515 ;       .line   87; "IIC.c"     return(DataTemp);   
+00B4   5800           00516         MOVAR   r0x1003
+00B5   000C           00517         RETURN  
+                      00518 ; exit point of _IIC_Receive_Byte
+                      00519 
+                      00520 ;***
+                      00521 ;  pBlock Stats: dbName = C
+                      00522 ;***
+                      00523 ;entry:  _IIC_Send_Byte ;Function start
+                      00524 ; 2 exit points
+                      00525 ;has an exit
+                      00526 ;functions called:
+                      00527 ;   _Delayus
+                      00528 ;   _IIC_Host_Receive_Ack
+                      00529 ;   _Delayus
+                      00530 ;   _IIC_Host_Receive_Ack
+                      00531 ;6 compiler assigned registers:
+                      00532 ;   r0x1005
+                      00533 ;   r0x1006
+                      00534 ;   r0x1007
+                      00535 ;   r0x1008
+                      00536 ;   r0x1009
+                      00537 ;   r0x100A
+                      00538 ;; Starting pCode block
+00B6                  00539 _IIC_Send_Byte  ;Function start
+                      00540 ; 2 exit points
+                      00541 ;       .line   55; "IIC.c"     void IIC_Send_Byte(uchar datatemp)
+00B6   5600           00542         MOVRA   r0x1005
+                      00543 ;       .line   58; "IIC.c"     SCL = 0;
+00B7   D000           00544         BCLR    _IOP1bits,0
+                      00545 ;       .line   59; "IIC.c"     SET_I2C_DATA_OUTPUT;
+00B8   C000           00546         BSET    _OEP0bits,0
+                      00547 ;       .line   60; "IIC.c"     for(i=0;i<8;i++)
+00B9   7600           00548         CLRR    r0x1006
+                      00549 ;;unsigned compare: left < lit(0x8=8), size=1
+00BA                  00550 _00135_DS_
+00BA   3C08           00551         MOVAI   0x08
+00BB   4800           00552         RSUBAR  r0x1006
+00BC   F187           00553         JBCLR   STATUS,0
+00BD   A000           00554         GOTO    _00138_DS_
+                      00555 ;;genSkipc:3246: created from rifx:0028608C
+                      00556 ;       .line   62; "IIC.c"     if((datatemp << i) & 0x80){SDA = 1;}    
+00BE   5800           00557         MOVAR   r0x1005
+00BF   5600           00558         MOVRA   r0x100A
+                      00559 ;;1     MOVRA   r0x1007
+                      00560 ;;1     CLRR    r0x1008
+00C0   3C00           00561         MOVAI   0x00
+00C1   5600           00562         MOVRA   r0x1009
+                      00563 ;;102   MOVAR   r0x1007
+00C2   5800           00564         MOVAR   r0x1006
+00C3   3A00           00565         ISUBAI  0x00
+00C4   F587           00566         JBCLR   STATUS,2
+00C5   A000           00567         GOTO    _00150_DS_
+00C6                  00568 _00149_DS_
+00C6   5200           00569         RLR     r0x100A
+00C7   5200           00570         RLR     r0x1009
+00C8   3F01           00571         ADDAI   0x01
+00C9   E187           00572         JBSET   STATUS,0
+00CA   A000           00573         GOTO    _00149_DS_
+00CB                  00574 _00150_DS_
+00CB   EE00           00575         JBSET   r0x100A,7
+00CC   A000           00576         GOTO    _00133_DS_
+00CD   C000           00577         BSET    _IOP0bits,0
+00CE   A000           00578         GOTO    _00134_DS_
+00CF                  00579 _00133_DS_
+                      00580 ;       .line   63; "IIC.c"     else{SDA = 0;}
+00CF   D000           00581         BCLR    _IOP0bits,0
+00D0                  00582 _00134_DS_
+                      00583 ;       .line   64; "IIC.c"     SCL = 1;
+00D0   C000           00584         BSET    _IOP1bits,0
+                      00585 ;       .line   65; "IIC.c"     Delayus(IIC_Freq);
+00D1   3C02           00586         MOVAI   0x02
+00D2   8000           00587         CALL    _Delayus
+                      00588 ;       .line   66; "IIC.c"     SCL = 0;                    
+00D3   D000           00589         BCLR    _IOP1bits,0
+                      00590 ;       .line   60; "IIC.c"     for(i=0;i<8;i++)
+00D4   6600           00591         INCR    r0x1006
+00D5   A000           00592         GOTO    _00135_DS_
+00D6                  00593 _00138_DS_
+                      00594 ;       .line   68; "IIC.c"     IIC_Host_Receive_Ack();     
+00D6   8000           00595         CALL    _IIC_Host_Receive_Ack
+00D7   000C           00596         RETURN  
+                      00597 ; exit point of _IIC_Send_Byte
+                      00598 
+                      00599 ;***
+                      00600 ;  pBlock Stats: dbName = C
+                      00601 ;***
+                      00602 ;entry:  _IIC_Host_Send_Ack     ;Function start
+                      00603 ; 2 exit points
+                      00604 ;has an exit
+                      00605 ;functions called:
+                      00606 ;   _Delayus
+                      00607 ;   _Delayus
+                      00608 ;1 compiler assigned register :
+                      00609 ;   r0x1003
+                      00610 ;; Starting pCode block
+00D8                  00611 _IIC_Host_Send_Ack      ;Function start
+                      00612 ; 2 exit points
+                      00613 ;       .line   44; "IIC.c"     void IIC_Host_Send_Ack(uchar ack)
+00D8   5600           00614         MOVRA   r0x1003
+                      00615 ;       .line   46; "IIC.c"     SCL = 0;
+00D9   D000           00616         BCLR    _IOP1bits,0
+                      00617 ;       .line   47; "IIC.c"     SET_I2C_DATA_OUTPUT;
+00DA   C000           00618         BSET    _OEP0bits,0
+                      00619 ;       .line   48; "IIC.c"     if(ack == 1){SDA = 1;} 
+00DB   5800           00620         MOVAR   r0x1003
+00DC   3901           00621         XORAI   0x01
+00DD   E587           00622         JBSET   STATUS,2
+00DE   A000           00623         GOTO    _00126_DS_
+00DF   C000           00624         BSET    _IOP0bits,0
+00E0   A000           00625         GOTO    _00127_DS_
+00E1                  00626 _00126_DS_
+                      00627 ;       .line   49; "IIC.c"     else {SDA = 0;}
+00E1   D000           00628         BCLR    _IOP0bits,0
+00E2                  00629 _00127_DS_
+                      00630 ;       .line   50; "IIC.c"     SCL = 1;
+00E2   C000           00631         BSET    _IOP1bits,0
+                      00632 ;       .line   51; "IIC.c"     Delayus(IIC_Freq);  
+00E3   3C02           00633         MOVAI   0x02
+00E4   8000           00634         CALL    _Delayus
+                      00635 ;       .line   52; "IIC.c"     SCL = 0;
+00E5   D000           00636         BCLR    _IOP1bits,0
+00E6   000C           00637         RETURN  
+                      00638 ; exit point of _IIC_Host_Send_Ack
+                      00639 
+                      00640 ;***
+                      00641 ;  pBlock Stats: dbName = C
+                      00642 ;***
+                      00643 ;entry:  _IIC_Host_Receive_Ack  ;Function start
+                      00644 ; 2 exit points
+                      00645 ;has an exit
+                      00646 ;functions called:
+                      00647 ;   _Delayus
+                      00648 ;   _Delayus
+                      00649 ;   _Delayus
+                      00650 ;   _Delayus
+                      00651 ;2 compiler assigned registers:
+                      00652 ;   r0x1003
+                      00653 ;   r0x1004
+                      00654 ;; Starting pCode block
+00E7                  00655 _IIC_Host_Receive_Ack   ;Function start
+                      00656 ; 2 exit points
+                      00657 ;       .line   35; "IIC.c"     SET_I2C_DATA_INPUT;
+00E7   D000           00658         BCLR    _OEP0bits,0
+                      00659 ;       .line   36; "IIC.c"     Delayus(IIC_Freq);
+00E8   3C02           00660         MOVAI   0x02
+00E9   8000           00661         CALL    _Delayus
+                      00662 ;       .line   37; "IIC.c"     SCL = 1;
+00EA   C000           00663         BSET    _IOP1bits,0
+                      00664 ;       .line   38; "IIC.c"     Delayus(IIC_Freq); 
+00EB   3C02           00665         MOVAI   0x02
+00EC   8000           00666         CALL    _Delayus
+                      00667 ;       .line   39; "IIC.c"     if(SDA == 1){F_IIC_ASK = 0;}  //0无应答位 1有应答位
+00ED   7600           00668         CLRR    r0x1003
+00EE   F000           00669         JBCLR   _IOP0bits,0
+00EF   6600           00670         INCR    r0x1003
+                      00671 ;;101   MOVAR   r0x1003
+                      00672 ;;99    MOVRA   r0x1004
+                      00673 ;;100   MOVAR   r0x1004
+00F0   5800           00674         MOVAR   r0x1003
+00F1   3901           00675         XORAI   0x01
+00F2   E587           00676         JBSET   STATUS,2
+00F3   A000           00677         GOTO    _00119_DS_
+00F4   DA00           00678         BCLR    _Flag1,5
+00F5   A000           00679         GOTO    _00120_DS_
+00F6                  00680 _00119_DS_
+                      00681 ;       .line   40; "IIC.c"     else {F_IIC_ASK = 1;} 
+00F6   CA00           00682         BSET    _Flag1,5
+00F7                  00683 _00120_DS_
+                      00684 ;       .line   41; "IIC.c"     SCL = 0;    
+00F7   D000           00685         BCLR    _IOP1bits,0
+00F8   000C           00686         RETURN  
+                      00687 ; exit point of _IIC_Host_Receive_Ack
+                      00688 
+                      00689 ;***
+                      00690 ;  pBlock Stats: dbName = C
+                      00691 ;***
+                      00692 ;entry:  _IIC_Stop      ;Function start
+                      00693 ; 2 exit points
+                      00694 ;has an exit
+                      00695 ;functions called:
+                      00696 ;   _Delayus
+                      00697 ;   _Delayus
+                      00698 ;   _Delayus
+                      00699 ;   _Delayus
+                      00700 ;; Starting pCode block
+00F9                  00701 _IIC_Stop       ;Function start
+                      00702 ; 2 exit points
+                      00703 ;       .line   25; "IIC.c"     SET_I2C_DATA_OUTPUT;
+00F9   C000           00704         BSET    _OEP0bits,0
+                      00705 ;       .line   26; "IIC.c"     SDA = 0;    
+00FA   D000           00706         BCLR    _IOP0bits,0
+                      00707 ;       .line   27; "IIC.c"     Delayus(IIC_Freq);          
+00FB   3C02           00708         MOVAI   0x02
+00FC   8000           00709         CALL    _Delayus
+                      00710 ;       .line   28; "IIC.c"     SCL = 1;
+00FD   C000           00711         BSET    _IOP1bits,0
+                      00712 ;       .line   29; "IIC.c"     Delayus(IIC_Freq);  
+00FE   3C02           00713         MOVAI   0x02
+00FF   8000           00714         CALL    _Delayus
+                      00715 ;       .line   30; "IIC.c"     SDA = 1;    
+0100   C000           00716         BSET    _IOP0bits,0
+0101   000C           00717         RETURN  
+                      00718 ; exit point of _IIC_Stop
+                      00719 
+                      00720 ;***
+                      00721 ;  pBlock Stats: dbName = C
+                      00722 ;***
+                      00723 ;entry:  _IIC_Start     ;Function start
+                      00724 ; 2 exit points
+                      00725 ;has an exit
+                      00726 ;functions called:
+                      00727 ;   _Delayus
+                      00728 ;   _Delayus
+                      00729 ;   _Delayus
+                      00730 ;   _Delayus
+                      00731 ;; Starting pCode block
+0102                  00732 _IIC_Start      ;Function start
+                      00733 ; 2 exit points
+                      00734 ;       .line   14; "IIC.c"     SDA = 1;    
+0102   C000           00735         BSET    _IOP0bits,0
+                      00736 ;       .line   15; "IIC.c"     SCL = 1;
+0103   C000           00737         BSET    _IOP1bits,0
+                      00738 ;       .line   16; "IIC.c"     SET_I2C_DATA_OUTPUT;        
+0104   C000           00739         BSET    _OEP0bits,0
+                      00740 ;       .line   17; "IIC.c"     Delayus(IIC_Freq);          
+0105   3C02           00741         MOVAI   0x02
+0106   8000           00742         CALL    _Delayus
+                      00743 ;       .line   18; "IIC.c"     SDA = 0;        
+0107   D000           00744         BCLR    _IOP0bits,0
+                      00745 ;       .line   19; "IIC.c"     Delayus(IIC_Freq);          
+0108   3C02           00746         MOVAI   0x02
+0109   8000           00747         CALL    _Delayus
+                      00748 ;       .line   20; "IIC.c"     SCL = 0;                
+010A   D000           00749         BCLR    _IOP1bits,0
+010B   000C           00750         RETURN  
+                      00751 ; exit point of _IIC_Start
+                      00752 
+                      00753 ;***
+                      00754 ;  pBlock Stats: dbName = C
+                      00755 ;***
+                      00756 ;entry:  _Delayus       ;Function start
+                      00757 ; 2 exit points
+                      00758 ;has an exit
+                      00759 ;2 compiler assigned registers:
+                      00760 ;   r0x1001
+                      00761 ;   r0x1002
+                      00762 ;; Starting pCode block
+010C                  00763 _Delayus        ;Function start
+                      00764 ; 2 exit points
+                      00765 ;       .line   7; "IIC.c"      void Delayus(uchar us) 
+010C   5600           00766         MOVRA   r0x1001
+010D                  00767 _00105_DS_
+                      00768 ;       .line   9; "IIC.c"      while(us--);               
+010D   5800           00769         MOVAR   r0x1001
+010E   5600           00770         MOVRA   r0x1002
+010F   6E00           00771         DECR    r0x1001
+0110   3C00           00772         MOVAI   0x00
+0111   5C00           00773         ORAR    r0x1002
+0112   E587           00774         JBSET   STATUS,2
+0113   A000           00775         GOTO    _00105_DS_
+0114   000C           00776         RETURN  
+                      00777 ; exit point of _Delayus
+                      00778 
+                      00779 
+                      00780 ;       code size estimation:
+                      00781 ;         277+    0 =   277 instructions (  554 byte)
+                      00782 
+                      00783         end
+gpasm-1.4.0 (Sep 22 2013)    IIC.asm            2013-12-11  14:50:47         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBIE                              00000004
+KBIF                              00000004
+KBIM                              00000197
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+LFEN                              00000001
+LVDCR                             000001AD
+LVDEN                             00000007
+LVDF                              00000000
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCAL                             000001FB
+OSCM                              000001AE
+P00                               00000000
+P00ANS                            00000000
+P00OE                             00000000
+P00PU                             00000000
+P01                               00000001
+P01ANS                            00000001
+P01OE                             00000001
+P01PU                             00000001
+P02                               00000002
+P02ANS                            00000002
+P02OE                             00000002
+P02PU                             00000002
+P03                               00000003
+P03ANS                            00000003
+P03OE                             00000003
+P03PU                             00000003
+P04                               00000004
+P04ANS                            00000004
+P04OE                             00000004
+P04PU                             00000004
+P10                               00000000
+P10OE                             00000000
+P10PU                             00000000
+P11                               00000001
+P11OE                             00000001
+P11PU                             00000001
+P12                               00000002
+P12ANS                            00000005
+P12OE                             00000002
+P12PU                             00000002
+P13                               00000003
+P13ANS                            00000006
+P13OE                             00000003
+P13PU                             00000003
+P14                               00000004
+P14OE                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OE                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OE                             00000006
+P16PU                             00000006
+PCL                               00000186
+PD                                00000004
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STATUS                            00000187
+STBH                              00000004
+STBL                              00000005
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+Z                                 00000002
+_00105_DS_                        0000010D
+_00119_DS_                        000000F6
+_00120_DS_                        000000F7
+_00126_DS_                        000000E1
+_00127_DS_                        000000E2
+_00133_DS_                        000000CF
+_00134_DS_                        000000D0
+_00135_DS_                        000000BA
+_00138_DS_                        000000D6
+_00149_DS_                        000000C6
+_00150_DS_                        000000CB
+_00156_DS_                        000000AF
+_00157_DS_                        0000009E
+_00160_DS_                        000000B4
+_00166_DS_                        00000070
+_00170_DS_                        0000008E
+_00171_DS_                        0000007D
+_00174_DS_                        00000095
+_00175_DS_                        00000097
+_00181_DS_                        00000076
+_00187_DS_                        00000012
+_00189_DS_                        00000018
+_00192_DS_                        00000027
+_00195_DS_                        0000004F
+_00196_DS_                        0000005D
+_00202_DS_                        00000020
+_00209_DS_                        0000003A
+_ABuf                             00000000
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADRH                             00000000
+_ADRL                             00000000
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_BAT_avgAD                        00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_CP_ALL                           00007FFF
+_Delayus                          0000010C
+_DisplayMode                      00000000
+_FCPU_128T                        0000FFEF
+_FCPU_16T                         0000FFBF
+_FCPU_256T                        0000FFFF
+_FCPU_2T                          0000FF8F
+_FCPU_32T                         0000FFCF
+_FCPU_4T                          0000FF9F
+_FCPU_64T                         0000FFDF
+_FCPU_8T                          0000FFAF
+_FSR                              00000000
+_FSR0                             00000000
+_FSR1                             00000000
+_Flag                             00000000
+_Flag1                            00000000
+_HIBYTE                           00000000
+_HRC_LRC                          0000FCFF
+_HRC_LXT                          0000FDFF
+_HXT_LRC                          0000FEFF
+_IIC_Host_Receive_Ack             000000E7
+_IIC_Host_Send_Ack                000000D8
+_IIC_Host_to_Slave_Read           00000000
+_IIC_Host_to_Slave_Writer         0000005E
+_IIC_Receive_Byte                 00000098
+_IIC_Send_Byte                    000000B6
+_IIC_Start                        00000102
+_IIC_Stop                         000000F9
+_INDF                             00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INDF3                            00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_Keycode                          00000000
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_Last_BATAD                       00000000
+_Load_avgAD                       00000000
+_Load_avgAD2                      00000000
+_MCLR_OFF                         0000FF7F
+_MCLR_ON                          0000FFFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MasterTime_100ms                 00000000
+_MasterTime_10ms                  00000000
+_MasterTime_1ms                   00000000
+_MasterTime_1s                    00000000
+_NoLoadCount                      00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCAL                            00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PTWRT_16_1024                    0000FFF7
+_PTWRT_16_16                      0000DFF7
+_PTWRT_256_256                    0000DFFF
+_PTWRT_256_4096                   0000FFFF
+_PTWRT_4_4                        0000DFF3
+_PTWRT_4_512                      0000FFF3
+_PTWRT_64_2048                    0000FFFB
+_PTWRT_64_64                      0000DFFB
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_StatusBuf                        00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0LOAD                           00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_VLVR_160                         0000E3FF
+_VLVR_185                         0000E7FF
+_VLVR_205                         0000EBFF
+_VLVR_218                         0000EFFF
+_VLVR_232                         0000F3FF
+_VLVR_245                         0000F7FF
+_VLVR_305                         0000FBFF
+_VLVR_360                         0000FFFF
+_WDT_ALWAYS_OFF                   0000FFFC
+_WDT_ALWAYS_ON                    0000FFFF
+_WDT_SLEEP_OFF                    0000FFFD
+_ZNB602Register                   00000000
+__32P21                           00000001
+__gptrget1                        00000000
+__gptrput1                        00000000
+_key_cnt                          00000000
+_key_press_time                   00000000
+_key_time                         00000000
+_short_press_time                 00000000
+_sleeptime                        00000000
+r0x1001                           00000000
+r0x1002                           00000001
+r0x1003                           00000002
+r0x1004                           00000007
+r0x1005                           00000003
+r0x1006                           00000004
+r0x1009                           00000006
+r0x100A                           00000005
+r0x100B                           0000000E
+r0x100C                           0000000F
+r0x100D                           00000012
+r0x100E                           00000011
+r0x100F                           00000010
+r0x1010                           00000013
+r0x1011                           00000014
+r0x1012                           00000015
+r0x1014                           00000016
+r0x1015                           00000008
+r0x1016                           00000009
+r0x1017                           0000000C
+r0x1018                           0000000B
+r0x1019                           0000000A
+r0x101A                           0000000D
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

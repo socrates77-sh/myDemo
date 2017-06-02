@@ -1,0 +1,991 @@
+gpasm-1.3.1 (Jul  9 2013)    fun.asm            2013-8-2  17:27:04           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                      00004 ; This file was generated Fri Aug 02 17:27:04 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+Warning[231]: directive ignored when debug info is disabled
+                      00008         .file   "fun.c"
+                      00009         list    p=30p011
+                      00010         radix dec
+                      00011         include "mc30p011.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _STATUSbits
+                      00016         extern  _P0bits
+                      00017         extern  _P1bits
+                      00018         extern  _MCRbits
+                      00019         extern  _KBIMbits
+                      00020         extern  _PDCONbits
+                      00021         extern  _ODCONbits
+                      00022         extern  _PUCONbits
+                      00023         extern  _INTECONbits
+                      00024         extern  _INTFLAGbits
+                      00025         extern  _T0CRbits
+                      00026         extern  _DDR0bits
+                      00027         extern  _DDR1bits
+                      00028         extern  _TMCRbits
+                      00029         extern  _T1CRbits
+                      00030         extern  _INDF
+                      00031         extern  _T0CNT
+                      00032         extern  _PCL
+                      00033         extern  _STATUS
+                      00034         extern  _FSR
+                      00035         extern  _P0
+                      00036         extern  _P1
+                      00037         extern  _MCR
+                      00038         extern  _KBIM
+                      00039         extern  _PCLATH
+                      00040         extern  _PDCON
+                      00041         extern  _ODCON
+                      00042         extern  _PUCON
+                      00043         extern  _INTECON
+                      00044         extern  _INTFLAG
+                      00045         extern  _T0CR
+                      00046         extern  _DDR0
+                      00047         extern  _DDR1
+                      00048         extern  _TMCR
+                      00049         extern  _T1CR
+                      00050         extern  _T1CNT
+                      00051         extern  _T1LOAD
+                      00052         extern  _T1DATA
+                      00053 
+                      00054         extern STK06
+                      00055         extern STK05
+                      00056         extern STK04
+                      00057         extern STK03
+                      00058         extern STK02
+                      00059         extern STK01
+                      00060         extern STK00
+                      00061 ;--------------------------------------------------------
+                      00062 ; global declarations
+                      00063 ;--------------------------------------------------------
+                      00064         global  _i2cint
+                      00065         global  _i2cout
+                      00066         global  _i
+                      00067         global  _j
+                      00068         global  _n
+                      00069         global  _table
+                      00070 
+                      00071 ;--------------------------------------------------------
+                      00072 ; global definitions
+                      00073 ;--------------------------------------------------------
+                      00074 UD_fun_0        udata
+0000                  00075 _i      res     1
+                      00076 
+                      00077 UD_fun_1        udata
+0000                  00078 _j      res     1
+                      00079 
+                      00080 UD_fun_2        udata
+0000                  00081 _n      res     1
+                      00082 
+                      00083 ;--------------------------------------------------------
+                      00084 ; absolute symbol definitions
+                      00085 ;--------------------------------------------------------
+                      00086 ;--------------------------------------------------------
+                      00087 ; compiler-defined variables
+                      00088 ;--------------------------------------------------------
+                      00089 ;--------------------------------------------------------
+                      00090 ; initialized data
+                      00091 ;--------------------------------------------------------
+                      00092 
+                      00093 ID_fun_0        code
+0000                  00094 _table
+0000   0A80           00095         retai 0x80
+0001   0A86           00096         retai 0x86
+0002   0A8D           00097         retai 0x8d
+0003   0A93           00098         retai 0x93
+0004   0A99           00099         retai 0x99
+0005   0A9F           00100         retai 0x9f
+0006   0AA5           00101         retai 0xa5
+0007   0AAB           00102         retai 0xab
+0008   0AB1           00103         retai 0xb1
+0009   0AB7           00104         retai 0xb7
+000A   0ABC           00105         retai 0xbc
+000B   0AC2           00106         retai 0xc2
+000C   0AC7           00107         retai 0xc7
+000D   0ACC           00108         retai 0xcc
+000E   0AD1           00109         retai 0xd1
+000F   0AD6           00110         retai 0xd6
+0010   0ADA           00111         retai 0xda
+0011   0ADF           00112         retai 0xdf
+0012   0AE3           00113         retai 0xe3
+0013   0AE7           00114         retai 0xe7
+0014   0AEA           00115         retai 0xea
+0015   0AEE           00116         retai 0xee
+0016   0AF1           00117         retai 0xf1
+0017   0AF4           00118         retai 0xf4
+0018   0AF6           00119         retai 0xf6
+0019   0AF8           00120         retai 0xf8
+001A   0AFA           00121         retai 0xfa
+001B   0AFC           00122         retai 0xfc
+001C   0AFD           00123         retai 0xfd
+001D   0AFF           00124         retai 0xff
+001E   0AFF           00125         retai 0xff
+001F   0AFF           00126         retai 0xff
+0020   0AFF           00127         retai 0xff
+0021   0AFF           00128         retai 0xff
+0022   0AFF           00129         retai 0xff
+0023   0AFE           00130         retai 0xfe
+0024   0AFD           00131         retai 0xfd
+0025   0AFB           00132         retai 0xfb
+0026   0AF9           00133         retai 0xf9
+0027   0AF7           00134         retai 0xf7
+0028   0AF5           00135         retai 0xf5
+0029   0AF2           00136         retai 0xf2
+002A   0AEF           00137         retai 0xef
+002B   0AEC           00138         retai 0xec
+002C   0AE9           00139         retai 0xe9
+002D   0AE5           00140         retai 0xe5
+002E   0AE1           00141         retai 0xe1
+002F   0ADD           00142         retai 0xdd
+0030   0AD8           00143         retai 0xd8
+0031   0AD4           00144         retai 0xd4
+0032   0ACF           00145         retai 0xcf
+0033   0ACA           00146         retai 0xca
+0034   0AC5           00147         retai 0xc5
+0035   0ABF           00148         retai 0xbf
+0036   0ABA           00149         retai 0xba
+0037   0AB4           00150         retai 0xb4
+0038   0AAE           00151         retai 0xae
+0039   0AA8           00152         retai 0xa8
+003A   0AA2           00153         retai 0xa2
+003B   0A9C           00154         retai 0x9c
+003C   0A96           00155         retai 0x96
+003D   0A90           00156         retai 0x90
+003E   0A89           00157         retai 0x89
+003F   0A83           00158         retai 0x83
+0040   0A80           00159         retai 0x80
+0041   0A79           00160         retai 0x79
+0042   0A72           00161         retai 0x72
+0043   0A6C           00162         retai 0x6c
+0044   0A66           00163         retai 0x66
+0045   0A60           00164         retai 0x60
+0046   0A5A           00165         retai 0x5a
+0047   0A55           00166         retai 0x55
+0048   0A4E           00167         retai 0x4e
+0049   0A48           00168         retai 0x48
+004A   0A43           00169         retai 0x43
+004B   0A3D           00170         retai 0x3d
+004C   0A38           00171         retai 0x38
+004D   0A33           00172         retai 0x33
+004E   0A2E           00173         retai 0x2e
+004F   0A29           00174         retai 0x29
+0050   0A25           00175         retai 0x25
+0051   0A20           00176         retai 0x20
+0052   0A1C           00177         retai 0x1c
+0053   0A18           00178         retai 0x18
+0054   0A15           00179         retai 0x15
+0055   0A11           00180         retai 0x11
+0056   0A0E           00181         retai 0x0e
+0057   0A0B           00182         retai 0x0b
+0058   0A09           00183         retai 0x09
+0059   0A07           00184         retai 0x07
+005A   0A05           00185         retai 0x05
+005B   0A03           00186         retai 0x03
+005C   0A02           00187         retai 0x02
+005D   0A00           00188         retai 0x00
+005E   0A00           00189         retai 0x00
+005F   0A00           00190         retai 0x00
+0060   0A00           00191         retai 0x00
+0061   0A00           00192         retai 0x00
+0062   0A00           00193         retai 0x00
+0063   0A01           00194         retai 0x01
+0064   0A02           00195         retai 0x02
+0065   0A04           00196         retai 0x04
+0066   0A06           00197         retai 0x06
+0067   0A08           00198         retai 0x08
+0068   0A0A           00199         retai 0x0a
+0069   0A0D           00200         retai 0x0d
+006A   0A10           00201         retai 0x10
+006B   0A13           00202         retai 0x13
+006C   0A16           00203         retai 0x16
+006D   0A1A           00204         retai 0x1a
+006E   0A1E           00205         retai 0x1e
+006F   0A22           00206         retai 0x22
+0070   0A27           00207         retai 0x27
+0071   0A2B           00208         retai 0x2b
+0072   0A30           00209         retai 0x30
+0073   0A35           00210         retai 0x35
+0074   0A3A           00211         retai 0x3a
+0075   0A40           00212         retai 0x40
+0076   0A45           00213         retai 0x45
+0077   0A4C           00214         retai 0x4c
+0078   0A51           00215         retai 0x51
+0079   0A57           00216         retai 0x57
+007A   0A5D           00217         retai 0x5d
+007B   0A63           00218         retai 0x63
+007C   0A69           00219         retai 0x69
+007D   0A6F           00220         retai 0x6f
+007E   0A76           00221         retai 0x76
+007F   0A7C           00222         retai 0x7c
+                      00223 
+                      00224 ;--------------------------------------------------------
+                      00225 ; overlayable items in internal ram 
+                      00226 ;--------------------------------------------------------
+                      00227 ;       udata_ovr
+                      00228 ;--------------------------------------------------------
+                      00229 ; code
+                      00230 ;--------------------------------------------------------
+                      00231 code_fun        code
+                      00232 ;***
+                      00233 ;  pBlock Stats: dbName = C
+                      00234 ;***
+                      00235 ;entry:  _i2cout        ;Function start
+                      00236 ; 2 exit points
+                      00237 ;has an exit
+                      00238 ;; Starting pCode block
+                      00239 ;;; gen.c:2315:resultRemat *{*
+                      00240 ;;; gen.c:2759:genLabel *{*
+                      00241 ;; ***  genLabel  2762
+                      00242 ;;; gen.c:2315:resultRemat *{*
+                      00243 ;;; gen.c:2339:genFunction *{*
+                      00244 ;; ***  genFunction  2341 curr label offset=4previous max_key=0 
+0000                  00245 _i2cout ;Function start
+                      00246 ; 2 exit points
+                      00247 ;;; gen.c:2315:resultRemat *{*
+                      00248 ;;; gen.c:2315:resultRemat *{*
+                      00249 ;;; gen.c:6669:genPointerSet *{*
+                      00250 ;; ***  genPointerSet  6670
+                      00251 ;;; gen.c:6488:genNearPointerSet *{*
+                      00252 ;; ***  genNearPointerSet  6489
+                      00253 ;;      613
+                      00254 ;;      aopForRemat 392
+                      00255 ;;      418: rname _INTECONbits, val 0, const = 0
+                      00256 ;; ***  genNearPointerSet  6504
+                      00257 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00258 ;;      _INTECONbits
+                      00259 ;;      line = 6506 result AOP_PCODE=_INTECONbits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+                      00260 ;;; gen.c:6214:genPackBits *{*
+                      00261 ;; ***  genPackBits  6215
+                      00262 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00263 ;;      _INTECONbits
+                      00264 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00265         .line   34; "fun.c"     GIE = 1;
+0000   3B80           00266         BSET    _INTECONbits,7
+                      00267 ;;; gen.c:2315:resultRemat *{*
+                      00268 ;;; gen.c:6910:genAssign *{*
+                      00269 ;; ***  genAssign  6911
+                      00270 ;; ***  aopForSym 315
+                      00271 ;;      327 sym->rname = _n, size = 1
+                      00272 ;;      line = 6920 result AOP_DIR=_n, size=1, left -=-, size=0, right AOP_LIT=0x02, size=1
+                      00273 ;; ***  genAssign  7006
+                      00274 ;; >>> gen.c:7013:genAssign
+Warning[231]: directive ignored when debug info is disabled
+                      00275         .line   35; "fun.c"     for(n=0x02;--n;) continue;
+0001   0B02           00276         MOVAI   0x02
+                      00277 ;; >>> gen.c:7015:genAssign
+                      00278 ;;      1009
+                      00279 ;;      1028  _n   offset=0
+0002   1580           00280         MOVRA   _n
+                      00281 ;;; gen.c:2315:resultRemat *{*
+                      00282 ;;; gen.c:2759:genLabel *{*
+                      00283 ;; ***  genLabel  2762
+                      00284 ;;; gen.c:2315:resultRemat *{*
+                      00285 ;;; gen.c:7300:genDjnz *{*
+                      00286 ;; ***  genDjnz  7301
+                      00287 ;;; genarith.c:861:genMinus *{*
+                      00288 ;; ***  genMinus  862
+                      00289 ;; ***  aopForSym 315
+                      00290 ;;      327 sym->rname = _n, size = 1
+                      00291 ;;      result AOP_DIR, left AOP_DIR, right AOP_LIT
+                      00292 ;;; genarith.c:269:genAddLit *{*
+                      00293 ;; ***  genAddLit  270
+                      00294 ;;; genarith.c:233:genAddLit2byte *{*
+                      00295 ;; >>> genarith.c:242:genAddLit2byte
+                      00296 ;;      1009
+                      00297 ;;      1028  _n   offset=0
+0003                  00298 _00109_DS_
+0003   1B80           00299         DECR    _n
+                      00300 ;; ***  addSign  826
+                      00301 ;;; genarith.c:827:addSign *{*
+                      00302 ;;; gen.c:2315:resultRemat *{*
+                      00303 ;;; gen.c:6742:genIfx *{*
+                      00304 ;; ***  genIfx  6743
+                      00305 ;; ***  aopForSym 315
+                      00306 ;;      327 sym->rname = _n, size = 1
+                      00307 ;; ***  pic14_toBoolean  1514
+                      00308 ;; >>> gen.c:1521:pic14_toBoolean
+0004   0B00           00309         MOVAI   0x00
+                      00310 ;; >>> gen.c:1532:pic14_toBoolean
+                      00311 ;;      1009
+                      00312 ;;      1028  _n   offset=0
+0005   1700           00313         ORAR    _n
+                      00314 ;; >>> gen.c:6791:genIfx
+0006   3103           00315         JBSET   STATUS,2
+                      00316 ;; >>> gen.c:6792:genIfx
+                      00317 ;; ***  popGetLabel  key=1, label offset 8
+0007   2800           00318         GOTO    _00109_DS_
+                      00319 ;;; gen.c:2315:resultRemat *{*
+                      00320 ;;; gen.c:2759:genLabel *{*
+                      00321 ;; ***  genLabel  2762
+                      00322 ;;; gen.c:2315:resultRemat *{*
+                      00323 ;;; gen.c:2315:resultRemat *{*
+                      00324 ;;; gen.c:6669:genPointerSet *{*
+                      00325 ;; ***  genPointerSet  6670
+                      00326 ;;; gen.c:6488:genNearPointerSet *{*
+                      00327 ;; ***  genNearPointerSet  6489
+                      00328 ;;      613
+                      00329 ;;      aopForRemat 392
+                      00330 ;;      418: rname _P0bits, val 0, const = 0
+                      00331 ;; ***  genNearPointerSet  6504
+                      00332 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00333 ;;      _P0bits
+                      00334 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+                      00335 ;;; gen.c:6214:genPackBits *{*
+                      00336 ;; ***  genPackBits  6215
+                      00337 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00338 ;;      _P0bits
+                      00339 ;; >>> gen.c:6240:genPackBits
+0008                  00340 _00112_DS_
+Warning[231]: directive ignored when debug info is disabled
+                      00341         .line   38; "fun.c"     P00=1; 
+0008   3800           00342         BSET    _P0bits,0
+                      00343 ;;; gen.c:2315:resultRemat *{*
+                      00344 ;;; gen.c:2315:resultRemat *{*
+                      00345 ;;; gen.c:6127:genPointerGet *{*
+                      00346 ;; ***  genPointerGet  6128
+                      00347 ;;; gen.c:5909:genNearPointerGet *{*
+                      00348 ;; ***  genNearPointerGet  5910
+                      00349 ;;      613
+                      00350 ;;      aopForRemat 392
+                      00351 ;;      418: rname _P0bits, val 0, const = 0
+                      00352 ;; ***  genNearPointerGet  5926
+                      00353 ;;      694 register type nRegs=1
+                      00354 ;;; gen.c:5743:genUnpackBits *{*
+                      00355 ;; ***  genUnpackBits  5744
+                      00356 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00357 ;;      _P0bits
+                      00358 ;; >>> gen.c:5766:genUnpackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00359         .line   39; "fun.c"     }while(P01==0);  
+0009   3080           00360         JBSET   _P0bits,1
+                      00361 ;; >>> gen.c:5767:genUnpackBits
+                      00362 ;; ***  popGetLabel  key=4, label offset 8
+000A   2800           00363         GOTO    _00112_DS_
+                      00364 ;;; gen.c:2315:resultRemat *{*
+                      00365 ;;; gen.c:2315:resultRemat *{*
+                      00366 ;;; gen.c:2315:resultRemat *{*
+                      00367 ;;; gen.c:6669:genPointerSet *{*
+                      00368 ;; ***  genPointerSet  6670
+                      00369 ;;; gen.c:6488:genNearPointerSet *{*
+                      00370 ;; ***  genNearPointerSet  6489
+                      00371 ;;      613
+                      00372 ;;      aopForRemat 392
+                      00373 ;;      418: rname _P0bits, val 0, const = 0
+                      00374 ;; ***  genNearPointerSet  6504
+                      00375 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00376 ;;      _P0bits
+                      00377 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00378 ;;; gen.c:6214:genPackBits *{*
+                      00379 ;; ***  genPackBits  6215
+                      00380 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00381 ;;      _P0bits
+                      00382 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00383         .line   40; "fun.c"     P00=0;
+000B   3C00           00384         BCLR    _P0bits,0
+                      00385 ;;; gen.c:2315:resultRemat *{*
+                      00386 ;;; gen.c:2315:resultRemat *{*
+                      00387 ;;; gen.c:6669:genPointerSet *{*
+                      00388 ;; ***  genPointerSet  6670
+                      00389 ;;; gen.c:6488:genNearPointerSet *{*
+                      00390 ;; ***  genNearPointerSet  6489
+                      00391 ;;      613
+                      00392 ;;      aopForRemat 392
+                      00393 ;;      418: rname _P0bits, val 0, const = 0
+                      00394 ;; ***  genNearPointerSet  6504
+                      00395 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00396 ;;      _P0bits
+                      00397 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x58, size=1
+                      00398 ;;; gen.c:6214:genPackBits *{*
+                      00399 ;; ***  genPackBits  6215
+                      00400 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00401 ;;      _P0bits
+                      00402 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00403         .line   41; "fun.c"     P02=0X58;
+000C   3900           00404         BSET    _P0bits,2
+                      00405 ;;; gen.c:2315:resultRemat *{*
+                      00406 ;;; gen.c:2759:genLabel *{*
+                      00407 ;; ***  genLabel  2762
+                      00408 ;;; gen.c:2315:resultRemat *{*
+                      00409 ;;; gen.c:2315:resultRemat *{*
+                      00410 ;;; gen.c:6127:genPointerGet *{*
+                      00411 ;; ***  genPointerGet  6128
+                      00412 ;;; gen.c:5909:genNearPointerGet *{*
+                      00413 ;; ***  genNearPointerGet  5910
+                      00414 ;;      613
+                      00415 ;;      aopForRemat 392
+                      00416 ;;      418: rname _P0bits, val 0, const = 0
+                      00417 ;; ***  genNearPointerGet  5926
+                      00418 ;;      694 register type nRegs=1
+                      00419 ;;; gen.c:5743:genUnpackBits *{*
+                      00420 ;; ***  genUnpackBits  5744
+                      00421 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00422 ;;      _P0bits
+                      00423 ;; >>> gen.c:5766:genUnpackBits
+000D                  00424 _00115_DS_
+Warning[231]: directive ignored when debug info is disabled
+                      00425         .line   45; "fun.c"     }while(P01==0);
+000D   3080           00426         JBSET   _P0bits,1
+                      00427 ;; >>> gen.c:5767:genUnpackBits
+                      00428 ;; ***  popGetLabel  key=7, label offset 8
+000E   2800           00429         GOTO    _00115_DS_
+                      00430 ;;; gen.c:2315:resultRemat *{*
+                      00431 ;;; gen.c:2315:resultRemat *{*
+                      00432 ;;; gen.c:2315:resultRemat *{*
+                      00433 ;;; gen.c:6669:genPointerSet *{*
+                      00434 ;; ***  genPointerSet  6670
+                      00435 ;;; gen.c:6488:genNearPointerSet *{*
+                      00436 ;; ***  genNearPointerSet  6489
+                      00437 ;;      613
+                      00438 ;;      aopForRemat 392
+                      00439 ;;      418: rname _P0bits, val 0, const = 0
+                      00440 ;; ***  genNearPointerSet  6504
+                      00441 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00442 ;;      _P0bits
+                      00443 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00444 ;;; gen.c:6214:genPackBits *{*
+                      00445 ;; ***  genPackBits  6215
+                      00446 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00447 ;;      _P0bits
+                      00448 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00449         .line   46; "fun.c"     P01=0; 
+000F   3C80           00450         BCLR    _P0bits,1
+                      00451 ;;; gen.c:2315:resultRemat *{*
+                      00452 ;;; gen.c:2315:resultRemat *{*
+                      00453 ;;; gen.c:6669:genPointerSet *{*
+                      00454 ;; ***  genPointerSet  6670
+                      00455 ;;; gen.c:6488:genNearPointerSet *{*
+                      00456 ;; ***  genNearPointerSet  6489
+                      00457 ;;      613
+                      00458 ;;      aopForRemat 392
+                      00459 ;;      418: rname _P0bits, val 0, const = 0
+                      00460 ;; ***  genNearPointerSet  6504
+                      00461 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00462 ;;      _P0bits
+                      00463 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+                      00464 ;;; gen.c:6214:genPackBits *{*
+                      00465 ;; ***  genPackBits  6215
+                      00466 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00467 ;;      _P0bits
+                      00468 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00469         .line   47; "fun.c"     P02=0X01;
+0010   3900           00470         BSET    _P0bits,2
+                      00471 ;;; gen.c:2315:resultRemat *{*
+                      00472 ;;; gen.c:2759:genLabel *{*
+                      00473 ;; ***  genLabel  2762
+                      00474 ;;; gen.c:2315:resultRemat *{*
+                      00475 ;;; gen.c:2315:resultRemat *{*
+                      00476 ;;; gen.c:6127:genPointerGet *{*
+                      00477 ;; ***  genPointerGet  6128
+                      00478 ;;; gen.c:5909:genNearPointerGet *{*
+                      00479 ;; ***  genNearPointerGet  5910
+                      00480 ;;      613
+                      00481 ;;      aopForRemat 392
+                      00482 ;;      418: rname _P0bits, val 0, const = 0
+                      00483 ;; ***  genNearPointerGet  5926
+                      00484 ;;      694 register type nRegs=1
+                      00485 ;;; gen.c:5743:genUnpackBits *{*
+                      00486 ;; ***  genUnpackBits  5744
+                      00487 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00488 ;;      _P0bits
+                      00489 ;; >>> gen.c:5766:genUnpackBits
+0011                  00490 _00117_DS_
+Warning[231]: directive ignored when debug info is disabled
+                      00491         .line   51; "fun.c"     }while(P01==0); 
+0011   3080           00492         JBSET   _P0bits,1
+                      00493 ;; >>> gen.c:5767:genUnpackBits
+                      00494 ;; ***  popGetLabel  key=9, label offset 8
+0012   2800           00495         GOTO    _00117_DS_
+                      00496 ;;; gen.c:2315:resultRemat *{*
+                      00497 ;;; gen.c:2315:resultRemat *{*
+                      00498 ;;; gen.c:2315:resultRemat *{*
+                      00499 ;;; gen.c:6669:genPointerSet *{*
+                      00500 ;; ***  genPointerSet  6670
+                      00501 ;;; gen.c:6488:genNearPointerSet *{*
+                      00502 ;; ***  genNearPointerSet  6489
+                      00503 ;;      613
+                      00504 ;;      aopForRemat 392
+                      00505 ;;      418: rname _P0bits, val 0, const = 0
+                      00506 ;; ***  genNearPointerSet  6504
+                      00507 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00508 ;;      _P0bits
+                      00509 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00510 ;;; gen.c:6214:genPackBits *{*
+                      00511 ;; ***  genPackBits  6215
+                      00512 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00513 ;;      _P0bits
+                      00514 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00515         .line   52; "fun.c"     P01=0;  
+0013   3C80           00516         BCLR    _P0bits,1
+                      00517 ;;; gen.c:2315:resultRemat *{*
+                      00518 ;;; gen.c:2315:resultRemat *{*
+                      00519 ;;; gen.c:6669:genPointerSet *{*
+                      00520 ;; ***  genPointerSet  6670
+                      00521 ;;; gen.c:6488:genNearPointerSet *{*
+                      00522 ;; ***  genNearPointerSet  6489
+                      00523 ;;      613
+                      00524 ;;      aopForRemat 392
+                      00525 ;;      418: rname _P0bits, val 0, const = 0
+                      00526 ;; ***  genNearPointerSet  6504
+                      00527 ;; ***  aopForSym 315
+                      00528 ;;      327 sym->rname = _j, size = 1
+                      00529 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00530 ;;      _P0bits
+                      00531 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_DIR=_j, size=1
+                      00532 ;;; gen.c:6214:genPackBits *{*
+                      00533 ;; ***  genPackBits  6215
+                      00534 ;; >>> gen.c:6319:genPackBits
+                      00535 ;;      1009
+                      00536 ;;      1024  _j   offset=0 - had to alloc by reg name
+Warning[231]: directive ignored when debug info is disabled
+                      00537         .line   53; "fun.c"     P02=j;   
+0014   1300           00538         RRAR    _j
+                      00539 ;; >>> gen.c:6320:genPackBits
+0015   3003           00540         JBSET   STATUS,0
+                      00541 ;; >>> gen.c:6321:genPackBits
+                      00542 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00543 ;;      _P0bits
+0016   3D00           00544         BCLR    _P0bits,2
+                      00545 ;; >>> gen.c:6322:genPackBits
+0017   3403           00546         JBCLR   STATUS,0
+                      00547 ;; >>> gen.c:6323:genPackBits
+                      00548 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00549 ;;      _P0bits
+0018   3900           00550         BSET    _P0bits,2
+                      00551 ;;; gen.c:2315:resultRemat *{*
+                      00552 ;;; gen.c:2759:genLabel *{*
+                      00553 ;; ***  genLabel  2762
+                      00554 ;;; gen.c:2315:resultRemat *{*
+                      00555 ;;; gen.c:2315:resultRemat *{*
+                      00556 ;;; gen.c:6127:genPointerGet *{*
+                      00557 ;; ***  genPointerGet  6128
+                      00558 ;;; gen.c:5909:genNearPointerGet *{*
+                      00559 ;; ***  genNearPointerGet  5910
+                      00560 ;;      613
+                      00561 ;;      aopForRemat 392
+                      00562 ;;      418: rname _P0bits, val 0, const = 0
+                      00563 ;; ***  genNearPointerGet  5926
+                      00564 ;;      694 register type nRegs=1
+                      00565 ;;; gen.c:5743:genUnpackBits *{*
+                      00566 ;; ***  genUnpackBits  5744
+                      00567 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00568 ;;      _P0bits
+                      00569 ;; >>> gen.c:5766:genUnpackBits
+0019                  00570 _00119_DS_
+Warning[231]: directive ignored when debug info is disabled
+                      00571         .line   57; "fun.c"     }while(P01==0);
+0019   3080           00572         JBSET   _P0bits,1
+                      00573 ;; >>> gen.c:5767:genUnpackBits
+                      00574 ;; ***  popGetLabel  key=11, label offset 8
+001A   2800           00575         GOTO    _00119_DS_
+                      00576 ;;; gen.c:2315:resultRemat *{*
+                      00577 ;;; gen.c:2315:resultRemat *{*
+                      00578 ;;; gen.c:2315:resultRemat *{*
+                      00579 ;;; gen.c:6669:genPointerSet *{*
+                      00580 ;; ***  genPointerSet  6670
+                      00581 ;;; gen.c:6488:genNearPointerSet *{*
+                      00582 ;; ***  genNearPointerSet  6489
+                      00583 ;;      613
+                      00584 ;;      aopForRemat 392
+                      00585 ;;      418: rname _P0bits, val 0, const = 0
+                      00586 ;; ***  genNearPointerSet  6504
+                      00587 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00588 ;;      _P0bits
+                      00589 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00590 ;;; gen.c:6214:genPackBits *{*
+                      00591 ;; ***  genPackBits  6215
+                      00592 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00593 ;;      _P0bits
+                      00594 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00595         .line   58; "fun.c"     P01=0;   
+001B   3C80           00596         BCLR    _P0bits,1
+                      00597 ;;; gen.c:2315:resultRemat *{*
+                      00598 ;;; gen.c:2315:resultRemat *{*
+                      00599 ;;; gen.c:6669:genPointerSet *{*
+                      00600 ;; ***  genPointerSet  6670
+                      00601 ;;; gen.c:6488:genNearPointerSet *{*
+                      00602 ;; ***  genNearPointerSet  6489
+                      00603 ;;      613
+                      00604 ;;      aopForRemat 392
+                      00605 ;;      418: rname _P0bits, val 0, const = 0
+                      00606 ;; ***  genNearPointerSet  6504
+                      00607 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00608 ;;      _P0bits
+                      00609 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+                      00610 ;;; gen.c:6214:genPackBits *{*
+                      00611 ;; ***  genPackBits  6215
+                      00612 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00613 ;;      _P0bits
+                      00614 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00615         .line   59; "fun.c"     P00=1;    
+001C   3800           00616         BSET    _P0bits,0
+                      00617 ;;; gen.c:2315:resultRemat *{*
+                      00618 ;;; gen.c:2759:genLabel *{*
+                      00619 ;; ***  genLabel  2762
+                      00620 ;;; gen.c:2315:resultRemat *{*
+                      00621 ;;; gen.c:2315:resultRemat *{*
+                      00622 ;;; gen.c:6127:genPointerGet *{*
+                      00623 ;; ***  genPointerGet  6128
+                      00624 ;;; gen.c:5909:genNearPointerGet *{*
+                      00625 ;; ***  genNearPointerGet  5910
+                      00626 ;;      613
+                      00627 ;;      aopForRemat 392
+                      00628 ;;      418: rname _P0bits, val 0, const = 0
+                      00629 ;; ***  genNearPointerGet  5926
+                      00630 ;;      694 register type nRegs=1
+                      00631 ;;; gen.c:5743:genUnpackBits *{*
+                      00632 ;; ***  genUnpackBits  5744
+                      00633 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00634 ;;      _P0bits
+                      00635 ;; >>> gen.c:5766:genUnpackBits
+001D                  00636 _00121_DS_
+Warning[231]: directive ignored when debug info is disabled
+                      00637         .line   63; "fun.c"     }while(P01==0); 
+001D   3080           00638         JBSET   _P0bits,1
+                      00639 ;; >>> gen.c:5767:genUnpackBits
+                      00640 ;; ***  popGetLabel  key=13, label offset 8
+001E   2800           00641         GOTO    _00121_DS_
+                      00642 ;;; gen.c:2315:resultRemat *{*
+                      00643 ;;; gen.c:2315:resultRemat *{*
+                      00644 ;;; gen.c:2315:resultRemat *{*
+                      00645 ;;; gen.c:6669:genPointerSet *{*
+                      00646 ;; ***  genPointerSet  6670
+                      00647 ;;; gen.c:6488:genNearPointerSet *{*
+                      00648 ;; ***  genNearPointerSet  6489
+                      00649 ;;      613
+                      00650 ;;      aopForRemat 392
+                      00651 ;;      418: rname _P0bits, val 0, const = 0
+                      00652 ;; ***  genNearPointerSet  6504
+                      00653 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00654 ;;      _P0bits
+                      00655 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00656 ;;; gen.c:6214:genPackBits *{*
+                      00657 ;; ***  genPackBits  6215
+                      00658 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00659 ;;      _P0bits
+                      00660 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00661         .line   64; "fun.c"     P01=0;    
+001F   3C80           00662         BCLR    _P0bits,1
+                      00663 ;;; gen.c:2315:resultRemat *{*
+                      00664 ;;; gen.c:2759:genLabel *{*
+                      00665 ;; ***  genLabel  2762
+                      00666 ;;; gen.c:2315:resultRemat *{*
+                      00667 ;;; gen.c:2523:genEndFunction *{*
+                      00668 ;; ***  genEndFunction  2525
+0020   000C           00669         RETURN  
+                      00670 ; exit point of _i2cout
+                      00671 
+                      00672 ;***
+                      00673 ;  pBlock Stats: dbName = C
+                      00674 ;***
+                      00675 ;entry:  _i2cint        ;Function start
+                      00676 ; 2 exit points
+                      00677 ;has an exit
+                      00678 ;; Starting pCode block
+                      00679 ;;; gen.c:2315:resultRemat *{*
+                      00680 ;;; gen.c:2759:genLabel *{*
+                      00681 ;; ***  genLabel  2762
+                      00682 ;;; gen.c:2315:resultRemat *{*
+                      00683 ;;; gen.c:2339:genFunction *{*
+                      00684 ;; ***  genFunction  2341 curr label offset=0previous max_key=0 
+0021                  00685 _i2cint ;Function start
+                      00686 ; 2 exit points
+                      00687 ;;; gen.c:2315:resultRemat *{*
+                      00688 ;;; gen.c:6910:genAssign *{*
+                      00689 ;; ***  genAssign  6911
+                      00690 ;; ***  aopForSym 315
+                      00691 ;;      327 sym->rname = _DDR0, size = 1
+                      00692 ;;      line = 6920 result AOP_DIR=_DDR0, size=1, left -=-, size=0, right AOP_LIT=0x08, size=1
+                      00693 ;; ***  genAssign  7006
+                      00694 ;; >>> gen.c:7013:genAssign
+Warning[231]: directive ignored when debug info is disabled
+                      00695         .line   27; "fun.c"     DDR0 = 0X08;
+0021   0B08           00696         MOVAI   0x08
+                      00697 ;; >>> gen.c:7015:genAssign
+                      00698 ;;      1009
+                      00699 ;;      1028  _DDR0   offset=0
+0022   1580           00700         MOVRA   _DDR0
+                      00701 ;;; gen.c:2315:resultRemat *{*
+                      00702 ;;; gen.c:2315:resultRemat *{*
+                      00703 ;;; gen.c:6669:genPointerSet *{*
+                      00704 ;; ***  genPointerSet  6670
+                      00705 ;;; gen.c:6488:genNearPointerSet *{*
+                      00706 ;; ***  genNearPointerSet  6489
+                      00707 ;;      613
+                      00708 ;;      aopForRemat 392
+                      00709 ;;      418: rname _P0bits, val 0, const = 0
+                      00710 ;; ***  genNearPointerSet  6504
+                      00711 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00712 ;;      _P0bits
+                      00713 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+                      00714 ;;; gen.c:6214:genPackBits *{*
+                      00715 ;; ***  genPackBits  6215
+                      00716 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00717 ;;      _P0bits
+                      00718 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00719         .line   28; "fun.c"     P00 = 1;
+0023   3800           00720         BSET    _P0bits,0
+                      00721 ;;; gen.c:2315:resultRemat *{*
+                      00722 ;;; gen.c:2315:resultRemat *{*
+                      00723 ;;; gen.c:6669:genPointerSet *{*
+                      00724 ;; ***  genPointerSet  6670
+                      00725 ;;; gen.c:6488:genNearPointerSet *{*
+                      00726 ;; ***  genNearPointerSet  6489
+                      00727 ;;      613
+                      00728 ;;      aopForRemat 392
+                      00729 ;;      418: rname _P0bits, val 0, const = 0
+                      00730 ;; ***  genNearPointerSet  6504
+                      00731 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00732 ;;      _P0bits
+                      00733 ;;      line = 6506 result AOP_PCODE=_P0bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00734 ;;; gen.c:6214:genPackBits *{*
+                      00735 ;; ***  genPackBits  6215
+                      00736 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00737 ;;      _P0bits
+                      00738 ;; >>> gen.c:6240:genPackBits
+Warning[231]: directive ignored when debug info is disabled
+                      00739         .line   29; "fun.c"     P00 = 0;
+0024   3C00           00740         BCLR    _P0bits,0
+                      00741 ;;; gen.c:2315:resultRemat *{*
+                      00742 ;;; gen.c:2759:genLabel *{*
+                      00743 ;; ***  genLabel  2762
+                      00744 ;;; gen.c:2315:resultRemat *{*
+                      00745 ;;; gen.c:2523:genEndFunction *{*
+                      00746 ;; ***  genEndFunction  2525
+0025   000C           00747         RETURN  
+                      00748 ; exit point of _i2cint
+                      00749 ;;; gen.c:7409:genpic14Code *{*
+                      00750 
+                      00751 
+                      00752 ;       code size estimation:
+                      00753 ;          38+    0 =    38 instructions (   76 byte)
+                      00754 
+                      00755         end
+gpasm-1.3.1 (Jul  9 2013)    fun.asm            2013-8-2  17:27:04           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00109_DS_                        00000003
+_00112_DS_                        00000008
+_00115_DS_                        0000000D
+_00117_DS_                        00000011
+_00119_DS_                        00000019
+_00121_DS_                        0000001D
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FSR                              00000000
+_INDF                             00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_KBIM                             00000000
+_KBIMbits                         00000000
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCR                              00000000
+_MCRbits                          00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_STATUS                           00000000
+_STATUSbits                       00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_TMCR                             00000000
+_TMCRbits                         00000000
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+_i                                00000000
+_i2cint                           00000021
+_i2cout                           00000000
+_j                                00000000
+_n                                00000000
+_table                            00000000
+
+Errors   :     0
+Warnings :    21 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

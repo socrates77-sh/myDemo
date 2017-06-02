@@ -1,0 +1,761 @@
+gpasm-1.4.1_beta1 (Oct 15 2013)displaysbr.asm     2013-12-13  13:42:41         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Nov 20 2013) (MINGW32)
+                      00004 ; This file was generated Fri Dec 13 13:42:41 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "displaysbr.c"
+                      00009         list    p=32p21
+                      00010         radix dec
+                      00011         include "mc32p21.inc"
+                      00001                 LIST
+                      00002 ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00261                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _KeySbr
+                      00016         extern  _STATUSbits
+                      00017         extern  _MCRbits
+                      00018         extern  _INTEbits
+                      00019         extern  _INTFbits
+                      00020         extern  _IOP0bits
+                      00021         extern  _OEP0bits
+                      00022         extern  _PUP0bits
+                      00023         extern  _ANSELbits
+                      00024         extern  _IOP1bits
+                      00025         extern  _OEP1bits
+                      00026         extern  _PUP1bits
+                      00027         extern  _KBIMbits
+                      00028         extern  _T0CRbits
+                      00029         extern  _T1CRbits
+                      00030         extern  _LVDCRbits
+                      00031         extern  _OSCMbits
+                      00032         extern  _ADCR0bits
+                      00033         extern  _ADCR1bits
+                      00034         extern  _Flag1
+                      00035         extern  _Flag2
+                      00036         extern  _Flag3
+                      00037         extern  _Buf0
+                      00038         extern  _Buf1
+                      00039         extern  _Buf2
+                      00040         extern  _ADCnt
+                      00041         extern  _ADVBatBuf
+                      00042         extern  _ADVOutBuf
+                      00043         extern  _ADIOutBuf
+                      00044         extern  _ADVBatMin
+                      00045         extern  _ADVBatMax
+                      00046         extern  _ADVOut
+                      00047         extern  _ADVBat
+                      00048         extern  _ADIOut
+                      00049         extern  _ADVOutMin
+                      00050         extern  _ADVOutMax
+                      00051         extern  _ADIMin
+                      00052         extern  _ADIMax
+                      00053         extern  _T500ms
+                      00054         extern  _KeyCnt
+                      00055         extern  _KeyLongth
+                      00056         extern  _BatStatus
+                      00057         extern  _DispCnt
+                      00058         extern  _DisPWM
+                      00059         extern  _CHGPWM
+                      00060         extern  _VinLowCnt
+                      00061         extern  _VinHiCnt
+                      00062         extern  _ILow0A1Dly10s
+                      00063         extern  _TStop5s
+                      00064         extern  _PwrON5s
+                      00065         extern  _CHGV4d2T1min
+                      00066         extern  _CHGI100ms1min
+                      00067         extern  _BatLowCnt
+                      00068         extern  _LoadCnt
+                      00069         extern  _TSec
+                      00070         extern  _TMin
+                      00071         extern  _INDF
+                      00072         extern  _INDF0
+                      00073         extern  _INDF1
+                      00074         extern  _INDF2
+                      00075         extern  _HIBYTE
+                      00076         extern  _FSR
+                      00077         extern  _FSR0
+                      00078         extern  _FSR1
+                      00079         extern  _PCL
+                      00080         extern  _STATUS
+                      00081         extern  _MCR
+                      00082         extern  _INDF3
+                      00083         extern  _INTE
+                      00084         extern  _INTF
+                      00085         extern  _IOP0
+                      00086         extern  _OEP0
+                      00087         extern  _PUP0
+                      00088         extern  _ANSEL
+                      00089         extern  _IOP1
+                      00090         extern  _OEP1
+                      00091         extern  _PUP1
+                      00092         extern  _KBIM
+                      00093         extern  _T0CR
+                      00094         extern  _T0CNT
+                      00095         extern  _T0LOAD
+                      00096         extern  _T0DATA
+                      00097         extern  _T1CR
+                      00098         extern  _T1CNT
+                      00099         extern  _T1LOAD
+                      00100         extern  _T1DATA
+                      00101         extern  _LVDCR
+                      00102         extern  _OSCM
+                      00103         extern  _ADCR0
+                      00104         extern  _ADCR1
+                      00105         extern  _ADRH
+                      00106         extern  _ADRL
+                      00107         extern  _OSCAL
+                      00108 
+                      00109         extern STK06
+                      00110         extern STK05
+                      00111         extern STK04
+                      00112         extern STK03
+                      00113         extern STK02
+                      00114         extern STK01
+                      00115         extern STK00
+                      00116 ;--------------------------------------------------------
+                      00117 ; global declarations
+                      00118 ;--------------------------------------------------------
+                      00119         global  _Led1Ligt
+                      00120         global  _Led2Ligt
+                      00121         global  _Led3Ligt
+                      00122         global  _Led4Ligt
+                      00123         global  _DisplaySbr
+                      00124 
+                      00125 ;--------------------------------------------------------
+                      00126 ; global definitions
+                      00127 ;--------------------------------------------------------
+                      00128 ;--------------------------------------------------------
+                      00129 ; absolute symbol definitions
+                      00130 ;--------------------------------------------------------
+                      00131 ;--------------------------------------------------------
+                      00132 ; compiler-defined variables
+                      00133 ;--------------------------------------------------------
+                      00134 ;--------------------------------------------------------
+                      00135 ; initialized data
+                      00136 ;--------------------------------------------------------
+                      00137 ;--------------------------------------------------------
+                      00138 ; overlayable items in internal ram 
+                      00139 ;--------------------------------------------------------
+                      00140 ;       udata_ovr
+                      00141 ;--------------------------------------------------------
+                      00142 ; code
+                      00143 ;--------------------------------------------------------
+                      00144 code_displaysbr code
+                      00145 ;***
+                      00146 ;  pBlock Stats: dbName = C
+                      00147 ;***
+                      00148 ;entry:  _DisplaySbr    ;Function start
+                      00149 ; 2 exit points
+                      00150 ;has an exit
+                      00151 ;functions called:
+                      00152 ;   _KeySbr
+                      00153 ;   _Led1Ligt
+                      00154 ;   _Led1Ligt
+                      00155 ;   _Led2Ligt
+                      00156 ;   _Led2Ligt
+                      00157 ;   _Led3Ligt
+                      00158 ;   _Led3Ligt
+                      00159 ;   _Led4Ligt
+                      00160 ;   _Led4Ligt
+                      00161 ;   _Led4Ligt
+                      00162 ;   _KeySbr
+                      00163 ;   _Led1Ligt
+                      00164 ;   _Led1Ligt
+                      00165 ;   _Led2Ligt
+                      00166 ;   _Led2Ligt
+                      00167 ;   _Led3Ligt
+                      00168 ;   _Led3Ligt
+                      00169 ;   _Led4Ligt
+                      00170 ;   _Led4Ligt
+                      00171 ;   _Led4Ligt
+                      00172 ;; Starting pCode block
+0000                  00173 _DisplaySbr     ;Function start
+                      00174 ; 2 exit points
+                      00175 ;       .line   33; "displaysbr.c"      pLed1C = 0;
+0000   D800           00176         BCLR    _OEP1bits,4
+                      00177 ;       .line   34; "displaysbr.c"      pLed2C = 0;
+0001   DA00           00178         BCLR    _OEP1bits,5
+                      00179 ;       .line   35; "displaysbr.c"      pLedCC = 1;
+0002   C800           00180         BSET    _OEP0bits,4
+                      00181 ;       .line   37; "displaysbr.c"      if (++DispCnt == 5) {KeySbr();return;}
+0003   6600           00182         INCR    _DispCnt
+0004   5800           00183         MOVAR   _DispCnt
+0005   3905           00184         XORAI   0x05
+0006   E587           00185         JBSET   STATUS,2
+0007   A000           00186         GOTO    _00122_DS_
+0008   8000           00187         CALL    _KeySbr
+0009   A000           00188         GOTO    _00181_DS_
+000A                  00189 _00122_DS_
+                      00190 ;       .line   39; "displaysbr.c"      FLight = 0;
+000A   DC00           00191         BCLR    _Flag2,6
+                      00192 ;       .line   40; "displaysbr.c"      if (!FT5s)
+000B   F600           00193         JBCLR   _Flag2,3
+000C   A000           00194         GOTO    _00136_DS_
+                      00195 ;       .line   42; "displaysbr.c"      if (FFlash) FLight = 1;
+000D   E400           00196         JBSET   _Flag1,2
+000E   A000           00197         GOTO    _00137_DS_
+000F   CC00           00198         BSET    _Flag2,6
+0010   A000           00199         GOTO    _00137_DS_
+0011                  00200 _00136_DS_
+                      00201 ;       .line   46; "displaysbr.c"      if (FVIN) Buf2 = BatStatus - CBAT350;
+0011   EE00           00202         JBSET   _Flag1,7
+0012   A000           00203         GOTO    _00133_DS_
+0013   3CFE           00204         MOVAI   0xfe
+0014   7C00           00205         ADDAR   _BatStatus
+0015   5600           00206         MOVRA   _Buf2
+0016   A000           00207         GOTO    _00137_DS_
+0017                  00208 _00133_DS_
+                      00209 ;       .line   49; "displaysbr.c"      if (!FPwr) return;
+0017   F000           00210         JBCLR   _Flag1,0
+0018   A000           00211         GOTO    _00126_DS_
+0019   A000           00212         GOTO    _00181_DS_
+001A                  00213 _00126_DS_
+                      00214 ;       .line   50; "displaysbr.c"      if (FDisBatLow)
+001A   EE00           00215         JBSET   _Flag2,7
+001B   A000           00216         GOTO    _00130_DS_
+                      00217 ;       .line   52; "displaysbr.c"      if (!FF250) return;
+001C   FC00           00218         JBCLR   _Flag1,6
+001D   A000           00219         GOTO    _00137_DS_
+001E   A000           00220         GOTO    _00181_DS_
+001F                  00221 _00130_DS_
+                      00222 ;       .line   54; "displaysbr.c"      else Buf2 = BatStatus - CBAT350;
+001F   3CFE           00223         MOVAI   0xfe
+0020   7C00           00224         ADDAR   _BatStatus
+0021   5600           00225         MOVRA   _Buf2
+0022                  00226 _00137_DS_
+                      00227 ;       .line   58; "displaysbr.c"      if (DispCnt == 1)
+0022   5800           00228         MOVAR   _DispCnt
+0023   3901           00229         XORAI   0x01
+0024   E587           00230         JBSET   STATUS,2
+0025   A000           00231         GOTO    _00146_DS_
+                      00232 ;       .line   60; "displaysbr.c"      if (FLight||FFlash||(Buf2 != 0)) Led1Ligt();
+0026   FC00           00233         JBCLR   _Flag2,6
+0027   A000           00234         GOTO    _00138_DS_
+0028   F400           00235         JBCLR   _Flag1,2
+0029   A000           00236         GOTO    _00138_DS_
+002A   3C00           00237         MOVAI   0x00
+002B   5C00           00238         ORAR    _Buf2
+002C   F587           00239         JBCLR   STATUS,2
+002D   A000           00240         GOTO    _00139_DS_
+002E                  00241 _00138_DS_
+002E   8000           00242         CALL    _Led1Ligt
+002F                  00243 _00139_DS_
+                      00244 ;       .line   61; "displaysbr.c"      if ((Buf2 == 0)&&(FPwr)) Led1Ligt();
+002F   3C00           00245         MOVAI   0x00
+0030   5C00           00246         ORAR    _Buf2
+0031   E587           00247         JBSET   STATUS,2
+0032   A000           00248         GOTO    _00143_DS_
+0033   E000           00249         JBSET   _Flag1,0
+0034   A000           00250         GOTO    _00143_DS_
+0035   8000           00251         CALL    _Led1Ligt
+0036                  00252 _00143_DS_
+                      00253 ;       .line   62; "displaysbr.c"      return;
+0036   A000           00254         GOTO    _00181_DS_
+0037                  00255 _00146_DS_
+                      00256 ;       .line   64; "displaysbr.c"      if (DispCnt == 2)
+0037   5800           00257         MOVAR   _DispCnt
+0038   3902           00258         XORAI   0x02
+0039   E587           00259         JBSET   STATUS,2
+003A   A000           00260         GOTO    _00156_DS_
+                      00261 ;       .line   66; "displaysbr.c"      if (FLight||(Buf2 > 1)) {Led2Ligt();return;}
+003B   FC00           00262         JBCLR   _Flag2,6
+003C   A000           00263         GOTO    _00147_DS_
+                      00264 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00265 ;;unsigned compare: left >= lit(0x2=2), size=1
+003D   3C02           00266         MOVAI   0x02
+003E   4800           00267         RSUBAR  _Buf2
+003F   E187           00268         JBSET   STATUS,0
+0040   A000           00269         GOTO    _00148_DS_
+                      00270 ;;genSkipc:3246: created from rifx:0022608C
+0041                  00271 _00147_DS_
+0041   8000           00272         CALL    _Led2Ligt
+0042   A000           00273         GOTO    _00181_DS_
+                      00274 ;;unsigned compare: left < lit(0x1=1), size=1
+0043                  00275 _00148_DS_
+                      00276 ;       .line   67; "displaysbr.c"      if (Buf2 < 1) return;
+0043   3C01           00277         MOVAI   0x01
+0044   4800           00278         RSUBAR  _Buf2
+0045   F187           00279         JBCLR   STATUS,0
+0046   A000           00280         GOTO    _00151_DS_
+                      00281 ;;genSkipc:3246: created from rifx:0022608C
+0047   A000           00282         GOTO    _00181_DS_
+0048                  00283 _00151_DS_
+                      00284 ;       .line   68; "displaysbr.c"      if (FPwr||FFlash) Led2Ligt();
+0048   F000           00285         JBCLR   _Flag1,0
+0049   A000           00286         GOTO    _00152_DS_
+004A   E400           00287         JBSET   _Flag1,2
+004B   A000           00288         GOTO    _00156_DS_
+004C                  00289 _00152_DS_
+004C   8000           00290         CALL    _Led2Ligt
+004D                  00291 _00156_DS_
+                      00292 ;       .line   70; "displaysbr.c"      if (DispCnt == 3)
+004D   5800           00293         MOVAR   _DispCnt
+004E   3903           00294         XORAI   0x03
+004F   E587           00295         JBSET   STATUS,2
+0050   A000           00296         GOTO    _00166_DS_
+                      00297 ;       .line   72; "displaysbr.c"      if (FLight||(Buf2 > 2)) Led3Ligt();
+0051   FC00           00298         JBCLR   _Flag2,6
+0052   A000           00299         GOTO    _00157_DS_
+                      00300 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00301 ;;unsigned compare: left >= lit(0x3=3), size=1
+0053   3C03           00302         MOVAI   0x03
+0054   4800           00303         RSUBAR  _Buf2
+0055   E187           00304         JBSET   STATUS,0
+0056   A000           00305         GOTO    _00158_DS_
+                      00306 ;;genSkipc:3246: created from rifx:0022608C
+0057                  00307 _00157_DS_
+0057   8000           00308         CALL    _Led3Ligt
+                      00309 ;;unsigned compare: left < lit(0x2=2), size=1
+0058                  00310 _00158_DS_
+                      00311 ;       .line   73; "displaysbr.c"      if (Buf2 < 2) return;
+0058   3C02           00312         MOVAI   0x02
+0059   4800           00313         RSUBAR  _Buf2
+005A   F187           00314         JBCLR   STATUS,0
+005B   A000           00315         GOTO    _00161_DS_
+                      00316 ;;genSkipc:3246: created from rifx:0022608C
+005C   A000           00317         GOTO    _00181_DS_
+005D                  00318 _00161_DS_
+                      00319 ;       .line   74; "displaysbr.c"      if (FPwr||FFlash) Led3Ligt();
+005D   F000           00320         JBCLR   _Flag1,0
+005E   A000           00321         GOTO    _00162_DS_
+005F   E400           00322         JBSET   _Flag1,2
+0060   A000           00323         GOTO    _00163_DS_
+0061                  00324 _00162_DS_
+0061   8000           00325         CALL    _Led3Ligt
+0062                  00326 _00163_DS_
+                      00327 ;       .line   75; "displaysbr.c"      return;
+0062   A000           00328         GOTO    _00181_DS_
+0063                  00329 _00166_DS_
+                      00330 ;       .line   77; "displaysbr.c"      if (FLight) Led4Ligt();
+0063   EC00           00331         JBSET   _Flag2,6
+0064   A000           00332         GOTO    _00168_DS_
+0065   8000           00333         CALL    _Led4Ligt
+                      00334 ;;unsigned compare: left < lit(0x3=3), size=1
+0066                  00335 _00168_DS_
+                      00336 ;       .line   78; "displaysbr.c"      if (Buf2 < 3) return;
+0066   3C03           00337         MOVAI   0x03
+0067   4800           00338         RSUBAR  _Buf2
+0068   F187           00339         JBCLR   STATUS,0
+0069   A000           00340         GOTO    _00170_DS_
+                      00341 ;;genSkipc:3246: created from rifx:0022608C
+006A   A000           00342         GOTO    _00181_DS_
+006B                  00343 _00170_DS_
+                      00344 ;       .line   79; "displaysbr.c"      if (Buf2 == 3)
+006B   5800           00345         MOVAR   _Buf2
+006C   3903           00346         XORAI   0x03
+006D   E587           00347         JBSET   STATUS,2
+006E   A000           00348         GOTO    _00175_DS_
+                      00349 ;       .line   81; "displaysbr.c"      if (FPwr||FFlash) Led4Ligt();
+006F   F000           00350         JBCLR   _Flag1,0
+0070   A000           00351         GOTO    _00171_DS_
+0071   E400           00352         JBSET   _Flag1,2
+0072   A000           00353         GOTO    _00172_DS_
+0073                  00354 _00171_DS_
+0073   8000           00355         CALL    _Led4Ligt
+0074                  00356 _00172_DS_
+                      00357 ;       .line   82; "displaysbr.c"      return;
+0074   A000           00358         GOTO    _00181_DS_
+0075                  00359 _00175_DS_
+                      00360 ;       .line   84; "displaysbr.c"      if (FPwr||(!FVIN)||FCHGOver||FFlash) Led4Ligt();
+0075   F000           00361         JBCLR   _Flag1,0
+0076   A000           00362         GOTO    _00176_DS_
+0077   EE00           00363         JBSET   _Flag1,7
+0078   A000           00364         GOTO    _00176_DS_
+0079   F800           00365         JBCLR   _Flag1,4
+007A   A000           00366         GOTO    _00176_DS_
+007B   E400           00367         JBSET   _Flag1,2
+007C   A000           00368         GOTO    _00181_DS_
+007D                  00369 _00176_DS_
+007D   8000           00370         CALL    _Led4Ligt
+007E                  00371 _00181_DS_
+007E   000C           00372         RETURN  
+                      00373 ; exit point of _DisplaySbr
+                      00374 
+                      00375 ;***
+                      00376 ;  pBlock Stats: dbName = C
+                      00377 ;***
+                      00378 ;entry:  _Led4Ligt      ;Function start
+                      00379 ; 2 exit points
+                      00380 ;has an exit
+                      00381 ;; Starting pCode block
+007F                  00382 _Led4Ligt       ;Function start
+                      00383 ; 2 exit points
+                      00384 ;       .line   27; "displaysbr.c"      pLedC = 0;
+007F   D800           00385         BCLR    _OEP0bits,4
+                      00386 ;       .line   28; "displaysbr.c"      pLed2C = 1;
+0080   CA00           00387         BSET    _OEP1bits,5
+                      00388 ;       .line   29; "displaysbr.c"      pLed2 = 1;
+0081   CA00           00389         BSET    _IOP1bits,5
+0082   000C           00390         RETURN  
+                      00391 ; exit point of _Led4Ligt
+                      00392 
+                      00393 ;***
+                      00394 ;  pBlock Stats: dbName = C
+                      00395 ;***
+                      00396 ;entry:  _Led3Ligt      ;Function start
+                      00397 ; 2 exit points
+                      00398 ;has an exit
+                      00399 ;; Starting pCode block
+0083                  00400 _Led3Ligt       ;Function start
+                      00401 ; 2 exit points
+                      00402 ;       .line   21; "displaysbr.c"      pLedC = 1;
+0083   C800           00403         BSET    _OEP0bits,4
+                      00404 ;       .line   22; "displaysbr.c"      pLed2C = 1;
+0084   CA00           00405         BSET    _OEP1bits,5
+                      00406 ;       .line   23; "displaysbr.c"      pLed2 = 0;
+0085   DA00           00407         BCLR    _IOP1bits,5
+0086   000C           00408         RETURN  
+                      00409 ; exit point of _Led3Ligt
+                      00410 
+                      00411 ;***
+                      00412 ;  pBlock Stats: dbName = C
+                      00413 ;***
+                      00414 ;entry:  _Led2Ligt      ;Function start
+                      00415 ; 2 exit points
+                      00416 ;has an exit
+                      00417 ;; Starting pCode block
+0087                  00418 _Led2Ligt       ;Function start
+                      00419 ; 2 exit points
+                      00420 ;       .line   15; "displaysbr.c"      pLedC = 1;
+0087   C800           00421         BSET    _OEP0bits,4
+                      00422 ;       .line   16; "displaysbr.c"      pLed1C = 1;
+0088   C800           00423         BSET    _OEP1bits,4
+                      00424 ;       .line   17; "displaysbr.c"      pLed1 = 0;
+0089   D800           00425         BCLR    _IOP1bits,4
+008A   000C           00426         RETURN  
+                      00427 ; exit point of _Led2Ligt
+                      00428 
+                      00429 ;***
+                      00430 ;  pBlock Stats: dbName = C
+                      00431 ;***
+                      00432 ;entry:  _Led1Ligt      ;Function start
+                      00433 ; 2 exit points
+                      00434 ;has an exit
+                      00435 ;; Starting pCode block
+008B                  00436 _Led1Ligt       ;Function start
+                      00437 ; 2 exit points
+                      00438 ;       .line   9; "displaysbr.c"       pLedC = 0;
+008B   D800           00439         BCLR    _OEP0bits,4
+                      00440 ;       .line   10; "displaysbr.c"      pLed1C = 1;
+008C   C800           00441         BSET    _OEP1bits,4
+                      00442 ;       .line   11; "displaysbr.c"      pLed1 = 1;
+008D   C800           00443         BSET    _IOP1bits,4
+008E   000C           00444         RETURN  
+                      00445 ; exit point of _Led1Ligt
+                      00446 
+                      00447 
+                      00448 ;       code size estimation:
+                      00449 ;         143+    0 =   143 instructions (  286 byte)
+                      00450 
+                      00451         end
+gpasm-1.4.1_beta1 (Oct 15 2013)displaysbr.asm     2013-12-13  13:42:41         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBIE                              00000004
+KBIF                              00000004
+KBIM                              00000197
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+LFEN                              00000001
+LVDCR                             000001AD
+LVDEN                             00000007
+LVDF                              00000000
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCAL                             000001FB
+OSCM                              000001AE
+P00                               00000000
+P00ANS                            00000000
+P00OE                             00000000
+P00PU                             00000000
+P01                               00000001
+P01ANS                            00000001
+P01OE                             00000001
+P01PU                             00000001
+P02                               00000002
+P02ANS                            00000002
+P02OE                             00000002
+P02PU                             00000002
+P03                               00000003
+P03ANS                            00000003
+P03OE                             00000003
+P03PU                             00000003
+P04                               00000004
+P04ANS                            00000004
+P04OE                             00000004
+P04PU                             00000004
+P10                               00000000
+P10OE                             00000000
+P10PU                             00000000
+P11                               00000001
+P11OE                             00000001
+P11PU                             00000001
+P12                               00000002
+P12ANS                            00000005
+P12OE                             00000002
+P12PU                             00000002
+P13                               00000003
+P13ANS                            00000006
+P13OE                             00000003
+P13PU                             00000003
+P14                               00000004
+P14OE                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OE                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OE                             00000006
+P16PU                             00000006
+PCL                               00000186
+PD                                00000004
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STATUS                            00000187
+STBH                              00000004
+STBL                              00000005
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+Z                                 00000002
+_00122_DS_                        0000000A
+_00126_DS_                        0000001A
+_00130_DS_                        0000001F
+_00133_DS_                        00000017
+_00136_DS_                        00000011
+_00137_DS_                        00000022
+_00138_DS_                        0000002E
+_00139_DS_                        0000002F
+_00143_DS_                        00000036
+_00146_DS_                        00000037
+_00147_DS_                        00000041
+_00148_DS_                        00000043
+_00151_DS_                        00000048
+_00152_DS_                        0000004C
+_00156_DS_                        0000004D
+_00157_DS_                        00000057
+_00158_DS_                        00000058
+_00161_DS_                        0000005D
+_00162_DS_                        00000061
+_00163_DS_                        00000062
+_00166_DS_                        00000063
+_00168_DS_                        00000066
+_00170_DS_                        0000006B
+_00171_DS_                        00000073
+_00172_DS_                        00000074
+_00175_DS_                        00000075
+_00176_DS_                        0000007D
+_00181_DS_                        0000007E
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADCnt                            00000000
+_ADIMax                           00000000
+_ADIMin                           00000000
+_ADIOut                           00000000
+_ADIOutBuf                        00000000
+_ADRH                             00000000
+_ADRL                             00000000
+_ADVBat                           00000000
+_ADVBatBuf                        00000000
+_ADVBatMax                        00000000
+_ADVBatMin                        00000000
+_ADVOut                           00000000
+_ADVOutBuf                        00000000
+_ADVOutMax                        00000000
+_ADVOutMin                        00000000
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_BatLowCnt                        00000000
+_BatStatus                        00000000
+_Buf0                             00000000
+_Buf1                             00000000
+_Buf2                             00000000
+_CHGI100ms1min                    00000000
+_CHGPWM                           00000000
+_CHGV4d2T1min                     00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_CP_ALL                           00007FFF
+_DisPWM                           00000000
+_DispCnt                          00000000
+_DisplaySbr                       00000000
+_FCPU_128T                        0000FFEF
+_FCPU_16T                         0000FFBF
+_FCPU_256T                        0000FFFF
+_FCPU_2T                          0000FF8F
+_FCPU_32T                         0000FFCF
+_FCPU_4T                          0000FF9F
+_FCPU_64T                         0000FFDF
+_FCPU_8T                          0000FFAF
+_FSR                              00000000
+_FSR0                             00000000
+_FSR1                             00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_Flag3                            00000000
+_HIBYTE                           00000000
+_HRC_LRC                          0000FCFF
+_HRC_LXT                          0000FDFF
+_HXT_LRC                          0000FEFF
+_ILow0A1Dly10s                    00000000
+_INDF                             00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INDF3                            00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyCnt                           00000000
+_KeyLongth                        00000000
+_KeySbr                           00000000
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_Led1Ligt                         0000008B
+_Led2Ligt                         00000087
+_Led3Ligt                         00000083
+_Led4Ligt                         0000007F
+_LoadCnt                          00000000
+_MCLR_OFF                         0000FF7F
+_MCLR_ON                          0000FFFF
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCAL                            00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PTWRT_16_1024                    0000FFF7
+_PTWRT_16_16                      0000DFF7
+_PTWRT_256_256                    0000DFFF
+_PTWRT_256_4096                   0000FFFF
+_PTWRT_4_4                        0000DFF3
+_PTWRT_4_512                      0000FFF3
+_PTWRT_64_2048                    0000FFFB
+_PTWRT_64_64                      0000DFFB
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PwrON5s                          00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0LOAD                           00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_T500ms                           00000000
+_TMin                             00000000
+_TSec                             00000000
+_TStop5s                          00000000
+_VLVR_160                         0000E3FF
+_VLVR_185                         0000E7FF
+_VLVR_205                         0000EBFF
+_VLVR_218                         0000EFFF
+_VLVR_232                         0000F3FF
+_VLVR_245                         0000F7FF
+_VLVR_305                         0000FBFF
+_VLVR_360                         0000FFFF
+_VinHiCnt                         00000000
+_VinLowCnt                        00000000
+_WDT_ALWAYS_OFF                   0000FFFC
+_WDT_ALWAYS_ON                    0000FFFF
+_WDT_SLEEP_OFF                    0000FFFD
+__32P21                           00000001
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

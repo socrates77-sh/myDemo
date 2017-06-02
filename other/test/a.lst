@@ -1,0 +1,87 @@
+MP2COD 4.02, COFF to COD File Converter
+Copyright (c) 2006 Microchip Technology Inc.
+Listing File Generated: Fri Jun 28 11:33:01 2013
+
+
+Address  Value    Disassembly              Source                                                                           File
+-------  -------  -----------------------  -------------------------------------------------------------------------------  -----
+                                           #include <p18f1220.h>                                                            d:\work\compiler\try\a\test\type_char.c
+                                                                                                                            d:\work\compiler\try\a\test\type_char.c
+                                           char c_a, c_b;                                                                   d:\work\compiler\try\a\test\type_char.c
+                                           unsigned char uc_a, uc_b;                                                        d:\work\compiler\try\a\test\type_char.c
+                                                                                                                            d:\work\compiler\try\a\test\type_char.c
+                                           void main(void)                                                                  d:\work\compiler\try\a\test\type_char.c
+                                           {                                                                                d:\work\compiler\try\a\test\type_char.c
+0000ca   cf81     MOVFF     0xf81,0xca     	c_a = PORTB;                                                                    d:\work\compiler\try\a\test\type_char.c
+0000cc   f0ca                                                                                                               
+0000ce   cf80     MOVFF     0xf80,0xcb     	c_b = PORTA;                                                                    d:\work\compiler\try\a\test\type_char.c
+0000d0   f0cb                                                                                                               
+0000d2   cf81     MOVFF     0xf81,0xcc     	uc_a = PORTB;                                                                   d:\work\compiler\try\a\test\type_char.c
+0000d4   f0cc                                                                                                               
+0000d6   cf81     MOVFF     0xf81,0xcd     	uc_b = PORTB;                                                                   d:\work\compiler\try\a\test\type_char.c
+0000d8   f0cd                                                                                                               
+                                                                                                                            d:\work\compiler\try\a\test\type_char.c
+0000da   0100     MOVLB     0x0            	PORTA = c_a + c_b;                                                              d:\work\compiler\try\a\test\type_char.c
+0000dc   51ca     MOVF      0xca,0x0,0x1                                                                                    
+0000de   25cb     ADDWF     0xcb,0x0,0x1                                                                                    
+0000e0   6e80     MOVWF     0x80,0x0                                                                                        
+0000e2   51cc     MOVF      0xcc,0x0,0x1   	PORTA = uc_a + uc_b;                                                            d:\work\compiler\try\a\test\type_char.c
+0000e4   25cd     ADDWF     0xcd,0x0,0x1                                                                                    
+0000e6   6e80     MOVWF     0x80,0x0                                                                                        
+0000e8   51cb     MOVF      0xcb,0x0,0x1   	PORTB = c_a - c_b;                                                              d:\work\compiler\try\a\test\type_char.c
+0000ea   5dca     SUBWF     0xca,0x0,0x1                                                                                    
+0000ec   6e81     MOVWF     0x81,0x0                                                                                        
+0000ee   51cd     MOVF      0xcd,0x0,0x1   	PORTB = uc_a - uc_b;                                                            d:\work\compiler\try\a\test\type_char.c
+0000f0   5dcc     SUBWF     0xcc,0x0,0x1                                                                                    
+0000f2   6e81     MOVWF     0x81,0x0                                                                                        
+                                                                                                                            d:\work\compiler\try\a\test\type_char.c
+0000f4   0e00     MOVLW     0x0            	if (c_a > 0) PORTA = c_b;                                                       d:\work\compiler\try\a\test\type_char.c
+0000f6   6ee7     MOVWF     0xe7,0x0                                                                                        
+0000f8   19ca     XORWF     0xca,0x0,0x1                                                                                    
+0000fa   aee8     BTFSS     0xe8,0x7,0x0                                                                                    
+0000fc   d002     BRA       0x102                                                                                           
+0000fe   35ca     RLCF      0xca,0x0,0x1                                                                                    
+000100   d003     BRA       0x108                                                                                           
+000102   50e7     MOVF      0xe7,0x0,0x0                                                                                    
+000104   80d8     BSF       0xd8,0x0,0x0                                                                                    
+000106   55ca     SUBFWB    0xca,0x0,0x1                                                                                    
+000108   e202     BC        0x10e                                                                                           
+00010a   c0cb     MOVFF     0xcb,0xf80                                                                                      
+00010c   ff80                                                                                                               
+00010e   51cc     MOVF      0xcc,0x0,0x1   	if (uc_a > 0) PORTA = uc_b;                                                     d:\work\compiler\try\a\test\type_char.c
+000110   0800     SUBLW     0x0                                                                                             
+000112   e202     BC        0x118                                                                                           
+000114   c0cd     MOVFF     0xcd,0xf80                                                                                      
+000116   ff80                                                                                                               
+                                           	                                                                                d:\work\compiler\try\a\test\type_char.c
+000118   0efd     MOVLW     0xfd           	if (c_a > -3) PORTA = c_b;                                                      d:\work\compiler\try\a\test\type_char.c
+00011a   6ee7     MOVWF     0xe7,0x0                                                                                        
+00011c   19ca     XORWF     0xca,0x0,0x1                                                                                    
+00011e   aee8     BTFSS     0xe8,0x7,0x0                                                                                    
+000120   d002     BRA       0x126                                                                                           
+000122   35ca     RLCF      0xca,0x0,0x1                                                                                    
+000124   d003     BRA       0x12c                                                                                           
+000126   50e7     MOVF      0xe7,0x0,0x0                                                                                    
+000128   80d8     BSF       0xd8,0x0,0x0                                                                                    
+00012a   55ca     SUBFWB    0xca,0x0,0x1                                                                                    
+00012c   e202     BC        0x132                                                                                           
+00012e   c0cb     MOVFF     0xcb,0xf80                                                                                      
+000130   ff80                                                                                                               
+000132   51cc     MOVF      0xcc,0x0,0x1   	if (uc_a > -3) PORTA = uc_b;                                                    d:\work\compiler\try\a\test\type_char.c
+000134   08fd     SUBLW     0xfd                                                                                            
+000136   e202     BC        0x13c                                                                                           
+000138   c0cd     MOVFF     0xcd,0xf80                                                                                      
+00013a   ff80                                                                                                               
+                                           	                                                                                d:\work\compiler\try\a\test\type_char.c
+00013c   1dcd     COMF      0xcd,0x0,0x1   	if (uc_a == ~uc_b) PORTA = uc_b;                                                d:\work\compiler\try\a\test\type_char.c
+00013e   5dcc     SUBWF     0xcc,0x0,0x1                                                                                    
+000140   e102     BNZ       0x146                                                                                           
+000142   c0cd     MOVFF     0xcd,0xf80                                                                                      
+000144   ff80                                                                                                               
+                                           	                                                                                d:\work\compiler\try\a\test\type_char.c
+000146   0e33     MOVLW     0x33           	uc_a = uc_b = 0x33;                                                             d:\work\compiler\try\a\test\type_char.c
+000148   6fcd     MOVWF     0xcd,0x1                                                                                        
+00014a   6fcc     MOVWF     0xcc,0x1                                                                                        
+                                                                                                                            d:\work\compiler\try\a\test\type_char.c
+00014c   d7ff     BRA       0x14c          	while(1);                                                                       d:\work\compiler\try\a\test\type_char.c
+                                           }                                                                                d:\work\compiler\try\a\test\type_char.c

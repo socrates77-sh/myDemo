@@ -1,0 +1,26 @@
+
+#include <mc3x-common.h>
+#include "CONST.H"
+/*****************************************************************
+;	Function : Define variables
+;*****************************************************************/
+#ifndef _EXTERNVAR_H_
+#define _EXTERNVAR_H_
+
+
+typedef  struct
+{
+    uchar bit0         : 1;
+    uchar bit1         : 1;
+    uchar bit2         : 1;
+    uchar bit3         : 1;
+    uchar bit4         : 1;	
+    uchar bit5         : 1; 
+    uchar bit6         : 1; 	
+    uchar bit7         : 1; 	
+} bitn;
+
+extern volatile bitn	Flag1,Flag2;
+
+
+#endif

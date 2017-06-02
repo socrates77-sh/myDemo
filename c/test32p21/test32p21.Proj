@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project MCU="mc32p21" ID="0x3221" MCU_Type="CRISC" Author="Mike.Mo" Date="2012-08-28" VS="1.01">
+  <ProWindows>
+    <Explorer fName="test32p21">
+      <SouceCode fName="SourceCode">
+        <asmFile fName="test32p21.c" fPath="\test32p21.c" />
+        <asmFile fName="ADCSbr.c" fPath="\ADCSbr.c" />
+        <asmFile fName="KeySbr.c" fPath="\KeySbr.c" />
+        <asmFile fName="InitRstSbr.c" fPath="\InitRstSbr.c" />
+        <asmFile fName="interrupt.c" fPath="\interrupt.c" />
+        <asmFile fName="displaySbr.c" fPath="\displaySbr.c" />
+      </SouceCode>
+      <SouceCode fName="Output" />
+      <SouceCode fName="Debug" />
+      <SouceCode fName="displaySbr.c" />
+    </Explorer>
+  </ProWindows>
+  <Option Value="DC10" />
+  <Compiler Name="gpasm.exe" />
+  <Language Name="C" />
+</Project>

@@ -1,0 +1,475 @@
+gpasm-1.4.1_beta1 (Oct 15 2013)KeySbr.asm         2013-12-13  13:42:43         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Nov 20 2013) (MINGW32)
+                      00004 ; This file was generated Fri Dec 13 13:42:43 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "KeySbr.c"
+                      00009         list    p=32p21
+                      00010         radix dec
+                      00011         include "mc32p21.inc"
+                      00001                 LIST
+                      00002 ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00261                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _CloseDisCHG
+                      00016         extern  _InitPWMSbr
+                      00017         extern  _InitADC
+                      00018         extern  _STATUSbits
+                      00019         extern  _MCRbits
+                      00020         extern  _INTEbits
+                      00021         extern  _INTFbits
+                      00022         extern  _IOP0bits
+                      00023         extern  _OEP0bits
+                      00024         extern  _PUP0bits
+                      00025         extern  _ANSELbits
+                      00026         extern  _IOP1bits
+                      00027         extern  _OEP1bits
+                      00028         extern  _PUP1bits
+                      00029         extern  _KBIMbits
+                      00030         extern  _T0CRbits
+                      00031         extern  _T1CRbits
+                      00032         extern  _LVDCRbits
+                      00033         extern  _OSCMbits
+                      00034         extern  _ADCR0bits
+                      00035         extern  _ADCR1bits
+                      00036         extern  _Flag1
+                      00037         extern  _Flag2
+                      00038         extern  _Flag3
+                      00039         extern  _Buf0
+                      00040         extern  _Buf1
+                      00041         extern  _Buf2
+                      00042         extern  _ADCnt
+                      00043         extern  _ADVBatBuf
+                      00044         extern  _ADVOutBuf
+                      00045         extern  _ADIOutBuf
+                      00046         extern  _ADVBatMin
+                      00047         extern  _ADVBatMax
+                      00048         extern  _ADVOut
+                      00049         extern  _ADVBat
+                      00050         extern  _ADIOut
+                      00051         extern  _ADVOutMin
+                      00052         extern  _ADVOutMax
+                      00053         extern  _ADIMin
+                      00054         extern  _ADIMax
+                      00055         extern  _T500ms
+                      00056         extern  _KeyCnt
+                      00057         extern  _KeyLongth
+                      00058         extern  _BatStatus
+                      00059         extern  _DispCnt
+                      00060         extern  _DisPWM
+                      00061         extern  _CHGPWM
+                      00062         extern  _VinLowCnt
+                      00063         extern  _VinHiCnt
+                      00064         extern  _ILow0A1Dly10s
+                      00065         extern  _TStop5s
+                      00066         extern  _PwrON5s
+                      00067         extern  _CHGV4d2T1min
+                      00068         extern  _CHGI100ms1min
+                      00069         extern  _BatLowCnt
+                      00070         extern  _LoadCnt
+                      00071         extern  _TSec
+                      00072         extern  _TMin
+                      00073         extern  _INDF
+                      00074         extern  _INDF0
+                      00075         extern  _INDF1
+                      00076         extern  _INDF2
+                      00077         extern  _HIBYTE
+                      00078         extern  _FSR
+                      00079         extern  _FSR0
+                      00080         extern  _FSR1
+                      00081         extern  _PCL
+                      00082         extern  _STATUS
+                      00083         extern  _MCR
+                      00084         extern  _INDF3
+                      00085         extern  _INTE
+                      00086         extern  _INTF
+                      00087         extern  _IOP0
+                      00088         extern  _OEP0
+                      00089         extern  _PUP0
+                      00090         extern  _ANSEL
+                      00091         extern  _IOP1
+                      00092         extern  _OEP1
+                      00093         extern  _PUP1
+                      00094         extern  _KBIM
+                      00095         extern  _T0CR
+                      00096         extern  _T0CNT
+                      00097         extern  _T0LOAD
+                      00098         extern  _T0DATA
+                      00099         extern  _T1CR
+                      00100         extern  _T1CNT
+                      00101         extern  _T1LOAD
+                      00102         extern  _T1DATA
+                      00103         extern  _LVDCR
+                      00104         extern  _OSCM
+                      00105         extern  _ADCR0
+                      00106         extern  _ADCR1
+                      00107         extern  _ADRH
+                      00108         extern  _ADRL
+                      00109         extern  _OSCAL
+                      00110 
+                      00111         extern STK06
+                      00112         extern STK05
+                      00113         extern STK04
+                      00114         extern STK03
+                      00115         extern STK02
+                      00116         extern STK01
+                      00117         extern STK00
+                      00118 ;--------------------------------------------------------
+                      00119 ; global declarations
+                      00120 ;--------------------------------------------------------
+                      00121         global  _NoKeySbr
+                      00122         global  _KeyShortSbr
+                      00123         global  _KeySbr
+                      00124 
+                      00125 ;--------------------------------------------------------
+                      00126 ; global definitions
+                      00127 ;--------------------------------------------------------
+                      00128 ;--------------------------------------------------------
+                      00129 ; absolute symbol definitions
+                      00130 ;--------------------------------------------------------
+                      00131 ;--------------------------------------------------------
+                      00132 ; compiler-defined variables
+                      00133 ;--------------------------------------------------------
+                      00134 ;--------------------------------------------------------
+                      00135 ; initialized data
+                      00136 ;--------------------------------------------------------
+                      00137 ;--------------------------------------------------------
+                      00138 ; overlayable items in internal ram 
+                      00139 ;--------------------------------------------------------
+                      00140 ;       udata_ovr
+                      00141 ;--------------------------------------------------------
+                      00142 ; code
+                      00143 ;--------------------------------------------------------
+                      00144 code_KeySbr     code
+                      00145 ;***
+                      00146 ;  pBlock Stats: dbName = C
+                      00147 ;***
+                      00148 ;entry:  _NoKeySbr      ;Function start
+                      00149 ; 2 exit points
+                      00150 ;has an exit
+                      00151 ;; Starting pCode block
+0000                  00152 _NoKeySbr       ;Function start
+                      00153 ; 2 exit points
+                      00154 ;       .line   75; "KeySbr.c"  FKeyAck = 0;
+0000   D200           00155         BCLR    _Flag1,1
+                      00156 ;       .line   76; "KeySbr.c"  KeyCnt = 0;
+0001   7600           00157         CLRR    _KeyCnt
+                      00158 ;       .line   77; "KeySbr.c"  KeyLongth = 0;
+0002   7600           00159         CLRR    _KeyLongth
+0003   000C           00160         RETURN  
+                      00161 ; exit point of _NoKeySbr
+                      00162 
+                      00163 ;***
+                      00164 ;  pBlock Stats: dbName = C
+                      00165 ;***
+                      00166 ;entry:  _KeyShortSbr   ;Function start
+                      00167 ; 2 exit points
+                      00168 ;has an exit
+                      00169 ;; Starting pCode block
+0004                  00170 _KeyShortSbr    ;Function start
+                      00171 ; 2 exit points
+                      00172 ;       .line   71; "KeySbr.c"  }
+0004   000C           00173         RETURN  
+                      00174 ; exit point of _KeyShortSbr
+                      00175 
+                      00176 ;***
+                      00177 ;  pBlock Stats: dbName = C
+                      00178 ;***
+                      00179 ;entry:  _KeySbr        ;Function start
+                      00180 ; 2 exit points
+                      00181 ;has an exit
+                      00182 ;; Starting pCode block
+0005                  00183 _KeySbr ;Function start
+                      00184 ; 2 exit points
+                      00185 ;       .line   32; "KeySbr.c"  }
+0005   000C           00186         RETURN  
+                      00187 ; exit point of _KeySbr
+                      00188 
+                      00189 
+                      00190 ;       code size estimation:
+                      00191 ;           6+    0 =     6 instructions (   12 byte)
+                      00192 
+                      00193         end
+gpasm-1.4.1_beta1 (Oct 15 2013)KeySbr.asm         2013-12-13  13:42:43         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBIE                              00000004
+KBIF                              00000004
+KBIM                              00000197
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+LFEN                              00000001
+LVDCR                             000001AD
+LVDEN                             00000007
+LVDF                              00000000
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCAL                             000001FB
+OSCM                              000001AE
+P00                               00000000
+P00ANS                            00000000
+P00OE                             00000000
+P00PU                             00000000
+P01                               00000001
+P01ANS                            00000001
+P01OE                             00000001
+P01PU                             00000001
+P02                               00000002
+P02ANS                            00000002
+P02OE                             00000002
+P02PU                             00000002
+P03                               00000003
+P03ANS                            00000003
+P03OE                             00000003
+P03PU                             00000003
+P04                               00000004
+P04ANS                            00000004
+P04OE                             00000004
+P04PU                             00000004
+P10                               00000000
+P10OE                             00000000
+P10PU                             00000000
+P11                               00000001
+P11OE                             00000001
+P11PU                             00000001
+P12                               00000002
+P12ANS                            00000005
+P12OE                             00000002
+P12PU                             00000002
+P13                               00000003
+P13ANS                            00000006
+P13OE                             00000003
+P13PU                             00000003
+P14                               00000004
+P14OE                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OE                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OE                             00000006
+P16PU                             00000006
+PCL                               00000186
+PD                                00000004
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STATUS                            00000187
+STBH                              00000004
+STBL                              00000005
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+Z                                 00000002
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADCnt                            00000000
+_ADIMax                           00000000
+_ADIMin                           00000000
+_ADIOut                           00000000
+_ADIOutBuf                        00000000
+_ADRH                             00000000
+_ADRL                             00000000
+_ADVBat                           00000000
+_ADVBatBuf                        00000000
+_ADVBatMax                        00000000
+_ADVBatMin                        00000000
+_ADVOut                           00000000
+_ADVOutBuf                        00000000
+_ADVOutMax                        00000000
+_ADVOutMin                        00000000
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_BatLowCnt                        00000000
+_BatStatus                        00000000
+_Buf0                             00000000
+_Buf1                             00000000
+_Buf2                             00000000
+_CHGI100ms1min                    00000000
+_CHGPWM                           00000000
+_CHGV4d2T1min                     00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_CP_ALL                           00007FFF
+_CloseDisCHG                      00000000
+_DisPWM                           00000000
+_DispCnt                          00000000
+_FCPU_128T                        0000FFEF
+_FCPU_16T                         0000FFBF
+_FCPU_256T                        0000FFFF
+_FCPU_2T                          0000FF8F
+_FCPU_32T                         0000FFCF
+_FCPU_4T                          0000FF9F
+_FCPU_64T                         0000FFDF
+_FCPU_8T                          0000FFAF
+_FSR                              00000000
+_FSR0                             00000000
+_FSR1                             00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_Flag3                            00000000
+_HIBYTE                           00000000
+_HRC_LRC                          0000FCFF
+_HRC_LXT                          0000FDFF
+_HXT_LRC                          0000FEFF
+_ILow0A1Dly10s                    00000000
+_INDF                             00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INDF3                            00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_InitADC                          00000000
+_InitPWMSbr                       00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyCnt                           00000000
+_KeyLongth                        00000000
+_KeySbr                           00000005
+_KeyShortSbr                      00000004
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_LoadCnt                          00000000
+_MCLR_OFF                         0000FF7F
+_MCLR_ON                          0000FFFF
+_MCR                              00000000
+_MCRbits                          00000000
+_NoKeySbr                         00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCAL                            00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PTWRT_16_1024                    0000FFF7
+_PTWRT_16_16                      0000DFF7
+_PTWRT_256_256                    0000DFFF
+_PTWRT_256_4096                   0000FFFF
+_PTWRT_4_4                        0000DFF3
+_PTWRT_4_512                      0000FFF3
+_PTWRT_64_2048                    0000FFFB
+_PTWRT_64_64                      0000DFFB
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PwrON5s                          00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0LOAD                           00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_T500ms                           00000000
+_TMin                             00000000
+_TSec                             00000000
+_TStop5s                          00000000
+_VLVR_160                         0000E3FF
+_VLVR_185                         0000E7FF
+_VLVR_205                         0000EBFF
+_VLVR_218                         0000EFFF
+_VLVR_232                         0000F3FF
+_VLVR_245                         0000F7FF
+_VLVR_305                         0000FBFF
+_VLVR_360                         0000FFFF
+_VinHiCnt                         00000000
+_VinLowCnt                        00000000
+_WDT_ALWAYS_OFF                   0000FFFC
+_WDT_ALWAYS_ON                    0000FFFF
+_WDT_SLEEP_OFF                    0000FFFD
+__32P21                           00000001
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

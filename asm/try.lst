@@ -1,0 +1,40 @@
+gpasm-1.9.3_beta (Apr  5 2017)try.asm            2017-5-4  18:23:00           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001         
+0000                  00002         org 0h
+                      00003         
+0000   0000           00004         nop
+                      00005         
+0001   0B01           00006         movai 01h
+0002   15F8           00007         movra 78h
+0003   0B80           00008         movai 80h
+0004   15FB           00009         movra 7bh
+                      00010 
+                      00011 
+                      00012         end
+gpasm-1.9.3_beta (Apr  5 2017)try.asm            2017-5-4  18:23:00           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__30P011                          00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXX-------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:     8
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

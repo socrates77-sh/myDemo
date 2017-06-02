@@ -1,0 +1,86 @@
+gpasm-1.4.0 (Sep 22 2013)    all_code_mc30p011.asm2013-10-14  17:46:02         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000   1F00           00001         addar   0
+0001   1F80           00002         addra   0
+0002   1E00           00003         andar   0
+0003   1E80           00004         andra   0
+0004   1D80           00005         clrr    0
+0005   1D00           00006         clra    
+0006   1C00           00007         comar   0
+0007   1C80           00008         comr    0
+0008   1B00           00009         decar   0
+0009   1B80           00010         decr    0
+000A   1A00           00011         djzar   0
+000B   1A80           00012         djzr    0
+000C   1900           00013         incar   0
+000D   1980           00014         incr    0
+000E   1800           00015         jzar    0
+000F   1880           00016         jzr     0
+0010   1700           00017         orar    0
+0011   1780           00018         orra    0
+0012   1600           00019         movar   0
+0013   1680           00020         movr    0
+0014   1580           00021         movra   0
+0015   1400           00022         rlar    0
+0016   1480           00023         rlr     0
+0017   1300           00024         rrar    0
+0018   1380           00025         rrr     0
+0019   1200           00026         rsubar  0
+001A   1280           00027         rsubra  0
+001B   1100           00028         swapar  0
+001C   1180           00029         swapr   0
+001D   1000           00030         xorar   0
+001E   1080           00031         xorra   0
+001F   3C00           00032         bclr    0, 0
+0020   3800           00033         bset    0, 0
+0021   3400           00034         jbclr   0, 0
+0022   3000           00035         jbset   0, 0
+0023   0E00           00036         addai   0
+0024   0D00           00037         andai   0
+0025   0C00           00038         orai    0
+0026   0B00           00039         movai   0
+0027   0A00           00040         retai   0
+0028   0900           00041         isubai  0
+0029   0800           00042         xorai   0
+002A   000E           00043         clrwdt  
+002B   000D           00044         retie   
+002C   000C           00045         return  
+002D   000B           00046         sleep   
+002E   000B           00047         stop    
+002F   0000           00048         nop     
+0030   000A           00049         daa     
+0031   0009           00050         dsa     
+0032   0700           00051         adcar   0
+0033   0780           00052         adcra   0
+0034   0600           00053         rsbcar  0
+0035   0680           00054         rsbcra  0
+0036   2000           00055         call    0
+0037   2800           00056         goto    0
+                      00057         
+                      00058         en
+gpasm-1.4.0 (Sep 22 2013)    all_code_mc30p011.asm2013-10-14  17:46:02         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__30P011                          00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXX--------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    56
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

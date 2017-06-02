@@ -1,0 +1,175 @@
+;--------------------------------------------------------------
+;放电控制
+;电流小于100mA超过20s结束
+;放电自动调整
+;--------------------------------------------------------------
+DisCHGSbr:
+	jbclr	FBatLow
+	return
+	jbset	pPwr
+	goto	DisCHG1Sbr	;
+	call	AdjVoutSbr
+	movai	COUTI_90mA
+	rsubar	ADIOut
+	jbclr	C
+	goto	IoutBig100mA
+	bset	FILow
+	return
+IoutBig100mA:
+	bclr	FILow
+	clrr	ILow0A1Dly10s
+	return
+	;--------------------------------------------------------------
+AdjVoutSbr:
+	movai	COUTU5V+2
+	rsubar	ADVOut+1
+	jbclr	C
+	goto	DisCHGSbr1	;Vout>5V
+	movai	COUTU5V-7	;间隔模式下，将下限值降低，避免空载时输出无法稳住
+	;;movr	ADISeg
+	;jbclr	Z
+	movai	COUTI_90mA
+	rsubar	ADIOut
+	jbset	C
+	goto	DisCHGSbr0
+	movai	COUTU5V-2
+DisCHGSbr0:
+	rsubar	ADVOut+1
+	jbclr	C
+	goto	OpenVOutSbr	
+	;Vout<5V---------------------------------------
+	incr	DisPWM
+	movai	CT0-1
+	rsubar	DisPWM
+	jbset	C
+	goto	SetDisCHGSbr
+	movr	ADISeg
+	jbset	Z
+	goto	SetDisCHGSbr
+	movai	1
+	movra	ADISeg
+	movra	ADISegBuf
+	movra	DisPWM
+	bclr	T0IE
+	bset	PWM0OE
+	bset	TC0EN
+	goto	SetDisCHGSbr
+	;Vout>5V---------------------------------------
+DisCHGSbr1:
+	decr	DisPWM
+	jbset	Z
+	goto	SetDisCHGSbr
+	movai	COUTU5d5V+10
+	rsubar	ADVOut+1
+	jbclr	C
+	goto	InitPWMSbr
+	incr	DisPWM
+	;----------------------------------------------
+SetDisCHGSbr:
+	movar	DisPWM
+	movra	T0DATA
+	return
+	
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	jbset	Z
+	decr	Delay
+	movai	COUTU5d2V
+	rsubar	ADVOut+1
+	jbclr	C
+	goto	DisCHGVOutBigSbr	;Vout>5V
+	;
+	movai	COUTU4d85V
+	rsubar	ADVOut+1
+	jbclr	C
+	goto	OpenVOutSbr
+	;Vout<4.85V---------------------------------------
+DisCHGVLowSbr:
+	movai	COUTU4d8V
+	rsubar	ADVOut+1
+	jbset	C
+	goto	DisCHGVLowSbr1
+	movr	Delay
+	jbset	Z
+	return
+	goto	DisCHGVLowSbr1
+	
+	movar	ADVLast01
+	rsubar	ADVOut+1
+	jbclr	C
+	goto	SaveLastVSbr	;当前值大于上一个
+	movar	ADVLast02
+	rsubar	ADVLast01
+	jbclr	C
+	goto	SaveLastVSbr	;当前值大于上一个
+	movar	ADVLast03
+	rsubar	ADVLast02
+	jbclr	C
+	goto	SaveLastVSbr	;当前值大于上一个
+DisCHGVLowSbr1:	
+	incr	DisPWM
+	movai	CT0-1
+	rsubar	DisPWM
+	jbset	C
+	goto	SetDisCHGSbr
+	decr	DisPWM
+	goto	SetDisCHGSbr
+	;Vout>5.2V---------------------------------------
+DisCHGVOutBigSbr:
+	movr	Delay
+	jbset	Z
+	return
+	movar	ADVLast01
+	rsubar	ADVOut+1
+	jbset	C
+	goto	SaveLastVSbr	;当前值小于上一个
+	movar	ADVLast02
+	rsubar	ADVLast01
+	jbset	C
+	goto	SaveLastVSbr	;当前值小于上一个
+	movar	ADVLast03
+	rsubar	ADVLast02
+	jbset	C
+	goto	SaveLastVSbr	;当前值小于上一个
+DisCHGVOutBigSbr1:
+	decr	DisPWM
+	jbset	Z
+	goto	SetDisCHGSbr
+	incr	DisPWM
+	;----------------------------------------------
+SetDisCHGSbr:
+	movar	DisPWM2
+	movra	DisPWM3
+	movar	DisPWM1
+	movra	DisPWM2
+	movar	DisPWM
+	movra	DisPWM1
+	movar	DisPWM
+	movra	T0DATA
+	goto	SaveLastVSbr
+	;--------------------------------------------------------------
+DisCHG1Sbr:
+	movai	COUTU5V
+	rsubar	ADVOut+1
+	jbset	C
+	goto	SaveLastVSbr
+OpenVOutSbr:
+	bset	pPwr
+	movai	50
+	movra	Delay
+SaveLastVSbr:
+	movar	ADVLast02
+	movra	ADVLast03
+	movar	ADVLast01
+	movra	ADVLast02
+	movar	ADVOut+1
+	movra	ADVLast01
+	return
+;--------------------------------------------------------------
+InitPWMSbr:
+	movai	CNPWM0DATA		
+SetDISPWMSbr:
+	movra	DisPWM
+	movra	T0DATA
+	return
+;--------------------------------------------------------------
+

@@ -1,0 +1,88 @@
+gpasm-1.4.2_beta (Jan  6 2014)all_code_mc34p01.asm2014-1-6  17:27:59           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000   0F80           00001         addar   0
+0001   0FC0           00002         addra   0
+0002   0F00           00003         andar   0
+0003   0F40           00004         andra   0
+0004   00C0           00005         clrr    0
+0005   0001           00006         clra    
+0006   0E80           00007         comar   0
+0007   0EC0           00008         comr    0
+0008   0E00           00009         decar   0
+0009   0E40           00010         decr    0
+000A   0D80           00011         djzar   0
+000B   0DC0           00012         djzr    0
+000C   0D00           00013         incar   0
+000D   0D40           00014         incr    0
+000E   0C80           00015         jzar    0
+000F   0CC0           00016         jzr     0
+0010   0C00           00017         orar    0
+0011   0C40           00018         orra    0
+0012   0B80           00019         movar   0
+0013   0BC0           00020         movr    0
+0014   0080           00021         movra   0
+0015   0B00           00022         rlar    0
+0016   0B40           00023         rlr     0
+0017   0A80           00024         rrar    0
+0018   0AC0           00025         rrr     0
+0019   0A00           00026         rsubar  0
+001A   0A40           00027         rsubra  0
+001B   0980           00028         swapar  0
+001C   09C0           00029         swapr   0
+001D   0900           00030         xorar   0
+001E   0940           00031         xorra   0
+001F   1E00           00032         bclr    0, 0
+0020   1C00           00033         bset    0, 0
+0021   1A00           00034         jbclr   0, 0
+0022   1800           00035         jbset   0, 0
+0023   0700           00036         addai   0
+0024   0600           00037         andai   0
+0025   0500           00038         orai    0
+0026   0400           00039         movai   0
+0027   0300           00040         retai   0
+0028   0200           00041         isubai  0
+0029   0100           00042         xorai   0
+002A   0002           00043         clrwdt  
+002B   0003           00044         retie   
+002C   0004           00045         return  
+002D   0005           00046         sleep   
+002E   0005           00047         stop    
+002F   0000           00048         nop     
+0030   0006           00049         daa     
+0031   0007           00050         dsa     
+0032   0880           00051         adcar   0
+0033   08C0           00052         adcra   0
+0034   0800           00053         rsbcar  0
+0035   0840           00054         rsbcra  0
+0036   1000           00055         call    0
+0037   1400           00056         goto    0
+0038   0030           00057         iosw    0
+0039   0020           00058         iosr    0
+                      00059         
+                      00060         en
+gpasm-1.4.2_beta (Jan  6 2014)all_code_mc34p01.asm2014-1-6  17:27:59           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__34P01                           00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXX------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    58
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

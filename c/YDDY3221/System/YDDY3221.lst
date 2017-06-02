@@ -1,0 +1,1671 @@
+gpasm-0.9.0 (Mar 19 2013)    YDDY3221.asm       2013-7-13  18:56:27          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;/******************************************************************
+                      00002 ;32P21移动电源 模板
+                      00003 ;******************************************************************/
+                      00004 #define Test            1
+                      00005 #define Test1628        0
+                      00006 
+                      00007 #include  "MC32P21.H"
+                      00001 
+                      00222 LIST
+                      00223 
+                      00008 #include  "VAR.H"
+                      00113 LIST
+                      00114 
+                      00009 #include  "CONST.H"
+                      00113 LIST
+                      00114 
+                      00010 #include  "TM1628.H"
+                      00073 LIST
+                      00074 
+                      00011 
+                      00012 
+                      00013 ;#pragma __CONFIG    _CONFIG1, _BOR_36 & _MCLR_OFF & _FOSC_4M & _FCPU_2T & _TWDT_18_18 & _WDT_ON
+                      00014 ;__CONFIG    _CONFIG2, _RDPORT_PIN & _SMT_ON & _MCU_FEL & _OSCM_HS_RTC & _CP_ON
+                      00015 list
+0000                  00016 .code
+                      00017         ;------------------------------------------------------
+                      00018         org     0x00
+0000   A000           00019         goto    RSET
+                      00020                         
+                      00021         org     0x08
+0008   A000           00022         goto    InterruptSbr    
+0009                  00023 DigTbl:
+0009   F514           00024         DW      DZero   <<8|DOne
+000A   D95D           00025         DW      DTwo    <<8|DThree
+000B   3C6D           00026         DW      DFour   <<8|DFive
+000C   ED54           00027         DW      DSix    <<8|DSeven
+000D   FD7D           00028         DW      DEight  <<8|DNine
+000E   FCAD           00029         DW      DLetterA<<8|DLetterb
+000F   E19D           00030         DW      DLetterC<<8|DLetterd
+0010   E9E8           00031         DW      DLetterE<<8|DLetterF
+                      00032         org     0x3ff           ;复位向量
+03FF   A000           00033         goto    RSET
+                      00034         org     0x11
+                      00035         
+                      00036 #include  "KeySbr.asm"
+0011                  00001 KeySbr:
+0011   761D           00002         clrr    DispCnt
+0012   E603           00003         jbset   FT5s
+0013   000C           00004         return
+0014   FD94           00005         jbclr   pKey
+0015   A000           00006         goto    NoKeySbr
+0016   661A           00007         incr    KeyCnt
+0017   3C0A           00008         movai   10
+0018   481A           00009         rsubar  KeyCnt
+0019   E187           00010         jbset   C
+001A   000C           00011         return
+001B   761A           00012         clrr    KeyCnt
+001C   661B           00013         incr    KeyLongth
+001D   3C08           00014         movai   8
+001E   481B           00015         rsubar  KeyLongth
+001F   E187           00016         jbset   C
+0020   000C           00017         return
+                      00018         ;------------------------------------------------------
+                      00019         ;长按键
+0021                  00020 KeyLongthSbr:
+0021   761B           00021         clrr    KeyLongth
+0022   F202           00022         jbclr   FKeyAck
+0023   000C           00023         return
+0024                  00024 KeyLongthSbr0:
+0024   F604           00025         jbclr   FBatLow3d2
+0025   A000           00026         goto    KeyLongthSbr1
+0026   C202           00027         bset    FKeyAck
+0027   F390           00028         jbclr   pLedW
+0028   A000           00029         goto    KeyLongthSbr1
+0029   C390           00030         bset    pLedW
+002A   D203           00031         bclr    FStop
+002B   000C           00032         return
+002C                  00033 KeyLongthSbr1:
+002C   D390           00034         bclr    pLedW
+002D   000C           00035         return
+                      00036         ;------------------------------------------------------
+                      00037         ;短按键
+002E                  00038 KeyShortSbr:
+002E   C202           00039         bset    FKeyAck
+002F   FE02           00040         jbclr   FVIN
+0030   000C           00041         return
+0031   F002           00042         jbclr   FPwr
+0032   A000           00043         goto    KeyShortSbr1
+0033   7636           00044         clrr    LoadCnt
+0034   C002           00045         bset    FPwr
+0035   7622           00046         clrr    ILow0A1Dly10s
+0036   7619           00047         clrr    T500ms
+0037   3C0F           00048         movai   15              ;2ms*17*15 = 510ms
+0038   5623           00049         movra   DISDly0d5s
+0039   F804           00050         jbclr   FBatLow3
+003A   A000           00051         goto    KeyShortSbr2
+003B   DF88           00052         bclr    GIE
+003C   C38A           00053         bset    T1IE
+003D   3C8F           00054         movai   0x8F
+003E   57A4           00055         movra   T1CR
+003F   3C7D           00056         movai   CT_1ms
+0040   57A6           00057         movra   T1LOAD
+                      00058         
+0041   3C88           00059         movai   0x88            ;T0做PWM
+0042   57A0           00060         movra   T0CR
+0043   3C80           00061         movai   CT0
+0044   57A2           00062         movra   T0LOAD
+0045   77A1           00063         clrr    T0CNT
+0046   8000           00064         call    InitPWMSbr
+0047   CDA0           00065         bset    PWM0OE
+                      00066         
+0048   D203           00067         bclr    FStop
+0049   7626           00068         clrr    TStop5s
+004A   8000           00069         call    ADCOverSbr1
+004B   CF88           00070         bset    GIE
+004C   000C           00071         return
+004D                  00072 KeyShortSbr1:
+004D   D604           00073         bclr    FBatLow3d2
+004E   DE03           00074         bclr    FDisBatLow
+004F   D002           00075         bclr    FPwr
+0050   D194           00076         bclr    pPwr
+0051   D594           00077         bclr    pDisCHG
+0052   DDA0           00078         bclr    PWM0OE
+0053   000C           00079         return
+0054                  00080 KeyShortSbr2:
+0054   3C06           00081         movai   6
+0055   5635           00082         movra   BatLowCnt
+0056   CE03           00083         bset    FDisBatLow
+0057   000C           00084         return
+                      00085         ;------------------------------------------------------
+0058                  00086 NoKeySbr:
+0058   F202           00087         jbclr   FKeyAck
+0059   A000           00088         goto    NoKeySbrR               ;按键已响应
+                      00089         
+005A   5A1B           00090         movr    KeyLongth
+005B   E587           00091         jbset   Z
+005C   A000           00092         goto    KeyShortSbr
+005D   5A1A           00093         movr    KeyCnt
+005E   F587           00094         jbclr   Z
+005F   A000           00095         goto    NoKeySbr1
+0060   3C03           00096         movai   3
+0061   481A           00097         rsubar  KeyCnt
+0062   F187           00098         jbclr   C
+0063   A000           00099         goto    KeyShortSbr
+0064                  00100 NoKeySbr1:
+0064                  00101 NoKeySbrR:
+0064   D202           00102         bclr    FKeyAck
+0065   761A           00103         clrr    KeyCnt
+0066   761B           00104         clrr    KeyLongth
+0067   000C           00105         return
+                      00106 
+                      00037 #include  "InitSys.asm"
+                      00001 
+                      00002 
+0068                  00003 InitialSys:
+                      00004         ;端口初始化-------------------------------------------------
+                      00005         ;P0 --------------------------------------------------------
+0068   C794           00006         bset    P1,3
+0069   D594           00007         bclr    P1,2
+006A   D390           00008         bclr    pLedW   
+006B   D194           00009         bclr    pPwr
+006C   D794           00010         bclr    pCHG
+006D   3CF2           00011         movai   0xF2
+006E   5791           00012         movra   OEP0
+006F   3C8D           00013         movai   0x8D
+0070   5795           00014         movra   OEP1
+0071   7792           00015         clrr    PUP0
+0072   3C40           00016         movai   0x40
+0073   5796           00017         movra   PUP1
+0074   3C0D           00018         movai   0x0D
+0075   5793           00019         movra   ANSEL
+                      00020         ;T0---------------------------------------------------------
+                      00021         ;不中断
+                      00022         ;25us:4M/8 = 1M = *250  
+                      00023         ;-----------------------------------------------------------
+0076   3C8F           00024         movai   0x8F;8
+0077   57A0           00025         movra   T0CR    ;
+0078   3C7D           00026         movai   CT_1ms
+0079   57A2           00027         movra   T0LOAD
+007A   3C01           00028         movai   1;CT0/8 ;0xFF
+007B   57A3           00029         movra   T0DATA
+                      00030         ;T1---------------------------------------------------------
+                      00031         ;25us:16M = 0.0625us *100 = 6.25us      
+                      00032         ;-----------------------------------------------------------
+007C   3C8F           00033         movai   0x8F
+007D   57A4           00034         movra   T1CR    ;
+007E   3C7D           00035         movai   CT_1ms
+007F   57A6           00036         movra   T1LOAD
+0080   3C32           00037         movai   CT1/2
+0081   57A7           00038         movra   T1DATA
+                      00039         ;WDT--------------------------------------------------------
+                      00040         ;-----------------------------------------------------------
+                      00041         ;LVDCR
+0082   7797           00042         clrr    KBIM    
+0083   3C08           00043         movai   8
+0084   5788           00044         movra   MCR                        
+0085   778A           00045         clrr    INTE
+0086   778B           00046         clrr    INTF
+0087   77AE           00047         clrr    OSCM
+0088   3C03           00048                 movai   CADRefVDD
+0089   57B1           00049                 movra   ADCR1
+008A   000C           00050         return
+                      00051 ;-----------------------------------------------------------
+                      00052 ;初始化RAM
+                      00053 ;-----------------------------------------------------------
+008B                  00054 InitalRAM:
+008B   7784           00055         clrr    FSR0   
+008C                  00056 InitalRAM0:
+008C   7780           00057         clrr    INDF0                       
+008D   6784           00058         incr    FSR0
+008E   3C7F           00059         movai   0x7F
+008F   4984           00060         rsubar  FSR0
+0090   E587           00061         jbset   Z
+0091   A000           00062         goto    InitalRAM0
+                      00063                 
+0092   C38A           00064         bset    T1IE
+0093   000C           00065         return
+                      00066 ;-----------------------------------------------------------
+0094                  00067 CHGPinCHKSbr:
+0094   F394           00068         jbclr   pVIN
+0095   A000           00069         goto    CHGPinHigh
+0096   7621           00070         clrr    VinHiCnt
+0097   6620           00071         incr    VinLowCnt
+0098   3C14           00072         movai   20
+0099   4820           00073         rsubar  VinLowCnt
+009A   E187           00074         jbset   C
+009B   000C           00075         return
+009C   DE02           00076         bclr    FVIN
+009D   D802           00077         bclr    FCHGOver
+009E   000C           00078         return
+009F                  00079 CHGPinHigh:
+009F   7620           00080         clrr    VinLowCnt
+00A0   6621           00081         incr    VinHiCnt
+00A1   3C14           00082         movai   20
+00A2   4821           00083         rsubar  VinHiCnt
+00A3   E187           00084         jbset   C
+00A4   000C           00085         return
+00A5   D604           00086         bclr    FBatLow3d2
+00A6   CE02           00087         bset    FVIN
+00A7   000C           00088         return
+                      00038 #include  "interrupt.asm"
+                      00001 
+                      00002 
+00A8                  00003 InterruptSbr:
+00A8   5600           00004         movra   ABuf
+00A9   4587           00005         swapar  PFLAG
+00AA   5601           00006         movra   PFLAGBuf
+                      00007         
+00AB   E98B           00008         jbset   KBIF
+00AC   A000           00009         goto    TMI1Sbr
+                      00010         ;键盘中断---------------------------------------------------
+00AD                  00011 KBIMSbr:
+00AD   D98B           00012         bclr     KBIF
+                      00013         ;----------------------------------------------------------
+00AE                  00014 TMI1Sbr:
+00AE   E38A           00015         jbset   T1IE
+00AF   A000           00016         goto    TMI0Sbr
+00B0   E38B           00017         jbset   T1IF                             
+00B1   A000           00018         goto    TMI0Sbr
+                      00019         ;定时器1中断子程序------------------------------------------
+00B2   D38B           00020         bclr    T1IF
+00B3   C403           00021         bset    F1ms
+                      00022                 ;movai  0x02
+                      00023                 ;xorra  P0
+                      00024         ;goto   INT1Sbr
+                      00025         ;定时器1中断子程序------------------------------------------
+00B4                  00026 TMI0Sbr:
+00B4   E18A           00027         jbset   T0IE
+00B5   A000           00028         goto    INT1Sbr
+00B6   E18B           00029         jbset   T0IF                             
+00B7   A000           00030         goto    INT1Sbr
+00B8   D18B           00031         bclr    T0IF
+00B9   E002           00032         jbset   FPwr
+00BA   A000           00033         goto    TMI0Sbr1
+                      00034         ;放电状态-------------------------------------------------
+00BB   DDA0           00035         bclr    PWM0OE
+00BC   D18A           00036         bclr    T0IE
+00BD   DFA0           00037         bclr    TC0EN
+00BE   A000           00038         goto    INT1Sbr
+                      00039         ;充电状态-------------------------------------------------
+00BF                  00040 TMI0Sbr1:
+00BF   C403           00041         bset    F1ms
+                      00042         ;外部中断1子程序------------------------------------------
+00C0                  00043 INT1Sbr:
+00C0   E78A           00044         jbset   INT1IE
+00C1   A000           00045         goto    InterruptSbrR
+00C2   E78B           00046         jbset   INT1IF
+00C3   A000           00047         goto    InterruptSbrR
+00C4   D78B           00048         bclr    INT1IF
+                      00049         ;----------------------------------------------------------
+00C5                  00050 InterruptSbrR:
+00C5   4401           00051         swapar  PFLAGBuf
+00C6   5787           00052         movra   PFLAG
+00C7   4600           00053         swapr   ABuf
+00C8   4400           00054         swapar  ABuf
+00C9   000D           00055         retie
+                      00056         
+                      00057         
+                      00039 #include  "T500msSbr.asm"
+00CA                  00001 T500msSbr:
+                      00002         if Test != 0
+00CA   FA03           00003         jbclr   F1628                   ;???
+00CB   000C           00004         return
+                      00005         endif
+                      00006         
+00CC   E603           00007         jbset   FT5s
+00CD   A000           00008         goto    T500msSbr00
+00CE   5A35           00009         movr    BatLowCnt
+00CF   F587           00010         jbclr   Z
+00D0   A000           00011         goto    T500msSbr0
+00D1   6E35           00012         decr    BatLowCnt
+00D2   A000           00013         goto    T500msSbr00
+00D3                  00014 T500msSbr0:
+00D3   EE03           00015         jbset   FDisBatLow
+00D4   A000           00016         goto    T500msSbr00
+00D5   DE03           00017         bclr    FDisBatLow
+                      00018         
+00D6   D995           00019         bclr    pLed1C
+00D7   DB95           00020         bclr    pLed2C
+00D8   C991           00021         bset    pLedCC
+                      00022                 
+00D9                  00023 T500msSbr00:    
+00D9   3C40           00024         movai   CF250
+00DA   4202           00025         xorra   Flag1
+00DB   EC02           00026         jbset   FF250
+00DC   000C           00027         return
+                      00028         ;500ms--------------------------------------
+00DD   3C04           00029         movai   CFlash
+00DE   4202           00030         xorra   Flag1
+                      00031                 
+00DF   F603           00032         jbclr   FT5s
+00E0   A000           00033         goto    T500msSbrA
+                      00034         ;timin 5s-----------------------------------
+00E1   662F           00035         incr    PwrON5s
+00E2   3C06           00036         movai   6
+00E3   482F           00037         rsubar  PwrON5s
+00E4   F187           00038         jbclr   C
+00E5   C603           00039         bset    FT5s
+00E6   000C           00040         return
+                      00041         ;------------------------------------------
+00E7                  00042 T500msSbrA:     
+                      00043         ;return         ;???
+00E7   FE02           00044         jbclr   FVIN
+00E8   A000           00045         goto    T500msCHGSbr
+00E9   D204           00046         bclr    FCHGI
+00EA   D004           00047         bclr    FCHGV
+00EB   7630           00048         clrr    CHGV4d2T1min
+00EC   7631           00049         clrr    CHGI100ms1min
+00ED   EA02           00050         jbset   FILow
+00EE   A000           00051         goto    T500msSbr1
+00EF   6622           00052         incr    ILow0A1Dly10s
+00F0   3C14           00053         movai   20              
+00F1   4822           00054         rsubar  ILow0A1Dly10s
+00F2   F187           00055         jbclr   C
+00F3   8000           00056         call    KeyShortSbr1
+00F4                  00057 T500msSbr1:
+00F4   F390           00058         jbclr   pLedW
+00F5   A000           00059         goto    T500msSbr2
+00F6   F002           00060         jbclr   FPwr
+00F7   A000           00061         goto    T500msSbr2
+00F8                  00062 T500msSbr3:     
+00F8   D002           00063         bclr    FPwr
+00F9   D390           00064         bclr    pLedW
+00FA   D594           00065         bclr    pDisCHG
+00FB   D194           00066         bclr    pPwr
+00FC   DDA0           00067         bclr    PWM0OE
+00FD   DDA4           00068         bclr    PWM1OE
+00FE   D802           00069         bclr    FCHGOver
+                      00070 
+00FF   6626           00071         incr    TStop5s
+0100   3C0A           00072         movai   10
+0101   4826           00073         rsubar  TStop5s
+0102   F187           00074         jbclr   C
+0103   C203           00075         bset    FStop
+0104   000C           00076         return
+0105                  00077 T500msSbr2:
+0105   7626           00078         clrr    TStop5s
+0106   D203           00079         bclr    FStop
+0107   000C           00080         return
+                      00081         ;-----------------------------------------
+0108                  00082 T500msCHGSbr:
+                      00083                 ;bset   FT5s???
+0108   F802           00084         jbclr   FCHGOver
+0109   000C           00085         return
+010A   F204           00086         jbclr   FCHGI
+010B   A000           00087         goto    T500msCHGISbr
+010C   7631           00088         clrr    CHGI100ms1min
+010D                  00089 T500msCHGSbr1:
+010D   F004           00090         jbclr   FCHGV
+010E   A000           00091         goto    T500msCHGVSbr
+010F   7630           00092         clrr    CHGV4d2T1min
+0110   000C           00093         return
+0111                  00094 T500msCHGISbr:
+0111   6631           00095         incr    CHGI100ms1min
+0112   3C78           00096         movai   120
+0113   4831           00097         rsubar  CHGI100ms1min
+0114   F187           00098         jbclr   C
+0115   A000           00099         goto    CHGOverSbr
+0116   A000           00100         goto    T500msCHGSbr1
+0117                  00101 T500msCHGVSbr:
+0117   6630           00102         incr    CHGV4d2T1min
+0118   3C78           00103         movai   120
+0119   4830           00104         rsubar  CHGV4d2T1min
+011A   F187           00105         jbclr   C
+011B   A000           00106         goto    CHGOverSbr
+011C   000C           00107         return
+                      00108 
+                      00040 #include  "ADCSbr.asm"
+                      00001 ;---------------------------------------------------------
+                      00002 ;---------------------------------------------------------
+011D                  00003 ADCSbr:
+                      00004 ;----------------------------------------------------------     
+                      00005 ;转换不同通道
+                      00006 ;----------------------------------------------------------     
+011D                  00007 ADChnlSbr:
+011D   C1B0           00008         bset    ADON
+011E                  00009 IOutStartSbr:
+011E   3C3E           00010         movai   CADIOut
+011F   8000           00011         call    ADVStartSbr
+0120   8000           00012         call    CalADISbr
+                      00013         ;-----------------------------------------------------
+0121                  00014 VBatStartSbr:
+0121   3C0E           00015         movai   CADVBat
+0122   8000           00016         call    ADVStartSbr
+0123   8000           00017         call    CalADVBatSbr
+                      00018         ;-----------------------------------------------------
+0124                  00019 VOutStartSbr:
+0124   3C2E           00020         movai   CADVOut
+0125   8000           00021         call    ADVStartSbr
+0126   8000           00022         call    CalADVOutSbr
+                      00023         ;-----------------------------------------------------
+                      00024         ;call   ADChnlSbr
+0127   6609           00025         incr    ADCnt
+0128   3C0A           00026         movai   10
+0129   4809           00027         rsubar  ADCnt
+012A   E187           00028         jbset   C
+012B   000C           00029         return
+012C                  00030 ADCOverSbr:
+012C   7609           00031         clrr    ADCnt
+012D   3C0B           00032         movai   ADVBatBuf+1
+012E   5784           00033         movra   FSR0
+012F   8000           00034         call    DIV8Sbr
+0130   560C           00035         movra   ADVBat
+                      00036 
+0131   3C10           00037         movai   ADVOutBuf+1
+0132   5784           00038         movra   FSR0
+0133   8000           00039         call    DIV8Sbr
+0134   5611           00040         movra   ADVOut
+                      00041         
+0135   3C15           00042         movai   ADIOutBuf+1
+0136   5784           00043         movra   FSR0
+0137   8000           00044         call    DIV8Sbr
+0138   5618           00045         movra   ADIOut
+                      00046                 
+0139                  00047 ADCOverSbr1:
+0139   760A           00048         clrr    ADVBatBuf
+013A   760B           00049         clrr    ADVBatBuf+1
+013B   760F           00050         clrr    ADVOutBuf
+013C   7610           00051         clrr    ADVOutBuf+1
+013D   7614           00052         clrr    ADIOutBuf
+013E   7615           00053         clrr    ADIOutBuf+1
+013F   7609           00054         clrr    ADCnt
+                      00055         
+0140   8000           00056         call    IChkSbr
+0141   5818           00057         movar   ADIOut
+0142   5811           00058         movar   ADVOut
+0143   562D           00059         movra   ADVLast1
+0144   8000           00060         call    BatChkSbr       ;???
+                      00061         
+0145   FE02           00062         jbclr   FVIN
+0146   A000           00063         goto    ADCOverSbr3
+0147   5A1C           00064         movr    BatStatus
+0148   F587           00065         jbclr   Z
+0149   A000           00066         goto    ADCOverSbr2
+014A   D804           00067         bclr    FBatLow3
+014B   3C02           00068         movai   CBAT350
+014C   481C           00069         rsubar  BatStatus
+014D   F187           00070         jbclr   C
+014E   A000           00071         goto    ADCOverSbr4
+014F   C604           00072         bset    FBatLow3d2
+0150   CE03           00073         bset    FDisBatLow
+0151   3C06           00074         movai   6
+0152   5635           00075         movra   BatLowCnt
+0153   000C           00076         return
+                      00077         ;----------------------------------
+0154                  00078 ADCOverSbr2:
+0154   C604           00079         bset    FBatLow3d2
+0155   C804           00080         bset    FBatLow3
+0156   E002           00081         jbset   FPwr
+0157   000C           00082         return
+0158   5A35           00083         movr    BatLowCnt
+0159   F587           00084         jbclr   Z
+015A   A000           00085         goto    KeyShortSbr1
+015B   000C           00086         return
+                      00087         ;---------------------------------
+015C                  00088 ADCOverSbr3:
+015C   3C02           00089         movai   CBAT350
+015D   481C           00090         rsubar  BatStatus
+015E   F187           00091         jbclr   C
+015F   000C           00092         return
+0160   3C02           00093         movai   CBAT350
+0161   5602           00094         movra   CBAT350
+0162   000C           00095         return          
+                      00096         ;---------------------------------
+0163                  00097 ADCOverSbr4:
+0163   D604           00098         bclr    FBatLow3d2
+0164   DE03           00099         bclr    FDisBatLow
+0165   000C           00100         return
+0166                  00101 BatChkSbr:
+0166   7605           00102         clrr    Buf0
+0167   3C3B           00103         movai   CBATU300
+0168   480C           00104         rsubar  ADVBat
+0169   E187           00105         jbset   C
+016A   A000           00106         goto    BatStatusSbr
+                      00107         
+016B   6605           00108         incr    Buf0
+016C   3C3C           00109         movai   CBATU320
+016D   480C           00110         rsubar  ADVBat
+016E   E187           00111         jbset   C
+016F   A000           00112         goto    BatStatusSbr
+                      00113 
+0170   6605           00114         incr    Buf0
+0171   3C3D           00115         movai   CBATU350
+0172   480C           00116         rsubar  ADVBat
+0173   E187           00117         jbset   C
+0174   A000           00118         goto    BatStatusSbr
+                      00119 
+0175   6605           00120         incr    Buf0
+0176   3C46           00121         movai   CBATU400
+0177   480C           00122         rsubar  ADVBat
+0178   E187           00123         jbset   C
+0179   A000           00124         goto    BatStatusSbr
+                      00125 
+017A   6605           00126         incr    Buf0
+017B   3C49           00127         movai   CBATU416
+017C   480C           00128         rsubar  ADVBat
+017D   E187           00129         jbset   C
+017E   A000           00130         goto    BatStatusSbr
+                      00131 
+017F   6605           00132         incr    Buf0
+0180                  00133 BatStatusSbr:
+0180   5805           00134         movar   Buf0
+0181   F194           00135         jbclr   pPwr     ;FPwr  ???
+0182   A000           00136         goto    BatStatusSbr1
+0183   EE02           00137         jbset   FVIN
+0184   A000           00138         goto    BatStatusSbr2
+0185   481C           00139         rsubar  BatStatus
+0186   E187           00140         jbset   C
+0187   A000           00141         goto    BatStatusSbr2
+0188   000C           00142         return
+0189                  00143 BatStatusSbr1:
+0189   481C           00144         rsubar  BatStatus
+018A   E187           00145         jbset   C
+018B   000C           00146         return
+018C                  00147 BatStatusSbr2:
+018C   5805           00148         movar   Buf0
+018D   561C           00149         movra   BatStatus
+018E   000C           00150         return
+                      00151         ;------------------------------------------------
+018F                  00152 IChkSbr:
+018F   E194           00153         jbset   pPwr
+0190   000C           00154         return
+0191   3C3F           00155         movai   COUTI_2A8
+0192   4818           00156         rsubar  ADIOut
+0193   E187           00157         jbset   C
+0194   A000           00158         goto    IChkSbr1
+0195   6636           00159         incr    LoadCnt
+0196   3C32           00160         movai   50
+0197   4818           00161         rsubar  ADIOut
+0198   F187           00162         jbclr   C
+0199   A000           00163         goto    KeyShortSbr1
+019A   000C           00164         return
+019B                  00165 IChkSbr1:
+019B   7636           00166         clrr    LoadCnt
+019C   000C           00167         return
+                      00168 ;---------------------------------------------
+019D                  00169 CalADVBatSbr:
+019D   5A09           00170         movr    ADCnt
+019E   F587           00171         jbclr   Z
+019F   A000           00172         goto    CalADVBatSbr0
+01A0   3C01           00173         movai   1
+01A1   4809           00174         rsubar  ADCnt
+01A2   F587           00175         jbclr   Z
+01A3   A000           00176         goto    CalADVBatSbr1
+01A4   580D           00177         movar   ADVBatMin
+01A5   49B4           00178         rsubar  ADRH
+01A6   E187           00179         jbset   C
+01A7   A000           00180         goto    CalADVBatSbr2
+01A8   580E           00181         movar   ADVBatMax
+01A9   49B4           00182         rsubar  ADRH
+01AA   F187           00183         jbclr   C
+01AB   A000           00184         goto    CalADVBatSbr3
+01AC   59B4           00185         movar   ADRH
+01AD   5605           00186         movra   Buf0
+01AE   A000           00187         goto    CalADVBatSbr4
+01AF                  00188 CalADVBatSbr0:
+01AF   59B4           00189         movar   ADRH
+01B0   560D           00190         movra   ADVBatMin
+01B1   560E           00191         movra   ADVBatMax
+01B2   000C           00192         return
+01B3                  00193 CalADVBatSbr1:
+01B3   580D           00194         movar   ADVBatMin
+01B4   49B4           00195         rsubar  ADRH
+01B5   E187           00196         jbset   C
+01B6   A000           00197         goto    CalADVBatSbr11
+01B7   560E           00198         movra   ADVBatMax
+01B8   49B4           00199         rsubar  ADRH
+01B9   E187           00200         jbset   C
+01BA   000C           00201         return
+01BB   59B4           00202         movar   ADRH
+01BC   560E           00203         movra   ADVBatMax
+01BD   000C           00204         return
+01BE                  00205 CalADVBatSbr11:
+01BE   59B4           00206         movar   ADRH
+01BF   560D           00207         movra   ADVBatMin
+01C0   000C           00208         return
+01C1                  00209 CalADVBatSbr2:
+01C1   580D           00210         movar   ADVBatMin
+01C2   5605           00211         movra   Buf0
+01C3   59B4           00212         movar   ADRH
+01C4   560D           00213         movra   ADVBatMin
+01C5   A000           00214         goto    CalADVBatSbr4
+01C6                  00215 CalADVBatSbr3:
+01C6   580E           00216         movar   ADVBatMax
+01C7   5605           00217         movra   Buf0
+01C8   59B4           00218         movar   ADRH
+01C9   560E           00219         movra   ADVBatMax       
+01CA                  00220 CalADVBatSbr4:
+01CA   5805           00221         movar   Buf0
+01CB   7E0A           00222         addra   ADVBatBuf
+01CC   7400           00223         clra
+01CD   120B           00224         adcra   ADVBatBuf+1
+01CE   000C           00225         return
+                      00226 ;---------------------------------------------
+01CF                  00227 CalADVOutSbr:
+01CF   5A09           00228         movr    ADCnt
+01D0   F587           00229         jbclr   Z
+01D1   A000           00230         goto    CalADVOutSbr0
+01D2   3C01           00231         movai   1
+01D3   4809           00232         rsubar  ADCnt
+01D4   F587           00233         jbclr   Z
+01D5   A000           00234         goto    CalADVOutSbr1
+01D6   5812           00235         movar   ADVOutMin
+01D7   49B4           00236         rsubar  ADRH
+01D8   E187           00237         jbset   C
+01D9   A000           00238         goto    CalADVOutSbr2
+01DA   5813           00239         movar   ADVOutMax
+01DB   49B4           00240         rsubar  ADRH
+01DC   F187           00241         jbclr   C
+01DD   A000           00242         goto    CalADVOutSbr3
+01DE   59B4           00243         movar   ADRH
+01DF   5605           00244         movra   Buf0
+01E0   A000           00245         goto    CalADVOutSbr4
+01E1                  00246 CalADVOutSbr0:
+01E1   59B4           00247         movar   ADRH
+01E2   5612           00248         movra   ADVOutMin
+01E3   5613           00249         movra   ADVOutMax
+01E4   000C           00250         return
+01E5                  00251 CalADVOutSbr1:
+01E5   5812           00252         movar   ADVOutMin
+01E6   49B4           00253         rsubar  ADRH
+01E7   E187           00254         jbset   C
+01E8   A000           00255         goto    CalADVOutSbr11
+01E9   5613           00256         movra   ADVOutMax
+01EA   49B4           00257         rsubar  ADRH
+01EB   E187           00258         jbset   C
+01EC   000C           00259         return
+01ED   59B4           00260         movar   ADRH
+01EE   5613           00261         movra   ADVOutMax
+01EF   000C           00262         return
+01F0                  00263 CalADVOutSbr11:
+01F0   59B4           00264         movar   ADRH
+01F1   5612           00265         movra   ADVOutMin
+01F2   000C           00266         return
+01F3                  00267 CalADVOutSbr2:
+01F3   5812           00268         movar   ADVOutMin
+01F4   5605           00269         movra   Buf0
+01F5   59B4           00270         movar   ADRH
+01F6   5612           00271         movra   ADVOutMin
+01F7   A000           00272         goto    CalADVOutSbr4
+01F8                  00273 CalADVOutSbr3:
+01F8   5813           00274         movar   ADVOutMax
+01F9   5605           00275         movra   Buf0
+01FA   59B4           00276         movar   ADRH
+01FB   5613           00277         movra   ADVOutMax       
+01FC                  00278 CalADVOutSbr4:
+01FC   5805           00279         movar   Buf0
+01FD   7E0F           00280         addra   ADVOutBuf
+01FE   7400           00281         clra
+01FF   1210           00282         adcra   ADVOutBuf+1
+0200   000C           00283         return
+                      00284         ;---------------------------------------------
+0201                  00285 CalADISbr:
+0201   5A09           00286         movr    ADCnt
+0202   F587           00287         jbclr   Z
+0203   A000           00288         goto    CalADISbr0
+0204   3C01           00289         movai   1
+0205   4809           00290         rsubar  ADCnt
+0206   F587           00291         jbclr   Z
+0207   A000           00292         goto    CalADISbr1
+0208   5816           00293         movar   ADIMin
+0209   4806           00294         rsubar  Buf1
+020A   E187           00295         jbset   C
+020B   A000           00296         goto    CalADISbr2
+020C   5817           00297         movar   ADIMax
+020D   4806           00298         rsubar  Buf1
+020E   F187           00299         jbclr   C
+020F   A000           00300         goto    CalADISbr3
+0210   5806           00301         movar   Buf1
+0211   5605           00302         movra   Buf0
+0212   A000           00303         goto    CalADISbr4
+0213                  00304 CalADISbr0:
+0213   5806           00305         movar   Buf1
+0214   5616           00306         movra   ADIMin
+0215   5617           00307         movra   ADIMax
+0216   000C           00308         return
+0217                  00309 CalADISbr1:
+0217   5816           00310         movar   ADIMin
+0218   4806           00311         rsubar  Buf1
+0219   E187           00312         jbset   C
+021A   A000           00313         goto    CalADISbr11
+021B   5617           00314         movra   ADIMax
+021C   4806           00315         rsubar  Buf1
+021D   E187           00316         jbset   C
+021E   000C           00317         return
+021F   5806           00318         movar   Buf1
+0220   5617           00319         movra   ADIMax
+0221   000C           00320         return
+0222                  00321 CalADISbr11:
+0222   5806           00322         movar   Buf1
+0223   5616           00323         movra   ADIMin
+0224   000C           00324         return
+0225                  00325 CalADISbr2:
+0225   5816           00326         movar   ADIMin
+0226   5605           00327         movra   Buf0
+0227   5806           00328         movar   Buf1
+0228   5616           00329         movra   ADIMin
+0229   A000           00330         goto    CalADISbr4
+022A                  00331 CalADISbr3:
+022A   5817           00332         movar   ADIMax
+022B   5605           00333         movra   Buf0
+022C   5806           00334         movar   Buf1
+022D   5617           00335         movra   ADIMax  
+022E                  00336 CalADISbr4:
+022E   5805           00337         movar   Buf0
+022F   7E14           00338         addra   ADIOutBuf
+0230   7400           00339         clra
+0231   1215           00340         adcra   ADIOutBuf+1
+0232   000C           00341         return
+                      00342 ;---------------------------------------------
+0233                  00343 DIV8Sbr:
+0233   D187           00344         bclr    C
+0234   4F80           00345         rrr     INDF0
+0235   6F84           00346         decr    FSR0
+0236   4F80           00347         rrr     INDF0
+0237   6784           00348         incr    FSR0
+0238   6605           00349         incr    Buf0
+0239   3C03           00350         movai   3
+023A   4805           00351         rsubar  Buf0
+023B   E187           00352         jbset   C
+023C   A000           00353         goto    DIV8Sbr
+023D   6F84           00354         decr    FSR0
+023E   5980           00355         movar   INDF0
+023F   000C           00356         return
+                      00357         ;-----------------------------------------------------
+0240                  00358 ADVStartSbr:
+0240   57B0           00359         movra   ADCR0
+0241   C1B0           00360         bset    ADON
+0242   D3B0           00361         bclr    ADEOC
+0243                  00362 ADStartSbrV0:
+0243   E3B0           00363         jbset   ADEOC
+0244   A000           00364         goto    ADStartSbrV0
+0245   45B4           00365         swapar  ADRH
+0246   3EF0           00366         andai   0xf0
+0247   5606           00367         movra   Buf1
+0248   3C0F           00368         movai   0x0f
+0249   79B5           00369         andar   ADRL
+024A   5E06           00370         orra    Buf1
+024B   000C           00371         return
+                      00372         
+                      00041 if(Test1628 != 0)
+                      00042         #include  "TM1628.asm"
+                      00043 else
+                      00044         #include  "DisplaySbr.asm"                      
+024C                  00001 DisplaySbr:
+024C   D995           00002         bclr    pLed1C
+024D   DB95           00003         bclr    pLed2C
+024E   C991           00004         bset    pLedCC
+                      00005         
+024F   661D           00006         incr    DispCnt
+0250   3C05           00007         movai   5
+0251   481D           00008         rsubar  DispCnt
+0252   F587           00009         jbclr   Z
+0253   A000           00010         goto    KeySbr
+                      00011 
+0254   DC03           00012         bclr    FLight
+0255   E603           00013         jbset   FT5s
+0256   A000           00014         goto    DisplaySbrA
+0257   FE02           00015         jbclr   FVIN
+0258   A000           00016         goto    DisplaySbrB
+0259   E002           00017         jbset   FPwr
+025A   000C           00018         return
+025B   FE03           00019         jbclr   FDisBatLow
+025C   A000           00020         goto    DisplaySbrC
+025D   A000           00021         goto    DisplaySbrB
+                      00022         ;第一次上电 0.5s闪烁-----------------------------------
+025E                  00023 DisplaySbrA:
+025E   E402           00024         jbset   FFlash
+025F   000C           00025         return
+0260                  00026 DisplaySbrA1:
+0260   CC03           00027         bset    FLight
+0261   A000           00028         goto    DisplaySbr1
+                      00029         ;充电状态 常亮-----------------------------------------
+0262                  00030 DisplaySbrB:
+0262   3C02           00031         movai   CBAT350
+0263   481C           00032         rsubar  BatStatus
+0264   5607           00033         movra   Buf2
+0265   A000           00034         goto    DisplaySbr1
+                      00035         ;0.25s闪烁(取决于FDisBatLow)----------------
+0266                  00036 DisplaySbrC:
+0266   EE03           00037         jbset   FDisBatLow
+0267   000C           00038         return
+0268   FC02           00039         jbclr   FF250
+0269   A000           00040         goto    DisplaySbrA1
+026A   000C           00041         return
+026B                  00042 DisplaySbr1:    
+026B   581D           00043         movar   DispCnt
+026C   5606           00044         movra   Buf1
+026D   6A06           00045         djzr    Buf1
+026E   A000           00046         goto    DisplaySbr11
+                      00047         ;------------------------------------------------------
+026F   FC03           00048         jbclr   FLight
+0270   A000           00049         goto    Led1Ligt
+0271   F402           00050         jbclr   FFlash
+0272   A000           00051         goto    Led1Ligt
+0273   5A07           00052         movr    Buf2
+0274   E587           00053         jbset   Z
+0275   A000           00054         goto    Led1Ligt
+                      00055         
+0276   F002           00056         jbclr   FPwr
+0277   A000           00057         goto    Led1Ligt
+0278   000C           00058         return
+0279                  00059 Led1Ligt:
+0279   D990           00060         bclr    pLedC
+027A   C995           00061         bset    pLed1C
+027B   C994           00062         bset    pLed1
+027C   000C           00063         return
+                      00064         ;------------------------------------------------------
+027D                  00065 DisplaySbr11:
+027D   6A06           00066         djzr    Buf1
+027E   A000           00067         goto    DisplaySbr12
+027F   FC03           00068         jbclr   FLight
+0280   A000           00069         goto    Led2Ligt
+0281   3C01           00070         movai   1
+0282   4807           00071         rsubar  Buf2
+0283   F587           00072         jbclr   Z
+0284   A000           00073         goto    DisplaySbr111
+0285   F187           00074         jbclr   C
+0286   A000           00075         goto    Led2Ligt
+0287   000C           00076         return
+0288                  00077 DisplaySbr111:
+0288   F002           00078         jbclr   FPwr
+0289   A000           00079         goto    Led2Ligt
+028A   E402           00080         jbset   FFlash
+028B   000C           00081         return
+028C                  00082 Led2Ligt:
+028C   C990           00083         bset    pLedC
+028D   C995           00084         bset    pLed1C
+028E   D994           00085         bclr    pLed1
+028F   000C           00086         return
+                      00087         ;------------------------------------------------------
+0290                  00088 DisplaySbr12:
+0290   6A06           00089         djzr    Buf1
+0291   A000           00090         goto    DisplaySbr13
+0292   FC03           00091         jbclr   FLight
+0293   A000           00092         goto    Led3Ligt
+0294   3C02           00093         movai   2
+0295   4807           00094         rsubar  Buf2
+0296   F587           00095         jbclr   Z
+0297   A000           00096         goto    DisplaySbr121
+0298   F187           00097         jbclr   C
+0299   A000           00098         goto    Led3Ligt
+029A   000C           00099         return
+029B                  00100 DisplaySbr121:
+029B   F002           00101         jbclr   FPwr
+029C   A000           00102         goto    Led3Ligt
+029D   E402           00103         jbset   FFlash
+029E   000C           00104         return
+029F                  00105 Led3Ligt:
+029F   C990           00106         bset    pLedC
+02A0   CB95           00107         bset    pLed2C
+02A1   DB94           00108         bclr    pLed2
+02A2   000C           00109         return
+                      00110         ;------------------------------------------------------
+02A3                  00111 DisplaySbr13:
+02A3   FC03           00112         jbclr   FLight
+02A4   A000           00113         goto    Led4igt
+02A5   3C03           00114         movai   3
+02A6   4807           00115         rsubar  Buf2
+02A7   F587           00116         jbclr   Z
+02A8   A000           00117         goto    DisplaySbr131
+02A9   F187           00118         jbclr   C
+02AA   A000           00119         goto    DisplaySbr14
+02AB   000C           00120         return
+02AC                  00121 DisplaySbr131:
+02AC   F002           00122         jbclr   FPwr
+02AD   A000           00123         goto    Led4igt
+02AE   E402           00124         jbset   FFlash
+02AF   000C           00125         return
+02B0                  00126 Led4igt:
+02B0   D990           00127         bclr    pLedC
+02B1   CB95           00128         bset    pLed2C
+02B2   CB94           00129         bset    pLed2
+02B3   000C           00130         return
+02B4                  00131 DisplaySbr14:
+02B4   F002           00132         jbclr   FPwr
+02B5   A000           00133         goto    Led4igt
+02B6   EE02           00134         jbset   FVIN
+02B7   A000           00135         goto    Led4igt
+02B8   F802           00136         jbclr   FCHGOver
+02B9   A000           00137         goto    Led4igt
+02BA   F402           00138         jbclr   FFlash
+02BB   A000           00139         goto    Led4igt
+02BC   000C           00140         return
+                      00141         
+                      00045 endif
+                      00046 #include  "WorkCtrlSbr.asm"
+                      00001 ;--------------------------------------------------------------
+                      00002 ;34ms执行一次
+                      00003 ;--------------------------------------------------------------
+02BD                  00004 WorkCtrlSbr:    
+02BD   FE02           00005         jbclr   FVIN
+02BE   A000           00006         goto    PwrInSbr
+02BF   D794           00007         bclr    pCHG
+02C0   D802           00008         bclr    FCHGOver
+02C1   F002           00009         jbclr   FPwr
+02C2   A000           00010         goto    DisCHGSbr
+02C3   000C           00011         return
+                      00012         ;备有电池充电状态--------------------------------------
+02C4                  00013 PwrInSbr:
+02C4   D594           00014         bclr    pDisCHG
+02C5   DDA0           00015         bclr    PWM0OE
+02C6   D194           00016         bclr    pPwr
+02C7   D002           00017         bclr    FPwr
+02C8   DA02           00018         bclr    FILow
+                      00019 
+02C9   F802           00020         jbclr   FCHGOver
+02CA   A000           00021         goto    CHGOverSbr      ;充电结束
+                      00022 ;--------------------------------------------------------------
+                      00023 ;充电控制
+                      00024 ;电池电压大于4.24V充电结束
+                      00025 ;电流连续30分钟小于100mA充电结束
+                      00026 ;--------------------------------------------------------------
+02CB                  00027 CHGSbr:
+02CB   EDA4           00028         jbset   PWM1OE
+02CC   A000           00029         goto    InitCHGPWM
+02CD   8000           00030         call    CHGPWMSbr
+                      00031         ;------------------------------------------------------
+02CE                  00032 IfILowMinSbr:
+02CE   3C07           00033         movai   CBATI100mA
+02CF   4818           00034         rsubar  ADIOut
+02D0   E187           00035         jbset   C
+02D1   A000           00036         goto    ILow100mA
+02D2   D204           00037         bclr    FCHGI
+02D3   3C4B           00038         movai   CBATU424
+02D4   480D           00039         rsubar ADVBat+1
+02D5   F187           00040         jbclr   C
+02D6   A000           00041         goto    UBig4d24        ;Vbat>=4.24结束充电
+02D7   D004           00042         bclr    FCHGV
+02D8   000C           00043         return
+                      00044         ;延时30分钟--------------------------------------------
+02D9                  00045 ILow100mA:
+02D9   C204           00046         bset    FCHGI
+02DA   000C           00047         return
+02DB                  00048 UBig4d24:
+02DB   C004           00049         bset    FCHGV
+02DC   000C           00050         return
+02DD                  00051 CHGOverSbr:
+02DD   C802           00052         bset    FCHGOver
+02DE   DDA4           00053         bclr    PWM1OE
+02DF   D794           00054         bclr    pCHG
+                      00055         ;bset   FStop
+02E0   000C           00056         return
+                      00057         ;初始化PWM---------------------------------------------
+02E1                  00058 InitCHGPWM:
+02E1   DF88           00059         bclr    GIE
+02E2   D38A           00060         bclr    T1IE
+02E3   3C88           00061         movai   0x88
+02E4   57A4           00062         movra   T1CR
+02E5   3C64           00063         movai   CT1
+02E6   57A6           00064         movra   T1LOAD
+02E7   3C01           00065         movai   1;      ;初始化PWM
+02E8   561F           00066         movra   CHGPWM
+02E9   57A7           00067         movra   T1DATA
+02EA   CDA4           00068         bset    PWM1OE
+02EB   3C8F           00069         movai   0x8F
+02EC   57A0           00070         movra   T0CR
+02ED   3C7D           00071         movai   CT_1ms
+02EE   57A2           00072         movra   T0LOAD
+02EF   C18A           00073         bset    T0IE
+02F0   CF88           00074         bset    GIE
+02F1   000C           00075         return
+                      00076         ;自动调节充电电流--------------------------------------
+02F2                  00077 CHGPWMSbr:
+02F2   3C4B           00078         movai   CBATI1A+2
+02F3   4818           00079         rsubar  ADIOut
+02F4   F187           00080         jbclr   C
+02F5   A000           00081         goto    DecCHGPWMSbr    ;ADIOut>CBATI1A+2
+                      00082                         
+02F6   3C47           00083         movai   CBATI1A-2
+02F7   4818           00084         rsubar  ADIOut
+02F8   E187           00085         jbset   C
+02F9   A000           00086         goto    INCCHGPWMSbr
+02FA   000C           00087         return                  ;ADIOut>=CBATI1A-2
+                      00088         ;------------------------------------------------------
+02FB                  00089 DecCHGPWMSbr:
+02FB   6E1F           00090         decr    CHGPWM
+02FC   581F           00091         movar   CHGPWM
+02FD   F587           00092         jbclr   Z
+02FE   661F           00093         incr    CHGPWM
+02FF   57A7           00094         movra   T1DATA
+0300   000C           00095         return
+                      00096         ;------------------------------------------------------
+0301                  00097 INCCHGPWMSbr:
+0301   3C64           00098         movai   CT1
+0302   481F           00099         rsubar  CHGPWM
+0303   F187           00100         jbclr   C
+0304   000C           00101         return
+0305   661F           00102         incr    CHGPWM
+0306                  00103 SetCHGPWMSbr:   
+0306   581F           00104         movar   CHGPWM
+0307   57A7           00105         movra   T1DATA
+0308   000C           00106         return
+                      00107 
+                      00108 
+                      00047 #include  "DisCHGSbr.asm"
+                      00001 ;--------------------------------------------------------------
+                      00002 ;放电控制
+                      00003 ;电流小于100mA超过20s结束
+                      00004 ;放电自动调整
+                      00005 ;--------------------------------------------------------------
+0309                  00006 DisCHGSbr:
+                      00007         ;jbclr  FBatLow3d2
+                      00008         ;return
+0309                  00009 DisCHGSbrA:
+0309   8000           00010         call    AdjVoutSbr
+030A   3C02           00011         movai   COUTI_90mA
+030B   4818           00012         rsubar  ADIOut
+030C   F187           00013         jbclr   C
+030D   A000           00014         goto    IoutBig100mA
+030E   CA02           00015         bset    FILow
+030F   000C           00016         return
+0310                  00017 IoutBig100mA:
+0310   DA02           00018         bclr    FILow
+0311   7622           00019         clrr    ILow0A1Dly10s
+0312   000C           00020         return
+                      00021         ;--------------------------------------------------------------
+0313                  00022 AdjVoutSbr:
+0313   3C5A           00023         movai   COUTU5V+2
+0314   4811           00024         rsubar  ADVOut
+0315   F187           00025         jbclr   C
+0316   A000           00026         goto    VoutBig5VSbr    ;Vout>5V
+0317   3C56           00027         movai   COUTU5V-2
+0318                  00028 DisCHGSbr0:
+0318   4811           00029         rsubar  ADVOut
+0319   F187           00030         jbclr   C
+031A   A000           00031         goto    OpenVOutSbr     
+                      00032         ;Vout<5V---------------------------------------
+031B                  00033 DisCHGSbr1:
+031B   3C50           00034         movai   COUTU4d5V               ;??
+031C   4811           00035         rsubar  ADVOut
+031D   F187           00036         jbclr   C
+031E   A000           00037         goto    DisCHGSbr2
+031F   3C05           00038         movai   5
+0320   7E1E           00039         addra   DisPWM                  ;??
+0321                  00040 DisCHGSbr2:
+0321   661E           00041         incr    DisPWM
+0322   3C7F           00042         movai   CT0-1
+0323   481E           00043         rsubar  DisPWM
+0324   E187           00044         jbset   C
+0325   A000           00045         goto    SetDisCHGSbr
+0326   6E1E           00046         decr    DisPWM
+0327   A000           00047         goto    SetDisCHGSbr
+                      00048         ;Vout>5V---------------------------------------
+0328                  00049 VoutBig5VSbr:
+0328   6E1E           00050         decr    DisPWM
+0329   E587           00051         jbset   Z
+032A   A000           00052         goto    SetDisCHGSbr
+032B   661E           00053         incr    DisPWM
+                      00054         ;----------------------------------------------
+032C                  00055 SetDisCHGSbr:
+032C   581E           00056         movar   DisPWM
+032D   57A3           00057         movra   T0DATA
+032E   000C           00058         return
+                      00059         ;--------------------------------------------------------------
+032F                  00060 DisCHG1Sbr:
+032F   3C58           00061         movai   COUTU5V
+0330   4811           00062         rsubar  ADVOut
+0331   E187           00063         jbset   C
+0332   A000           00064         goto    DisCHGSbr1
+0333                  00065 OpenVOutSbr:
+0333   C194           00066         bset    pPwr
+0334   CC04           00067         bset    FPwr1st
+0335   3C02           00068         movai   2
+0336   5634           00069         movra   Delay
+0337                  00070 SaveLastVSbr:
+0337   5629           00071         movra   ADVLast03
+0338   5827           00072         movar   ADVLast01
+0339   5628           00073         movra   ADVLast02
+033A   5811           00074         movar   ADVOut
+033B   5627           00075         movra   ADVLast01
+033C   000C           00076         return
+                      00077 ;--------------------------------------------------------------
+033D                  00078 InitPWMSbr:
+033D   3C05           00079         movai   CNPWM0DATA              
+033E                  00080 SetDISPWMSbr:
+033E   561E           00081         movra   DisPWM
+033F   57A3           00082         movra   T0DATA
+0340   000C           00083         return
+                      00084 ;--------------------------------------------------------------
+                      00085 
+                      00048 ;复位---------------------------------------------------------
+                      00049 
+                      00050 
+0341                  00051 RSET:
+0341   778A           00052         clrr    INTE            ;关中断
+0342   000E           00053         clrwdt
+0343   8000           00054         call    InitialSys      
+0344   8000           00055         call    InitalRAM
+0345                  00056 RSET0:  
+                      00057         if(Test1628 != 0)
+                      00058         bset    F1628                   
+                      00059         endif
+0345   CF88           00060         bset    GIE       
+0346                  00061 Start:  
+                      00062         if(Test1628 != 0)
+                      00063                 goto    Start2msSbr
+                      00064         endif
+0346   E203           00065         jbset   FStop
+0347   A000           00066         goto    Start2msSbr
+0348   778A           00067         clrr    INTE
+0349   C78A           00068         bset    INT1IE
+034A   CD97           00069         bset    KBIM6
+034B   C98A           00070         bset    KBIE
+034C   C994           00071         bset    pLed1
+034D   CB94           00072         bset    pLed2
+034E   C990           00073         bset    pLedC
+034F   C995           00074         bset    pLed1C
+0350   CB95           00075         bset    pLed2C
+0351   C991           00076         bset    pLedCC
+0352   D194           00077         bclr    pPwr
+0353   D794           00078         bclr    pCHG
+0354   CD94           00079         bset    pKey
+0355   0000           00080         nop
+0356   0000           00081         nop
+0357   0000           00082         nop
+0358   000B           00083         stop
+0359   0000           00084         nop
+035A   0000           00085         nop
+035B   0000           00086         nop
+035C   D203           00087         bclr    FStop
+035D   D78A           00088         bclr    INT1IE
+035E   C38A           00089         bset    T1IE
+                      00090         ;5ms程序-----------------------------------------------
+035F                  00091 Start2msSbr:
+035F   E403           00092         jbset   F1ms
+0360   A000           00093         goto    Start   
+0361   D403           00094         bclr    F1ms
+0362   000E           00095         clrwdt
+                      00096         ;上电延时结束------------------------------------------
+0363                  00097 Start2msSbr1:
+0363   8000           00098         call    CHGPinCHKSbr
+0364   8000           00099         call    DisplaySbr
+                      00100         ;------------------------------------------------------
+0365                  00101 Start2msSbr2:
+0365   8000           00102         call    ADCSbr          
+0366   5A09           00103         movr    ADCnt
+0367   F587           00104         jbclr   Z
+0368   8000           00105         call    WorkCtrlSbr             ;17*2=34ms???
+0369                  00106 Start2msSbr4:
+0369   6619           00107         incr    T500ms
+036A   3CFA           00108         movai   C250ms
+036B   4819           00109         rsubar  T500ms
+036C   E187           00110         jbset   C
+036D   A000           00111         goto    Start
+036E   7619           00112         clrr    T500ms
+036F   8000           00113         call    T500msSbr
+0370   A000           00114         goto    Start
+                      00115         
+                      00116 
+                      00117         END
+gpasm-0.9.0 (Mar 19 2013)    YDDY3221.asm       2013-7-13  18:56:27          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+.code                             00000000
+ABuf                              00000000
+ADCOverSbr                        0000012C
+ADCOverSbr1                       00000139
+ADCOverSbr2                       00000154
+ADCOverSbr3                       0000015C
+ADCOverSbr4                       00000163
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADCSbr                            0000011D
+ADChnlSbr                         0000011D
+ADCnt                             00000009
+ADILowCnt                         0000002E
+ADIMax                            00000017
+ADIMin                            00000016
+ADIOut                            00000018
+ADIOutBuf                         00000014
+ADRH                              000001B4
+ADRL                              000001B5
+ADStartSbrV0                      00000243
+ADVBat                            0000000C
+ADVBatBuf                         0000000A
+ADVBatMax                         0000000E
+ADVBatMin                         0000000D
+ADVLast01                         00000027
+ADVLast02                         00000028
+ADVLast03                         00000029
+ADVLast1                          0000002D
+ADVOut                            00000011
+ADVOutBuf                         0000000F
+ADVOutMax                         00000013
+ADVOutMin                         00000012
+ADVStartSbr                       00000240
+ANSEL                             00000193
+AdjVoutSbr                        00000313
+Bat                               00000048
+BatChkSbr                         00000166
+BatLowCnt                         00000035
+BatStatus                         0000001C
+BatStatusSbr                      00000180
+BatStatusSbr1                     00000189
+BatStatusSbr2                     0000018C
+Buf0                              00000005
+Buf1                              00000006
+Buf2                              00000007
+CHGI100ms1min                     00000031
+CHGOverSbr                        000002DD
+CHGPWM                            0000001F
+CHGPWMSbr                         000002F2
+CHGPinCHKSbr                      00000094
+CHGPinHigh                        0000009F
+CHGSbr                            000002CB
+CHGV4d2T1min                      00000030
+CalADISbr                         00000201
+CalADISbr0                        00000213
+CalADISbr1                        00000217
+CalADISbr11                       00000222
+CalADISbr2                        00000225
+CalADISbr3                        0000022A
+CalADISbr4                        0000022E
+CalADVBatSbr                      0000019D
+CalADVBatSbr0                     000001AF
+CalADVBatSbr1                     000001B3
+CalADVBatSbr11                    000001BE
+CalADVBatSbr2                     000001C1
+CalADVBatSbr3                     000001C6
+CalADVBatSbr4                     000001CA
+CalADVOutSbr                      000001CF
+CalADVOutSbr0                     000001E1
+CalADVOutSbr1                     000001E5
+CalADVOutSbr11                    000001F0
+CalADVOutSbr2                     000001F3
+CalADVOutSbr3                     000001F8
+CalADVOutSbr4                     000001FC
+DISDly0d5s                        00000023
+DIV8Sbr                           00000233
+DecCHGPWMSbr                      000002FB
+Delay                             00000034
+DigTbl                            00000009
+DisCHG1Sbr                        0000032F
+DisCHGDly                         00000024
+DisCHGSbr                         00000309
+DisCHGSbr0                        00000318
+DisCHGSbr1                        0000031B
+DisCHGSbr2                        00000321
+DisCHGSbrA                        00000309
+DisPWM                            0000001E
+DisPWM1                           0000002A
+DisPWM2                           0000002B
+DisPWM3                           0000002C
+DispBuf                           0000003B
+DispCnt                           0000001D
+DispCnt1628                       00000047
+DispData                          0000003C
+DisplaySbr                        0000024C
+DisplaySbr1                       0000026B
+DisplaySbr11                      0000027D
+DisplaySbr111                     00000288
+DisplaySbr12                      00000290
+DisplaySbr121                     0000029B
+DisplaySbr13                      000002A3
+DisplaySbr131                     000002AC
+DisplaySbr14                      000002B4
+DisplaySbrA                       0000025E
+DisplaySbrA1                      00000260
+DisplaySbrB                       00000262
+DisplaySbrC                       00000266
+FSR0                              00000184
+FSR1                              00000185
+Flag1                             00000002
+Flag2                             00000003
+Flag3                             00000004
+HIBYTE                            00000183
+IChkSbr                           0000018F
+IChkSbr1                          0000019B
+ILow0A1Dly10s                     00000022
+ILow100mA                         000002D9
+INCCHGPWMSbr                      00000301
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT1Sbr                           000000C0
+INTE                              0000018A
+INTF                              0000018B
+IOut                              0000004A
+IOutStartSbr                      0000011E
+IfILowMinSbr                      000002CE
+InitCHGPWM                        000002E1
+InitPWMSbr                        0000033D
+InitalRAM                         0000008B
+InitalRAM0                        0000008C
+InitialSys                        00000068
+InterruptSbr                      000000A8
+InterruptSbrR                     000000C5
+IoutBig100mA                      00000310
+KBIM                              00000197
+KBIMSbr                           000000AD
+KeyBuf1628                        0000003A
+KeyCnt                            0000001A
+KeyCnt1628                        00000046
+KeyCode1628                       00000045
+KeyData                           00000040
+KeyLongth                         0000001B
+KeyLongthSbr                      00000021
+KeyLongthSbr0                     00000024
+KeyLongthSbr1                     0000002C
+KeySbr                            00000011
+KeyShortSbr                       0000002E
+KeyShortSbr1                      0000004D
+KeyShortSbr2                      00000054
+LVDCR                             000001AD
+Led1Ligt                          00000279
+Led2Ligt                          0000028C
+Led3Ligt                          0000029F
+Led4igt                           000002B0
+LoadCnt                           00000036
+MCR                               00000188
+NoKeySbr                          00000058
+NoKeySbr1                         00000064
+NoKeySbrR                         00000064
+OEP0                              00000191
+OEP1                              00000195
+OSCCAL                            000001FB
+OSCM                              000001AE
+OpenVOutSbr                       00000333
+P0                                00000190
+P1                                00000194
+PCL                               00000186
+PFLAG                             00000187
+PFLAGBuf                          00000001
+PUP0                              00000192
+PUP1                              00000196
+PWM0CntBuf                        00000025
+PwrInSbr                          000002C4
+PwrON5s                           0000002F
+PwrONDly                          00000008
+RSET                              00000341
+RSET0                             00000345
+SaveLastVSbr                      00000337
+SetCHGPWMSbr                      00000306
+SetDISPWMSbr                      0000033E
+SetDisCHGSbr                      0000032C
+Start                             00000346
+Start2msSbr                       0000035F
+Start2msSbr1                      00000363
+Start2msSbr2                      00000365
+Start2msSbr4                      00000369
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1LOAD                            000001A6
+T30Min                            00000039
+T500ms                            00000019
+T500msCHGISbr                     00000111
+T500msCHGSbr                      00000108
+T500msCHGSbr1                     0000010D
+T500msCHGVSbr                     00000117
+T500msSbr                         000000CA
+T500msSbr0                        000000D3
+T500msSbr00                       000000D9
+T500msSbr1                        000000F4
+T500msSbr2                        00000105
+T500msSbr3                        000000F8
+T500msSbrA                        000000E7
+TMI0Sbr                           000000B4
+TMI0Sbr1                          000000BF
+TMI1Sbr                           000000AE
+TMin                              00000038
+TSec                              00000037
+TStop5s                           00000026
+UBig4d24                          000002DB
+VBatStartSbr                      00000121
+VOutStartSbr                      00000124
+Vbat3Cnt                          00000033
+Vbat3d2Cnt                        00000032
+VinHiCnt                          00000021
+VinLowCnt                         00000020
+VoutBig5VSbr                      00000328
+WorkCtrlSbr                       000002BD
+_CONFIG1                          00002000
+_CONFIG2                          00002001
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_ENCR_                            00007FFF
+_FCPU_128T                        00003BFF
+_FCPU_16T                         00003EFF
+_FCPU_256T                        00003AFF
+_FCPU_2T                          00003FFF
+_FCPU_32T                         00003DFF
+_FCPU_4T                          00003F7F
+_FCPU_64T                         00003CFF
+_FCPU_8T                          00003FFF
+_MCLRE_                           00003FBF
+_MCU_EMC                          00003BFF
+_MCU_FEL                          00003FFF
+_MOSC_00                          00003FF7
+_MOSC_01                          00003FEF
+_MOSC_10                          00003FDF
+_MOSC_11                          00003FCF
+_OSCM_HS                          00003FFF
+_OSCM_HS_RTC                      000037FF
+_OSCM_IRC                         000027FF
+_OSCM_LP                          00002FFF
+_RDPORT_PIN                       00003FFF
+_RDPORT_REG                       00003EFF
+_SMT_OFF                          00003DFF
+_SMT_ON                           00003EFF
+_TWDT_16_1024                     00002FFF
+_TWDT_256_4096                    00000FFF
+_TWDT_4_512                       00003FFF
+_TWDT_64_2048                     00001FFF
+_TWDT_WDT_16                      000038FF
+_TWDT_WDT_256                     000037FF
+_TWDT_WDT_4                       000039FF
+_TWDT_WDT_64                      00003FFF
+_VLVRS_160                        00003FF9
+_VLVRS_185                        00003FFA
+_VLVRS_205                        00003FFB
+_VLVRS_218                        00003FFC
+_VLVRS_232                        00003FFD
+_VLVRS_245                        00003FFF
+_VLVRS_305                        00003FFF
+_VLVRS_360                        00003FF7
+_WDTC_00                          00000FFF
+_WDTC_01                          00000FFF
+_WDTC_1X                          00000FFF
+__32P21                           00000001
+ADEOC                             ADCR0,1
+ADIE                              INTE,6
+ADIF                              INTF,6
+ADON                              ADCR0,0
+BUZ0OE                            T0CR,5
+BUZ1OE                            T1CR,5
+C                                 PFLAG,0
+C1628                             0x20
+C250ms                            250
+CADIOut                           0x3E
+CADRef2V                          0
+CADRef3V                          1
+CADRef4V                          2
+CADRefExt                         4
+CADRefVDD                         3
+CADVBat                           0x0E
+CADVOut                           0x2E
+CBAT300                           0
+CBAT320                           1
+CBAT350                           2
+CBAT375                           3
+CBAT400                           4
+CBAT416                           5
+CBAT424                           6
+CBATI100mA                        0x0007
+CBATI1A                           0x0049
+CBATU300                          59
+CBATU320                          60
+CBATU350                          61
+CBATU375                          66
+CBATU400                          70
+CBATU416                          73
+CBATU424                          75
+CF250                             0x40
+CFlash                            4
+CILOW                             0x20
+CKEY1                             0x02
+CKEY2                             0x20
+CKEY3                             0x04
+CKEY4                             0x08
+CKEY5                             0x01
+CLIGHT0                           0x88
+CLIGHT1                           0x89
+CLIGHT2                           0x8a
+CLIGHT3                           0x8b
+CLIGHT4                           0x8c
+CLIGHT5                           0x8d
+CLIGHT6                           0x8e
+CLIGHT7                           0x8f
+CLIGHTOFF                         0x80
+CLKS                              OSCM,2
+CNPWM0DATA                        5
+COUT2A3                           0x54
+COUTI_1A5                         34
+COUTI_200mA                       5
+COUTI_2A                          46
+COUTI_2A3                         52
+COUTI_2A8                         63
+COUTI_40mA                        0
+COUTI_900mA                       21
+COUTI_90mA                        2
+COUTU4d5V                         80
+COUTU4d85V                        87
+COUTU4d8V                         86
+COUTU5V                           88
+COUTU5d2V                         92
+COUTU5d5V                         97
+COUTU5d8V                         103
+CPWM0DATA                         50
+CT0                               128
+CT1                               100
+CT_1ms                            125
+DC                                PFLAG,1
+DEight                            (SegA|SegB|SegC|SegD|SegE|SegF|SegG)
+DFive                             (SegA|SegC|SegD|SegF|SegG)
+DFour                             (SegB|SegC|SegF|SegG)
+DIGH                              0
+DIGL                              3
+DIGMH                             1
+DIGML                             2
+DLetterA                          (SegA|SegB|SegC|SegE|SegF|SegG)
+DLetterC                          (SegA|SegD|SegE|SegF)
+DLetterE                          (SegA|SegD|SegE|SegF|SegG)
+DLetterF                          (SegA|SegE|SegF|SegG)
+DLetterP                          (SegA|SegB|SegE|SegF|SegG)
+DLetterV                          (SegC|SegD|SegE)
+DLetterb                          (SegC|SegD|SegE|SegF|SegG)
+DLetterd                          (SegB|SegC|SegD|SegE|SegG)
+DLettert                          (SegD|SegE|SegF|SegG)
+DNine                             (SegA|SegB|SegC|SegD|SegF|SegG)
+DOne                              (SegB|SegC)
+DSeven                            (SegA|SegB|SegC)
+DSix                              (SegA|SegC|SegD|SegE|SegF|SegG)
+DThree                            (SegA|SegB|SegC|SegD|SegG)
+DTwo                              (SegA|SegB|SegD|SegE|SegG)
+DZero                             (SegA|SegB|SegC|SegD|SegE|SegF)
+F1628                             Flag2,5
+F1ms                              Flag2,2
+FBatLow3                          Flag3,4
+FBatLow3d2                        Flag3,3
+FCHGI                             Flag3,1
+FCHGOver                          Flag1,4
+FCHGV                             Flag3,0
+FDisBatLow                        Flag2,7
+FF250                             Flag1,6
+FFlash                            Flag1,2
+FILow                             Flag1,5
+FKeyAck                           Flag1,1
+FKeyAck1628                       Flag2,4
+FLight                            Flag2,6
+FLigt                             Flag3,7
+FLoad                             Flag3,2
+FLongRKey                         Flag2,0
+FPWMInc                           Flag3,5
+FPwr                              Flag1,0
+FPwr1st                           Flag3,6
+FStop                             Flag2,1
+FT5s                              Flag2,3
+FVIN                              Flag1,7
+FVLage                            Flag1,3
+GIE                               MCR,7
+HFEN                              OSCM,0
+INT0IE                            INTE,2
+INT0IF                            INTF,2
+INT1IE                            INTE,3
+INT1IF                            INTF,3
+KBIE                              INTE,4
+KBIF                              INTF,4
+KBIM0                             KBIM,0
+KBIM1                             KBIM,1
+KBIM2                             KBIM,2
+KBIM3                             KBIM,3
+KBIM4                             KBIM,4
+KBIM5                             KBIM,5
+KBIM6                             KBIM,6
+LFEN                              OSCM,1
+LVDEN                             LVDCR,7
+LVDF                              LVDCR,0
+MINT00                            MCR,0
+MINT01                            MCR,1
+MINT10                            MCR,2
+MINT11                            MCR,3
+PD                                MCR,4
+PWM0OE                            T0CR,6
+PWM1OE                            T1CR,6
+STBH                              OSCM,4
+STBL                              OSCM,5
+SegA                              0x40
+SegB                              0x10
+SegC                              0x04
+SegD                              0x01
+SegDp                             0x02
+SegE                              0x80
+SegF                              0x20
+SegG                              0x08
+T0IE                              INTE,0
+T0IF                              INTF,0
+T1IE                              INTE,1
+T1IF                              INTF,1
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+TO                                MCR,5
+Test                              1
+Test1628                          0
+VRS0                              ADCR1,0
+VRS1                              ADCR1,1
+VRS2                              ADCR1,2
+Z                                 PFLAG,2
+_CONST_H_                         (null)
+_MC32P21_H_                       (null)
+_TM1628_H_                        (null)
+_VAR_H_                           (null)
+cCLK                              OEP1,4
+cDIO                              OEP1,5
+cSTB                              OEP0,4
+pCHG                              P1,3
+pCLK                              P1,4
+pDIO                              P1,5
+pDisCHG                           P1,2
+pKey                              P1,6
+pLed1                             P1,4
+pLed1C                            OEP1,4
+pLed2                             P1,5
+pLed2C                            OEP1,5
+pLedC                             P0,4
+pLedCC                            OEP0,4
+pLedW                             P0,1
+pPwr                              P1,0
+pSTB                              P0,4
+pVIN                              P1,1
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,58 @@
+000000:  0f80  addar	0
+000001:  0fc0  addra	0
+000002:  0f00  andar	0
+000003:  0f40  andra	0
+000004:  00c0  clrr	0
+000005:  0001  clra
+000006:  0e80  comar	0
+000007:  0ec0  comr	0
+000008:  0e00  decar	0
+000009:  0e40  decr	0
+00000a:  0d80  djzar	0
+00000b:  0dc0  djzr	0
+00000c:  0d00  incar	0
+00000d:  0d40  incr	0
+00000e:  0c80  jzar	0
+00000f:  0cc0  jzr	0
+000010:  0c00  orar	0
+000011:  0c40  orra	0
+000012:  0b80  movar	0
+000013:  0bc0  movr	0
+000014:  0080  movra	0
+000015:  0b00  rlar	0
+000016:  0b40  rlr	0
+000017:  0a80  rrar	0
+000018:  0ac0  rrr	0
+000019:  0a00  rsubar	0
+00001a:  0a40  rsubra	0
+00001b:  0980  swapar	0
+00001c:  09c0  swapr	0
+00001d:  0900  xorar	0
+00001e:  0940  xorra	0
+00001f:  1e00  bclr	0, 0
+000020:  1c00  bset	0, 0
+000021:  1a00  jbclr	0, 0
+000022:  1800  jbset	0, 0
+000023:  0700  addai	0
+000024:  0600  andai	0
+000025:  0500  orai	0
+000026:  0400  movai	0
+000027:  0300  retai	0
+000028:  0200  isubai	0
+000029:  0100  xorai	0
+00002a:  0002  clrwdt
+00002b:  0003  retie
+00002c:  0004  return
+00002d:  0005  sleep
+00002e:  0005  sleep
+00002f:  0000  nop
+000030:  0006  daa
+000031:  0007  dsa
+000032:  0880  adcar	0
+000033:  08c0  adcra	0
+000034:  0800  rsbcar	0
+000035:  0840  rsbcra	0
+000036:  1000  call	0
+000037:  1400  goto	0
+000038:  0030  iosw	0
+000039:  0020  iosr	0

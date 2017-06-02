@@ -1,0 +1,947 @@
+gpasm-1.4.1_beta1 (Oct 15 2013)adcsbr.asm         2013-12-13  13:44:47         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Nov 20 2013) (MINGW32)
+                      00004 ; This file was generated Fri Dec 13 13:44:47 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "adcsbr.c"
+                      00009         list    p=32p21
+                      00010         radix dec
+                      00011         include "mc32p21.inc"
+                      00001                 LIST
+                      00002 ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00261                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _STATUSbits
+                      00016         extern  _MCRbits
+                      00017         extern  _INTEbits
+                      00018         extern  _INTFbits
+                      00019         extern  _IOP0bits
+                      00020         extern  _OEP0bits
+                      00021         extern  _PUP0bits
+                      00022         extern  _ANSELbits
+                      00023         extern  _IOP1bits
+                      00024         extern  _OEP1bits
+                      00025         extern  _PUP1bits
+                      00026         extern  _KBIMbits
+                      00027         extern  _T0CRbits
+                      00028         extern  _T1CRbits
+                      00029         extern  _LVDCRbits
+                      00030         extern  _OSCMbits
+                      00031         extern  _ADCR0bits
+                      00032         extern  _ADCR1bits
+                      00033         extern  _ABuf
+                      00034         extern  _StatusBuf
+                      00035         extern  _Keycode
+                      00036         extern  _DisplayMode
+                      00037         extern  _MasterTime_1ms
+                      00038         extern  _MasterTime_10ms
+                      00039         extern  _MasterTime_100ms
+                      00040         extern  _MasterTime_1s
+                      00041         extern  _sleeptime
+                      00042         extern  _key_cnt
+                      00043         extern  _key_time
+                      00044         extern  _key_press_time
+                      00045         extern  _short_press_time
+                      00046         extern  _BAT_avgAD
+                      00047         extern  _Load_avgAD
+                      00048         extern  _Last_BATAD
+                      00049         extern  _Load_avgAD2
+                      00050         extern  _NoLoadCount
+                      00051         extern  _ZNB602Register
+                      00052         extern  _Flag
+                      00053         extern  _Flag1
+                      00054         extern  _INDF
+                      00055         extern  _INDF0
+                      00056         extern  _INDF1
+                      00057         extern  _INDF2
+                      00058         extern  _HIBYTE
+                      00059         extern  _FSR
+                      00060         extern  _FSR0
+                      00061         extern  _FSR1
+                      00062         extern  _PCL
+                      00063         extern  _STATUS
+                      00064         extern  _MCR
+                      00065         extern  _INDF3
+                      00066         extern  _INTE
+                      00067         extern  _INTF
+                      00068         extern  _IOP0
+                      00069         extern  _OEP0
+                      00070         extern  _PUP0
+                      00071         extern  _ANSEL
+                      00072         extern  _IOP1
+                      00073         extern  _OEP1
+                      00074         extern  _PUP1
+                      00075         extern  _KBIM
+                      00076         extern  _T0CR
+                      00077         extern  _T0CNT
+                      00078         extern  _T0LOAD
+                      00079         extern  _T0DATA
+                      00080         extern  _T1CR
+                      00081         extern  _T1CNT
+                      00082         extern  _T1LOAD
+                      00083         extern  _T1DATA
+                      00084         extern  _LVDCR
+                      00085         extern  _OSCM
+                      00086         extern  _ADCR0
+                      00087         extern  _ADCR1
+                      00088         extern  _ADRH
+                      00089         extern  _ADRL
+                      00090         extern  _OSCAL
+                      00091         extern  __gptrget2
+                      00092         extern  __mulchar
+                      00093         extern  __gptrput2
+                      00094 
+                      00095         extern STK06
+                      00096         extern STK05
+                      00097         extern STK04
+                      00098         extern STK03
+                      00099         extern STK02
+                      00100         extern STK01
+                      00101         extern STK00
+                      00102 ;--------------------------------------------------------
+                      00103 ; global declarations
+                      00104 ;--------------------------------------------------------
+                      00105         global  _AD_Check
+                      00106         global  _Battery_Check
+                      00107         global  _Compare_AD
+                      00108         global  _Dispose_AD
+                      00109 
+                      00110 ;--------------------------------------------------------
+                      00111 ; global definitions
+                      00112 ;--------------------------------------------------------
+                      00113 ;--------------------------------------------------------
+                      00114 ; absolute symbol definitions
+                      00115 ;--------------------------------------------------------
+                      00116 ;--------------------------------------------------------
+                      00117 ; compiler-defined variables
+                      00118 ;--------------------------------------------------------
+                      00119 UDL_adcsbr_0    udata
+0000                  00120 r0x100C res     1
+0000                  00121 r0x100D res     1
+0001                  00122 r0x100F res     1
+0001                  00123 r0x100E res     1
+0002                  00124 r0x1010 res     1
+0002                  00125 r0x1021 res     1
+0003                  00126 r0x1022 res     1
+0003                  00127 r0x1023 res     1
+0004                  00128 r0x1024 res     1
+0004                  00129 r0x1026 res     1
+0005                  00130 r0x1025 res     1
+0005                  00131 r0x1011 res     1
+0006                  00132 r0x1012 res     1
+0006                  00133 r0x1013 res     1
+0007                  00134 r0x1014 res     1
+0007                  00135 r0x1015 res     1
+0008                  00136 r0x1016 res     1
+0008                  00137 r0x1017 res     1
+0009                  00138 r0x1018 res     1
+0009                  00139 r0x101A res     1
+000A                  00140 r0x1019 res     1
+000A                  00141 r0x101B res     1
+000B                  00142 r0x101C res     1
+000B                  00143 r0x101D res     1
+000C                  00144 r0x101E res     1
+000C                  00145 r0x1020 res     1
+000D                  00146 r0x101F res     1
+000D                  00147 _Dispose_AD_arrayAD_1_12        res     12
+                      00148 ;--------------------------------------------------------
+                      00149 ; initialized data
+                      00150 ;--------------------------------------------------------
+                      00151 ;--------------------------------------------------------
+                      00152 ; overlayable items in internal ram 
+                      00153 ;--------------------------------------------------------
+                      00154 ;       udata_ovr
+                      00155 ;--------------------------------------------------------
+                      00156 ; code
+                      00157 ;--------------------------------------------------------
+                      00158 code_adcsbr     code
+                      00159 ;***
+                      00160 ;  pBlock Stats: dbName = C
+                      00161 ;***
+                      00162 ;entry:  _Dispose_AD    ;Function start
+                      00163 ; 2 exit points
+                      00164 ;has an exit
+                      00165 ;functions called:
+                      00166 ;   _AD_Check
+                      00167 ;   _Compare_AD
+                      00168 ;   _AD_Check
+                      00169 ;   _Compare_AD
+                      00170 ;8 compiler assigned registers:
+                      00171 ;   r0x101B
+                      00172 ;   r0x101C
+                      00173 ;   r0x101D
+                      00174 ;   r0x101E
+                      00175 ;   r0x101F
+                      00176 ;   STK00
+                      00177 ;   r0x1020
+                      00178 ;   STK01
+                      00179 ;; Starting pCode block
+0000                  00180 _Dispose_AD     ;Function start
+                      00181 ; 2 exit points
+                      00182 ;       .line   59; "adcsbr.c"  uint Dispose_AD(uchar adway)
+0000   5600           00183         MOVRA   r0x101B
+                      00184 ;       .line   63; "adcsbr.c"  for(i=0;i<6;i++)
+0001   7600           00185         CLRR    r0x101C
+                      00186 ;;unsigned compare: left < lit(0x6=6), size=1
+0002                  00187 _00149_DS_
+0002   3C06           00188         MOVAI   0x06
+0003   4800           00189         RSUBAR  r0x101C
+0004   F187           00190         JBCLR   STATUS,0
+0005   A000           00191         GOTO    _00152_DS_
+                      00192 ;;genSkipc:3246: created from rifx:0022608C
+                      00193 ;       .line   65; "adcsbr.c"  arrayAD[i] = AD_Check(adway);
+0006   D187           00194         BCLR    STATUS,0
+0007   5000           00195         RLAR    r0x101C
+0008   5600           00196         MOVRA   r0x101D
+0009   5800           00197         MOVAR   r0x101D
+000A   3F00           00198         ADDAI   (_Dispose_AD_arrayAD_1_12 + 0)
+000B   5600           00199         MOVRA   r0x101D
+000C   3C00           00200         MOVAI   high (_Dispose_AD_arrayAD_1_12 + 0)
+000D   F187           00201         JBCLR   STATUS,0
+000E   3F01           00202         ADDAI   0x01
+000F   5600           00203         MOVRA   r0x101E
+0010   5800           00204         MOVAR   r0x101B
+0011   8000           00205         CALL    _AD_Check
+0012   5600           00206         MOVRA   r0x101F
+0013   5800           00207         MOVAR   STK00
+0014   5600           00208         MOVRA   r0x1020
+0015   5800           00209         MOVAR   r0x101D
+0016   5784           00210         MOVRA   FSR
+0017   DF87           00211         BCLR    STATUS,7
+0018   F000           00212         JBCLR   r0x101E,0
+0019   CF87           00213         BSET    STATUS,7
+001A   5800           00214         MOVAR   r0x1020
+001B   5780           00215         MOVRA   INDF
+001C   6784           00216         INCR    FSR
+001D   5800           00217         MOVAR   r0x101F
+001E   5780           00218         MOVRA   INDF
+                      00219 ;       .line   63; "adcsbr.c"  for(i=0;i<6;i++)
+001F   6600           00220         INCR    r0x101C
+0020   A000           00221         GOTO    _00149_DS_
+0021                  00222 _00152_DS_
+                      00223 ;       .line   67; "adcsbr.c"  return Compare_AD(arrayAD);
+0021   3C00           00224         MOVAI   high (_Dispose_AD_arrayAD_1_12 + 0)
+0022   5600           00225         MOVRA   r0x101C
+0023   3C00           00226         MOVAI   (_Dispose_AD_arrayAD_1_12 + 0)
+0024   5600           00227         MOVRA   r0x101B
+0025   7600           00228         CLRR    r0x101D
+0026   5800           00229         MOVAR   r0x101B
+0027   5600           00230         MOVRA   STK01
+0028   5800           00231         MOVAR   r0x101C
+0029   5600           00232         MOVRA   STK00
+002A   3C00           00233         MOVAI   0x00
+002B   8000           00234         CALL    _Compare_AD
+002C   5600           00235         MOVRA   r0x101C
+002D   5800           00236         MOVAR   STK00
+002E   5600           00237         MOVRA   r0x101B
+002F   5800           00238         MOVAR   r0x101B
+0030   5600           00239         MOVRA   STK00
+0031   5800           00240         MOVAR   r0x101C
+0032   000C           00241         RETURN  
+                      00242 ; exit point of _Dispose_AD
+                      00243 
+                      00244 ;***
+                      00245 ;  pBlock Stats: dbName = C
+                      00246 ;***
+                      00247 ;entry:  _Compare_AD    ;Function start
+                      00248 ; 2 exit points
+                      00249 ;has an exit
+                      00250 ;functions called:
+                      00251 ;   __gptrget2
+                      00252 ;   __mulchar
+                      00253 ;   __gptrget2
+                      00254 ;   __gptrput2
+                      00255 ;   __gptrput2
+                      00256 ;   __gptrget2
+                      00257 ;   __gptrget2
+                      00258 ;   __gptrget2
+                      00259 ;   __mulchar
+                      00260 ;   __gptrget2
+                      00261 ;   __gptrput2
+                      00262 ;   __gptrput2
+                      00263 ;   __gptrget2
+                      00264 ;   __gptrget2
+                      00265 ;19 compiler assigned registers:
+                      00266 ;   r0x100C
+                      00267 ;   STK00
+                      00268 ;   r0x100D
+                      00269 ;   STK01
+                      00270 ;   r0x100E
+                      00271 ;   r0x100F
+                      00272 ;   r0x1010
+                      00273 ;   r0x1011
+                      00274 ;   r0x1012
+                      00275 ;   r0x1013
+                      00276 ;   r0x1014
+                      00277 ;   r0x1015
+                      00278 ;   r0x1016
+                      00279 ;   r0x1017
+                      00280 ;   r0x1018
+                      00281 ;   r0x1019
+                      00282 ;   r0x101A
+                      00283 ;   STK02
+                      00284 ;   STK03
+                      00285 ;; Starting pCode block
+0033                  00286 _Compare_AD     ;Function start
+                      00287 ; 2 exit points
+                      00288 ;       .line   38; "adcsbr.c"  uint Compare_AD(uint str[])//(uint  *str)//(uint str[])// ////// 冒泡法排序
+0033   5600           00289         MOVRA   r0x100C
+0034   5800           00290         MOVAR   STK00
+0035   5600           00291         MOVRA   r0x100D
+0036   5800           00292         MOVAR   STK01
+0037   5600           00293         MOVRA   r0x100E
+                      00294 ;       .line   43; "adcsbr.c"  for(i=0;i<5;i++) //比较的数是6-1
+0038   7600           00295         CLRR    r0x100F
+                      00296 ;;unsigned compare: left < lit(0x5=5), size=1
+0039                  00297 _00124_DS_
+0039   3C05           00298         MOVAI   0x05
+003A   4800           00299         RSUBAR  r0x100F
+003B   F187           00300         JBCLR   STATUS,0
+003C   A000           00301         GOTO    _00127_DS_
+                      00302 ;;genSkipc:3246: created from rifx:0022608C
+                      00303 ;       .line   45; "adcsbr.c"  for(j = 0;j<5-i;j++)
+003D   7600           00304         CLRR    r0x1010
+                      00305 ;;100   MOVAR   r0x100F
+003E                  00306 _00120_DS_
+003E   7600           00307         CLRR    r0x1012
+                      00308 ;;99    MOVAR   r0x1011
+003F   5800           00309         MOVAR   r0x100F
+0040   5600           00310         MOVRA   r0x1011
+0041   3A05           00311         ISUBAI  0x05
+0042   5600           00312         MOVRA   r0x1011
+0043   3C00           00313         MOVAI   0x00
+0044   E187           00314         JBSET   STATUS,0
+0045   6400           00315         INCAR   r0x1012
+0046   3A00           00316         ISUBAI  0x00
+0047   5600           00317         MOVRA   r0x1012
+0048   5800           00318         MOVAR   r0x1010
+0049   5600           00319         MOVRA   r0x1013
+004A   7600           00320         CLRR    r0x1014
+004B   3C00           00321         MOVAI   0x00
+004C   3F80           00322         ADDAI   0x80
+004D   5600           00323         MOVRA   r0x1015
+004E   5800           00324         MOVAR   r0x1012
+004F   3F80           00325         ADDAI   0x80
+0050   4800           00326         RSUBAR  r0x1015
+0051   E587           00327         JBSET   STATUS,2
+0052   A000           00328         GOTO    _00143_DS_
+0053   5800           00329         MOVAR   r0x1011
+0054   4800           00330         RSUBAR  r0x1013
+0055                  00331 _00143_DS_
+0055   F187           00332         JBCLR   STATUS,0
+0056   A000           00333         GOTO    _00126_DS_
+                      00334 ;;genSkipc:3246: created from rifx:0022608C
+                      00335 ;       .line   47; "adcsbr.c"  if(str[j+1]>str[j])
+0057   6600           00336         INCR    r0x1013
+0058   F587           00337         JBCLR   STATUS,2
+0059   6600           00338         INCR    r0x1014
+005A   D187           00339         BCLR    STATUS,0
+005B   5000           00340         RLAR    r0x1013
+005C   5600           00341         MOVRA   r0x1011
+005D   5000           00342         RLAR    r0x1014
+005E   5600           00343         MOVRA   r0x1012
+005F   5800           00344         MOVAR   r0x1011
+0060   7C00           00345         ADDAR   r0x100E
+0061   5600           00346         MOVRA   r0x1011
+                      00347 ;;102   MOVAR   r0x100D
+                      00348 ;;101   MOVAR   r0x1012
+0062   5800           00349         MOVAR   r0x100D
+0063   5600           00350         MOVRA   r0x1012
+0064   F187           00351         JBCLR   STATUS,0
+0065   6000           00352         JZAR    r0x1012
+0066   7E00           00353         ADDRA   r0x1012
+0067   5800           00354         MOVAR   r0x100C
+0068   F187           00355         JBCLR   STATUS,0
+0069   3F01           00356         ADDAI   0x01
+006A   5600           00357         MOVRA   r0x1013
+006B   5800           00358         MOVAR   r0x1011
+006C   5600           00359         MOVRA   STK01
+006D   5800           00360         MOVAR   r0x1012
+006E   5600           00361         MOVRA   STK00
+006F   5800           00362         MOVAR   r0x1013
+0070   8000           00363         CALL    __gptrget2
+0071   5600           00364         MOVRA   r0x1015
+0072   5800           00365         MOVAR   STK00
+0073   5600           00366         MOVRA   r0x1014
+0074   3C02           00367         MOVAI   0x02
+0075   5600           00368         MOVRA   STK00
+0076   5800           00369         MOVAR   r0x1010
+0077   8000           00370         CALL    __mulchar
+0078   5600           00371         MOVRA   r0x1016
+0079   7600           00372         CLRR    r0x1017
+007A   5800           00373         MOVAR   r0x1016
+007B   7C00           00374         ADDAR   r0x100E
+007C   5600           00375         MOVRA   r0x1016
+                      00376 ;;104   MOVAR   r0x100D
+                      00377 ;;103   MOVAR   r0x1017
+007D   5800           00378         MOVAR   r0x100D
+007E   5600           00379         MOVRA   r0x1017
+007F   F187           00380         JBCLR   STATUS,0
+0080   6000           00381         JZAR    r0x1017
+0081   7E00           00382         ADDRA   r0x1017
+0082   5800           00383         MOVAR   r0x100C
+0083   F187           00384         JBCLR   STATUS,0
+0084   3F01           00385         ADDAI   0x01
+0085   5600           00386         MOVRA   r0x1018
+0086   5800           00387         MOVAR   r0x1016
+0087   5600           00388         MOVRA   STK01
+0088   5800           00389         MOVAR   r0x1017
+0089   5600           00390         MOVRA   STK00
+008A   5800           00391         MOVAR   r0x1018
+008B   8000           00392         CALL    __gptrget2
+008C   5600           00393         MOVRA   r0x1019
+008D   5800           00394         MOVAR   STK00
+008E   5600           00395         MOVRA   r0x101A
+008F   5800           00396         MOVAR   r0x1015
+0090   4800           00397         RSUBAR  r0x1019
+0091   E587           00398         JBSET   STATUS,2
+0092   A000           00399         GOTO    _00144_DS_
+0093   5800           00400         MOVAR   r0x1014
+0094   4800           00401         RSUBAR  r0x101A
+0095                  00402 _00144_DS_
+0095   F187           00403         JBCLR   STATUS,0
+0096   A000           00404         GOTO    _00122_DS_
+                      00405 ;;genSkipc:3246: created from rifx:0022608C
+                      00406 ;       .line   50; "adcsbr.c"  str[j] = str[j+1];
+0097   5800           00407         MOVAR   r0x1015
+0098   5600           00408         MOVRA   STK02
+0099   5800           00409         MOVAR   r0x1014
+009A   5600           00410         MOVRA   STK03
+009B   5800           00411         MOVAR   r0x1016
+009C   5600           00412         MOVRA   STK01
+009D   5800           00413         MOVAR   r0x1017
+009E   5600           00414         MOVRA   STK00
+009F   5800           00415         MOVAR   r0x1018
+00A0   8000           00416         CALL    __gptrput2
+                      00417 ;       .line   51; "adcsbr.c"  str[j+1] = temp;
+00A1   5800           00418         MOVAR   r0x1019
+00A2   5600           00419         MOVRA   STK02
+00A3   5800           00420         MOVAR   r0x101A
+00A4   5600           00421         MOVRA   STK03
+00A5   5800           00422         MOVAR   r0x1011
+00A6   5600           00423         MOVRA   STK01
+00A7   5800           00424         MOVAR   r0x1012
+00A8   5600           00425         MOVRA   STK00
+00A9   5800           00426         MOVAR   r0x1013
+00AA   8000           00427         CALL    __gptrput2
+00AB                  00428 _00122_DS_
+                      00429 ;       .line   45; "adcsbr.c"  for(j = 0;j<5-i;j++)
+00AB   6600           00430         INCR    r0x1010
+00AC   A000           00431         GOTO    _00120_DS_
+00AD                  00432 _00126_DS_
+                      00433 ;       .line   43; "adcsbr.c"  for(i=0;i<5;i++) //比较的数是6-1
+00AD   6600           00434         INCR    r0x100F
+00AE   A000           00435         GOTO    _00124_DS_
+00AF                  00436 _00127_DS_
+                      00437 ;       .line   55; "adcsbr.c"  return ((uint)(str[2]+str[3])/2);
+00AF   3C04           00438         MOVAI   0x04
+00B0   7C00           00439         ADDAR   r0x100E
+00B1   5600           00440         MOVRA   r0x100F
+00B2   7600           00441         CLRR    r0x1010
+00B3   5200           00442         RLR     r0x1010
+00B4   5800           00443         MOVAR   r0x100D
+00B5   7E00           00444         ADDRA   r0x1010
+00B6   7600           00445         CLRR    r0x1011
+00B7   5200           00446         RLR     r0x1011
+00B8   5800           00447         MOVAR   r0x100C
+00B9   7E00           00448         ADDRA   r0x1011
+00BA   5800           00449         MOVAR   r0x100F
+00BB   5600           00450         MOVRA   STK01
+00BC   5800           00451         MOVAR   r0x1010
+00BD   5600           00452         MOVRA   STK00
+00BE   5800           00453         MOVAR   r0x1011
+00BF   8000           00454         CALL    __gptrget2
+00C0   5600           00455         MOVRA   r0x1013
+00C1   5800           00456         MOVAR   STK00
+00C2   5600           00457         MOVRA   r0x1012
+00C3   3C06           00458         MOVAI   0x06
+00C4   7E00           00459         ADDRA   r0x100E
+00C5   F187           00460         JBCLR   STATUS,0
+00C6   6600           00461         INCR    r0x100D
+00C7   F587           00462         JBCLR   STATUS,2
+00C8   6600           00463         INCR    r0x100C
+00C9   5800           00464         MOVAR   r0x100E
+00CA   5600           00465         MOVRA   STK01
+00CB   5800           00466         MOVAR   r0x100D
+00CC   5600           00467         MOVRA   STK00
+00CD   5800           00468         MOVAR   r0x100C
+00CE   8000           00469         CALL    __gptrget2
+00CF   5600           00470         MOVRA   r0x1010
+00D0   5800           00471         MOVAR   STK00
+00D1   5600           00472         MOVRA   r0x100F
+00D2   5800           00473         MOVAR   r0x100F
+00D3   7E00           00474         ADDRA   r0x1012
+00D4   5800           00475         MOVAR   r0x1010
+00D5   F187           00476         JBCLR   STATUS,0
+00D6   6000           00477         JZAR    r0x1010
+00D7   7E00           00478         ADDRA   r0x1013
+                      00479 ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=0, offr=0
+00D8   D187           00480         BCLR    STATUS,0
+00D9   4C00           00481         RRAR    r0x1013
+00DA   5600           00482         MOVRA   r0x100D
+00DB   4C00           00483         RRAR    r0x1012
+00DC   5600           00484         MOVRA   r0x100E
+00DD   5800           00485         MOVAR   r0x100E
+00DE   5600           00486         MOVRA   STK00
+00DF   5800           00487         MOVAR   r0x100D
+00E0   000C           00488         RETURN  
+                      00489 ; exit point of _Compare_AD
+                      00490 
+                      00491 ;***
+                      00492 ;  pBlock Stats: dbName = C
+                      00493 ;***
+                      00494 ;entry:  _Battery_Check ;Function start
+                      00495 ; 2 exit points
+                      00496 ;has an exit
+                      00497 ;functions called:
+                      00498 ;   _AD_Check
+                      00499 ;   _AD_Check
+                      00500 ;7 compiler assigned registers:
+                      00501 ;   r0x1021
+                      00502 ;   r0x1022
+                      00503 ;   r0x1023
+                      00504 ;   r0x1024
+                      00505 ;   r0x1025
+                      00506 ;   STK00
+                      00507 ;   r0x1026
+                      00508 ;; Starting pCode block
+00E1                  00509 _Battery_Check  ;Function start
+                      00510 ; 2 exit points
+                      00511 ;       .line   26; "adcsbr.c"  uint Battery_Check(uchar number)
+00E1   5600           00512         MOVRA   r0x1021
+                      00513 ;       .line   29; "adcsbr.c"  uint sum = 0;
+00E2   7600           00514         CLRR    r0x1022
+00E3   7600           00515         CLRR    r0x1023
+                      00516 ;       .line   30; "adcsbr.c"  for(i=0;i<8;i++)
+00E4   7600           00517         CLRR    r0x1024
+                      00518 ;;unsigned compare: left < lit(0x8=8), size=1
+00E5                  00519 _00110_DS_
+00E5   3C08           00520         MOVAI   0x08
+00E6   4800           00521         RSUBAR  r0x1024
+00E7   F187           00522         JBCLR   STATUS,0
+00E8   A000           00523         GOTO    _00113_DS_
+                      00524 ;;genSkipc:3246: created from rifx:0022608C
+                      00525 ;       .line   32; "adcsbr.c"  sum += AD_Check(number);
+00E9   5800           00526         MOVAR   r0x1021
+00EA   8000           00527         CALL    _AD_Check
+00EB   5600           00528         MOVRA   r0x1025
+00EC   5800           00529         MOVAR   STK00
+00ED   5600           00530         MOVRA   r0x1026
+00EE   5800           00531         MOVAR   r0x1026
+00EF   7E00           00532         ADDRA   r0x1022
+00F0   5800           00533         MOVAR   r0x1025
+00F1   F187           00534         JBCLR   STATUS,0
+00F2   6000           00535         JZAR    r0x1025
+00F3   7E00           00536         ADDRA   r0x1023
+                      00537 ;       .line   30; "adcsbr.c"  for(i=0;i<8;i++)
+00F4   6600           00538         INCR    r0x1024
+00F5   A000           00539         GOTO    _00110_DS_
+                      00540 ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=0, offr=0
+00F6                  00541 _00113_DS_
+                      00542 ;       .line   34; "adcsbr.c"  return  (sum/8);
+00F6   D187           00543         BCLR    STATUS,0
+00F7   4C00           00544         RRAR    r0x1023
+00F8   5600           00545         MOVRA   r0x1024
+00F9   4C00           00546         RRAR    r0x1022
+00FA   5600           00547         MOVRA   r0x1021
+                      00548 ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=1, offr=0
+00FB   D187           00549         BCLR    STATUS,0
+00FC   4E00           00550         RRR     r0x1024
+00FD   4E00           00551         RRR     r0x1021
+                      00552 ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=1, offr=0
+00FE   D187           00553         BCLR    STATUS,0
+00FF   4E00           00554         RRR     r0x1024
+0100   4E00           00555         RRR     r0x1021
+0101   5800           00556         MOVAR   r0x1021
+0102   5600           00557         MOVRA   STK00
+0103   5800           00558         MOVAR   r0x1024
+0104   000C           00559         RETURN  
+                      00560 ; exit point of _Battery_Check
+                      00561 
+                      00562 ;***
+                      00563 ;  pBlock Stats: dbName = C
+                      00564 ;***
+                      00565 ;entry:  _AD_Check      ;Function start
+                      00566 ; 2 exit points
+                      00567 ;has an exit
+                      00568 ;7 compiler assigned registers:
+                      00569 ;   r0x100C
+                      00570 ;   r0x100D
+                      00571 ;   r0x100E
+                      00572 ;   r0x100F
+                      00573 ;   r0x1010
+                      00574 ;   r0x1011
+                      00575 ;   STK00
+                      00576 ;; Starting pCode block
+0105                  00577 _AD_Check       ;Function start
+                      00578 ; 2 exit points
+                      00579 ;       .line   10; "adcsbr.c"  uint AD_Check(uchar AD_enter) //检测AD
+0105   5600           00580         MOVRA   r0x100C
+                      00581 ;       .line   13; "adcsbr.c"  ADCHS = AD_enter; //选择通道
+0106   5800           00582         MOVAR   r0x100C
+0107   3E0F           00583         ANDAI   0x0f
+0108   5600           00584         MOVRA   r0x100D
+0109   4600           00585         SWAPR   r0x100D
+010A   3CF0           00586         MOVAI   0xf0
+010B   7A00           00587         ANDRA   r0x100D
+010C   5800           00588         MOVAR   (_ADCR0bits + 0)
+010D   3E0F           00589         ANDAI   0x0f
+010E   5C00           00590         ORAR    r0x100D
+010F   5600           00591         MOVRA   (_ADCR0bits + 0)
+                      00592 ;       .line   14; "adcsbr.c"  ADCKS = 3; //AD时钟频率不分频
+0110   5800           00593         MOVAR   (_ADCR0bits + 0)
+0111   3D0C           00594         ORAI    0x0c
+0112   5600           00595         MOVRA   (_ADCR0bits + 0)
+0113   0000           00596         nop
+0114   0000           00597         nop
+0115   0000           00598         nop
+                      00599 ;       .line   18; "adcsbr.c"  ADON = 1; //启动AD
+0116   C000           00600         BSET    _ADCR0bits,0
+                      00601 ;       .line   19; "adcsbr.c"  ADEOC = 0;
+0117   D200           00602         BCLR    _ADCR0bits,1
+0118                  00603 _00105_DS_
+                      00604 ;       .line   20; "adcsbr.c"  while(ADEOC==0);//AD转换中
+0118   E200           00605         JBSET   _ADCR0bits,1
+0119   A000           00606         GOTO    _00105_DS_
+                      00607 ;       .line   21; "adcsbr.c"  AD_Value = ADRH; //获取AD值
+011A   5800           00608         MOVAR   _ADRH
+011B   5600           00609         MOVRA   r0x100C
+011C   7600           00610         CLRR    r0x100D
+                      00611 ;       .line   22; "adcsbr.c"  AD_Value = (AD_Value<<4)|ADRL; 
+011D   4400           00612         SWAPAR  r0x100D
+011E   3EF0           00613         ANDAI   0xf0
+011F   5600           00614         MOVRA   r0x100E
+0120   4400           00615         SWAPAR  r0x100C
+0121   5600           00616         MOVRA   r0x100F
+0122   3E0F           00617         ANDAI   0x0f
+0123   5E00           00618         ORRA    r0x100E
+0124   4200           00619         XORRA   r0x100F
+0125   5800           00620         MOVAR   _ADRL
+0126   5600           00621         MOVRA   r0x1010
+                      00622 ;;1     CLRR    r0x1011
+0127   5800           00623         MOVAR   r0x1010
+0128   5C00           00624         ORAR    r0x100F
+0129   5600           00625         MOVRA   r0x100C
+012A   3C00           00626         MOVAI   0x00
+012B   5C00           00627         ORAR    r0x100E
+012C   5600           00628         MOVRA   r0x100D
+                      00629 ;       .line   23; "adcsbr.c"  return AD_Value;
+012D   5800           00630         MOVAR   r0x100C
+012E   5600           00631         MOVRA   STK00
+012F   5800           00632         MOVAR   r0x100D
+0130   000C           00633         RETURN  
+                      00634 ; exit point of _AD_Check
+                      00635 
+                      00636 
+                      00637 ;       code size estimation:
+                      00638 ;         302+    0 =   302 instructions (  604 byte)
+                      00639 
+                      00640         end
+gpasm-1.4.1_beta1 (Oct 15 2013)adcsbr.asm         2013-12-13  13:44:47         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBIE                              00000004
+KBIF                              00000004
+KBIM                              00000197
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+LFEN                              00000001
+LVDCR                             000001AD
+LVDEN                             00000007
+LVDF                              00000000
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCAL                             000001FB
+OSCM                              000001AE
+P00                               00000000
+P00ANS                            00000000
+P00OE                             00000000
+P00PU                             00000000
+P01                               00000001
+P01ANS                            00000001
+P01OE                             00000001
+P01PU                             00000001
+P02                               00000002
+P02ANS                            00000002
+P02OE                             00000002
+P02PU                             00000002
+P03                               00000003
+P03ANS                            00000003
+P03OE                             00000003
+P03PU                             00000003
+P04                               00000004
+P04ANS                            00000004
+P04OE                             00000004
+P04PU                             00000004
+P10                               00000000
+P10OE                             00000000
+P10PU                             00000000
+P11                               00000001
+P11OE                             00000001
+P11PU                             00000001
+P12                               00000002
+P12ANS                            00000005
+P12OE                             00000002
+P12PU                             00000002
+P13                               00000003
+P13ANS                            00000006
+P13OE                             00000003
+P13PU                             00000003
+P14                               00000004
+P14OE                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OE                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OE                             00000006
+P16PU                             00000006
+PCL                               00000186
+PD                                00000004
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STATUS                            00000187
+STBH                              00000004
+STBL                              00000005
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+Z                                 00000002
+_00105_DS_                        00000118
+_00110_DS_                        000000E5
+_00113_DS_                        000000F6
+_00120_DS_                        0000003E
+_00122_DS_                        000000AB
+_00124_DS_                        00000039
+_00126_DS_                        000000AD
+_00127_DS_                        000000AF
+_00143_DS_                        00000055
+_00144_DS_                        00000095
+_00149_DS_                        00000002
+_00152_DS_                        00000021
+_ABuf                             00000000
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADRH                             00000000
+_ADRL                             00000000
+_AD_Check                         00000105
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_BAT_avgAD                        00000000
+_Battery_Check                    000000E1
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_CP_ALL                           00007FFF
+_Compare_AD                       00000033
+_DisplayMode                      00000000
+_Dispose_AD                       00000000
+_Dispose_AD_arrayAD_1_12          0000001B
+_FCPU_128T                        0000FFEF
+_FCPU_16T                         0000FFBF
+_FCPU_256T                        0000FFFF
+_FCPU_2T                          0000FF8F
+_FCPU_32T                         0000FFCF
+_FCPU_4T                          0000FF9F
+_FCPU_64T                         0000FFDF
+_FCPU_8T                          0000FFAF
+_FSR                              00000000
+_FSR0                             00000000
+_FSR1                             00000000
+_Flag                             00000000
+_Flag1                            00000000
+_HIBYTE                           00000000
+_HRC_LRC                          0000FCFF
+_HRC_LXT                          0000FDFF
+_HXT_LRC                          0000FEFF
+_INDF                             00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INDF3                            00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_Keycode                          00000000
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_Last_BATAD                       00000000
+_Load_avgAD                       00000000
+_Load_avgAD2                      00000000
+_MCLR_OFF                         0000FF7F
+_MCLR_ON                          0000FFFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MasterTime_100ms                 00000000
+_MasterTime_10ms                  00000000
+_MasterTime_1ms                   00000000
+_MasterTime_1s                    00000000
+_NoLoadCount                      00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCAL                            00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PTWRT_16_1024                    0000FFF7
+_PTWRT_16_16                      0000DFF7
+_PTWRT_256_256                    0000DFFF
+_PTWRT_256_4096                   0000FFFF
+_PTWRT_4_4                        0000DFF3
+_PTWRT_4_512                      0000FFF3
+_PTWRT_64_2048                    0000FFFB
+_PTWRT_64_64                      0000DFFB
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_StatusBuf                        00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0LOAD                           00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_VLVR_160                         0000E3FF
+_VLVR_185                         0000E7FF
+_VLVR_205                         0000EBFF
+_VLVR_218                         0000EFFF
+_VLVR_232                         0000F3FF
+_VLVR_245                         0000F7FF
+_VLVR_305                         0000FBFF
+_VLVR_360                         0000FFFF
+_WDT_ALWAYS_OFF                   0000FFFC
+_WDT_ALWAYS_ON                    0000FFFF
+_WDT_SLEEP_OFF                    0000FFFD
+_ZNB602Register                   00000000
+__32P21                           00000001
+__gptrget2                        00000000
+__gptrput2                        00000000
+__mulchar                         00000000
+_key_cnt                          00000000
+_key_press_time                   00000000
+_key_time                         00000000
+_short_press_time                 00000000
+_sleeptime                        00000000
+r0x100C                           00000000
+r0x100D                           00000001
+r0x100E                           00000003
+r0x100F                           00000002
+r0x1010                           00000004
+r0x1011                           0000000B
+r0x1012                           0000000C
+r0x1013                           0000000D
+r0x1014                           0000000E
+r0x1015                           0000000F
+r0x1016                           00000010
+r0x1017                           00000011
+r0x1018                           00000012
+r0x1019                           00000014
+r0x101A                           00000013
+r0x101B                           00000015
+r0x101C                           00000016
+r0x101D                           00000017
+r0x101E                           00000018
+r0x101F                           0000001A
+r0x1020                           00000019
+r0x1021                           00000005
+r0x1022                           00000006
+r0x1023                           00000007
+r0x1024                           00000008
+r0x1025                           0000000A
+r0x1026                           00000009
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

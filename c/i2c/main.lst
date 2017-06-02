@@ -1,0 +1,451 @@
+gpasm-1.3.1 (Jul  9 2013)    main.asm           2013-8-2  17:27:06           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                      00004 ; This file was generated Fri Aug 02 17:27:05 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+Warning[231]: directive ignored when debug info is disabled
+                      00008         .file   "main.c"
+                      00009         list    p=30p011
+                      00010         radix dec
+                      00011         include "mc30p011.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _i2cint
+                      00016         extern  _i2cout
+                      00017         extern  _i
+                      00018         extern  _j
+                      00019         extern  _n
+                      00020         extern  _table
+                      00021         extern  __gptrget1
+                      00022         extern  __sdcc_gsinit_startup
+                      00023 ;--------------------------------------------------------
+                      00024 ; global declarations
+                      00025 ;--------------------------------------------------------
+                      00026         global  _main
+                      00027 
+                      00028         global STK06
+                      00029         global STK05
+                      00030         global STK04
+                      00031         global STK03
+                      00032         global STK02
+                      00033         global STK01
+                      00034         global STK00
+                      00035 
+                      00036 sharebank udata_ovr 0x0010
+0008                  00037 STK06   res 1
+0008                  00038 STK05   res 1
+0009                  00039 STK04   res 1
+0009                  00040 STK03   res 1
+000A                  00041 STK02   res 1
+000A                  00042 STK01   res 1
+000B                  00043 STK00   res 1
+                      00044 
+                      00045 ;--------------------------------------------------------
+                      00046 ; global definitions
+                      00047 ;--------------------------------------------------------
+                      00048 ;--------------------------------------------------------
+                      00049 ; absolute symbol definitions
+                      00050 ;--------------------------------------------------------
+                      00051 ;--------------------------------------------------------
+                      00052 ; compiler-defined variables
+                      00053 ;--------------------------------------------------------
+                      00054 UDL_main_0      udata
+0000                  00055 r0x1002 res     1
+0000                  00056 r0x1003 res     1
+                      00057 ;--------------------------------------------------------
+                      00058 ; initialized data
+                      00059 ;--------------------------------------------------------
+                      00060 ;--------------------------------------------------------
+                      00061 ; overlayable items in internal ram 
+                      00062 ;--------------------------------------------------------
+                      00063 ;       udata_ovr
+                      00064 ;--------------------------------------------------------
+                      00065 ; reset vector 
+                      00066 ;--------------------------------------------------------
+                      00067 STARTUP code 0x0000
+0000   2800           00068         goto    __sdcc_gsinit_startup
+                      00069 ;--------------------------------------------------------
+                      00070 ; code
+                      00071 ;--------------------------------------------------------
+                      00072 code_main       code
+                      00073 ;***
+                      00074 ;  pBlock Stats: dbName = M
+                      00075 ;***
+                      00076 ;entry:  _main  ;Function start
+                      00077 ; 2 exit points
+                      00078 ;has an exit
+                      00079 ;functions called:
+                      00080 ;   _i2cint
+                      00081 ;   __gptrget1
+                      00082 ;   _i2cout
+                      00083 ;   _i2cint
+                      00084 ;   __gptrget1
+                      00085 ;   _i2cout
+                      00086 ;4 compiler assigned registers:
+                      00087 ;   r0x1002
+                      00088 ;   r0x1003
+                      00089 ;   STK01
+                      00090 ;   STK00
+                      00091 ;; Starting pCode block
+                      00092 ;;; gen.c:2315:resultRemat *{*
+                      00093 ;;; gen.c:2759:genLabel *{*
+                      00094 ;; ***  genLabel  2762
+                      00095 ;;; gen.c:2315:resultRemat *{*
+                      00096 ;;; gen.c:2339:genFunction *{*
+                      00097 ;; ***  genFunction  2341 curr label offset=0previous max_key=0 
+0000                  00098 _main   ;Function start
+                      00099 ; 2 exit points
+                      00100 ;;; gen.c:2315:resultRemat *{*
+                      00101 ;;; gen.c:2085:genCall *{*
+                      00102 ;; ***  genCall  2087
+                      00103 ;;; gen.c:1800:saveRegisters *{*
+                      00104 ;; ***  saveRegisters  1802
+                      00105 ;; >>> gen.c:2174:genCall
+Warning[231]: directive ignored when debug info is disabled
+                      00106         .line   9; "main.c"     i2cint();     
+0000   2000           00107         CALL    _i2cint
+                      00108 ;;; gen.c:1844:unsaveRegisters *{*
+                      00109 ;; ***  unsaveRegisters  1846
+                      00110 ;;; gen.c:2315:resultRemat *{*
+                      00111 ;;; gen.c:2759:genLabel *{*
+                      00112 ;; ***  genLabel  2762
+                      00113 ;;; gen.c:2315:resultRemat *{*
+                      00114 ;;; gen.c:6910:genAssign *{*
+                      00115 ;; ***  genAssign  6911
+                      00116 ;; ***  aopForSym 315
+                      00117 ;;      327 sym->rname = _i, size = 1
+                      00118 ;;      line = 6920 result AOP_DIR=_i, size=1, left -=-, size=0, right AOP_LIT=0x00, size=1
+                      00119 ;; ***  genAssign  7006
+                      00120 ;; >>> gen.c:7018:genAssign
+                      00121 ;;      1009
+                      00122 ;;      1028  _i   offset=0
+0001                  00123 _00106_DS_
+Warning[231]: directive ignored when debug info is disabled
+                      00124         .line   12; "main.c"    for(i=0x00;i<=127;++i)
+0001   1D80           00125         CLRR    _i
+                      00126 ;;; gen.c:2315:resultRemat *{*
+                      00127 ;;; gen.c:2315:resultRemat *{*
+                      00128 ;;; gen.c:2759:genLabel *{*
+                      00129 ;; ***  genLabel  2762
+                      00130 ;;; gen.c:2315:resultRemat *{*
+                      00131 ;;; gen.c:3546:genCmpGt *{*
+                      00132 ;; ***  genCmpGt  3547
+                      00133 ;; ***  aopForSym 315
+                      00134 ;;      327 sym->rname = _i, size = 1
+                      00135 ;;; gen.c:3293:genCmp *{*
+                      00136 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00137 ;;unsigned compare: left >= lit(0x80=128), size=1
+                      00138 ;; >>> gen.c:3264:pic14_mov2w_regOrLit
+0002                  00139 _00108_DS_
+0002   0B80           00140         MOVAI   0x80
+                      00141 ;; >>> gen.c:3431:genCmp
+                      00142 ;;      1009
+                      00143 ;;      1028  _i   offset=0
+0003   1200           00144         RSUBAR  _i
+                      00145 ;;; gen.c:3236:genSkipc *{*
+                      00146 ;; >>> gen.c:3241:genSkipc
+0004   3403           00147         JBCLR   STATUS,0
+                      00148 ;; >>> gen.c:3245:genSkipc
+                      00149 ;; ***  popGetLabel  key=2, label offset 4
+0005   2800           00150         GOTO    _00106_DS_
+                      00151 ;;genSkipc:3246: created from rifx:0022608C
+                      00152 ;;; gen.c:2315:resultRemat *{*
+                      00153 ;;; gen.c:2315:resultRemat *{*
+                      00154 ;; ***  genPlus  576
+                      00155 ;;; genarith.c:577:genPlus *{*
+                      00156 ;;      613
+                      00157 ;;      aopForRemat 392
+                      00158 ;;      418: rname _table, val 0, const = 0
+                      00159 ;; ***  aopForSym 315
+                      00160 ;;      327 sym->rname = _i, size = 1
+                      00161 ;;      694 register type nRegs=2
+                      00162 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00163 ;;      _table
+                      00164 ;;      line = 583 result AOP_REG=r0x1002, size=2, left AOP_PCODE=_table, size=2, right AOP_DIR=_i, size=1
+                      00165 ;;; genarith.c:142:genPlusIncr *{*
+                      00166 ;; ***  genPlusIncr  144
+                      00167 ;;      result AOP_REG, left AOP_PCODE, right AOP_DIR
+                      00168 ;; ***  genPlus  682
+                      00169 ;;      833: aopGet AOP_PCODE type PO_IMMEDIATE
+                      00170 ;;      _table
+                      00171 ;; >>> genarith.c:691:genPlus
+                      00172 ;;      1009
+                      00173 ;;      1028  _i   offset=0
+Warning[231]: directive ignored when debug info is disabled
+                      00174         .line   14; "main.c"    j=table[i]; 
+0006   1600           00175         MOVAR   _i
+                      00176 ;; >>> genarith.c:700:genPlus
+0007   0E00           00177         ADDAI   (_table + 0)
+                      00178 ;; >>> genarith.c:701:genPlus
+                      00179 ;;      1108 rIdx = r0x1002 
+0008   1580           00180         MOVRA   r0x1002
+                      00181 ;; >>> genarith.c:764:genPlus
+0009   0B00           00182         MOVAI   high (_table + 0)
+                      00183 ;; >>> genarith.c:765:genPlus
+000A   3403           00184         JBCLR   STATUS,0
+                      00185 ;; >>> genarith.c:766:genPlus
+000B   0E01           00186         ADDAI   0x01
+                      00187 ;; >>> genarith.c:767:genPlus
+                      00188 ;;      1108 rIdx = r0x1003 
+000C   1580           00189         MOVRA   r0x1003
+                      00190 ;;; gen.c:2315:resultRemat *{*
+                      00191 ;;; gen.c:6127:genPointerGet *{*
+                      00192 ;; ***  genPointerGet  6128
+                      00193 ;;; gen.c:6074:genConstPointerGet *{*
+                      00194 ;; ***  genConstPointerGet  6075
+                      00195 ;;      694 register type nRegs=2
+                      00196 ;; ***  aopForSym 315
+                      00197 ;;      327 sym->rname = _j, size = 1
+                      00198 ;;      line = 6079 result AOP_DIR=_j, size=1, left AOP_REG=r0x1002, size=2, right -=-, size=0
+                      00199 ;;       6081 getting const pointer
+                      00200 ;;; gen.c:1342:mov2w_op *{*
+                      00201 ;; ***  mov2w  1380  offset=0
+                      00202 ;; >>> gen.c:1385:mov2w
+                      00203 ;;      1108 rIdx = r0x1002 
+000D   1600           00204         MOVAR   r0x1002
+                      00205 ;; >>> gen.c:6097:genConstPointerGet
+                      00206 ;; ***  popRegFromIdx,1042  , rIdx=0x1e
+000E   1580           00207         MOVRA   STK01
+                      00208 ;;; gen.c:1342:mov2w_op *{*
+                      00209 ;; ***  mov2w  1380  offset=1
+                      00210 ;; >>> gen.c:1385:mov2w
+                      00211 ;;      1108 rIdx = r0x1003 
+000F   1600           00212         MOVAR   r0x1003
+                      00213 ;; >>> gen.c:6099:genConstPointerGet
+                      00214 ;; ***  popRegFromIdx,1042  , rIdx=0x1f
+0010   1580           00215         MOVRA   STK00
+                      00216 ;; >>> gen.c:6100:genConstPointerGet
+0011   0B80           00217         MOVAI   0x80
+                      00218 ;; >>> gen.c:1434:call_libraryfunc
+0012   2000           00219         CALL    __gptrget1
+                      00220 ;; >>> gen.c:1392:movwf
+                      00221 ;;      1009
+                      00222 ;;      1028  _j   offset=0
+0013   1580           00223         MOVRA   _j
+                      00224 ;;; gen.c:2315:resultRemat *{*
+                      00225 ;;; gen.c:2085:genCall *{*
+                      00226 ;; ***  genCall  2087
+                      00227 ;;; gen.c:1800:saveRegisters *{*
+                      00228 ;; ***  saveRegisters  1802
+                      00229 ;; >>> gen.c:2174:genCall
+Warning[231]: directive ignored when debug info is disabled
+                      00230         .line   15; "main.c"    i2cout(); 
+0014   2000           00231         CALL    _i2cout
+                      00232 ;;; gen.c:1844:unsaveRegisters *{*
+                      00233 ;; ***  unsaveRegisters  1846
+                      00234 ;;; gen.c:2315:resultRemat *{*
+                      00235 ;; ***  genPlus  576
+                      00236 ;;; genarith.c:577:genPlus *{*
+                      00237 ;; ***  aopForSym 315
+                      00238 ;;      327 sym->rname = _i, size = 1
+                      00239 ;;      line = 583 result AOP_DIR=_i, size=1, left AOP_DIR=_i, size=1, right AOP_LIT=0x01, size=1
+                      00240 ;;; genarith.c:142:genPlusIncr *{*
+                      00241 ;; ***  genPlusIncr  144
+                      00242 ;;      result AOP_DIR, left AOP_DIR, right AOP_LIT
+                      00243 ;;      genPlusIncr  156
+                      00244 ;; >>> genarith.c:168:genPlusIncr
+                      00245 ;;      1009
+                      00246 ;;      1028  _i   offset=0
+Warning[231]: directive ignored when debug info is disabled
+                      00247         .line   12; "main.c"    for(i=0x00;i<=127;++i)
+0015   1980           00248         INCR    _i
+                      00249 ;;; gen.c:2315:resultRemat *{*
+                      00250 ;;; gen.c:2777:genGoto *{*
+                      00251 ;; >>> gen.c:2779:genGoto
+                      00252 ;; ***  popGetLabel  key=4, label offset 4
+0016   2800           00253         GOTO    _00108_DS_
+                      00254 ;;; gen.c:2315:resultRemat *{*
+                      00255 ;;; gen.c:2759:genLabel *{*
+                      00256 ;; ***  genLabel  2762
+                      00257 ;;; gen.c:2315:resultRemat *{*
+                      00258 ;;; gen.c:2523:genEndFunction *{*
+                      00259 ;; ***  genEndFunction  2525
+0017   000C           00260         RETURN  
+                      00261 ; exit point of _main
+                      00262 
+                      00263 
+                      00264 ;       code size estimation:
+                      00265 ;          24+    0 =    24 instructions (   48 byte)
+                      00266 
+                      00267         end
+gpasm-1.3.1 (Jul  9 2013)    main.asm           2013-8-2  17:27:06           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000016
+STK01                             00000015
+STK02                             00000014
+STK03                             00000013
+STK04                             00000012
+STK05                             00000011
+STK06                             00000010
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00106_DS_                        00000001
+_00108_DS_                        00000002
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+__gptrget1                        00000000
+__sdcc_gsinit_startup             00000000
+_i                                00000000
+_i2cint                           00000000
+_i2cout                           00000000
+_j                                00000000
+_main                             00000000
+_n                                00000000
+_table                            00000000
+r0x1002                           00000000
+r0x1003                           00000001
+
+Errors   :     0
+Warnings :     6 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

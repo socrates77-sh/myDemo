@@ -1,0 +1,25 @@
+
+
+#include <mc3x-common.h>
+#include "CONST.H"
+/*****************************************************************
+;	Function : Define variables
+;*****************************************************************/
+#ifndef _VAR_H_
+#define _VAR_H_
+
+typedef  struct
+{
+    uchar bit0         : 1;
+    uchar bit1         : 1;
+    uchar bit2         : 1;
+    uchar bit3         : 1;
+    uchar bit4         : 1;	
+    uchar bit5         : 1; 
+    uchar bit6         : 1; 	
+    uchar bit7         : 1; 	
+} bitn;
+
+volatile bitn	Flag,Flag1,Flag2;
+
+#endif

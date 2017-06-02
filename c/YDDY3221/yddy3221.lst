@@ -1,0 +1,666 @@
+gpasm-1.4.1_beta1 (Oct 15 2013)yddy3221.asm       2013-12-13  13:42:45         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Nov 20 2013) (MINGW32)
+                      00004 ; This file was generated Fri Dec 13 13:42:45 2013
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "yddy3221.c"
+                      00009         list    p=32p21
+                      00010         radix dec
+                      00011         include "mc32p21.inc"
+                      00001                 LIST
+                      00002 ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00261                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _InitialSys
+                      00016         extern  _InitalRAM
+                      00017         extern  _CHGPinCHKSbr
+                      00018         extern  _ADCSbr
+                      00019         extern  _WorkCtrlSbr
+                      00020         extern  _T500msSbr
+                      00021         extern  _DisplaySbr
+                      00022         extern  _STATUSbits
+                      00023         extern  _MCRbits
+                      00024         extern  _INTEbits
+                      00025         extern  _INTFbits
+                      00026         extern  _IOP0bits
+                      00027         extern  _OEP0bits
+                      00028         extern  _PUP0bits
+                      00029         extern  _ANSELbits
+                      00030         extern  _IOP1bits
+                      00031         extern  _OEP1bits
+                      00032         extern  _PUP1bits
+                      00033         extern  _KBIMbits
+                      00034         extern  _T0CRbits
+                      00035         extern  _T1CRbits
+                      00036         extern  _LVDCRbits
+                      00037         extern  _OSCMbits
+                      00038         extern  _ADCR0bits
+                      00039         extern  _ADCR1bits
+                      00040         extern  _INDF
+                      00041         extern  _INDF0
+                      00042         extern  _INDF1
+                      00043         extern  _INDF2
+                      00044         extern  _HIBYTE
+                      00045         extern  _FSR
+                      00046         extern  _FSR0
+                      00047         extern  _FSR1
+                      00048         extern  _PCL
+                      00049         extern  _STATUS
+                      00050         extern  _MCR
+                      00051         extern  _INDF3
+                      00052         extern  _INTE
+                      00053         extern  _INTF
+                      00054         extern  _IOP0
+                      00055         extern  _OEP0
+                      00056         extern  _PUP0
+                      00057         extern  _ANSEL
+                      00058         extern  _IOP1
+                      00059         extern  _OEP1
+                      00060         extern  _PUP1
+                      00061         extern  _KBIM
+                      00062         extern  _T0CR
+                      00063         extern  _T0CNT
+                      00064         extern  _T0LOAD
+                      00065         extern  _T0DATA
+                      00066         extern  _T1CR
+                      00067         extern  _T1CNT
+                      00068         extern  _T1LOAD
+                      00069         extern  _T1DATA
+                      00070         extern  _LVDCR
+                      00071         extern  _OSCM
+                      00072         extern  _ADCR0
+                      00073         extern  _ADCR1
+                      00074         extern  _ADRH
+                      00075         extern  _ADRL
+                      00076         extern  _OSCAL
+                      00077         extern  __sdcc_gsinit_startup
+                      00078 ;--------------------------------------------------------
+                      00079 ; global declarations
+                      00080 ;--------------------------------------------------------
+                      00081         global  _main
+                      00082         global  _Flag1
+                      00083         global  _Flag2
+                      00084         global  _Flag3
+                      00085         global  _Buf0
+                      00086         global  _Buf1
+                      00087         global  _Buf2
+                      00088         global  _ADCnt
+                      00089         global  _ADVBatBuf
+                      00090         global  _ADVOutBuf
+                      00091         global  _ADIOutBuf
+                      00092         global  _ADVBatMin
+                      00093         global  _ADVBatMax
+                      00094         global  _ADVOut
+                      00095         global  _ADVBat
+                      00096         global  _ADIOut
+                      00097         global  _ADVOutMin
+                      00098         global  _ADVOutMax
+                      00099         global  _ADIMin
+                      00100         global  _ADIMax
+                      00101         global  _T500ms
+                      00102         global  _KeyCnt
+                      00103         global  _KeyLongth
+                      00104         global  _BatStatus
+                      00105         global  _DispCnt
+                      00106         global  _DisPWM
+                      00107         global  _CHGPWM
+                      00108         global  _VinLowCnt
+                      00109         global  _VinHiCnt
+                      00110         global  _ILow0A1Dly10s
+                      00111         global  _TStop5s
+                      00112         global  _PwrON5s
+                      00113         global  _CHGV4d2T1min
+                      00114         global  _CHGI100ms1min
+                      00115         global  _BatLowCnt
+                      00116         global  _LoadCnt
+                      00117         global  _TSec
+                      00118         global  _TMin
+                      00119 
+                      00120         global STK06
+                      00121         global STK05
+                      00122         global STK04
+                      00123         global STK03
+                      00124         global STK02
+                      00125         global STK01
+                      00126         global STK00
+                      00127 
+                      00128 sharebank udata_ovr 0x0000
+0000                  00129 STK06   res 1
+0000                  00130 STK05   res 1
+0001                  00131 STK04   res 1
+0001                  00132 STK03   res 1
+0002                  00133 STK02   res 1
+0002                  00134 STK01   res 1
+0003                  00135 STK00   res 1
+                      00136 
+                      00137 ;--------------------------------------------------------
+                      00138 ; global definitions
+                      00139 ;--------------------------------------------------------
+                      00140 UD_yddy3221_0   udata
+0000                  00141 _Flag1  res     1
+                      00142 
+                      00143 UD_yddy3221_1   udata
+0000                  00144 _Flag2  res     1
+                      00145 
+                      00146 UD_yddy3221_2   udata
+0000                  00147 _Flag3  res     1
+                      00148 
+                      00149 UD_yddy3221_3   udata
+0000                  00150 _Buf0   res     1
+                      00151 
+                      00152 UD_yddy3221_4   udata
+0000                  00153 _Buf1   res     1
+                      00154 
+                      00155 UD_yddy3221_5   udata
+0000                  00156 _Buf2   res     1
+                      00157 
+                      00158 UD_yddy3221_6   udata
+0000                  00159 _ADCnt  res     1
+                      00160 
+                      00161 UD_yddy3221_7   udata
+0000                  00162 _ADVBatBuf      res     2
+                      00163 
+                      00164 UD_yddy3221_8   udata
+0000                  00165 _ADVOutBuf      res     2
+                      00166 
+                      00167 UD_yddy3221_9   udata
+0000                  00168 _ADIOutBuf      res     2
+                      00169 
+                      00170 UD_yddy3221_10  udata
+0000                  00171 _ADVBatMin      res     1
+                      00172 
+                      00173 UD_yddy3221_11  udata
+0000                  00174 _ADVBatMax      res     1
+                      00175 
+                      00176 UD_yddy3221_12  udata
+0000                  00177 _ADVOut res     1
+                      00178 
+                      00179 UD_yddy3221_13  udata
+0000                  00180 _ADVBat res     1
+                      00181 
+                      00182 UD_yddy3221_14  udata
+0000                  00183 _ADIOut res     1
+                      00184 
+                      00185 UD_yddy3221_15  udata
+0000                  00186 _ADVOutMin      res     1
+                      00187 
+                      00188 UD_yddy3221_16  udata
+0000                  00189 _ADVOutMax      res     1
+                      00190 
+                      00191 UD_yddy3221_17  udata
+0000                  00192 _ADIMin res     1
+                      00193 
+                      00194 UD_yddy3221_18  udata
+0000                  00195 _ADIMax res     1
+                      00196 
+                      00197 UD_yddy3221_19  udata
+0000                  00198 _T500ms res     1
+                      00199 
+                      00200 UD_yddy3221_20  udata
+0000                  00201 _KeyCnt res     1
+                      00202 
+                      00203 UD_yddy3221_21  udata
+0000                  00204 _KeyLongth      res     1
+                      00205 
+                      00206 UD_yddy3221_22  udata
+0000                  00207 _BatStatus      res     1
+                      00208 
+                      00209 UD_yddy3221_23  udata
+0000                  00210 _DispCnt        res     1
+                      00211 
+                      00212 UD_yddy3221_24  udata
+0000                  00213 _DisPWM res     1
+                      00214 
+                      00215 UD_yddy3221_25  udata
+0000                  00216 _CHGPWM res     1
+                      00217 
+                      00218 UD_yddy3221_26  udata
+0000                  00219 _VinLowCnt      res     1
+                      00220 
+                      00221 UD_yddy3221_27  udata
+0000                  00222 _VinHiCnt       res     1
+                      00223 
+                      00224 UD_yddy3221_28  udata
+0000                  00225 _ILow0A1Dly10s  res     1
+                      00226 
+                      00227 UD_yddy3221_29  udata
+0000                  00228 _TStop5s        res     1
+                      00229 
+                      00230 UD_yddy3221_30  udata
+0000                  00231 _PwrON5s        res     1
+                      00232 
+                      00233 UD_yddy3221_31  udata
+0000                  00234 _CHGV4d2T1min   res     1
+                      00235 
+                      00236 UD_yddy3221_32  udata
+0000                  00237 _CHGI100ms1min  res     1
+                      00238 
+                      00239 UD_yddy3221_33  udata
+0000                  00240 _BatLowCnt      res     1
+                      00241 
+                      00242 UD_yddy3221_34  udata
+0000                  00243 _LoadCnt        res     1
+                      00244 
+                      00245 UD_yddy3221_35  udata
+0000                  00246 _TSec   res     1
+                      00247 
+                      00248 UD_yddy3221_36  udata
+0000                  00249 _TMin   res     1
+                      00250 
+                      00251 ;--------------------------------------------------------
+                      00252 ; absolute symbol definitions
+                      00253 ;--------------------------------------------------------
+                      00254 ;--------------------------------------------------------
+                      00255 ; compiler-defined variables
+                      00256 ;--------------------------------------------------------
+                      00257 ;--------------------------------------------------------
+                      00258 ; initialized data
+                      00259 ;--------------------------------------------------------
+                      00260 ;--------------------------------------------------------
+                      00261 ; overlayable items in internal ram 
+                      00262 ;--------------------------------------------------------
+                      00263 ;       udata_ovr
+                      00264 ;--------------------------------------------------------
+                      00265 ; reset vector 
+                      00266 ;--------------------------------------------------------
+                      00267 STARTUP code 0x0000
+0000   A000           00268         goto    __sdcc_gsinit_startup
+                      00269 ;--------------------------------------------------------
+                      00270 ; code
+                      00271 ;--------------------------------------------------------
+                      00272 code_yddy3221   code
+                      00273 ;***
+                      00274 ;  pBlock Stats: dbName = M
+                      00275 ;***
+                      00276 ;entry:  _main  ;Function start
+                      00277 ; 2 exit points
+                      00278 ;has an exit
+                      00279 ;functions called:
+                      00280 ;   _InitialSys
+                      00281 ;   _InitalRAM
+                      00282 ;   _CHGPinCHKSbr
+                      00283 ;   _DisplaySbr
+                      00284 ;   _ADCSbr
+                      00285 ;   _WorkCtrlSbr
+                      00286 ;   _T500msSbr
+                      00287 ;   _InitialSys
+                      00288 ;   _InitalRAM
+                      00289 ;   _CHGPinCHKSbr
+                      00290 ;   _DisplaySbr
+                      00291 ;   _ADCSbr
+                      00292 ;   _WorkCtrlSbr
+                      00293 ;   _T500msSbr
+                      00294 ;; Starting pCode block
+0000                  00295 _main   ;Function start
+                      00296 ; 2 exit points
+                      00297 ;       .line   19; "yddy3221.c"        INTE = 0;               //¹ØÖÐ¶Ï
+0000   7600           00298         CLRR    _INTE
+0001   000E           00299         clrwdt
+                      00300 ;       .line   21; "yddy3221.c"        InitialSys();
+0002   8000           00301         CALL    _InitialSys
+                      00302 ;       .line   22; "yddy3221.c"        InitalRAM();
+0003   8000           00303         CALL    _InitalRAM
+                      00304 ;       .line   23; "yddy3221.c"        GIE = 1;
+0004   CE00           00305         BSET    _MCRbits,7
+0005                  00306 _00114_DS_
+                      00307 ;       .line   27; "yddy3221.c"        if (FStop)
+0005   E200           00308         JBSET   _Flag2,1
+0006   A000           00309         GOTO    _00106_DS_
+                      00310 ;       .line   29; "yddy3221.c"        INTE = 0;INT1IE = 1;KBIM6 = 1;KBIE = 1;
+0007   7600           00311         CLRR    _INTE
+0008   C600           00312         BSET    _INTEbits,3
+0009   CC00           00313         BSET    _KBIMbits,6
+000A   C800           00314         BSET    _INTEbits,4
+                      00315 ;       .line   30; "yddy3221.c"        pLed1 = 1;pLed2 = 1;pLedC = 1;
+000B   C800           00316         BSET    _IOP1bits,4
+000C   CA00           00317         BSET    _IOP1bits,5
+000D   C800           00318         BSET    _OEP0bits,4
+                      00319 ;       .line   31; "yddy3221.c"        pLed1C = 1;pLed2C = 1;pLedCC = 1;
+000E   C800           00320         BSET    _OEP1bits,4
+000F   CA00           00321         BSET    _OEP1bits,5
+0010   C800           00322         BSET    _OEP0bits,4
+                      00323 ;       .line   32; "yddy3221.c"        pPwr = 0;pCHG = 0;pKey = 1;
+0011   D000           00324         BCLR    _IOP1bits,0
+0012   D600           00325         BCLR    _IOP1bits,3
+0013   CC00           00326         BSET    _IOP1bits,6
+0014   0000           00327         nop
+0015   0000           00328         nop
+0016   0000           00329         nop
+0017   000B           00330         stop
+0018   0000           00331         nop
+0019   0000           00332         nop
+001A   0000           00333         nop
+                      00334 ;       .line   40; "yddy3221.c"        FStop = 0;INT1IE = 0;T1IE = 1;
+001B   D200           00335         BCLR    _Flag2,1
+001C   D600           00336         BCLR    _INTEbits,3
+001D   C200           00337         BSET    _INTEbits,1
+001E                  00338 _00106_DS_
+                      00339 ;       .line   43; "yddy3221.c"        if (F1ms)
+001E   E400           00340         JBSET   _Flag2,2
+001F   A000           00341         GOTO    _00114_DS_
+                      00342 ;       .line   45; "yddy3221.c"        F1ms = 0;
+0020   D400           00343         BCLR    _Flag2,2
+0021   000E           00344         clrwdt
+                      00345 ;       .line   47; "yddy3221.c"        CHGPinCHKSbr();
+0022   8000           00346         CALL    _CHGPinCHKSbr
+                      00347 ;       .line   48; "yddy3221.c"        DisplaySbr();
+0023   8000           00348         CALL    _DisplaySbr
+                      00349 ;       .line   49; "yddy3221.c"        ADCSbr();
+0024   8000           00350         CALL    _ADCSbr
+                      00351 ;       .line   50; "yddy3221.c"        if (ADCnt == 0) WorkCtrlSbr();          //;17*2=34ms???
+0025   3C00           00352         MOVAI   0x00
+0026   5C00           00353         ORAR    _ADCnt
+0027   E587           00354         JBSET   STATUS,2
+0028   A000           00355         GOTO    _00108_DS_
+0029   8000           00356         CALL    _WorkCtrlSbr
+002A                  00357 _00108_DS_
+                      00358 ;       .line   51; "yddy3221.c"        if (++T500ms >= C250ms)
+002A   6600           00359         INCR    _T500ms
+                      00360 ;;unsigned compare: left < lit(0xFA=250), size=1
+002B   3CFA           00361         MOVAI   0xfa
+002C   4800           00362         RSUBAR  _T500ms
+002D   E187           00363         JBSET   STATUS,0
+002E   A000           00364         GOTO    _00114_DS_
+                      00365 ;;genSkipc:3246: created from rifx:0022608C
+                      00366 ;       .line   53; "yddy3221.c"        T500ms = 0;
+002F   7600           00367         CLRR    _T500ms
+                      00368 ;       .line   54; "yddy3221.c"        T500msSbr();
+0030   8000           00369         CALL    _T500msSbr
+0031   A000           00370         GOTO    _00114_DS_
+0032   000C           00371         RETURN  
+                      00372 ; exit point of _main
+                      00373 
+                      00374 
+                      00375 ;       code size estimation:
+                      00376 ;          42+    0 =    42 instructions (   84 byte)
+                      00377 
+                      00378         end
+gpasm-1.4.1_beta1 (Oct 15 2013)yddy3221.asm       2013-12-13  13:42:45         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBIE                              00000004
+KBIF                              00000004
+KBIM                              00000197
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+LFEN                              00000001
+LVDCR                             000001AD
+LVDEN                             00000007
+LVDF                              00000000
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCAL                             000001FB
+OSCM                              000001AE
+P00                               00000000
+P00ANS                            00000000
+P00OE                             00000000
+P00PU                             00000000
+P01                               00000001
+P01ANS                            00000001
+P01OE                             00000001
+P01PU                             00000001
+P02                               00000002
+P02ANS                            00000002
+P02OE                             00000002
+P02PU                             00000002
+P03                               00000003
+P03ANS                            00000003
+P03OE                             00000003
+P03PU                             00000003
+P04                               00000004
+P04ANS                            00000004
+P04OE                             00000004
+P04PU                             00000004
+P10                               00000000
+P10OE                             00000000
+P10PU                             00000000
+P11                               00000001
+P11OE                             00000001
+P11PU                             00000001
+P12                               00000002
+P12ANS                            00000005
+P12OE                             00000002
+P12PU                             00000002
+P13                               00000003
+P13ANS                            00000006
+P13OE                             00000003
+P13PU                             00000003
+P14                               00000004
+P14OE                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OE                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OE                             00000006
+P16PU                             00000006
+PCL                               00000186
+PD                                00000004
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STATUS                            00000187
+STBH                              00000004
+STBL                              00000005
+STK00                             00000006
+STK01                             00000005
+STK02                             00000004
+STK03                             00000003
+STK04                             00000002
+STK05                             00000001
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+Z                                 00000002
+_00106_DS_                        0000001E
+_00108_DS_                        0000002A
+_00114_DS_                        00000005
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADCSbr                           00000000
+_ADCnt                            00000000
+_ADIMax                           00000000
+_ADIMin                           00000000
+_ADIOut                           00000000
+_ADIOutBuf                        00000000
+_ADRH                             00000000
+_ADRL                             00000000
+_ADVBat                           00000000
+_ADVBatBuf                        00000000
+_ADVBatMax                        00000000
+_ADVBatMin                        00000000
+_ADVOut                           00000000
+_ADVOutBuf                        00000000
+_ADVOutMax                        00000000
+_ADVOutMin                        00000000
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_BatLowCnt                        00000000
+_BatStatus                        00000000
+_Buf0                             00000000
+_Buf1                             00000000
+_Buf2                             00000000
+_CHGI100ms1min                    00000000
+_CHGPWM                           00000000
+_CHGPinCHKSbr                     00000000
+_CHGV4d2T1min                     00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_CP_ALL                           00007FFF
+_DisPWM                           00000000
+_DispCnt                          00000000
+_DisplaySbr                       00000000
+_FCPU_128T                        0000FFEF
+_FCPU_16T                         0000FFBF
+_FCPU_256T                        0000FFFF
+_FCPU_2T                          0000FF8F
+_FCPU_32T                         0000FFCF
+_FCPU_4T                          0000FF9F
+_FCPU_64T                         0000FFDF
+_FCPU_8T                          0000FFAF
+_FSR                              00000000
+_FSR0                             00000000
+_FSR1                             00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_Flag3                            00000000
+_HIBYTE                           00000000
+_HRC_LRC                          0000FCFF
+_HRC_LXT                          0000FDFF
+_HXT_LRC                          0000FEFF
+_ILow0A1Dly10s                    00000000
+_INDF                             00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INDF3                            00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_InitalRAM                        00000000
+_InitialSys                       00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyCnt                           00000000
+_KeyLongth                        00000000
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_LoadCnt                          00000000
+_MCLR_OFF                         0000FF7F
+_MCLR_ON                          0000FFFF
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCAL                            00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PTWRT_16_1024                    0000FFF7
+_PTWRT_16_16                      0000DFF7
+_PTWRT_256_256                    0000DFFF
+_PTWRT_256_4096                   0000FFFF
+_PTWRT_4_4                        0000DFF3
+_PTWRT_4_512                      0000FFF3
+_PTWRT_64_2048                    0000FFFB
+_PTWRT_64_64                      0000DFFB
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PwrON5s                          00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0LOAD                           00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_T500ms                           00000000
+_T500msSbr                        00000000
+_TMin                             00000000
+_TSec                             00000000
+_TStop5s                          00000000
+_VLVR_160                         0000E3FF
+_VLVR_185                         0000E7FF
+_VLVR_205                         0000EBFF
+_VLVR_218                         0000EFFF
+_VLVR_232                         0000F3FF
+_VLVR_245                         0000F7FF
+_VLVR_305                         0000FBFF
+_VLVR_360                         0000FFFF
+_VinHiCnt                         00000000
+_VinLowCnt                        00000000
+_WDT_ALWAYS_OFF                   0000FFFC
+_WDT_ALWAYS_ON                    0000FFFF
+_WDT_SLEEP_OFF                    0000FFFD
+_WorkCtrlSbr                      00000000
+__32P21                           00000001
+__sdcc_gsinit_startup             00000000
+_main                             00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

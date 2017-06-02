@@ -1,0 +1,1718 @@
+gplink-1.4.0 (Sep 22 2013)
+Listing File Generated: 2013-12-11  15:02:17
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                                           ; This file was generated Wed Dec 11 15:02:17 2013
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"test32p21.c"
+                                           	list	p=32p21
+                                           	radix dec
+                                           	include "mc32p21.inc"
+                                           		LIST
+                                           ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_InitialSys
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           	extern	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_ABuf
+                                           	global	_StatusBuf
+                                           	global	_Keycode
+                                           	global	_DisplayMode
+                                           	global	_MasterTime_1ms
+                                           	global	_MasterTime_10ms
+                                           	global	_MasterTime_100ms
+                                           	global	_MasterTime_1s
+                                           	global	_sleeptime
+                                           	global	_key_cnt
+                                           	global	_key_time
+                                           	global	_key_press_time
+                                           	global	_short_press_time
+                                           	global	_BAT_avgAD
+                                           	global	_Load_avgAD
+                                           	global	_Last_BATAD
+                                           	global	_Load_avgAD2
+                                           	global	_NoLoadCount
+                                           	global	_ZNB602Register
+                                           	global	_Flag
+                                           	global	_Flag1
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_test32p21_0	udata
+                                           _ABuf	res	1
+                                           
+                                           UD_test32p21_1	udata
+                                           _StatusBuf	res	1
+                                           
+                                           UD_test32p21_2	udata
+                                           _Keycode	res	1
+                                           
+                                           UD_test32p21_3	udata
+                                           _DisplayMode	res	1
+                                           
+                                           UD_test32p21_4	udata
+                                           _MasterTime_1ms	res	1
+                                           
+                                           UD_test32p21_5	udata
+                                           _MasterTime_10ms	res	1
+                                           
+                                           UD_test32p21_6	udata
+                                           _MasterTime_100ms	res	1
+                                           
+                                           UD_test32p21_7	udata
+                                           _MasterTime_1s	res	1
+                                           
+                                           UD_test32p21_8	udata
+                                           _sleeptime	res	1
+                                           
+                                           UD_test32p21_9	udata
+                                           _key_cnt	res	1
+                                           
+                                           UD_test32p21_10	udata
+                                           _key_time	res	1
+                                           
+                                           UD_test32p21_11	udata
+                                           _key_press_time	res	1
+                                           
+                                           UD_test32p21_12	udata
+                                           _short_press_time	res	1
+                                           
+                                           UD_test32p21_13	udata
+                                           _BAT_avgAD	res	2
+                                           
+                                           UD_test32p21_14	udata
+                                           _Load_avgAD	res	2
+                                           
+                                           UD_test32p21_15	udata
+                                           _Last_BATAD	res	2
+                                           
+                                           UD_test32p21_16	udata
+                                           _Load_avgAD2	res	2
+                                           
+                                           UD_test32p21_17	udata
+                                           _NoLoadCount	res	1
+                                           
+                                           UD_test32p21_18	udata
+                                           _ZNB602Register	res	6
+                                           
+                                           UD_test32p21_19	udata
+                                           _Flag	res	1
+                                           
+                                           UD_test32p21_20	udata
+                                           _Flag1	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   a13a     goto    0x13a            	goto	__sdcc_gsinit_startup
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_test32p21	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _InitialSys
+                                           ;   _InitialSys
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	17; "test32p21.c"	GIE = 0;
+000276   df88     bclr    0x188, 0x7       	BCLR	_MCRbits,7
+                                           ;	.line	18; "test32p21.c"	InitialSys();
+000277   823b     call    0x23b            	CALL	_InitialSys
+                                           ;	.line	20; "test32p21.c"	GIE = 1;
+000278   cf88     bset    0x188, 0x7       	BSET	_MCRbits,7
+                                           _00109_DS_
+                                           ;	.line	23; "test32p21.c"	if(InQt_Flag) P14 = 1;
+000279   ee5b     jbset   0x5b, 0x7        	JBSET	_Flag,7
+00027a   a27d     goto    0x27d            	GOTO	_00106_DS_
+00027b   c994     bset    0x194, 0x4       	BSET	_IOP1bits,4
+00027c   a279     goto    0x279            	GOTO	_00109_DS_
+                                           _00106_DS_
+                                           ;	.line	24; "test32p21.c"	else P14 = 0;
+00027d   d994     bclr    0x194, 0x4       	BCLR	_IOP1bits,4
+00027e   a279     goto    0x279            	GOTO	_00109_DS_
+00027f   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   10+    0 =    10 instructions (   20 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                                           ; This file was generated Wed Dec 11 15:02:17 2013
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"ADCSbr.c"
+                                           	list	p=32p21
+                                           	radix dec
+                                           	include "mc32p21.inc"
+                                           		LIST
+                                           ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ABuf
+                                           	extern	_StatusBuf
+                                           	extern	_Keycode
+                                           	extern	_DisplayMode
+                                           	extern	_MasterTime_1ms
+                                           	extern	_MasterTime_10ms
+                                           	extern	_MasterTime_100ms
+                                           	extern	_MasterTime_1s
+                                           	extern	_sleeptime
+                                           	extern	_key_cnt
+                                           	extern	_key_time
+                                           	extern	_key_press_time
+                                           	extern	_short_press_time
+                                           	extern	_BAT_avgAD
+                                           	extern	_Load_avgAD
+                                           	extern	_Last_BATAD
+                                           	extern	_Load_avgAD2
+                                           	extern	_NoLoadCount
+                                           	extern	_ZNB602Register
+                                           	extern	_Flag
+                                           	extern	_Flag1
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           	extern	__gptrget2
+                                           	extern	__mulchar
+                                           	extern	__gptrput2
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_AD_Check
+                                           	global	_Battery_Check
+                                           	global	_Compare_AD
+                                           	global	_Dispose_AD
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_ADCSbr_0	udata
+                                           r0x100C	res	1
+                                           r0x100D	res	1
+                                           r0x100F	res	1
+                                           r0x100E	res	1
+                                           r0x1010	res	1
+                                           r0x1021	res	1
+                                           r0x1022	res	1
+                                           r0x1023	res	1
+                                           r0x1024	res	1
+                                           r0x1026	res	1
+                                           r0x1025	res	1
+                                           r0x1011	res	1
+                                           r0x1012	res	1
+                                           r0x1013	res	1
+                                           r0x1014	res	1
+                                           r0x1015	res	1
+                                           r0x1016	res	1
+                                           r0x1017	res	1
+                                           r0x1018	res	1
+                                           r0x101A	res	1
+                                           r0x1019	res	1
+                                           r0x101B	res	1
+                                           r0x101C	res	1
+                                           r0x101D	res	1
+                                           r0x101E	res	1
+                                           r0x1020	res	1
+                                           r0x101F	res	1
+                                           _Dispose_AD_arrayAD_1_12	res	12
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_ADCSbr	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Dispose_AD	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _AD_Check
+                                           ;   _Compare_AD
+                                           ;   _AD_Check
+                                           ;   _Compare_AD
+                                           ;8 compiler assigned registers:
+                                           ;   r0x101B
+                                           ;   r0x101C
+                                           ;   r0x101D
+                                           ;   r0x101E
+                                           ;   r0x101F
+                                           ;   STK00
+                                           ;   r0x1020
+                                           ;   STK01
+                                           ;; Starting pCode block
+                                           _Dispose_AD	;Function start
+                                           ; 2 exit points
+                                           ;	.line	60; "ADCSbr.c"	uint Dispose_AD(uchar adway)
+000009   561c     movra   0x1c             	MOVRA	r0x101B
+                                           ;	.line	64; "ADCSbr.c"	for(i=0;i<6;i++)
+00000a   761d     clrr    0x1d             	CLRR	r0x101C
+                                           ;;unsigned compare: left < lit(0x6=6), size=1
+                                           _00149_DS_
+00000b   3c06     movai   0x6              	MOVAI	0x06
+00000c   481d     rsubar  0x1d             	RSUBAR	r0x101C
+00000d   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00000e   a02a     goto    0x2a             	GOTO	_00152_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	66; "ADCSbr.c"	arrayAD[i] = AD_Check(adway);
+00000f   d187     bclr    0x187, 0         	BCLR	STATUS,0
+000010   501d     rlar    0x1d             	RLAR	r0x101C
+000011   561e     movra   0x1e             	MOVRA	r0x101D
+000012   581e     movar   0x1e             	MOVAR	r0x101D
+000013   3f22     addai   0x22             	ADDAI	(_Dispose_AD_arrayAD_1_12 + 0)
+000014   561e     movra   0x1e             	MOVRA	r0x101D
+000015   3c00     movai   0                	MOVAI	high (_Dispose_AD_arrayAD_1_12 + 0)
+000016   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000017   3f01     addai   0x1              	ADDAI	0x01
+000018   561f     movra   0x1f             	MOVRA	r0x101E
+000019   581c     movar   0x1c             	MOVAR	r0x101B
+00001a   810e     call    0x10e            	CALL	_AD_Check
+00001b   5621     movra   0x21             	MOVRA	r0x101F
+00001c   5806     movar   0x6              	MOVAR	STK00
+00001d   5620     movra   0x20             	MOVRA	r0x1020
+00001e   581e     movar   0x1e             	MOVAR	r0x101D
+00001f   5784     movra   0x184            	MOVRA	FSR
+000020   df87     bclr    0x187, 0x7       	BCLR	STATUS,7
+000021   f01f     jbclr   0x1f, 0          	JBCLR	r0x101E,0
+000022   cf87     bset    0x187, 0x7       	BSET	STATUS,7
+000023   5820     movar   0x20             	MOVAR	r0x1020
+000024   5780     movra   0x180            	MOVRA	INDF
+000025   6784     incr    0x184            	INCR	FSR
+000026   5821     movar   0x21             	MOVAR	r0x101F
+000027   5780     movra   0x180            	MOVRA	INDF
+                                           ;	.line	64; "ADCSbr.c"	for(i=0;i<6;i++)
+000028   661d     incr    0x1d             	INCR	r0x101C
+000029   a00b     goto    0xb              	GOTO	_00149_DS_
+                                           _00152_DS_
+                                           ;	.line	69; "ADCSbr.c"	return Compare_AD(arrayAD);
+00002a   3c00     movai   0                	MOVAI	high (_Dispose_AD_arrayAD_1_12 + 0)
+00002b   561d     movra   0x1d             	MOVRA	r0x101C
+00002c   3c22     movai   0x22             	MOVAI	(_Dispose_AD_arrayAD_1_12 + 0)
+00002d   561c     movra   0x1c             	MOVRA	r0x101B
+00002e   761e     clrr    0x1e             	CLRR	r0x101D
+00002f   581c     movar   0x1c             	MOVAR	r0x101B
+000030   5605     movra   0x5              	MOVRA	STK01
+000031   581d     movar   0x1d             	MOVAR	r0x101C
+000032   5606     movra   0x6              	MOVRA	STK00
+000033   3c00     movai   0                	MOVAI	0x00
+000034   803c     call    0x3c             	CALL	_Compare_AD
+000035   561d     movra   0x1d             	MOVRA	r0x101C
+000036   5806     movar   0x6              	MOVAR	STK00
+000037   561c     movra   0x1c             	MOVRA	r0x101B
+000038   581c     movar   0x1c             	MOVAR	r0x101B
+000039   5606     movra   0x6              	MOVRA	STK00
+00003a   581d     movar   0x1d             	MOVAR	r0x101C
+00003b   000c     return                   	RETURN	
+                                           ; exit point of _Dispose_AD
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Compare_AD	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __gptrget2
+                                           ;   __mulchar
+                                           ;   __gptrget2
+                                           ;   __gptrput2
+                                           ;   __gptrput2
+                                           ;   __gptrget2
+                                           ;   __gptrget2
+                                           ;   __gptrget2
+                                           ;   __mulchar
+                                           ;   __gptrget2
+                                           ;   __gptrput2
+                                           ;   __gptrput2
+                                           ;   __gptrget2
+                                           ;   __gptrget2
+                                           ;19 compiler assigned registers:
+                                           ;   r0x100C
+                                           ;   STK00
+                                           ;   r0x100D
+                                           ;   STK01
+                                           ;   r0x100E
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;   r0x1011
+                                           ;   r0x1012
+                                           ;   r0x1013
+                                           ;   r0x1014
+                                           ;   r0x1015
+                                           ;   r0x1016
+                                           ;   r0x1017
+                                           ;   r0x1018
+                                           ;   r0x1019
+                                           ;   r0x101A
+                                           ;   STK02
+                                           ;   STK03
+                                           ;; Starting pCode block
+                                           _Compare_AD	;Function start
+                                           ; 2 exit points
+                                           ;	.line	39; "ADCSbr.c"	uint Compare_AD(uint str[])//(uint  *str)//(uint str[])// ////// 冒泡法排序
+00003c   5607     movra   0x7              	MOVRA	r0x100C
+00003d   5806     movar   0x6              	MOVAR	STK00
+00003e   5608     movra   0x8              	MOVRA	r0x100D
+00003f   5805     movar   0x5              	MOVAR	STK01
+000040   560a     movra   0xa              	MOVRA	r0x100E
+                                           ;	.line	44; "ADCSbr.c"	for(i=0;i<5;i++) //比较的数是6-1
+000041   7609     clrr    0x9              	CLRR	r0x100F
+                                           ;;unsigned compare: left < lit(0x5=5), size=1
+                                           _00124_DS_
+000042   3c05     movai   0x5              	MOVAI	0x05
+000043   4809     rsubar  0x9              	RSUBAR	r0x100F
+000044   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000045   a0b8     goto    0xb8             	GOTO	_00127_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	46; "ADCSbr.c"	for(j = 0;j<5-i;j++)
+000046   760b     clrr    0xb              	CLRR	r0x1010
+                                           ;;100	MOVAR	r0x100F
+                                           _00120_DS_
+000047   7613     clrr    0x13             	CLRR	r0x1012
+                                           ;;99	MOVAR	r0x1011
+000048   5809     movar   0x9              	MOVAR	r0x100F
+000049   5612     movra   0x12             	MOVRA	r0x1011
+00004a   3a05     isubai  0x5              	ISUBAI	0x05
+00004b   5612     movra   0x12             	MOVRA	r0x1011
+00004c   3c00     movai   0                	MOVAI	0x00
+00004d   e187     jbset   0x187, 0         	JBSET	STATUS,0
+00004e   6413     incar   0x13             	INCAR	r0x1012
+00004f   3a00     isubai  0                	ISUBAI	0x00
+000050   5613     movra   0x13             	MOVRA	r0x1012
+000051   580b     movar   0xb              	MOVAR	r0x1010
+000052   5614     movra   0x14             	MOVRA	r0x1013
+000053   7615     clrr    0x15             	CLRR	r0x1014
+000054   3c00     movai   0                	MOVAI	0x00
+000055   3f80     addai   0x80             	ADDAI	0x80
+000056   5616     movra   0x16             	MOVRA	r0x1015
+000057   5813     movar   0x13             	MOVAR	r0x1012
+000058   3f80     addai   0x80             	ADDAI	0x80
+000059   4816     rsubar  0x16             	RSUBAR	r0x1015
+00005a   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+00005b   a05e     goto    0x5e             	GOTO	_00143_DS_
+00005c   5812     movar   0x12             	MOVAR	r0x1011
+00005d   4814     rsubar  0x14             	RSUBAR	r0x1013
+                                           _00143_DS_
+00005e   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00005f   a0b6     goto    0xb6             	GOTO	_00126_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	48; "ADCSbr.c"	if(str[j+1]>str[j])
+000060   6614     incr    0x14             	INCR	r0x1013
+000061   f587     jbclr   0x187, 0x2       	JBCLR	STATUS,2
+000062   6615     incr    0x15             	INCR	r0x1014
+000063   d187     bclr    0x187, 0         	BCLR	STATUS,0
+000064   5014     rlar    0x14             	RLAR	r0x1013
+000065   5612     movra   0x12             	MOVRA	r0x1011
+000066   5015     rlar    0x15             	RLAR	r0x1014
+000067   5613     movra   0x13             	MOVRA	r0x1012
+000068   5812     movar   0x12             	MOVAR	r0x1011
+000069   7c0a     addar   0xa              	ADDAR	r0x100E
+00006a   5612     movra   0x12             	MOVRA	r0x1011
+                                           ;;102	MOVAR	r0x100D
+                                           ;;101	MOVAR	r0x1012
+00006b   5808     movar   0x8              	MOVAR	r0x100D
+00006c   5613     movra   0x13             	MOVRA	r0x1012
+00006d   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00006e   6013     jzar    0x13             	JZAR	r0x1012
+00006f   7e13     addra   0x13             	ADDRA	r0x1012
+000070   5807     movar   0x7              	MOVAR	r0x100C
+000071   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000072   3f01     addai   0x1              	ADDAI	0x01
+000073   5614     movra   0x14             	MOVRA	r0x1013
+000074   5812     movar   0x12             	MOVAR	r0x1011
+000075   5605     movra   0x5              	MOVRA	STK01
+000076   5813     movar   0x13             	MOVAR	r0x1012
+000077   5606     movra   0x6              	MOVRA	STK00
+000078   5814     movar   0x14             	MOVAR	r0x1013
+000079   81c5     call    0x1c5            	CALL	__gptrget2
+00007a   5616     movra   0x16             	MOVRA	r0x1015
+00007b   5806     movar   0x6              	MOVAR	STK00
+00007c   5615     movra   0x15             	MOVRA	r0x1014
+00007d   3c02     movai   0x2              	MOVAI	0x02
+00007e   5606     movra   0x6              	MOVRA	STK00
+00007f   580b     movar   0xb              	MOVAR	r0x1010
+000080   8259     call    0x259            	CALL	__mulchar
+000081   5617     movra   0x17             	MOVRA	r0x1016
+000082   7618     clrr    0x18             	CLRR	r0x1017
+000083   5817     movar   0x17             	MOVAR	r0x1016
+000084   7c0a     addar   0xa              	ADDAR	r0x100E
+000085   5617     movra   0x17             	MOVRA	r0x1016
+                                           ;;104	MOVAR	r0x100D
+                                           ;;103	MOVAR	r0x1017
+000086   5808     movar   0x8              	MOVAR	r0x100D
+000087   5618     movra   0x18             	MOVRA	r0x1017
+000088   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000089   6018     jzar    0x18             	JZAR	r0x1017
+00008a   7e18     addra   0x18             	ADDRA	r0x1017
+00008b   5807     movar   0x7              	MOVAR	r0x100C
+00008c   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00008d   3f01     addai   0x1              	ADDAI	0x01
+00008e   5619     movra   0x19             	MOVRA	r0x1018
+00008f   5817     movar   0x17             	MOVAR	r0x1016
+000090   5605     movra   0x5              	MOVRA	STK01
+000091   5818     movar   0x18             	MOVAR	r0x1017
+000092   5606     movra   0x6              	MOVRA	STK00
+000093   5819     movar   0x19             	MOVAR	r0x1018
+000094   81c5     call    0x1c5            	CALL	__gptrget2
+000095   561b     movra   0x1b             	MOVRA	r0x1019
+000096   5806     movar   0x6              	MOVAR	STK00
+000097   561a     movra   0x1a             	MOVRA	r0x101A
+000098   5816     movar   0x16             	MOVAR	r0x1015
+000099   481b     rsubar  0x1b             	RSUBAR	r0x1019
+00009a   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+00009b   a09e     goto    0x9e             	GOTO	_00144_DS_
+00009c   5815     movar   0x15             	MOVAR	r0x1014
+00009d   481a     rsubar  0x1a             	RSUBAR	r0x101A
+                                           _00144_DS_
+00009e   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00009f   a0b4     goto    0xb4             	GOTO	_00122_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	51; "ADCSbr.c"	str[j] = str[j+1];
+0000a0   5816     movar   0x16             	MOVAR	r0x1015
+0000a1   5604     movra   0x4              	MOVRA	STK02
+0000a2   5815     movar   0x15             	MOVAR	r0x1014
+0000a3   5603     movra   0x3              	MOVRA	STK03
+0000a4   5817     movar   0x17             	MOVAR	r0x1016
+0000a5   5605     movra   0x5              	MOVRA	STK01
+0000a6   5818     movar   0x18             	MOVAR	r0x1017
+0000a7   5606     movra   0x6              	MOVRA	STK00
+0000a8   5819     movar   0x19             	MOVAR	r0x1018
+0000a9   81a8     call    0x1a8            	CALL	__gptrput2
+                                           ;	.line	52; "ADCSbr.c"	str[j+1] = temp;
+0000aa   581b     movar   0x1b             	MOVAR	r0x1019
+0000ab   5604     movra   0x4              	MOVRA	STK02
+0000ac   581a     movar   0x1a             	MOVAR	r0x101A
+0000ad   5603     movra   0x3              	MOVRA	STK03
+0000ae   5812     movar   0x12             	MOVAR	r0x1011
+0000af   5605     movra   0x5              	MOVRA	STK01
+0000b0   5813     movar   0x13             	MOVAR	r0x1012
+0000b1   5606     movra   0x6              	MOVRA	STK00
+0000b2   5814     movar   0x14             	MOVAR	r0x1013
+0000b3   81a8     call    0x1a8            	CALL	__gptrput2
+                                           _00122_DS_
+                                           ;	.line	46; "ADCSbr.c"	for(j = 0;j<5-i;j++)
+0000b4   660b     incr    0xb              	INCR	r0x1010
+0000b5   a047     goto    0x47             	GOTO	_00120_DS_
+                                           _00126_DS_
+                                           ;	.line	44; "ADCSbr.c"	for(i=0;i<5;i++) //比较的数是6-1
+0000b6   6609     incr    0x9              	INCR	r0x100F
+0000b7   a042     goto    0x42             	GOTO	_00124_DS_
+                                           _00127_DS_
+                                           ;	.line	56; "ADCSbr.c"	return ((uint)(str[2]+str[3])/2);
+0000b8   3c04     movai   0x4              	MOVAI	0x04
+0000b9   7c0a     addar   0xa              	ADDAR	r0x100E
+0000ba   5609     movra   0x9              	MOVRA	r0x100F
+0000bb   760b     clrr    0xb              	CLRR	r0x1010
+0000bc   520b     rlr     0xb              	RLR	r0x1010
+0000bd   5808     movar   0x8              	MOVAR	r0x100D
+0000be   7e0b     addra   0xb              	ADDRA	r0x1010
+0000bf   7612     clrr    0x12             	CLRR	r0x1011
+0000c0   5212     rlr     0x12             	RLR	r0x1011
+0000c1   5807     movar   0x7              	MOVAR	r0x100C
+0000c2   7e12     addra   0x12             	ADDRA	r0x1011
+0000c3   5809     movar   0x9              	MOVAR	r0x100F
+0000c4   5605     movra   0x5              	MOVRA	STK01
+0000c5   580b     movar   0xb              	MOVAR	r0x1010
+0000c6   5606     movra   0x6              	MOVRA	STK00
+0000c7   5812     movar   0x12             	MOVAR	r0x1011
+0000c8   81c5     call    0x1c5            	CALL	__gptrget2
+0000c9   5614     movra   0x14             	MOVRA	r0x1013
+0000ca   5806     movar   0x6              	MOVAR	STK00
+0000cb   5613     movra   0x13             	MOVRA	r0x1012
+0000cc   3c06     movai   0x6              	MOVAI	0x06
+0000cd   7e0a     addra   0xa              	ADDRA	r0x100E
+0000ce   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+0000cf   6608     incr    0x8              	INCR	r0x100D
+0000d0   f587     jbclr   0x187, 0x2       	JBCLR	STATUS,2
+0000d1   6607     incr    0x7              	INCR	r0x100C
+0000d2   580a     movar   0xa              	MOVAR	r0x100E
+0000d3   5605     movra   0x5              	MOVRA	STK01
+0000d4   5808     movar   0x8              	MOVAR	r0x100D
+0000d5   5606     movra   0x6              	MOVRA	STK00
+0000d6   5807     movar   0x7              	MOVAR	r0x100C
+0000d7   81c5     call    0x1c5            	CALL	__gptrget2
+0000d8   560b     movra   0xb              	MOVRA	r0x1010
+0000d9   5806     movar   0x6              	MOVAR	STK00
+0000da   5609     movra   0x9              	MOVRA	r0x100F
+0000db   5809     movar   0x9              	MOVAR	r0x100F
+0000dc   7e13     addra   0x13             	ADDRA	r0x1012
+0000dd   580b     movar   0xb              	MOVAR	r0x1010
+0000de   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+0000df   600b     jzar    0xb              	JZAR	r0x1010
+0000e0   7e14     addra   0x14             	ADDRA	r0x1013
+                                           ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=0, offr=0
+0000e1   d187     bclr    0x187, 0         	BCLR	STATUS,0
+0000e2   4c14     rrar    0x14             	RRAR	r0x1013
+0000e3   5608     movra   0x8              	MOVRA	r0x100D
+0000e4   4c13     rrar    0x13             	RRAR	r0x1012
+0000e5   560a     movra   0xa              	MOVRA	r0x100E
+0000e6   580a     movar   0xa              	MOVAR	r0x100E
+0000e7   5606     movra   0x6              	MOVRA	STK00
+0000e8   5808     movar   0x8              	MOVAR	r0x100D
+0000e9   000c     return                   	RETURN	
+                                           ; exit point of _Compare_AD
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Battery_Check	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _AD_Check
+                                           ;   _AD_Check
+                                           ;7 compiler assigned registers:
+                                           ;   r0x1021
+                                           ;   r0x1022
+                                           ;   r0x1023
+                                           ;   r0x1024
+                                           ;   r0x1025
+                                           ;   STK00
+                                           ;   r0x1026
+                                           ;; Starting pCode block
+                                           _Battery_Check	;Function start
+                                           ; 2 exit points
+                                           ;	.line	26; "ADCSbr.c"	uint Battery_Check(uchar number)
+0000ea   560c     movra   0xc              	MOVRA	r0x1021
+                                           ;	.line	29; "ADCSbr.c"	uint sum = 0;
+0000eb   760d     clrr    0xd              	CLRR	r0x1022
+0000ec   760e     clrr    0xe              	CLRR	r0x1023
+                                           ;	.line	30; "ADCSbr.c"	for(i=0;i<8;i++)
+0000ed   760f     clrr    0xf              	CLRR	r0x1024
+                                           ;;unsigned compare: left < lit(0x8=8), size=1
+                                           _00110_DS_
+0000ee   3c08     movai   0x8              	MOVAI	0x08
+0000ef   480f     rsubar  0xf              	RSUBAR	r0x1024
+0000f0   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+0000f1   a0ff     goto    0xff             	GOTO	_00113_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	32; "ADCSbr.c"	sum += AD_Check(number);
+0000f2   580c     movar   0xc              	MOVAR	r0x1021
+0000f3   810e     call    0x10e            	CALL	_AD_Check
+0000f4   5611     movra   0x11             	MOVRA	r0x1025
+0000f5   5806     movar   0x6              	MOVAR	STK00
+0000f6   5610     movra   0x10             	MOVRA	r0x1026
+0000f7   5810     movar   0x10             	MOVAR	r0x1026
+0000f8   7e0d     addra   0xd              	ADDRA	r0x1022
+0000f9   5811     movar   0x11             	MOVAR	r0x1025
+0000fa   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+0000fb   6011     jzar    0x11             	JZAR	r0x1025
+0000fc   7e0e     addra   0xe              	ADDRA	r0x1023
+                                           ;	.line	30; "ADCSbr.c"	for(i=0;i<8;i++)
+0000fd   660f     incr    0xf              	INCR	r0x1024
+0000fe   a0ee     goto    0xee             	GOTO	_00110_DS_
+                                           ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=0, offr=0
+                                           _00113_DS_
+                                           ;	.line	35; "ADCSbr.c"	return  (sum/8);
+0000ff   d187     bclr    0x187, 0         	BCLR	STATUS,0
+000100   4c0e     rrar    0xe              	RRAR	r0x1023
+000101   560f     movra   0xf              	MOVRA	r0x1024
+000102   4c0d     rrar    0xd              	RRAR	r0x1022
+000103   560c     movra   0xc              	MOVRA	r0x1021
+                                           ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=1, offr=0
+000104   d187     bclr    0x187, 0         	BCLR	STATUS,0
+000105   4e0f     rrr     0xf              	RRR	r0x1024
+000106   4e0c     rrr     0xc              	RRR	r0x1021
+                                           ;;shiftRight_Left2ResultLit:5278: shCount=1, size=2, sign=0, same=1, offr=0
+000107   d187     bclr    0x187, 0         	BCLR	STATUS,0
+000108   4e0f     rrr     0xf              	RRR	r0x1024
+000109   4e0c     rrr     0xc              	RRR	r0x1021
+00010a   580c     movar   0xc              	MOVAR	r0x1021
+00010b   5606     movra   0x6              	MOVRA	STK00
+00010c   580f     movar   0xf              	MOVAR	r0x1024
+00010d   000c     return                   	RETURN	
+                                           ; exit point of _Battery_Check
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _AD_Check	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;7 compiler assigned registers:
+                                           ;   r0x100C
+                                           ;   r0x100D
+                                           ;   r0x100E
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;   r0x1011
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           _AD_Check	;Function start
+                                           ; 2 exit points
+                                           ;	.line	10; "ADCSbr.c"	uint AD_Check(uchar AD_enter) //检测AD
+00010e   5607     movra   0x7              	MOVRA	r0x100C
+                                           ;	.line	13; "ADCSbr.c"	ADCHS = AD_enter; //选择通道
+00010f   5807     movar   0x7              	MOVAR	r0x100C
+000110   3e0f     andai   0xf              	ANDAI	0x0f
+000111   5608     movra   0x8              	MOVRA	r0x100D
+000112   4608     swapr   0x8              	SWAPR	r0x100D
+000113   3cf0     movai   0xf0             	MOVAI	0xf0
+000114   7a08     andra   0x8              	ANDRA	r0x100D
+000115   59b0     movar   0x1b0            	MOVAR	(_ADCR0bits + 0)
+000116   3e0f     andai   0xf              	ANDAI	0x0f
+000117   5c08     orar    0x8              	ORAR	r0x100D
+000118   57b0     movra   0x1b0            	MOVRA	(_ADCR0bits + 0)
+                                           ;	.line	14; "ADCSbr.c"	ADCKS = 3; //AD时钟频率不分频
+000119   59b0     movar   0x1b0            	MOVAR	(_ADCR0bits + 0)
+00011a   3d0c     orai    0xc              	ORAI	0x0c
+00011b   57b0     movra   0x1b0            	MOVRA	(_ADCR0bits + 0)
+00011c   0000     nop                      	nop
+00011d   0000     nop                      	nop
+00011e   0000     nop                      	nop
+                                           ;	.line	18; "ADCSbr.c"	ADON = 1; //启动AD
+00011f   c1b0     bset    0x1b0, 0         	BSET	_ADCR0bits,0
+                                           ;	.line	19; "ADCSbr.c"	ADEOC = 0;
+000120   d3b0     bclr    0x1b0, 0x1       	BCLR	_ADCR0bits,1
+                                           _00105_DS_
+                                           ;	.line	20; "ADCSbr.c"	while(ADEOC==0);//AD转换中
+000121   e3b0     jbset   0x1b0, 0x1       	JBSET	_ADCR0bits,1
+000122   a121     goto    0x121            	GOTO	_00105_DS_
+                                           ;	.line	21; "ADCSbr.c"	AD_Value = ADRH; //获取AD值
+000123   59b4     movar   0x1b4            	MOVAR	_ADRH
+000124   5607     movra   0x7              	MOVRA	r0x100C
+000125   7608     clrr    0x8              	CLRR	r0x100D
+                                           ;	.line	22; "ADCSbr.c"	AD_Value = (AD_Value<<4)|ADRL; 
+000126   4408     swapar  0x8              	SWAPAR	r0x100D
+000127   3ef0     andai   0xf0             	ANDAI	0xf0
+000128   560a     movra   0xa              	MOVRA	r0x100E
+000129   4407     swapar  0x7              	SWAPAR	r0x100C
+00012a   5609     movra   0x9              	MOVRA	r0x100F
+00012b   3e0f     andai   0xf              	ANDAI	0x0f
+00012c   5e0a     orra    0xa              	ORRA	r0x100E
+00012d   4209     xorra   0x9              	XORRA	r0x100F
+00012e   59b5     movar   0x1b5            	MOVAR	_ADRL
+00012f   560b     movra   0xb              	MOVRA	r0x1010
+                                           ;;1	CLRR	r0x1011
+000130   580b     movar   0xb              	MOVAR	r0x1010
+000131   5c09     orar    0x9              	ORAR	r0x100F
+000132   5607     movra   0x7              	MOVRA	r0x100C
+000133   3c00     movai   0                	MOVAI	0x00
+000134   5c0a     orar    0xa              	ORAR	r0x100E
+000135   5608     movra   0x8              	MOVRA	r0x100D
+                                           ;	.line	23; "ADCSbr.c"	return AD_Value;
+000136   5807     movar   0x7              	MOVAR	r0x100C
+000137   5606     movra   0x6              	MOVRA	STK00
+000138   5808     movar   0x8              	MOVAR	r0x100D
+000139   000c     return                   	RETURN	
+                                           ; exit point of _AD_Check
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  302+    0 =   302 instructions (  604 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                                           ; This file was generated Wed Dec 11 15:02:17 2013
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"KeySbr.c"
+                                           	list	p=32p21
+                                           	radix dec
+                                           	include "mc32p21.inc"
+                                           		LIST
+                                           ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ABuf
+                                           	extern	_StatusBuf
+                                           	extern	_Keycode
+                                           	extern	_DisplayMode
+                                           	extern	_MasterTime_1ms
+                                           	extern	_MasterTime_10ms
+                                           	extern	_MasterTime_100ms
+                                           	extern	_MasterTime_1s
+                                           	extern	_sleeptime
+                                           	extern	_key_cnt
+                                           	extern	_key_time
+                                           	extern	_key_press_time
+                                           	extern	_short_press_time
+                                           	extern	_BAT_avgAD
+                                           	extern	_Load_avgAD
+                                           	extern	_Last_BATAD
+                                           	extern	_Load_avgAD2
+                                           	extern	_NoLoadCount
+                                           	extern	_ZNB602Register
+                                           	extern	_Flag
+                                           	extern	_Flag1
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_Key_Scan
+                                           	global	_Key_Deal
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_KeySbr	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Key_Deal	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Key_Deal	;Function start
+                                           ; 2 exit points
+                                           ;	.line	50; "KeySbr.c"	if(key_flag)
+0001df   e85b     jbset   0x5b, 0x4        	JBSET	_Flag,4
+0001e0   a1ef     goto    0x1ef            	GOTO	_00130_DS_
+                                           ;;unsigned compare: left < lit(0x14=20), size=1
+                                           ;	.line	52; "KeySbr.c"	if(key_press_time >= 20) //大于2s
+0001e1   3c14     movai   0x14             	MOVAI	0x14
+0001e2   4858     rsubar  0x58             	RSUBAR	_key_press_time
+0001e3   e187     jbset   0x187, 0         	JBSET	STATUS,0
+0001e4   a1e9     goto    0x1e9            	GOTO	_00127_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	54; "KeySbr.c"	key_flag = 0;
+0001e5   d85b     bclr    0x5b, 0x4        	BCLR	_Flag,4
+                                           ;	.line	55; "KeySbr.c"	Keycode = LONGKEY;  
+0001e6   3c02     movai   0x2              	MOVAI	0x02
+0001e7   564f     movra   0x4f             	MOVRA	_Keycode
+0001e8   a1f0     goto    0x1f0            	GOTO	_00132_DS_
+                                           _00127_DS_
+                                           ;	.line	59; "KeySbr.c"	else if(key_flag_bak == 0)// 按键已释放
+0001e9   f65b     jbclr   0x5b, 0x3        	JBCLR	_Flag,3
+0001ea   a1f0     goto    0x1f0            	GOTO	_00132_DS_
+                                           ;	.line	61; "KeySbr.c"	key_flag = 0;
+0001eb   d85b     bclr    0x5b, 0x4        	BCLR	_Flag,4
+                                           ;	.line	62; "KeySbr.c"	Keycode = SHORTKEY;
+0001ec   3c01     movai   0x1              	MOVAI	0x01
+0001ed   564f     movra   0x4f             	MOVRA	_Keycode
+0001ee   a1f0     goto    0x1f0            	GOTO	_00132_DS_
+                                           _00130_DS_
+                                           ;	.line	70; "KeySbr.c"	Keycode = NOKEY;
+0001ef   764f     clrr    0x4f             	CLRR	_Keycode
+                                           _00132_DS_
+0001f0   000c     return                   	RETURN	
+                                           ; exit point of _Key_Deal
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Key_Scan	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Key_Scan	;Function start
+                                           ; 2 exit points
+                                           ;	.line	11; "KeySbr.c"	if(!KEY_I) //有按键
+0001f1   fd94     jbclr   0x194, 0x6       	JBCLR	_IOP1bits,6
+0001f2   a202     goto    0x202            	GOTO	_00117_DS_
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x33=51), size=1
+                                           ;	.line	13; "KeySbr.c"	if(key_time <= KEY_EFFECT) //去抖
+0001f3   3c33     movai   0x33             	MOVAI	0x33
+0001f4   4857     rsubar  0x57             	RSUBAR	_key_time
+0001f5   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+0001f6   a20f     goto    0x20f            	GOTO	_00119_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	15; "KeySbr.c"	key_time++;
+0001f7   6657     incr    0x57             	INCR	_key_time
+                                           ;	.line	16; "KeySbr.c"	if(key_time == KEY_EFFECT)
+0001f8   5857     movar   0x57             	MOVAR	_key_time
+0001f9   3932     xorai   0x32             	XORAI	0x32
+0001fa   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+0001fb   a20f     goto    0x20f            	GOTO	_00119_DS_
+                                           ;	.line	18; "KeySbr.c"	if(!key_flag_bak)  //赋值
+0001fc   f65b     jbclr   0x5b, 0x3        	JBCLR	_Flag,3
+0001fd   a20f     goto    0x20f            	GOTO	_00119_DS_
+                                           ;	.line	20; "KeySbr.c"	key_flag = 1;        //按键有效标志
+0001fe   c85b     bset    0x5b, 0x4        	BSET	_Flag,4
+                                           ;	.line	21; "KeySbr.c"	key_flag_bak = 1;    //松开时清除标志
+0001ff   c65b     bset    0x5b, 0x3        	BSET	_Flag,3
+                                           ;	.line	22; "KeySbr.c"	key_press_time = 0;  //有效按键计数   
+000200   7658     clrr    0x58             	CLRR	_key_press_time
+000201   a20f     goto    0x20f            	GOTO	_00119_DS_
+                                           _00117_DS_
+                                           ;	.line	29; "KeySbr.c"	if(key_time)
+000202   3c00     movai   0                	MOVAI	0x00
+000203   5c57     orar    0x57             	ORAR	_key_time
+000204   f587     jbclr   0x187, 0x2       	JBCLR	STATUS,2
+000205   a20f     goto    0x20f            	GOTO	_00119_DS_
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x6=6), size=1
+                                           ;	.line	31; "KeySbr.c"	if(key_time > 5)
+000206   3c06     movai   0x6              	MOVAI	0x06
+000207   4857     rsubar  0x57             	RSUBAR	_key_time
+000208   e187     jbset   0x187, 0         	JBSET	STATUS,0
+000209   a20d     goto    0x20d            	GOTO	_00112_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	33; "KeySbr.c"	key_time-=3;
+00020a   3cfd     movai   0xfd             	MOVAI	0xfd
+00020b   7e57     addra   0x57             	ADDRA	_key_time
+00020c   a20f     goto    0x20f            	GOTO	_00119_DS_
+                                           _00112_DS_
+                                           ;	.line	37; "KeySbr.c"	key_time = 0;
+00020d   7657     clrr    0x57             	CLRR	_key_time
+                                           ;	.line	38; "KeySbr.c"	key_flag_bak = 0;
+00020e   d65b     bclr    0x5b, 0x3        	BCLR	_Flag,3
+                                           _00119_DS_
+00020f   000c     return                   	RETURN	
+                                           ; exit point of _Key_Scan
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   49+    0 =    49 instructions (   98 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                                           ; This file was generated Wed Dec 11 15:02:17 2013
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"InitRstSbr.c"
+                                           	list	p=32p21
+                                           	radix dec
+                                           	include "mc32p21.inc"
+                                           		LIST
+                                           ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ABuf
+                                           	extern	_StatusBuf
+                                           	extern	_Keycode
+                                           	extern	_DisplayMode
+                                           	extern	_MasterTime_1ms
+                                           	extern	_MasterTime_10ms
+                                           	extern	_MasterTime_100ms
+                                           	extern	_MasterTime_1s
+                                           	extern	_sleeptime
+                                           	extern	_key_cnt
+                                           	extern	_key_time
+                                           	extern	_key_press_time
+                                           	extern	_short_press_time
+                                           	extern	_BAT_avgAD
+                                           	extern	_Load_avgAD
+                                           	extern	_Last_BATAD
+                                           	extern	_Load_avgAD2
+                                           	extern	_NoLoadCount
+                                           	extern	_ZNB602Register
+                                           	extern	_Flag
+                                           	extern	_Flag1
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_InitialSys
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_InitRstSbr	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _InitialSys	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _InitialSys	;Function start
+                                           ; 2 exit points
+                                           ;	.line	8; "InitRstSbr.c"	OEP0 = 0xff;
+00023b   3cff     movai   0xff             	MOVAI	0xff
+00023c   5791     movra   0x191            	MOVRA	_OEP0
+                                           ;	.line	9; "InitRstSbr.c"	OEP1 = 0xff; // 设置方向
+00023d   3cff     movai   0xff             	MOVAI	0xff
+00023e   5795     movra   0x195            	MOVRA	_OEP1
+                                           ;	.line	10; "InitRstSbr.c"	PUP0 = 0x00;
+00023f   7792     clrr    0x192            	CLRR	_PUP0
+                                           ;	.line	11; "InitRstSbr.c"	PUP1 = 0x00; // 设置上拉电阻
+000240   7796     clrr    0x196            	CLRR	_PUP1
+                                           ;	.line	12; "InitRstSbr.c"	IOP0 = 0;
+000241   7790     clrr    0x190            	CLRR	_IOP0
+                                           ;	.line	13; "InitRstSbr.c"	IOP1 = 0;    // 设置数据
+000242   7794     clrr    0x194            	CLRR	_IOP1
+                                           ;	.line	14; "InitRstSbr.c"	MCR = 0x05; // 设置外部中断方式
+000243   3c05     movai   0x5              	MOVAI	0x05
+000244   5788     movra   0x188            	MOVRA	_MCR
+                                           ;	.line	15; "InitRstSbr.c"	ANSEL = 0x00; // 设置IO口是否为模拟输入口 做AD用
+000245   7793     clrr    0x193            	CLRR	_ANSEL
+                                           ;	.line	16; "InitRstSbr.c"	T0CR = 0x00; //设置定时器0
+000246   77a0     clrr    0x1a0            	CLRR	_T0CR
+                                           ;	.line	17; "InitRstSbr.c"	T1LOAD = 249; // 设置定时器以及PWM周期
+000247   3cf9     movai   0xf9             	MOVAI	0xf9
+000248   57a6     movra   0x1a6            	MOVRA	_T1LOAD
+                                           ;	.line	18; "InitRstSbr.c"	T0DATA = 12;
+000249   3c0c     movai   0xc              	MOVAI	0x0c
+00024a   57a3     movra   0x1a3            	MOVRA	_T0DATA
+                                           ;	.line	19; "InitRstSbr.c"	T1CR = 0x00; // 设置定时器1
+00024b   77a4     clrr    0x1a4            	CLRR	_T1CR
+                                           ;	.line	20; "InitRstSbr.c"	T1LOAD = 159;
+00024c   3c9f     movai   0x9f             	MOVAI	0x9f
+00024d   57a6     movra   0x1a6            	MOVRA	_T1LOAD
+                                           ;	.line	21; "InitRstSbr.c"	T1DATA = 25;
+00024e   3c19     movai   0x19             	MOVAI	0x19
+00024f   57a7     movra   0x1a7            	MOVRA	_T1DATA
+                                           ;	.line	22; "InitRstSbr.c"	ADCR0 = 0x0f;
+000250   3c0f     movai   0xf              	MOVAI	0x0f
+000251   57b0     movra   0x1b0            	MOVRA	_ADCR0
+                                           ;	.line	23; "InitRstSbr.c"	ADCR1 = 0x03; // 选择VDD做参考
+000252   3c03     movai   0x3              	MOVAI	0x03
+000253   57b1     movra   0x1b1            	MOVRA	_ADCR1
+                                           ;	.line	24; "InitRstSbr.c"	TC0EN = 1;
+000254   cfa0     bset    0x1a0, 0x7       	BSET	_T0CRbits,7
+                                           ;	.line	25; "InitRstSbr.c"	T0IE = 1;
+000255   c18a     bset    0x18a, 0         	BSET	_INTEbits,0
+                                           ;	.line	26; "InitRstSbr.c"	TC1EN = 1;
+000256   cfa4     bset    0x1a4, 0x7       	BSET	_T1CRbits,7
+                                           ;	.line	27; "InitRstSbr.c"	PWM0OE = 1;
+000257   cda0     bset    0x1a0, 0x6       	BSET	_T0CRbits,6
+000258   000c     return                   	RETURN	
+                                           ; exit point of _InitialSys
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   30+    0 =    30 instructions (   60 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                                           ; This file was generated Wed Dec 11 09:43:13 2013
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"interrupt.c"
+                                           	list	p=32p21
+                                           	radix dec
+                                           	include "mc32p21.inc"
+                                           		LIST
+                                           ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ABuf
+                                           	extern	_StatusBuf
+                                           	extern	_Keycode
+                                           	extern	_DisplayMode
+                                           	extern	_MasterTime_1ms
+                                           	extern	_MasterTime_10ms
+                                           	extern	_MasterTime_100ms
+                                           	extern	_MasterTime_1s
+                                           	extern	_sleeptime
+                                           	extern	_key_cnt
+                                           	extern	_key_time
+                                           	extern	_key_press_time
+                                           	extern	_short_press_time
+                                           	extern	_BAT_avgAD
+                                           	extern	_Load_avgAD
+                                           	extern	_Last_BATAD
+                                           	extern	_Load_avgAD2
+                                           	extern	_NoLoadCount
+                                           	extern	_ZNB602Register
+                                           	extern	_Flag
+                                           	extern	_Flag1
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_int_isr
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; interrupt and initialization code
+                                           ;--------------------------------------------------------
+                                           c_interrupt	code	0x8
+                                           __sdcc_interrupt
+                                           ;***
+                                           ;  pBlock Stats: dbName = I
+                                           ;***
+                                           ;entry:  _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;; Starting pCode block
+                                           _int_isr	;Function start
+                                           ; 0 exit points
+                                           END_OF_INTERRUPT
+                                           ;	.line	43; "interrupt.c"	}
+000008   000d     retie                    	RETIE	
+                                           
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_interrupt	code
+                                           
+                                           ;	code size estimation:
+                                           ;	    1+    0 =     1 instructions (    2 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.3 (Jul 18 2013) (MINGW32)
+                                           ; This file was generated Wed Dec 11 15:02:17 2013
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"displaySbr.c"
+                                           	list	p=32p21
+                                           	radix dec
+                                           	include "mc32p21.inc"
+                                           		LIST
+                                           ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ABuf
+                                           	extern	_StatusBuf
+                                           	extern	_Keycode
+                                           	extern	_DisplayMode
+                                           	extern	_MasterTime_1ms
+                                           	extern	_MasterTime_10ms
+                                           	extern	_MasterTime_100ms
+                                           	extern	_MasterTime_1s
+                                           	extern	_sleeptime
+                                           	extern	_key_cnt
+                                           	extern	_key_time
+                                           	extern	_key_press_time
+                                           	extern	_short_press_time
+                                           	extern	_BAT_avgAD
+                                           	extern	_Load_avgAD
+                                           	extern	_Last_BATAD
+                                           	extern	_Load_avgAD2
+                                           	extern	_NoLoadCount
+                                           	extern	_ZNB602Register
+                                           	extern	_Flag
+                                           	extern	_Flag1
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_Battery_MODE
+                                           	global	_Display_LED
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_displaySbr	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Display_LED	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Display_LED	;Function start
+                                           ; 2 exit points
+                                           ;	.line	38; "displaySbr.c"	if(CHRG)
+000210   e394     jbset   0x194, 0x1       	JBSET	_IOP1bits,1
+000211   a216     goto    0x216            	GOTO	_00131_DS_
+                                           ;	.line	40; "displaySbr.c"	LED1 = ONLED;LED2 = ONLED;LED3 = ONLED;LED4 = ONLED;
+000212   c994     bset    0x194, 0x4       	BSET	_IOP1bits,4
+000213   cb94     bset    0x194, 0x5       	BSET	_IOP1bits,5
+000214   c794     bset    0x194, 0x3       	BSET	_IOP1bits,3
+000215   c594     bset    0x194, 0x2       	BSET	_IOP1bits,2
+                                           _00131_DS_
+000216   000c     return                   	RETURN	
+                                           ; exit point of _Display_LED
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Battery_MODE	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Battery_MODE	;Function start
+                                           ; 2 exit points
+                                           ;;unsigned compare: left < lit(0x280=640), size=2
+                                           ;	.line	11; "displaySbr.c"	if(BAT_avgAD < BATAhAD1)
+000217   3c02     movai   0x2              	MOVAI	0x02
+000218   4846     rsubar  0x46             	RSUBAR	(_BAT_avgAD + 1)
+000219   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+00021a   a21d     goto    0x21d            	GOTO	_00122_DS_
+00021b   3c80     movai   0x80             	MOVAI	0x80
+00021c   4845     rsubar  0x45             	RSUBAR	_BAT_avgAD
+                                           _00122_DS_
+00021d   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00021e   a222     goto    0x222            	GOTO	_00112_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	13; "displaySbr.c"	DisplayMode = 1;
+00021f   3c01     movai   0x1              	MOVAI	0x01
+000220   5650     movra   0x50             	MOVRA	_DisplayMode
+000221   a23a     goto    0x23a            	GOTO	_00114_DS_
+                                           ;;unsigned compare: left < lit(0x28F=655), size=2
+                                           _00112_DS_
+                                           ;	.line	17; "displaySbr.c"	if(BAT_avgAD < BATAhAD2)
+000222   3c02     movai   0x2              	MOVAI	0x02
+000223   4846     rsubar  0x46             	RSUBAR	(_BAT_avgAD + 1)
+000224   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+000225   a228     goto    0x228            	GOTO	_00123_DS_
+000226   3c8f     movai   0x8f             	MOVAI	0x8f
+000227   4845     rsubar  0x45             	RSUBAR	_BAT_avgAD
+                                           _00123_DS_
+000228   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000229   a22d     goto    0x22d            	GOTO	_00109_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	19; "displaySbr.c"	DisplayMode = 2;
+00022a   3c02     movai   0x2              	MOVAI	0x02
+00022b   5650     movra   0x50             	MOVRA	_DisplayMode
+00022c   a23a     goto    0x23a            	GOTO	_00114_DS_
+                                           ;;unsigned compare: left < lit(0x2D2=722), size=2
+                                           _00109_DS_
+                                           ;	.line	23; "displaySbr.c"	if(BAT_avgAD < BATAhAD3)
+00022d   3c02     movai   0x2              	MOVAI	0x02
+00022e   4846     rsubar  0x46             	RSUBAR	(_BAT_avgAD + 1)
+00022f   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+000230   a233     goto    0x233            	GOTO	_00124_DS_
+000231   3cd2     movai   0xd2             	MOVAI	0xd2
+000232   4845     rsubar  0x45             	RSUBAR	_BAT_avgAD
+                                           _00124_DS_
+000233   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000234   a238     goto    0x238            	GOTO	_00106_DS_
+                                           ;;genSkipc:3246: created from rifx:0028608C
+                                           ;	.line	25; "displaySbr.c"	DisplayMode = 3;
+000235   3c03     movai   0x3              	MOVAI	0x03
+000236   5650     movra   0x50             	MOVRA	_DisplayMode
+000237   a23a     goto    0x23a            	GOTO	_00114_DS_
+                                           _00106_DS_
+                                           ;	.line	29; "displaySbr.c"	DisplayMode = 4;
+000238   3c04     movai   0x4              	MOVAI	0x04
+000239   5650     movra   0x50             	MOVRA	_DisplayMode
+                                           _00114_DS_
+00023a   000c     return                   	RETURN	
+                                           ; exit point of _Battery_MODE
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   43+    0 =    43 instructions (   86 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXX------------ XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0380 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+03C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0400 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0440 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0480 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+04C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0500 : XXXXXXXXXXXXXXXX ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   642
+

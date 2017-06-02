@@ -1,0 +1,102 @@
+gpasm-1.4.0 (Oct 15 2013)    all_code_mc32p21.asm2013-10-15  18:44:55         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000   7C00           00001         addar   0
+0001   7E00           00002         addra   0
+0002   7800           00003         andar   0
+0003   7A00           00004         andra   0
+0004   7600           00005         clrr    0
+0005   7000           00006         comar   0
+0006   7200           00007         comr    0
+0007   6C00           00008         decar   0
+0008   6E00           00009         decr    0
+0009   6800           00010         djzar   0
+000A   6A00           00011         djzr    0
+000B   6400           00012         incar   0
+000C   6600           00013         incr    0
+000D   6000           00014         jzar    0
+000E   6200           00015         jzr     0
+000F   5C00           00016         orar    0
+0010   5E00           00017         orra    0
+0011   5800           00018         movar   0
+0012   5A00           00019         movr    0
+0013   5600           00020         movra   0
+0014   5000           00021         rlar    0
+0015   5200           00022         rlr     0
+0016   4C00           00023         rrar    0
+0017   4E00           00024         rrr     0
+0018   4800           00025         rsubar  0
+0019   4A00           00026         rsubra  0
+001A   4400           00027         swapar  0
+001B   4600           00028         swapr   0
+001C   4000           00029         xorar   0
+001D   4200           00030         xorra   0
+001E   1000           00031         adcar   0
+001F   1200           00032         adcra   0 
+0020   0C00           00033         rsbcar  0 
+0021   0E00           00034         rsbcra  0 
+0022   0800           00035         asubar  0 
+0023   0A00           00036         asubra  0
+0024   0400           00037         asbcar  0
+0025   0600           00038         asbcra  0
+0026   F000           00039         jbclr   0, 0
+0027   E000           00040         jbset   0, 0
+0028   D000           00041         bclr    0, 0
+0029   C000           00042         bset    0, 0
+002A   3F00           00043         addai   0
+002B   3E00           00044         andai   0
+002C   3D00           00045         orai    0
+002D   3C00           00046         movai   0
+002E   3B00           00047         retai   0
+002F   3A00           00048         isubai  0
+0030   3900           00049         xorai   0
+0031   3800           00050         adcai   0
+0032   3700           00051         isbcai  0
+0033   3600           00052         asbcai  0
+0034   3500           00053         asubai  0
+0035   8000           00054         call    0
+0036   A000           00055         goto    0
+0037   7400           00056         clra    
+0038   000E           00057         clrwdt  
+0039   000D           00058         retie   
+003A   000C           00059         return  
+003B   000B           00060         stop   
+003C   0000           00061         nop     
+003D   000A           00062         daa    
+003E   0009           00063         dsa    
+003F   0015           00064         rra     
+0040   0014           00065         rla     
+0041   0013           00066         inca    
+0042   0012           00067         jza     
+0043   0011           00068         deca    
+0044   0010           00069         djza   
+0045   2000 0000      00070         lgoto   0
+0047   2100 0000      00071         lcall   0
+                      00072         
+                      00073         en
+gpasm-1.4.0 (Oct 15 2013)    all_code_mc32p21.asm2013-10-15  18:44:55         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__32P21                           00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXX------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    73
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
