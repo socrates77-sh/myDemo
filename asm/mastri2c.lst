@@ -1,4 +1,4 @@
-gpasm-1.9.8 (Jun  2 2017)    mastri2c.asm       2017-6-2  19:19:02           PAGE  1
+gpasm-1.9.8 (Jun  3 2017)    mastri2c.asm       2017-6-3  21:12:07           PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -9,8 +9,8 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00001                 LIST
                       00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
                       00225                 LIST
-2000   F81A           00003         __CONFIG _CONFIG0, (_FCPU_4T & _WDT_OFF)
-2001   F81A           00004         __CONFIG _CONFIG1, ( _SMT_OFF & _CP_ALL)
+2000   0FED           00003         __CONFIG _CONFIG0, (_FCPU_4T & _WDT_OFF)
+2001   0FED           00004         __CONFIG _CONFIG1, ( _SMT_OFF & _CP_ALL)
                       00005 
                       00006 #include  "mastri2c.inc"             ;
                       00001 
@@ -244,7 +244,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00170 ;----------------------------------------------------------------------
                       00171 
                       00172         end
-gpasm-1.9.8 (Jun  2 2017)    mastri2c.asm       2017-6-2  19:19:02           PAGE  2
+gpasm-1.9.8 (Jun  3 2017)    mastri2c.asm       2017-6-3  21:12:07           PAGE  2
 
 
 SYMBOL TABLE

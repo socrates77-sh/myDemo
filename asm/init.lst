@@ -1,4 +1,4 @@
-gpasm-1.9.8 (Jun  2 2017)    init.asm           2017-6-2  19:19:02           PAGE  1
+gpasm-1.9.8 (Jun  3 2017)    init.asm           2017-6-3  21:12:07           PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -32,7 +32,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0004   000C           00023         return
                       00024 
                       00025         end
-gpasm-1.9.8 (Jun  2 2017)    init.asm           2017-6-2  19:19:02           PAGE  2
+gpasm-1.9.8 (Jun  3 2017)    init.asm           2017-6-3  21:12:07           PAGE  2
 
 
 SYMBOL TABLE
