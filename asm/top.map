@@ -1,5 +1,5 @@
-gplink-1.9.8 (Jun 12 2017)
-Map File - Created 2017-6-14  16:13:40
+gplink-1.9.8 (Jun  5 2017)
+Map File - Created 2017-6-14  23:08:04
  
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -8,7 +8,7 @@ Map File - Created 2017-6-14  16:13:40
                INT_VECTOR       code   0x000004    program   0x000030
                  I2C_COMM       code   0x00001c    program   0x0000b0
                      MAIN       code   0x000074    program   0x00007c
-                INIT_CODE       code   0x0000b2    program   0x00000a
+                INIT_CODE       code   0x0000b2    program   0x00001c
                   .config       code   0x002000    program   0x000004
                   INT_VAR      udata   0x000020       data   0x000003
                  GPR_DATA      udata   0x000023       data   0x00000b
@@ -18,20 +18,21 @@ Map File - Created 2017-6-14  16:13:40
                               Program Memory Usage
                                Start         End
                            ---------   ---------
-                            0x0000b2    0x0000b6
+                            0x0000b2    0x0000bf
                             0x00001c    0x000073
                             0x002000    0x002001
                             00000000    0x000002
                             0x000004    0x00001b
                             0x000074    0x0000b1
  
-                            184 program addresses used
+                            193 program addresses used
  
                               Symbols
                      Name    Address   Location    Storage File
                 ---------  ---------  ---------  --------- ---------
                init_ports   0x0000b2    program     extern init.asm
-              init_timer1   0x0000b4    program     extern init.asm
+                    delay   0x0000ba    program     static init.asm
+              init_timer1   0x0000bd    program     extern init.asm
               sflag_event   0x000023       data     extern i2ccomm.inc
               eflag_event   0x000024       data     extern i2ccomm.inc
                  i2cState   0x000025       data     extern i2ccomm.inc

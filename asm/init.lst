@@ -1,4 +1,4 @@
-gpasm-1.9.8 (Jun 12 2017)    init.asm           2017-6-14  15:04:43          PAGE  1
+gpasm-1.9.8 (Jun 12 2017)    init.asm           2017-6-14  23:08:03          PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -8,31 +8,45 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00001                 LIST
                       00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
                       00225                 LIST
-                      00002 
-                      00003         GLOBAL  init_timer1
-                      00004         GLOBAL  init_ports
-                      00005 
-                      00006 ;----------------------------------------------------------------------
-                      00007 ;  ******************* INITIALIZE PORTS  *************************
-                      00008 ;----------------------------------------------------------------------
-                      00009 INIT_CODE               CODE
-                      00010 
-0000                  00011 init_ports
-0000   0BFF           00012         movai 0xff
-                      00013         ;iost 5
-                      00014         ;iost 6
-0001   000C           00015         return
-                      00016 
-                      00017 ;----------------------------------------------------------------------
-                      00018 ;  ******************* INITIALIZE TIMER1 MODULE  *******************
-                      00019 ;----------------------------------------------------------------------
-0002                  00020 init_timer1
-0002   0B30           00021         movai b'00110000'  
-0003   1588           00022         movra MCR
-0004   000C           00023         return
+                      00002         GLOBAL  init_timer1
+                      00003         GLOBAL  init_ports
+                      00004 
+                      00005 INIT_CODE               CODE
+                      00006 
+                      00007 Read macro device, buffer
+                      00008         movar buffer
+                      00009         movra device
+                      00010         call delay
+                      00011         endm
+                      00012 
+0000                  00013 init_ports:
+                      00014         ;movai 0x0d
+                      00015         Read 0x01, 0x03
+0000   1603               M         movar buffer
+0001   1581               M         movra device
+0002   2000               M         call delay
+0003   0BFF           00016         movai 0xff
+                      00017         Read 0x01, 0x03
+0004   1603               M         movar buffer
+0005   1581               M         movra device
+0006   2000               M         call delay
+0007   000C           00018         return
+                      00019         
+0008                  00020 delay:
+0008   0000           00021         nop
+0009   0000           00022         nop
+000A   000C           00023         return
                       00024 
-                      00025         end
-gpasm-1.9.8 (Jun 12 2017)    init.asm           2017-6-14  15:04:43          PAGE  2
+                      00025 ;----------------------------------------------------------------------
+                      00026 ;  ******************* INITIALIZE TIMER1 MODULE  *******************
+                      00027 ;----------------------------------------------------------------------
+000B                  00028 init_timer1:
+000B   0B30           00029         movai b'00110000'  
+000C   1588           00030         movra MCR
+000D   000C           00031         return
+                      00032 
+                      00033         end
+gpasm-1.9.8 (Jun 12 2017)    init.asm           2017-6-14  23:08:03          PAGE  2
 
 
 SYMBOL TABLE
@@ -175,8 +189,9 @@ _VBOR_36                          00003FFF
 _WDT_OFF                          000037FF
 _WDT_ON                           00003FFF
 __30P011                          00000001
+delay                             00000008
 init_ports                        00000000
-init_timer1                       00000002
+init_timer1                       0000000B
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
