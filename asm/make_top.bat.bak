@@ -8,4 +8,4 @@ set GPLINK_ARG=-m -I "e:\tools\sn-sdcc\share\lkr" -s mc30p011.lkr
 gpasm.exe %GPASM_ARG% -c init.asm
 gpasm.exe %GPASM_ARG% -c mastri2c.asm
 gpasm.exe %GPASM_ARG% -c i2ccomm.asm
-gplink.exe %GPLINK_ARG% -c -o top init.o i2ccomm.o mastri2c.o
+::gplink.exe %GPLINK_ARG% -c -o top init.o i2ccomm.o mastri2c.o
