@@ -1,45 +1,39 @@
-gpasm-1.9.8 (Jun  3 2017)    withmacro.asm      2017-6-3  16:07:34           PAGE  1
+gpasm-1.9.8 (Jun 12 2017)    withmacro.asm      2017-6-15  17:42:14          PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001         
-                      00002         org 0h
-                      00003         
-                      00004 Read macro device, buffer
-                      00005         movar buffer
-                      00006         movra device
-                      00007         call delay
-                      00008         endm
-                      00009         
-0000   0000           00010         nop
-                      00011         
-0001   0B01           00012         movai 01h
-0002   15F8           00013         movra 78h
-0003   0B80           00014         movai 80h
-0004   15FB           00015         movra 7bh
+                      00001         org 0h
+                      00002 Read macro device, buffer
+                      00003         movar buffer
+                      00004         movra device
+                      00005         call delay
+                      00006         endm
+                      00007         
+                      00008         Read 0x01, 0x03
+0000   1603               M         movar buffer
+0001   1581               M         movra device
+0002   2000               M         call delay
+0003   0B01           00009         movai 01h
+                      00010         Read 0x05, 0x07
+0004   1607               M         movar buffer
+0005   1585               M         movra device
+0006   2000               M         call delay
+0007   0000           00011         nop
+0008   0B01           00012         movai 01h
+0009   15F8           00013         movra 78h
+000A   0B80           00014         movai 80h
+000B   15FB           00015         movra 7bh
                       00016         
-                      00017         Read 0x01, 0x03
-0005   1603               M         movar buffer
-0006   1581               M         movra device
-0007   2000               M         call delay
-                      00018         
-0008   0B01           00019         movai 01h
-                      00020         
-                      00021         Read 0x05, 0x07
-0009   1607               M         movar buffer
-000A   1585               M         movra device
-000B   2000               M         call delay
-                      00022         
-000C                  00023 delay:
-000C   0000           00024         nop
-000D   0000           00025         nop
-000E   000C           00026         return
-                      00027 
-                      00028 
-                      00029         end
-gpasm-1.9.8 (Jun  3 2017)    withmacro.asm      2017-6-3  16:07:34           PAGE  2
+000C                  00017 delay:
+000C   0000           00018         nop
+000D   0000           00019         nop
+000E   000C           00020         return
+                      00021 
+                      00022 
+                      00023         end
+gpasm-1.9.8 (Jun 12 2017)    withmacro.asm      2017-6-15  17:42:14          PAGE  2
 
 
 SYMBOL TABLE
