@@ -1,0 +1,39 @@
+gplink-1.9.8 (Jun  3 2017)
+Listing File Generated: 2017-6-18  22:48:57
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           	org 0h
+                                           Read macro device, buffer
+000000   1603     movar   0x3              	movar buffer
+000001   1581     movra   0x1              	movra device
+000002   200c     call    0xc              	call delay
+                                           	endm
+                                           	
+                                           	Read 0x01, 0x03
+000003   0b01     movai   0x1              	movai 01h
+                                           	Read 0x05, 0x07
+000007   0000     nop                      	nop
+000008   0b01     movai   0x1              	movai 01h
+000009   15f8     movra   0x78             	movra 78h
+00000a   0b80     movai   0x80             	movai 80h
+00000b   15fb     movra   0x7b             	movra 7bh
+                                           	
+                                           delay:
+00000c   0000     nop                      	nop
+00000d   0000     nop                      	nop
+00000e   000c     return                   	return
+                                           
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    15
+
