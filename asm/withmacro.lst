@@ -1,4 +1,4 @@
-gpasm-1.9.8 (Jun  3 2017)    withmacro.asm      2017-6-18  22:48:57          PAGE  1
+gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-19  17:21:14          PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -33,7 +33,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00021 
                       00022 
                       00023         end
-gpasm-1.9.8 (Jun  3 2017)    withmacro.asm      2017-6-18  22:48:57          PAGE  2
+gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-19  17:21:14          PAGE  2
 
 
 SYMBOL TABLE
