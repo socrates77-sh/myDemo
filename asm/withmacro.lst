@@ -1,4 +1,4 @@
-gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-19  17:21:14          PAGE  1
+gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-21  09:40:10          PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -11,36 +11,37 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00005         call delay
                       00006         endm
                       00007         
-                      00008         Read 0x01, 0x03
-0000   1603               M         movar buffer
-0001   1581               M         movra device
-0002   2000               M         call delay
-0003   0B01           00009         movai 01h
-                      00010         Read 0x05, 0x07
-0004   1607               M         movar buffer
-0005   1585               M         movra device
-0006   2000               M         call delay
-0007   0000           00011         nop
-0008   0B01           00012         movai 01h
-0009   15F8           00013         movra 78h
-000A   0B80           00014         movai 80h
-000B   15FB           00015         movra 7bh
-                      00016         
-000C                  00017 delay:
-000C   0000           00018         nop
+0000   0000           00008         nop
+                      00009         Read 0x01, 0x03
+0001   1603               M         movar buffer
+0002   1581               M         movra device
+0003   2000               M         call delay
+0004   0B01           00010         movai 01h
+                      00011         Read 0x05, 0x07
+0005   1607               M         movar buffer
+0006   1585               M         movra device
+0007   2000               M         call delay
+0008   0000           00012         nop
+0009   0B01           00013         movai 01h
+000A   15F8           00014         movra 78h
+000B   0B80           00015         movai 80h
+000C   15FB           00016         movra 7bh
+                      00017         
+000D                  00018 delay:
 000D   0000           00019         nop
-000E   000C           00020         return
-                      00021 
+000E   0000           00020         nop
+000F   000C           00021         return
                       00022 
-                      00023         end
-gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-19  17:21:14          PAGE  2
+                      00023 
+                      00024         end
+gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-21  09:40:10          PAGE  2
 
 
 SYMBOL TABLE
   LABEL                             VALUE
 
 __30P011                          00000001
-delay                             0000000C
+delay                             0000000D
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

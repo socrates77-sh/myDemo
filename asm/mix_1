@@ -1,0 +1,40 @@
+gplink-2.0.0_beta (Jun 19 2017)                                                  00 90 01 00 00 00 
+Listing File Generated: 2017-6-21  09:40:10                                      00 90 01 00 00 00 
+                                                                                 00 90 01 00 00 00 
+                                                                                 00 90 01 00 00 00 
+Address  Value    Disassembly              Source                                00 90 01 00 00 00 
+-------  -----    -----------              ------                                00 90 01 00 00 00 
+                                           	org 0h                               00 90 01 00 00 00 
+                                           Read macro device, buffer             00 90 02 00 00 00 
+000001   1603     movar   0x3              	movar buffer                         00 80 03 00 01 00 
+000002   1581     movra   0x1              	movra device                         00 80 04 00 02 00 
+000003   200d     call    0xd              	call delay                           00 80 05 00 03 00 
+                                           	endm                                 00 90 06 00 04 00 
+                                           	                                     00 90 07 00 04 00 
+000000   0000     nop                      	nop                                  00 80 08 00 00 00 
+                                           	Read 0x01, 0x03                      00 90 09 00 01 00 
+000004   0b01     movai   0x1              	movai 01h                            00 80 0A 00 04 00 
+                                           	Read 0x05, 0x07                      00 90 0B 00 05 00 
+000008   0000     nop                      	nop                                  00 80 0C 00 08 00 
+000009   0b01     movai   0x1              	movai 01h                            00 80 0D 00 09 00 
+00000a   15f8     movra   0x78             	movra 78h                            00 80 0E 00 0A 00 
+00000b   0b80     movai   0x80             	movai 80h                            00 80 0F 00 0B 00 
+00000c   15fb     movra   0x7b             	movra 7bh                            00 80 10 00 0C 00 
+                                           	                                     00 90 11 00 0D 00 
+                                           delay:                                00 90 12 00 0D 00 
+00000d   0000     nop                      	nop                                  00 80 13 00 0D 00 
+00000e   0000     nop                      	nop                                  00 80 14 00 0E 00 
+00000f   000c     return                   	return                               00 80 15 00 0F 00 
+                                                                                 00 90 16 00 10 00 
+                                                                                 00 90 17 00 10 00 
+                                           	end                                  00 90 18 00 10 00 
+                                                                                 00 80 03 00 05 00 
+                                                                                 00 80 04 00 06 00 
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)                                     00 80 05 00 07 00 
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    16
+

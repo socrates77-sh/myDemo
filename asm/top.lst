@@ -1,39 +1,525 @@
-gplink-2.0.0_beta (Jun 19 2017)
-Listing File Generated: 2017-6-19  17:21:15
+gplink-2.0.0_beta (Jun 21 2017)
+Listing File Generated: 2017-6-21  14:38:30
  
  
 Address  Value    Disassembly              Source
 -------  -----    -----------              ------
-                                           	org 0h
+                                           #include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           	GLOBAL	init_timer1
+                                           	GLOBAL	init_ports
+                                           
+                                           INIT_CODE		CODE
+                                           
                                            Read macro device, buffer
-000000   1603     movar   0x3              	movar buffer
-000001   1581     movra   0x1              	movra device
-000002   200c     call    0xc              	call delay
+0000b2   1603     movar   0x3              	movar buffer
+0000b3   1581     movra   0x1              	movra device
+0000b4   20ba     call    0xba             	call delay
                                            	endm
-                                           	
+                                           
+                                           init_ports:
+                                           	;movai 0x0d
                                            	Read 0x01, 0x03
-000003   0b01     movai   0x1              	movai 01h
-                                           	Read 0x05, 0x07
-000007   0000     nop                      	nop
-000008   0b01     movai   0x1              	movai 01h
-000009   15f8     movra   0x78             	movra 78h
-00000a   0b80     movai   0x80             	movai 80h
-00000b   15fb     movra   0x7b             	movra 7bh
+0000b5   0bff     movai   0xff             	movai 0xff
+                                           	Read 0x01, 0x03
+0000b9   000c     return                   	return
                                            	
                                            delay:
-00000c   0000     nop                      	nop
-00000d   0000     nop                      	nop
-00000e   000c     return                   	return
+0000ba   0000     nop                      	nop
+0000bb   0000     nop                      	nop
+0000bc   000c     return                   	return
                                            
+                                           ;----------------------------------------------------------------------
+                                           ;  ******************* INITIALIZE TIMER1 MODULE  *******************
+                                           ;----------------------------------------------------------------------
+                                           init_timer1:
+0000bd   0b30     movai   0x30             	movai b'00110000'  
+0000be   1588     movra   0x8              	movra MCR
+0000bf   000c     return                   	return
                                            
                                            	end
+                                           #include 0311.inc 
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           #include  "i2ccomm.inc"       
+                                           #include  "flags.inc"            ; required include file
+                                            
+                                           ; bits for variable sflag_event
+                                           #define  sh1         0                   ; place holder
+                                           #define  sh2         1                   ; place holder
+                                           #define  sh3         2                   ; place holder
+                                           #define  sh4         3                   ; place holder
+                                           #define  sh5         4                   ; place holder
+                                           #define  sh6         5                   ; place holder
+                                           #define  sh7         6                   ; place holder
+                                           #define  rw_done     7                   ; flag bit
+                                           
+                                           
+                                           ; bits for variable eflag_event
+                                           #define  ack_error   0                   ; flag bit
+                                           #define  eh1         1                   ; place holder
+                                           #define  eh2         2                   ; place holder
+                                           #define  eh3         3                   ; place holder
+                                           #define  eh4         4                   ; place holder
+                                           #define  eh5         5                   ; place holder
+                                           #define  eh6         6                   ; place holder
+                                           #define  eh7         7                   ; place holder
+                                           
+                                           i2cSizeMask		EQU		0x0F
+                                           
+                                           
+                                           	GLOBAL		sflag_event          ; make variable viewable for other modules 
+                                           	GLOBAL		eflag_event          ; make variable viewable for other modules
+                                           	GLOBAL		i2cState             ; make variable viewable for other modules
+                                           	GLOBAL		read_count           ; make variable viewable for other modules
+                                           	GLOBAL		write_count          ; make variable viewable for other modules
+                                           	GLOBAL		write_ptr            ; make variable viewable for other modules
+                                           	GLOBAL		read_ptr             ; make variable viewable for other modules
+                                           	GLOBAL		temp_address         ; make variable viewable for other modules
+                                           
+                                           	GLOBAL		init_i2c             ; make function viewable for other modules
+                                           	GLOBAL		service_i2c          ; make function viewable for other modules
+                                           
+                                           
+                                           
+                                           ;*******    GENERAL PURPOSE VARIABLES
+                                           GPR_DATA		UDATA
+                                           sflag_event      RES     1               ; variable for i2c general status flags
+                                           eflag_event      RES     1               ; variable for i2c error status flags
+                                           i2cState         RES     1               ; I2C state machine variable
+                                           read_count       RES     1               ; variable used for slave read byte count
+                                           write_count      RES     1               ; variable used for slave write byte count
+                                           write_ptr        RES     1               ; variable used for pointer (writes to)
+                                           read_ptr         RES     1               ; variable used for pointer (reads from)
+                                           temp_address     RES     1               ; variable used for passing address to functions
+                                           		
+                                           
+                                           
+                                           #define  FOSC        D'8000000'
+                                           #define  I2CClock    D'400000'
+                                           #define  ClockValue  (((FOSC/I2CClock)/4) -1) ; 
+                                           	
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   ***********************  I2C Service  *************************
+                                           ;----------------------------------------------------------------------
+                                           I2C_COMM	CODE	
+                                           service_i2c:
+00001c   0b00     movai   0                	movai high I2CJump
+00001d   158a     movra   0xa              	movra PCLATH
+00001e   0b0f     movai   0xf              	movai i2cSizeMask
+00001f   1e25     andar   0x25             	andar i2cState
+000020   0e24     addai   0x24             	addai low (I2CJump + 1)
+000021   3403     jbclr   0x3, 0           	jbclr STATUS, C
+000022   198a     incr    0xa              	incr PCLATH
+                                           I2CJump:
+000023   1582     movra   0x2              	movra PCL
+                                           
+000024   2832     goto    0x32             	goto WrtStart
+000025   2837     goto    0x37             	goto SendWrtAddr
+000026   283b     goto    0x3b             	goto WrtAckTest
+000027   2846     goto    0x46             	goto WrtStop
+                                           
+000028   284e     goto    0x4e             	goto ReadStart
+000029   2853     goto    0x53             	goto SendReadAddr
+00002a   2857     goto    0x57             	goto ReadAckTest
+00002b   285e     goto    0x5e             	goto ReadData
+00002c   2868     goto    0x68             	goto ReadStop
+                                           
+                                           I2CJumpEnd		 
+00002d   000c     return                   	Fill (return),  (I2CJump-I2CJumpEnd) + i2cSizeMask 
+00002e   000c     return                   
+00002f   000c     return                   
+000030   000c     return                   
+000031   000c     return                   
+                                           
+                                           
+                                           
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   ********************* Write data to Slave   *********************
+                                           ;----------------------------------------------------------------------
+                                           ; Generate I2C bus start condition               [ I2C STATE -> 0 ]
+                                           WrtStart
+000032   1628     movar   0x28             	movar write_ptr
+000033   1584     movra   0x4              	movra FSR
+000034   19a5     incr    0x25             	incr i2cState
+000035   3805     bset    0x5, 0           	bset P0, 0
+000036   000c     return                   	return
+                                           
+                                           ; Generate I2C address write (R/W=0)             [ I2C STATE -> 1 ]
+                                           SendWrtAddr
+000037   3c03     bclr    0x3, 0           	bclr STATUS, C
+000038   14aa     rlr     0x2a             	rlr temp_address
+000039   19a5     incr    0x25             	incr i2cState
+00003a   000c     return                   	return
+                                           
+                                           ; Test acknowledge after address and data write  [ I2C STATE -> 2 ]
+                                           WrtAckTest
+00003b   3085     jbset   0x5, 0x1         	jbset P0, 1
+00003c   2840     goto    0x40             	goto WrtData
+00003d   3824     bset    0x24, 0          	bset eflag_event, ack_error
+00003e   1da5     clrr    0x25             	clrr i2cState
+00003f   000c     return                   	return
+                                           
+                                           ; Generate I2C write data condition
+                                           WrtData
+000040   1600     movar   0                	movar INDF
+000041   3105     jbset   0x5, 0x2         	jbset P0, 2
+000042   2844     goto    0x44             	goto send_byte
+000043   19a5     incr    0x25             	incr i2cState
+                                           send_byte
+000044   1586     movra   0x6              	movra P1
+000045   000c     return                   	return
+                                           
+                                           ; Generate I2C bus stop condition                [ I2C STATE -> 3 ]
+                                           WrtStop
+000046   3185     jbset   0x5, 0x3         	jbset P0, 3
+000047   284b     goto    0x4b             	goto no_error
+000048   3824     bset    0x24, 0          	bset eflag_event, ack_error
+000049   1da5     clrr    0x25             	clrr i2cState
+00004a   284c     goto    0x4c             	goto stop1
+                                           no_error
+00004b   19a5     incr    0x25             	incr i2cState
+                                           stop1
+00004c   3886     bset    0x6, 0x1         	bset P1, 1
+00004d   000c     return                   	return
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   ********************* Read data from Slave   *********************
+                                           ;----------------------------------------------------------------------
+                                           ; Generate I2C start condition                   [ I2C STATE -> 4 ]
+                                           ReadStart
+00004e   1629     movar   0x29             	movar read_ptr
+00004f   1584     movra   0x4              	movra FSR
+000050   19a5     incr    0x25             	incr i2cState
+000051   3806     bset    0x6, 0           	bset P1, 0
+000052   000c     return                   	return
+                                           
+                                           ; Generate I2C address write (R/W=1)             [ I2C STATE -> 5 ]
+                                           SendReadAddr 
+000053   3803     bset    0x3, 0           	bset STATUS, C
+000054   14aa     rlr     0x2a             	rlr temp_address
+000055   19a5     incr    0x25             	incr i2cState
+000056   000c     return                   	return
+                                           
+                                           ; Test acknowledge after address write           [ I2C STATE -> 6 ]
+                                           ReadAckTest
+000057   3106     jbset   0x6, 0x2         	jbset P1, 2
+000058   285c     goto    0x5c             	goto StartReadData
+000059   3824     bset    0x24, 0          	bset eflag_event, ack_error
+00005a   1da5     clrr    0x25             	clrr i2cState
+00005b   000c     return                   	return
+                                           
+                                           StartReadData
+00005c   19a5     incr    0x25             	incr i2cState
+00005d   000c     return                   	return
+                                           
+                                           ; Read slave I2C                                 [ I2C STATE -> 7 ]
+                                           ReadData
+00005e   1aa6     djzr    0x26             	djzr read_count
+00005f   2863     goto    0x63             	goto SendReadAck
+                                           
+                                           ; Send Not Acknowledge
+                                           SendReadNack
+000060   1580     movra   0                	movra INDF
+000061   19a5     incr    0x25             	incr i2cState
+000062   000c     return                   	return
+                                           
+                                           ; Send Acknowledge
+                                           SendReadAck
+000063   1580     movra   0                	movra INDF
+000064   1984     incr    0x4              	incr FSR
+000065   2864     goto    0x64             	goto $-1
+000066   3906     bset    0x6, 0x2         	bset P1, 2
+000067   000c     return                   	return
+                                           
+                                           ; Generate I2C stop condition                    [ I2C STATE -> 8 ]
+                                           ReadStop
+000068   3d06     bclr    0x6, 0x2         	bclr P1, 2
+000069   1da5     clrr    0x25             	clrr i2cState
+00006a   3ba3     bset    0x23, 0x7        	bset sflag_event, rw_done
+00006b   000c     return                   	return
+                                           	
+                                           ;----------------------------------------------------------------------
+                                           ;   ******************* Generic bus idle check ***********************
+                                           ;----------------------------------------------------------------------
+                                           ; test for i2c bus idle state; not implemented in this code (example only)
+                                           i2c_idle   
+00006c   1586     movra   0x6              	movra P1
+00006d   0d1f     andai   0x1f             	andai 0x1f
+00006e   3103     jbset   0x3, 0x2         	jbset STATUS, Z
+00006f   286c     goto    0x6c             	goto $-3
+000070   000c     return                   	return
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;  ******************* INITIALIZE MSSP MODULE  *******************
+                                           ;----------------------------------------------------------------------
+                                           
+                                           init_i2c
+000071   0b04     movai   0x4              	movai ClockValue
+000072   0b18     movai   0x18             	movai b'00011000'
+                                           	;iost 5
+000073   000c     return                   	return
+                                           
+                                           	end
+                                           ;list
+                                           	#include 0311.inc               ; processor specific variable definitions
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           	__CONFIG _CONFIG0, (_FCPU_4T & _WDT_OFF)
+                                           	__CONFIG _CONFIG1, ( _SMT_OFF & _CP_ALL)
+                                           
+                                           #include  "mastri2c.inc"             ;
+                                           
+                                           ;*******    INTERRUPT CONTEXT SAVE/RESTORE VARIABLES
+                                           INT_VAR        UDATA   0x20              ; create uninitialized data "udata" section
+                                           w_temp           RES     1               ;
+                                           status_temp      RES     1               ;
+                                           pclath_temp      RES     1
+                                           
+                                           
+                                           INT_VAR1       UDATA   0x30              ; reserve location 0xA0
+                                           w_temp1          RES     1
+                                           
+                                           
+                                           ;*******    GENERAL PURPOSE VARIABLES
+                                           GPR_DATA		UDATA
+                                           temp_hold        RES     1               ; temp variable for string compare
+                                           ptr1             RES     1               ; used as pointer in string compare 
+                                           ptr2             RES     1               ; used as pointer in string compare
+                                           
+                                           
+                                           STRING_DATA		 UDATA	
+                                           write_string     RES      D'3'
+                                           read_string      RES      D'3'       
+                                           
+                                           
+                                           
+                                           		EXTERN		init_timer1          ; reference linkage for function
+                                           		EXTERN		init_ports           ; reference linkage for function
+                                           
+                                           #include  "i2ccomm1.inc"             ; required include file
+                                           		#include  "flags.inc"            ; required include file
+                                            
+                                           ; bits for variable sflag_event
+                                           #define  sh1         0                   ; place holder
+                                           #define  sh2         1                   ; place holder
+                                           #define  sh3         2                   ; place holder
+                                           #define  sh4         3                   ; place holder
+                                           #define  sh5         4                   ; place holder
+                                           #define  sh6         5                   ; place holder
+                                           #define  sh7         6                   ; place holder
+                                           #define  rw_done     7                   ; flag bit
+                                           
+                                           
+                                           ; bits for variable eflag_event
+                                           #define  ack_error   0                   ; flag bit
+                                           #define  eh1         1                   ; place holder
+                                           #define  eh2         2                   ; place holder
+                                           #define  eh3         3                   ; place holder
+                                           #define  eh4         4                   ; place holder
+                                           #define  eh5         5                   ; place holder
+                                           #define  eh6         6                   ; place holder
+                                           #define  eh7         7                   ; place holder
+                                           
+                                           		GLOBAL		write_string         ; make variable viewable for other modules
+                                           		GLOBAL 		read_string          ; make variable viewable for other modules
+                                           
+                                           		EXTERN		sflag_event          ; reference linkage for variable  
+                                           		EXTERN		eflag_event          ; reference linkage for variable
+                                           		EXTERN		i2cState             ; reference linkage for variable
+                                           		EXTERN		read_count           ; reference linkage for variable
+                                           		EXTERN		write_count          ; reference linkage for variable
+                                           		EXTERN		write_ptr            ; reference linkage for variable
+                                           		EXTERN		read_ptr             ; reference linkage for variable
+                                           		EXTERN		temp_address         ; reference linkage for variable
+                                           
+                                           		EXTERN		init_i2c             ; reference linkage for function
+                                           		EXTERN		service_i2c          ; reference linkage for function
+                                           
+                                           #define  ADDRESS     0x01                ; Slave I2C address
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   ********************* RESET VECTOR LOCATION  ********************
+                                           ;----------------------------------------------------------------------
+                                           RESET_VECTOR  CODE    0x000              ; processor reset vector
+000000   0b00     movai   0                	movai high start
+000001   158a     movra   0xa              	movra PCLATH
+000002   2874     goto    0x74             	goto start
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;  ******************* INTERRUPT VECTOR LOCATION  *******************
+                                           ;----------------------------------------------------------------------
+                                           INT_VECTOR   CODE    0x004               ; interrupt vector location
+000004   15a0     movra   0x20             	movra w_temp
+000005   1603     movar   0x3              	movar STATUS
+000006   1da1     clrr    0x21             	clrr status_temp
+000007   15a1     movra   0x21             	movra status_temp
+000008   160a     movar   0xa              	movar PCLATH
+000009   15a2     movra   0x22             	movra pclath_temp
+00000a   1d8a     clrr    0xa              	clrr PCLATH
+                                           
+00000b   3106     jbset   0x6, 0x2         	jbset P1, 2
+00000c   280e     goto    0xe              	goto test_buscoll
+00000d   201c     call    0x1c             	call service_i2c
+                                           
+                                           test_buscoll
+00000e   3086     jbset   0x6, 0x1         	jbset P1, 1
+00000f   2813     goto    0x13             	goto test_timer1
+000010   3206     jbset   0x6, 0x4         	jbset P1, 4
+000011   2813     goto    0x13             	goto test_timer1
+000012   2084     call    0x84             	call service_buscoll
+                                           
+                                           
+                                           ; TEST FOR TIMER1 ROLLOVER EVENT		
+                                           test_timer1
+000013   3206     jbset   0x6, 0x4         	jbset P1, 4
+000014   2816     goto    0x16             	goto exit_isr
+000015   201c     call    0x1c             	call service_i2c
+                                           
+                                           exit_isr 
+000016   1d83     clrr    0x3              	clrr STATUS
+000017   1622     movar   0x22             	movar pclath_temp
+000018   158a     movra   0xa              	movra PCLATH
+000019   1621     movar   0x21             	movar status_temp
+00001a   1583     movra   0x3              	movra STATUS
+00001b   000d     retie                    	retie
+                                           
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   ******************* MAIN CODE START LOCATION  ******************
+                                           ;----------------------------------------------------------------------
+                                           MAIN    CODE
+                                           start
+000074   20b2     call    0xb2             	call init_ports
+000075   20bd     call    0xbd             	call init_timer1
+000076   2071     call    0x71             	call init_i2c
+000077   1da4     clrr    0x24             	clrr eflag_event
+000078   1da3     clrr    0x23             	clrr sflag_event
+000079   1da5     clrr    0x25             	clrr i2cState
+00007a   20af     call    0xaf             	call CopyRom2Ram
+00007b   208b     call    0x8b             	call init_vars
+                                           
+                                           
+                                           ;*******************************************************************
+                                           ;                     MAIN LOOP BEGINS HERE
+                                           ;******************************************************************* 
+                                           main_loop 
+00007c   000e     clrwdt                   	clrwdt
+00007d   3424     jbclr   0x24, 0          	jbclr eflag_event, ack_error
+00007e   2087     call    0x87             	call service_ackerror
+00007f   33a3     jbset   0x23, 0x7        	jbset sflag_event, rw_done
+000080   287c     goto    0x7c             	goto main_loop
+                                           
+000081   2095     call    0x95             	call string_compare
+000082   208b     call    0x8b             	call init_vars
+000083   287c     goto    0x7c             	goto main_loop
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   *************** Bus Collision Service Routine ******************
+                                           ;----------------------------------------------------------------------
+                                           service_buscoll  
+000084   1da5     clrr    0x25             	clrr i2cState
+000085   208b     call    0x8b             	call init_vars
+000086   000c     return                   	return
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   ************* Acknowledge Error Service Routine ***************
+                                           ;----------------------------------------------------------------------
+                                           service_ackerror
+000087   3c24     bclr    0x24, 0          	bclr eflag_event, ack_error
+000088   1da5     clrr    0x25             	clrr i2cState
+000089   208b     call    0x8b             	call init_vars
+00008a   000c     return                   	return
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;   *****  INITIALIZE VARIABLES USED IN SERVICE_I2C FUNCTION  ******
+                                           ;----------------------------------------------------------------------
+                                           init_vars
+00008b   0b15     movai   0x15             	movai 21
+00008c   15a7     movra   0x27             	movra write_count
+00008d   15a6     movra   0x26             	movra read_count
+                                           
+00008e   0b31     movai   0x31             	movai write_string
+00008f   15a8     movra   0x28             	movra write_ptr
+                                           
+000090   0b34     movai   0x34             	movai read_string
+000091   15a9     movra   0x29             	movra read_ptr
+                                           
+000092   0b01     movai   0x1              	movai ADDRESS
+000093   15aa     movra   0x2a             	movra temp_address
+000094   000c     return                   	return
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;  *******************  Compare Strings   ************************
+                                           ;----------------------------------------------------------------------
+                                           ;Compare the string written to and read back from the Slave
+                                           string_compare
+000095   0b34     movai   0x34             	movai read_string
+000096   15ac     movra   0x2c             	movra ptr1
+000097   0b31     movai   0x31             	movai write_string
+000098   15ad     movra   0x2d             	movra ptr2
+                                           
+                                           loop
+000099   162c     movar   0x2c             	movar ptr1
+00009a   1584     movra   0x4              	movra FSR
+00009b   1600     movar   0                	movar INDF
+00009c   15ab     movra   0x2b             	movra temp_hold
+00009d   162d     movar   0x2d             	movar ptr2
+00009e   1584     movra   0x4              	movra FSR
+00009f   1600     movar   0                	movar INDF
+0000a0   12ab     rsubra  0x2b             	rsubra temp_hold
+0000a1   3103     jbset   0x3, 0x2         	jbset STATUS, Z
+0000a2   28a8     goto    0xa8             	goto not_equal
+0000a3   3503     jbclr   0x3, 0x2         	jbclr STATUS, Z
+0000a4   28ab     goto    0xab             	goto end_string
+0000a5   19ac     incr    0x2c             	incr ptr1
+0000a6   19ad     incr    0x2d             	incr ptr2
+0000a7   2899     goto    0x99             	goto loop
+                                           
+                                           not_equal
+0000a8   0b01     movai   0x1              	movai 1
+0000a9   1086     xorra   0x6              	xorra P1
+0000aa   28ad     goto    0xad             	goto exit
+                                           
+                                           end_string
+0000ab   0b02     movai   0x2              	movai 0x2
+0000ac   1086     xorra   0x6              	xorra P1
+                                           exit
+0000ad   3fa3     bclr    0x23, 0x7        	bclr sflag_event, rw_done
+0000ae   000c     return                   	return
+                                           
+                                           ;----------------------------------------------------------------------
+                                           ;  *******************  Program Memory Read   *******************
+                                           ;----------------------------------------------------------------------
+                                           ;Read the message from location MessageTable
+                                           CopyRom2Ram
+0000af   0b31     movai   0x31             	movai write_string
+0000b0   1584     movra   0x4              	movra FSR
+0000b1   000c     return                   	return
+                                           ;----------------------------------------------------------------------
+                                           ;----------------------------------------------------------------------
+                                           
+                                           	end
+                                           
 
 
 MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
 
-0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-- ---------------- ----------------
+0000 : XXXXXX--XXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+4000 : XXXX------------ ---------------- ---------------- ----------------
 
 All other memory blocks unused.
 
-Program Memory Words Used:    15
+Program Memory Words Used:   191
 
