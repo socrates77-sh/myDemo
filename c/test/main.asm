@@ -1,109 +1,59 @@
 ;--------------------------------------------------------
 ; File Created by SN-SDCC : ANSI-C Compiler
-; Version 0.0.3 (Jul 18 2013) (MINGW32)
-; This file was generated Tue Aug 06 19:16:32 2013
+; Version 0.0.4 (Aug 18 2017) (MINGW32)
+; This file was generated Mon Aug 21 17:07:04 2017
 ;--------------------------------------------------------
 ; MC3X port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"main.c"
-	list	p=32p64
+	list	p=0311
 	radix dec
-	include "mc32p64.inc"
+	include "0311.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------
 	extern	_STATUSbits
+	extern	_P0bits
+	extern	_P1bits
 	extern	_MCRbits
-	extern	_INTEbits
-	extern	_INTFbits
-	extern	_OSCMbits
-	extern	_IOP0bits
-	extern	_OEP0bits
-	extern	_PUP0bits
-	extern	_IOP1bits
-	extern	_OEP1bits
-	extern	_PUP1bits
-	extern	_IOP2bits
-	extern	_OEP2bits
-	extern	_PUP2bits
-	extern	_IOP3bits
-	extern	_OEP3bits
-	extern	_PUP3bits
+	extern	_KBIMbits
+	extern	_PDCONbits
+	extern	_ODCONbits
+	extern	_PUCONbits
+	extern	_INTECONbits
+	extern	_INTFLAGbits
 	extern	_T0CRbits
+	extern	_DDR0bits
+	extern	_DDR1bits
+	extern	_TMCRbits
 	extern	_T1CRbits
-	extern	_T2CRbits
-	extern	_TK0CRHbits
-	extern	_TK0CRLbits
-	extern	_TK1CRHbits
-	extern	_TK1CRLbits
-	extern	_TK2CRHbits
-	extern	_TK2CRLbits
-	extern	_ADCR0bits
-	extern	_ADCR1bits
-	extern	_I2CCRbits
 	extern	_INDF
-	extern	_INDF0
-	extern	_INDF1
-	extern	_INDF2
-	extern	_HIBYTE
-	extern	_FSR
-	extern	_FSR0
-	extern	_FSR1
+	extern	_T0CNT
 	extern	_PCL
 	extern	_STATUS
+	extern	_FSR
+	extern	_P0
+	extern	_P1
 	extern	_MCR
-	extern	_INDF3
-	extern	_INTE
-	extern	_INTF
-	extern	_OSCM
-	extern	_IOP0
-	extern	_OEP0
-	extern	_PUP0
-	extern	_IOP1
-	extern	_OEP1
-	extern	_PUP1
-	extern	_IOP2
-	extern	_OEP2
-	extern	_PUP2
-	extern	_IOP3
-	extern	_OEP3
-	extern	_PUP3
+	extern	_KBIM
+	extern	_PCLATH
+	extern	_PDCON
+	extern	_ODCON
+	extern	_PUCON
+	extern	_INTECON
+	extern	_INTFLAG
 	extern	_T0CR
-	extern	_T0CNT
-	extern	_T0LOAD
-	extern	_T0DATA
+	extern	_DDR0
+	extern	_DDR1
+	extern	_TMCR
 	extern	_T1CR
 	extern	_T1CNT
 	extern	_T1LOAD
 	extern	_T1DATA
-	extern	_T2CR
-	extern	_T2CNTH
-	extern	_T2CNTL
-	extern	_T2LOADH
-	extern	_T2LOADL
-	extern	_TK0CRH
-	extern	_TK0CRL
-	extern	_TK0CNTH
-	extern	_TK0CNTL
-	extern	_TK1CRH
-	extern	_TK1CRL
-	extern	_TK1CNTH
-	extern	_TK1CNTL
-	extern	_TK2CRH
-	extern	_TK2CRL
-	extern	_TK2CNTH
-	extern	_TK2CNTL
-	extern	_ADCR0
-	extern	_ADCR1
-	extern	_ADRH
-	extern	_ADRL
-	extern	_I2CCR
-	extern	_I2CADDR
-	extern	_I2CDATA
-	extern	__sdcc_gsinit_startup
 ;--------------------------------------------------------
 ; global declarations
 ;--------------------------------------------------------
+	global	_fun1
 	global	_main
 
 	global STK06
@@ -114,7 +64,7 @@
 	global STK01
 	global STK00
 
-sharebank udata_ovr 0x0000
+sharebank udata_ovr 0x0010
 STK06	res 1
 STK05	res 1
 STK04	res 1
@@ -132,9 +82,59 @@ STK00	res 1
 ;--------------------------------------------------------
 ; compiler-defined variables
 ;--------------------------------------------------------
+UDL_main_0	udata
+r0x1001	res	1
+_gVar	res	1
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
+
+;@Allocation info for local variables in function 'fun1'
+;@fun1 fun1                      Allocated to registers ;size:2
+;@fun1 STATUSbits                Allocated to registers ;size:1
+;@fun1 P0bits                    Allocated to registers ;size:1
+;@fun1 P1bits                    Allocated to registers ;size:1
+;@fun1 MCRbits                   Allocated to registers ;size:1
+;@fun1 KBIMbits                  Allocated to registers ;size:1
+;@fun1 PDCONbits                 Allocated to registers ;size:1
+;@fun1 ODCONbits                 Allocated to registers ;size:1
+;@fun1 PUCONbits                 Allocated to registers ;size:1
+;@fun1 INTECONbits               Allocated to registers ;size:1
+;@fun1 INTFLAGbits               Allocated to registers ;size:1
+;@fun1 T0CRbits                  Allocated to registers ;size:1
+;@fun1 DDR0bits                  Allocated to registers ;size:1
+;@fun1 DDR1bits                  Allocated to registers ;size:1
+;@fun1 TMCRbits                  Allocated to registers ;size:1
+;@fun1 T1CRbits                  Allocated to registers ;size:1
+;@fun1 gVar                      Allocated to registers ;size:1
+;@fun1 lVar                      Allocated to registers r0x1001 ;size:1
+;@fun1 INDF                      Allocated to registers ;size:1
+;@fun1 T0CNT                     Allocated to registers ;size:1
+;@fun1 PCL                       Allocated to registers ;size:1
+;@fun1 STATUS                    Allocated to registers ;size:1
+;@fun1 FSR                       Allocated to registers ;size:1
+;@fun1 P0                        Allocated to registers ;size:1
+;@fun1 P1                        Allocated to registers ;size:1
+;@fun1 MCR                       Allocated to registers ;size:1
+;@fun1 KBIM                      Allocated to registers ;size:1
+;@fun1 PCLATH                    Allocated to registers ;size:1
+;@fun1 PDCON                     Allocated to registers ;size:1
+;@fun1 ODCON                     Allocated to registers ;size:1
+;@fun1 PUCON                     Allocated to registers ;size:1
+;@fun1 INTECON                   Allocated to registers ;size:1
+;@fun1 INTFLAG                   Allocated to registers ;size:1
+;@fun1 T0CR                      Allocated to registers ;size:1
+;@fun1 DDR0                      Allocated to registers ;size:1
+;@fun1 DDR1                      Allocated to registers ;size:1
+;@fun1 TMCR                      Allocated to registers ;size:1
+;@fun1 T1CR                      Allocated to registers ;size:1
+;@fun1 T1CNT                     Allocated to registers ;size:1
+;@fun1 T1LOAD                    Allocated to registers ;size:1
+;@fun1 T1DATA                    Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'fun1';
+;@Allocation info for local variables in function 'main'
+;@end Allocation info for local variables in function 'main';
+
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -143,7 +143,7 @@ STK00	res 1
 ; reset vector 
 ;--------------------------------------------------------
 STARTUP	code 0x0000
-	goto	__sdcc_gsinit_startup
+	goto	_main
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
@@ -154,33 +154,62 @@ code_main	code
 ;entry:  _main	;Function start
 ; 2 exit points
 ;has an exit
+;functions called:
+;   _fun1
+;   _fun1
 ;; Starting pCode block
 _main	;Function start
 ; 2 exit points
-;	.line	11; "main.c"	GIE=0;
-	BCLR	_MCRbits,7
-;	.line	12; "main.c"	IOP1=0XFF;
+;	.line	22; "main.c"	gVar = 18;
+	MOVAI	0x12
+	MOVRA	_gVar
+;	.line	23; "main.c"	fun1();
+	CALL	_fun1
+;	.line	25; "main.c"	P1 = 0XFF;
 	MOVAI	0xff
-	MOVRA	_IOP1
-;	.line	13; "main.c"	IOP2=0XFF;
-	MOVAI	0xff
-	MOVRA	_IOP2
-;	.line	14; "main.c"	OEP0=0XFF;
-	MOVAI	0xff
-	MOVRA	_OEP0
-;	.line	15; "main.c"	OEP1=0XFF;
-	MOVAI	0xff
-	MOVRA	_OEP1
-_00106_DS_
-;	.line	20; "main.c"	IOP1=~IOP1;       
-	COMAR	_IOP1
-	MOVRA	_IOP1
-	GOTO	_00106_DS_
+	MOVRA	_P1
+_00114_DS_
+;	.line	29; "main.c"	P1=~P1;
+	COMAR	_P1
+	MOVRA	_P1
+;	.line	30; "main.c"	P00 = ~P00;    
+	BSET	_P0bits,0
+	GOTO	_00114_DS_
 	RETURN	
 ; exit point of _main
 
+;***
+;  pBlock Stats: dbName = C
+;***
+;entry:  _fun1	;Function start
+; 2 exit points
+;has an exit
+;1 compiler assigned register :
+;   r0x1001
+;; Starting pCode block
+_fun1	;Function start
+; 2 exit points
+;	.line	9; "main.c"	lVar = gVar-1;
+	DECAR	_gVar
+	MOVRA	r0x1001
+;	.line	10; "main.c"	if(lVar==18)
+	MOVAR	r0x1001
+	XORAI	0x12
+	JBSET	STATUS,2
+	GOTO	_00106_DS_
+;	.line	12; "main.c"	P1 = 0;
+	CLRR	_P1
+	GOTO	_00108_DS_
+_00106_DS_
+;	.line	16; "main.c"	P1 = 1;
+	MOVAI	0x01
+	MOVRA	_P1
+_00108_DS_
+	RETURN	
+; exit point of _fun1
+
 
 ;	code size estimation:
-;	   13+    0 =    13 instructions (   26 byte)
+;	   21+    0 =    21 instructions (   42 byte)
 
 	end

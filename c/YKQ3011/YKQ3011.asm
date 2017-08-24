@@ -1,14 +1,14 @@
 ;--------------------------------------------------------
-; File Created by SDCC : free open source ANSI-C Compiler
-; Version 0.0.1 (Jun 20 2013) (MINGW32)
-; This file was generated Wed Jun 26 16:24:57 2013
+; File Created by SN-SDCC : ANSI-C Compiler
+; Version 0.0.4 (Aug 18 2017) (MINGW32)
+; This file was generated Fri Aug 18 18:35:19 2017
 ;--------------------------------------------------------
-; MC30 port for the 14-bit core
+; MC3X port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"YKQ3011.c"
-	list	p=30p011
+	list	p=0311
 	radix dec
-	include "mc30p011.inc"
+	include "0311.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------
@@ -27,6 +27,7 @@
 	extern	_PUCONbits
 	extern	_INTECONbits
 	extern	_INTFLAGbits
+	extern	_T0CRbits
 	extern	_DDR0bits
 	extern	_DDR1bits
 	extern	_TMCRbits
@@ -54,7 +55,6 @@
 	extern	_T1CNT
 	extern	_T1LOAD
 	extern	_T1DATA
-	extern	__sdcc_gsinit_startup
 ;--------------------------------------------------------
 ; global declarations
 ;--------------------------------------------------------
@@ -91,15 +91,6 @@
 	global	_Flag1
 	global	_Flag2
 
-	global PSAVE
-	global SSAVE
-	global WSAVE
-	global STK12
-	global STK11
-	global STK10
-	global STK09
-	global STK08
-	global STK07
 	global STK06
 	global STK05
 	global STK04
@@ -109,15 +100,6 @@
 	global STK00
 
 sharebank udata_ovr 0x0010
-PSAVE	res 1
-SSAVE	res 1
-WSAVE	res 1
-STK12	res 1
-STK11	res 1
-STK10	res 1
-STK09	res 1
-STK08	res 1
-STK07	res 1
 STK06	res 1
 STK05	res 1
 STK04	res 1
@@ -231,6 +213,85 @@ _Flag2	res	1
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
+
+;@Allocation info for local variables in function 'main'
+;@main InitialSys                Allocated to registers ;size:2
+;@main InitalRAM                 Allocated to registers ;size:2
+;@main Mode2Sbr                  Allocated to registers ;size:2
+;@main MColorSbr                 Allocated to registers ;size:2
+;@main T1sSbr                    Allocated to registers ;size:2
+;@main main                      Allocated to registers ;size:2
+;@main STATUSbits                Allocated to registers ;size:1
+;@main P0bits                    Allocated to registers ;size:1
+;@main P1bits                    Allocated to registers ;size:1
+;@main MCRbits                   Allocated to registers ;size:1
+;@main KBIMbits                  Allocated to registers ;size:1
+;@main PDCONbits                 Allocated to registers ;size:1
+;@main ODCONbits                 Allocated to registers ;size:1
+;@main PUCONbits                 Allocated to registers ;size:1
+;@main INTECONbits               Allocated to registers ;size:1
+;@main INTFLAGbits               Allocated to registers ;size:1
+;@main T0CRbits                  Allocated to registers ;size:1
+;@main DDR0bits                  Allocated to registers ;size:1
+;@main DDR1bits                  Allocated to registers ;size:1
+;@main TMCRbits                  Allocated to registers ;size:1
+;@main T1CRbits                  Allocated to registers ;size:1
+;@main KeyCnt                    Allocated to registers ;size:1
+;@main T1s                       Allocated to registers ;size:1
+;@main TRedCnt                   Allocated to registers ;size:1
+;@main TRed                      Allocated to registers ;size:1
+;@main TGreen                    Allocated to registers ;size:1
+;@main TBlue                     Allocated to registers ;size:1
+;@main TRedbak                   Allocated to registers ;size:1
+;@main TGreenbak                 Allocated to registers ;size:1
+;@main TBluebak                  Allocated to registers ;size:1
+;@main IRTmr                     Allocated to registers ;size:1
+;@main KeyCode                   Allocated to registers ;size:1
+;@main Custom                    Allocated to registers ;size:1
+;@main CustomRev                 Allocated to registers ;size:1
+;@main IRCode1                   Allocated to registers ;size:1
+;@main IRCodeRev1                Allocated to registers ;size:1
+;@main BitCnt                    Allocated to registers ;size:1
+;@main LongIRCnt                 Allocated to registers ;size:1
+;@main IRCnt                     Allocated to registers ;size:1
+;@main Color                     Allocated to registers ;size:1
+;@main Mode1Cnt                  Allocated to registers ;size:1
+;@main delay                     Allocated to registers ;size:1
+;@main Tmr                       Allocated to registers ;size:2
+;@main TStop                     Allocated to registers ;size:1
+;@main Step                      Allocated to registers ;size:1
+;@main T40ms                     Allocated to registers ;size:1
+;@main Dly100ms                  Allocated to registers ;size:1
+;@main Mode2Cnt2                 Allocated to registers ;size:1
+;@main Mode2Cnt3                 Allocated to registers ;size:1
+;@main delay05ms                 Allocated to registers ;size:1
+;@main Flag1                     Allocated to registers ;size:1
+;@main Flag2                     Allocated to registers ;size:1
+;@main INDF                      Allocated to registers ;size:1
+;@main T0CNT                     Allocated to registers ;size:1
+;@main PCL                       Allocated to registers ;size:1
+;@main STATUS                    Allocated to registers ;size:1
+;@main FSR                       Allocated to registers ;size:1
+;@main P0                        Allocated to registers ;size:1
+;@main P1                        Allocated to registers ;size:1
+;@main MCR                       Allocated to registers ;size:1
+;@main KBIM                      Allocated to registers ;size:1
+;@main PCLATH                    Allocated to registers ;size:1
+;@main PDCON                     Allocated to registers ;size:1
+;@main ODCON                     Allocated to registers ;size:1
+;@main PUCON                     Allocated to registers ;size:1
+;@main INTECON                   Allocated to registers ;size:1
+;@main INTFLAG                   Allocated to registers ;size:1
+;@main T0CR                      Allocated to registers ;size:1
+;@main DDR0                      Allocated to registers ;size:1
+;@main DDR1                      Allocated to registers ;size:1
+;@main TMCR                      Allocated to registers ;size:1
+;@main T1CR                      Allocated to registers ;size:1
+;@main T1CNT                     Allocated to registers ;size:1
+;@main T1LOAD                    Allocated to registers ;size:1
+;@main T1DATA                    Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'main';
+
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -239,8 +300,7 @@ _Flag2	res	1
 ; reset vector 
 ;--------------------------------------------------------
 STARTUP	code 0x0000
-	nop
-	goto	__sdcc_gsinit_startup
+	goto	_main
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
@@ -267,6 +327,7 @@ _main	;Function start
 ; 2 exit points
 ;	.line	16; "YKQ3011.c"	GIE = 0;    
 	BCLR	_INTECONbits,7
+;	.line	17; "YKQ3011.c"	ClrWdt();
 	clrwdt
 ;	.line	18; "YKQ3011.c"	InitialSys();
 	CALL	_InitialSys
@@ -292,12 +353,19 @@ _00138_DS_
 	BCLR	_TMCRbits,0
 ;	.line	31; "YKQ3011.c"	T0IF = 0;
 	BCLR	_INTFLAGbits,0
+;	.line	32; "YKQ3011.c"	Nop();
 	nop
+;	.line	33; "YKQ3011.c"	Nop();
 	nop
+;	.line	34; "YKQ3011.c"	Nop();
 	nop
+;	.line	35; "YKQ3011.c"	Stop();
 	stop
+;	.line	36; "YKQ3011.c"	Nop();
 	nop
+;	.line	37; "YKQ3011.c"	Nop();
 	nop
+;	.line	38; "YKQ3011.c"	Nop();
 	nop
 _00106_DS_
 ;	.line	40; "YKQ3011.c"	if ((delay05ms != 0)||(!FOn))
@@ -337,6 +405,7 @@ _00114_DS_
 	GOTO	_00138_DS_
 ;	.line	61; "YKQ3011.c"	F4ms = 0;
 	BCLR	_Flag2,2
+;	.line	62; "YKQ3011.c"	ClrWdt();
 	clrwdt
 ;	.line	63; "YKQ3011.c"	if (delay05ms == 0)
 	MOVAI	0x00
@@ -363,7 +432,7 @@ _00128_DS_
 	RSUBAR	_T40ms
 	JBSET	STATUS,0
 	GOTO	_00134_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 ;	.line	75; "YKQ3011.c"	T40ms = 0;
 	CLRR	_T40ms
 ;	.line	76; "YKQ3011.c"	if (FDirection)
@@ -377,7 +446,7 @@ _00128_DS_
 	RSUBAR	_Mode2Cnt3
 	JBSET	STATUS,0
 	GOTO	_00134_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	BCLR	_Flag1,2
 	GOTO	_00134_DS_
 _00121_DS_
@@ -388,7 +457,7 @@ _00121_DS_
 	RSUBAR	_Mode2Cnt3
 	JBCLR	STATUS,0
 	GOTO	_00134_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	BSET	_Flag1,2
 	GOTO	_00134_DS_
 _00133_DS_

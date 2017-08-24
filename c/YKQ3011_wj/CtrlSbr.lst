@@ -1,0 +1,725 @@
+gpasm-2.0.0_beta2 (Jun 23 2017)CtrlSbr.asm        2017-8-18  18:31:21          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 18:31:21 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "CtrlSbr.c"
+                      00009         list    p=0311
+                      00010         radix dec
+                      00011         include "0311.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _STATUSbits
+                      00016         extern  _P0bits
+                      00017         extern  _P1bits
+                      00018         extern  _MCRbits
+                      00019         extern  _KBIMbits
+                      00020         extern  _PDCONbits
+                      00021         extern  _ODCONbits
+                      00022         extern  _PUCONbits
+                      00023         extern  _INTECONbits
+                      00024         extern  _INTFLAGbits
+                      00025         extern  _T0CRbits
+                      00026         extern  _DDR0bits
+                      00027         extern  _DDR1bits
+                      00028         extern  _TMCRbits
+                      00029         extern  _T1CRbits
+                      00030         extern  _KeyCnt
+                      00031         extern  _T1s
+                      00032         extern  _TRedCnt
+                      00033         extern  _TRed
+                      00034         extern  _TGreen
+                      00035         extern  _TBlue
+                      00036         extern  _TRedbak
+                      00037         extern  _TGreenbak
+                      00038         extern  _TBluebak
+                      00039         extern  _IRTmr
+                      00040         extern  _KeyCode
+                      00041         extern  _Custom
+                      00042         extern  _CustomRev
+                      00043         extern  _IRCode1
+                      00044         extern  _IRCodeRev1
+                      00045         extern  _BitCnt
+                      00046         extern  _LongIRCnt
+                      00047         extern  _IRCnt
+                      00048         extern  _Color
+                      00049         extern  _Mode1Cnt
+                      00050         extern  _delay
+                      00051         extern  _Tmr
+                      00052         extern  _TStop
+                      00053         extern  _Step
+                      00054         extern  _T40ms
+                      00055         extern  _Dly100ms
+                      00056         extern  _Mode2Cnt2
+                      00057         extern  _Mode2Cnt3
+                      00058         extern  _delay05ms
+                      00059         extern  _Flag1
+                      00060         extern  _Flag2
+                      00061         extern  _INDF
+                      00062         extern  _T0CNT
+                      00063         extern  _PCL
+                      00064         extern  _STATUS
+                      00065         extern  _FSR
+                      00066         extern  _P0
+                      00067         extern  _P1
+                      00068         extern  _MCR
+                      00069         extern  _KBIM
+                      00070         extern  _PCLATH
+                      00071         extern  _PDCON
+                      00072         extern  _ODCON
+                      00073         extern  _PUCON
+                      00074         extern  _INTECON
+                      00075         extern  _INTFLAG
+                      00076         extern  _T0CR
+                      00077         extern  _DDR0
+                      00078         extern  _DDR1
+                      00079         extern  _TMCR
+                      00080         extern  _T1CR
+                      00081         extern  _T1CNT
+                      00082         extern  _T1LOAD
+                      00083         extern  _T1DATA
+                      00084         extern  __gptrget1
+                      00085 
+                      00086         extern STK06
+                      00087         extern STK05
+                      00088         extern STK04
+                      00089         extern STK03
+                      00090         extern STK02
+                      00091         extern STK01
+                      00092         extern STK00
+                      00093 ;--------------------------------------------------------
+                      00094 ; global declarations
+                      00095 ;--------------------------------------------------------
+                      00096         global  _ColorSbr
+                      00097         global  _MColorSbr
+                      00098         global  _Mode2Sbr
+                      00099         global  _BlueTbl
+                      00100         global  _GreenTbl
+                      00101         global  _RedTbl
+                      00102 
+                      00103 ;--------------------------------------------------------
+                      00104 ; global definitions
+                      00105 ;--------------------------------------------------------
+                      00106 ;--------------------------------------------------------
+                      00107 ; absolute symbol definitions
+                      00108 ;--------------------------------------------------------
+                      00109 ;--------------------------------------------------------
+                      00110 ; compiler-defined variables
+                      00111 ;--------------------------------------------------------
+                      00112 UDL_CtrlSbr_0   udata
+0000                  00113 r0x1009 res     1
+0000                  00114 r0x100A res     1
+                      00115 ;--------------------------------------------------------
+                      00116 ; initialized data
+                      00117 ;--------------------------------------------------------
+                      00118 
+                      00119 ID_CtrlSbr_0    code
+0000                  00120 _BlueTbl
+0000   0AFF           00121         retai 0xff
+0001   0AFF           00122         retai 0xff
+0002   0A0E           00123         retai 0x0e
+0003   0AFC           00124         retai 0xfc
+0004   0AF7           00125         retai 0xf7
+0005   0A26           00126         retai 0x26
+0006   0AFF           00127         retai 0xff
+0007   0AAE           00128         retai 0xae
+0008   0AD6           00129         retai 0xd6
+0009   0A23           00130         retai 0x23
+000A   0AD6           00131         retai 0xd6
+000B   0A75           00132         retai 0x75
+                      00133 
+                      00134 
+                      00135 ID_CtrlSbr_1    code
+0000                  00136 _GreenTbl
+0000   0AFF           00137         retai 0xff
+0001   0A0E           00138         retai 0x0e
+0002   0AFF           00139         retai 0xff
+0003   0A8B           00140         retai 0x8b
+0004   0A18           00141         retai 0x18
+0005   0AF7           00142         retai 0xf7
+0006   0A26           00143         retai 0x26
+0007   0A1F           00144         retai 0x1f
+0008   0A26           00145         retai 0x26
+0009   0A58           00146         retai 0x58
+000A   0AF7           00147         retai 0xf7
+000B   0ADD           00148         retai 0xdd
+                      00149 
+                      00150 
+                      00151 ID_CtrlSbr_2    code
+0000                  00152 _RedTbl
+0000   0A0E           00153         retai 0x0e
+0001   0AFF           00154         retai 0xff
+0002   0AFF           00155         retai 0xff
+0003   0A1A           00156         retai 0x1a
+0004   0AA0           00157         retai 0xa0
+0005   0AE3           00158         retai 0xe3
+0006   0A00           00159         retai 0x00
+0007   0AAE           00160         retai 0xae
+0008   0A31           00161         retai 0x31
+0009   0AE3           00162         retai 0xe3
+000A   0A27           00163         retai 0x27
+000B   0AAE           00164         retai 0xae
+                      00165 
+                      00166 
+                      00167 ;@Allocation info for local variables in function 'ColorSbr'
+                      00168 ;@ColorSbr ColorSbr                  Allocated to registers ;size:2
+                      00169 ;@ColorSbr STATUSbits                Allocated to registers ;size:1
+                      00170 ;@ColorSbr P0bits                    Allocated to registers ;size:1
+                      00171 ;@ColorSbr P1bits                    Allocated to registers ;size:1
+                      00172 ;@ColorSbr MCRbits                   Allocated to registers ;size:1
+                      00173 ;@ColorSbr KBIMbits                  Allocated to registers ;size:1
+                      00174 ;@ColorSbr PDCONbits                 Allocated to registers ;size:1
+                      00175 ;@ColorSbr ODCONbits                 Allocated to registers ;size:1
+                      00176 ;@ColorSbr PUCONbits                 Allocated to registers ;size:1
+                      00177 ;@ColorSbr INTECONbits               Allocated to registers ;size:1
+                      00178 ;@ColorSbr INTFLAGbits               Allocated to registers ;size:1
+                      00179 ;@ColorSbr T0CRbits                  Allocated to registers ;size:1
+                      00180 ;@ColorSbr DDR0bits                  Allocated to registers ;size:1
+                      00181 ;@ColorSbr DDR1bits                  Allocated to registers ;size:1
+                      00182 ;@ColorSbr TMCRbits                  Allocated to registers ;size:1
+                      00183 ;@ColorSbr T1CRbits                  Allocated to registers ;size:1
+                      00184 ;@ColorSbr KeyCnt                    Allocated to registers ;size:1
+                      00185 ;@ColorSbr T1s                       Allocated to registers ;size:1
+                      00186 ;@ColorSbr TRedCnt                   Allocated to registers ;size:1
+                      00187 ;@ColorSbr TRed                      Allocated to registers ;size:1
+                      00188 ;@ColorSbr TGreen                    Allocated to registers ;size:1
+                      00189 ;@ColorSbr TBlue                     Allocated to registers ;size:1
+                      00190 ;@ColorSbr TRedbak                   Allocated to registers ;size:1
+                      00191 ;@ColorSbr TGreenbak                 Allocated to registers ;size:1
+                      00192 ;@ColorSbr TBluebak                  Allocated to registers ;size:1
+                      00193 ;@ColorSbr IRTmr                     Allocated to registers ;size:1
+                      00194 ;@ColorSbr KeyCode                   Allocated to registers ;size:1
+                      00195 ;@ColorSbr Custom                    Allocated to registers ;size:1
+                      00196 ;@ColorSbr CustomRev                 Allocated to registers ;size:1
+                      00197 ;@ColorSbr IRCode1                   Allocated to registers ;size:1
+                      00198 ;@ColorSbr IRCodeRev1                Allocated to registers ;size:1
+                      00199 ;@ColorSbr BitCnt                    Allocated to registers ;size:1
+                      00200 ;@ColorSbr LongIRCnt                 Allocated to registers ;size:1
+                      00201 ;@ColorSbr IRCnt                     Allocated to registers ;size:1
+                      00202 ;@ColorSbr Color                     Allocated to registers ;size:1
+                      00203 ;@ColorSbr Mode1Cnt                  Allocated to registers ;size:1
+                      00204 ;@ColorSbr delay                     Allocated to registers ;size:1
+                      00205 ;@ColorSbr Tmr                       Allocated to registers ;size:2
+                      00206 ;@ColorSbr TStop                     Allocated to registers ;size:1
+                      00207 ;@ColorSbr Step                      Allocated to registers ;size:1
+                      00208 ;@ColorSbr T40ms                     Allocated to registers ;size:1
+                      00209 ;@ColorSbr Dly100ms                  Allocated to registers ;size:1
+                      00210 ;@ColorSbr Mode2Cnt2                 Allocated to registers ;size:1
+                      00211 ;@ColorSbr Mode2Cnt3                 Allocated to registers ;size:1
+                      00212 ;@ColorSbr delay05ms                 Allocated to registers ;size:1
+                      00213 ;@ColorSbr Flag1                     Allocated to registers ;size:1
+                      00214 ;@ColorSbr Flag2                     Allocated to registers ;size:1
+                      00215 ;@ColorSbr INDF                      Allocated to registers ;size:1
+                      00216 ;@ColorSbr T0CNT                     Allocated to registers ;size:1
+                      00217 ;@ColorSbr PCL                       Allocated to registers ;size:1
+                      00218 ;@ColorSbr STATUS                    Allocated to registers ;size:1
+                      00219 ;@ColorSbr FSR                       Allocated to registers ;size:1
+                      00220 ;@ColorSbr P0                        Allocated to registers ;size:1
+                      00221 ;@ColorSbr P1                        Allocated to registers ;size:1
+                      00222 ;@ColorSbr MCR                       Allocated to registers ;size:1
+                      00223 ;@ColorSbr KBIM                      Allocated to registers ;size:1
+                      00224 ;@ColorSbr PCLATH                    Allocated to registers ;size:1
+                      00225 ;@ColorSbr PDCON                     Allocated to registers ;size:1
+                      00226 ;@ColorSbr ODCON                     Allocated to registers ;size:1
+                      00227 ;@ColorSbr PUCON                     Allocated to registers ;size:1
+                      00228 ;@ColorSbr INTECON                   Allocated to registers ;size:1
+                      00229 ;@ColorSbr INTFLAG                   Allocated to registers ;size:1
+                      00230 ;@ColorSbr T0CR                      Allocated to registers ;size:1
+                      00231 ;@ColorSbr DDR0                      Allocated to registers ;size:1
+                      00232 ;@ColorSbr DDR1                      Allocated to registers ;size:1
+                      00233 ;@ColorSbr TMCR                      Allocated to registers ;size:1
+                      00234 ;@ColorSbr T1CR                      Allocated to registers ;size:1
+                      00235 ;@ColorSbr T1CNT                     Allocated to registers ;size:1
+                      00236 ;@ColorSbr T1LOAD                    Allocated to registers ;size:1
+                      00237 ;@ColorSbr T1DATA                    Allocated to registers ;size:1
+                      00238 ;@end Allocation info for local variables in function 'ColorSbr';
+                      00239 ;@Allocation info for local variables in function 'MColorSbr'
+                      00240 ;@end Allocation info for local variables in function 'MColorSbr';
+                      00241 ;@Allocation info for local variables in function 'Mode2Sbr'
+                      00242 ;@end Allocation info for local variables in function 'Mode2Sbr';
+                      00243 
+                      00244 ;--------------------------------------------------------
+                      00245 ; overlayable items in internal ram 
+                      00246 ;--------------------------------------------------------
+                      00247 ;       udata_ovr
+                      00248 ;--------------------------------------------------------
+                      00249 ; code
+                      00250 ;--------------------------------------------------------
+                      00251 code_CtrlSbr    code
+                      00252 ;***
+                      00253 ;  pBlock Stats: dbName = C
+                      00254 ;***
+                      00255 ;entry:  _Mode2Sbr      ;Function start
+                      00256 ; 2 exit points
+                      00257 ;has an exit
+                      00258 ;; Starting pCode block
+0000                  00259 _Mode2Sbr       ;Function start
+                      00260 ; 2 exit points
+                      00261 ;       .line   75; "CtrlSbr.c" if (Mode2Cnt2 >= Mode2Cnt3)
+0000   1600           00262         MOVAR   _Mode2Cnt3
+0001   1200           00263         RSUBAR  _Mode2Cnt2
+0002   3003           00264         JBSET   STATUS,0
+0003   2800           00265         GOTO    _00135_DS_
+                      00266 ;;genSkipc:3251: created from rifx:0022609C
+                      00267 ;       .line   77; "CtrlSbr.c" pBlueC = 1;
+0004   3900           00268         BSET    _DDR1bits,2
+                      00269 ;       .line   78; "CtrlSbr.c" pRedC = 1;
+0005   3800           00270         BSET    _DDR1bits,0
+                      00271 ;       .line   79; "CtrlSbr.c" pGreenC = 1;
+0006   3880           00272         BSET    _DDR1bits,1
+                      00273 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00274 ;;unsigned compare: left >= lit(0x33=51), size=1
+                      00275 ;       .line   80; "CtrlSbr.c" if (Mode2Cnt2 > 50) Mode2Cnt2 = 0;
+0007   0B33           00276         MOVAI   0x33
+0008   1200           00277         RSUBAR  _Mode2Cnt2
+0009   3003           00278         JBSET   STATUS,0
+000A   2800           00279         GOTO    _00137_DS_
+                      00280 ;;genSkipc:3251: created from rifx:0022609C
+000B   1D80           00281         CLRR    _Mode2Cnt2
+000C   2800           00282         GOTO    _00137_DS_
+000D                  00283 _00135_DS_
+                      00284 ;       .line   84; "CtrlSbr.c" pBlueC = 0;
+000D   3D00           00285         BCLR    _DDR1bits,2
+                      00286 ;       .line   85; "CtrlSbr.c" pRedC = 0;
+000E   3C00           00287         BCLR    _DDR1bits,0
+                      00288 ;       .line   86; "CtrlSbr.c" pGreenC = 0;
+000F   3C80           00289         BCLR    _DDR1bits,1
+0010                  00290 _00137_DS_
+0010   000C           00291         RETURN  
+                      00292 ; exit point of _Mode2Sbr
+                      00293 
+                      00294 ;***
+                      00295 ;  pBlock Stats: dbName = C
+                      00296 ;***
+                      00297 ;entry:  _MColorSbr     ;Function start
+                      00298 ; 2 exit points
+                      00299 ;has an exit
+                      00300 ;; Starting pCode block
+0011                  00301 _MColorSbr      ;Function start
+                      00302 ; 2 exit points
+                      00303 ;       .line   22; "CtrlSbr.c" if (++delay >= 4) 
+0011   1980           00304         INCR    _delay
+                      00305 ;;unsigned compare: left < lit(0x4=4), size=1
+0012   0B04           00306         MOVAI   0x04
+0013   1200           00307         RSUBAR  _delay
+0014   3003           00308         JBSET   STATUS,0
+0015   2800           00309         GOTO    _00127_DS_
+                      00310 ;;genSkipc:3251: created from rifx:0022609C
+                      00311 ;       .line   24; "CtrlSbr.c" delay = 0;
+0016   1D80           00312         CLRR    _delay
+                      00313 ;       .line   25; "CtrlSbr.c" if (--Mode1Cnt == 0)
+0017   1B80           00314         DECR    _Mode1Cnt
+0018   0B00           00315         MOVAI   0x00
+0019   1700           00316         ORAR    _Mode1Cnt
+001A   3103           00317         JBSET   STATUS,2
+001B   2800           00318         GOTO    _00112_DS_
+                      00319 ;       .line   27; "CtrlSbr.c" TGreen = TColor;
+001C   0B7F           00320         MOVAI   0x7f
+001D   1580           00321         MOVRA   _TGreen
+                      00322 ;       .line   28; "CtrlSbr.c" TRed = TColor;
+001E   0B7F           00323         MOVAI   0x7f
+001F   1580           00324         MOVRA   _TRed
+                      00325 ;       .line   29; "CtrlSbr.c" TBlue = TColor;
+0020   0B7F           00326         MOVAI   0x7f
+0021   1580           00327         MOVRA   _TBlue
+                      00328 ;       .line   30; "CtrlSbr.c" if (++Step > 5) Step = 0;
+0022   1980           00329         INCR    _Step
+                      00330 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00331 ;;unsigned compare: left >= lit(0x6=6), size=1
+0023   0B06           00332         MOVAI   0x06
+0024   1200           00333         RSUBAR  _Step
+0025   3003           00334         JBSET   STATUS,0
+0026   2800           00335         GOTO    _00110_DS_
+                      00336 ;;genSkipc:3251: created from rifx:0022609C
+0027   1D80           00337         CLRR    _Step
+0028                  00338 _00110_DS_
+                      00339 ;       .line   31; "CtrlSbr.c" Mode1Cnt = TSteplengh;
+0028   0B7F           00340         MOVAI   0x7f
+0029   1580           00341         MOVRA   _Mode1Cnt
+002A                  00342 _00112_DS_
+                      00343 ;       .line   33; "CtrlSbr.c" if (Step == 0) {++TGreen;--TBlue;return;}
+002A   0B00           00344         MOVAI   0x00
+002B   1700           00345         ORAR    _Step
+002C   3103           00346         JBSET   STATUS,2
+002D   2800           00347         GOTO    _00114_DS_
+002E   1980           00348         INCR    _TGreen
+002F   1B80           00349         DECR    _TBlue
+0030   2800           00350         GOTO    _00127_DS_
+0031                  00351 _00114_DS_
+                      00352 ;       .line   34; "CtrlSbr.c" if (Step == 1) {--TGreen;++TBlue;return;}
+0031   1600           00353         MOVAR   _Step
+0032   0801           00354         XORAI   0x01
+0033   3103           00355         JBSET   STATUS,2
+0034   2800           00356         GOTO    _00116_DS_
+0035   1B80           00357         DECR    _TGreen
+0036   1980           00358         INCR    _TBlue
+0037   2800           00359         GOTO    _00127_DS_
+0038                  00360 _00116_DS_
+                      00361 ;       .line   35; "CtrlSbr.c" if (Step == 2) {++TRed;--TBlue;return;}
+0038   1600           00362         MOVAR   _Step
+0039   0802           00363         XORAI   0x02
+003A   3103           00364         JBSET   STATUS,2
+003B   2800           00365         GOTO    _00118_DS_
+003C   1980           00366         INCR    _TRed
+003D   1B80           00367         DECR    _TBlue
+003E   2800           00368         GOTO    _00127_DS_
+003F                  00369 _00118_DS_
+                      00370 ;       .line   36; "CtrlSbr.c" if (Step == 3) {--TRed;++TBlue;return;}
+003F   1600           00371         MOVAR   _Step
+0040   0803           00372         XORAI   0x03
+0041   3103           00373         JBSET   STATUS,2
+0042   2800           00374         GOTO    _00120_DS_
+0043   1B80           00375         DECR    _TRed
+0044   1980           00376         INCR    _TBlue
+0045   2800           00377         GOTO    _00127_DS_
+0046                  00378 _00120_DS_
+                      00379 ;       .line   37; "CtrlSbr.c" if (Step == 4) {++TRed;--TGreen;return;}
+0046   1600           00380         MOVAR   _Step
+0047   0804           00381         XORAI   0x04
+0048   3103           00382         JBSET   STATUS,2
+0049   2800           00383         GOTO    _00122_DS_
+004A   1980           00384         INCR    _TRed
+004B   1B80           00385         DECR    _TGreen
+004C   2800           00386         GOTO    _00127_DS_
+004D                  00387 _00122_DS_
+                      00388 ;       .line   38; "CtrlSbr.c" if (Step == 5) {--TRed;++TGreen;return;}
+004D   1600           00389         MOVAR   _Step
+004E   0805           00390         XORAI   0x05
+004F   3103           00391         JBSET   STATUS,2
+0050   2800           00392         GOTO    _00127_DS_
+0051   1B80           00393         DECR    _TRed
+0052   1980           00394         INCR    _TGreen
+0053                  00395 _00127_DS_
+0053   000C           00396         RETURN  
+                      00397 ; exit point of _MColorSbr
+                      00398 
+                      00399 ;***
+                      00400 ;  pBlock Stats: dbName = C
+                      00401 ;***
+                      00402 ;entry:  _ColorSbr      ;Function start
+                      00403 ; 2 exit points
+                      00404 ;has an exit
+                      00405 ;functions called:
+                      00406 ;   __gptrget1
+                      00407 ;   __gptrget1
+                      00408 ;   __gptrget1
+                      00409 ;   __gptrget1
+                      00410 ;   __gptrget1
+                      00411 ;   __gptrget1
+                      00412 ;4 compiler assigned registers:
+                      00413 ;   r0x1009
+                      00414 ;   r0x100A
+                      00415 ;   STK01
+                      00416 ;   STK00
+                      00417 ;; Starting pCode block
+0054                  00418 _ColorSbr       ;Function start
+                      00419 ; 2 exit points
+                      00420 ;       .line   13; "CtrlSbr.c" TRed = RedTbl[Color];
+0054   1600           00421         MOVAR   _Color
+0055   0E00           00422         ADDAI   (_RedTbl + 0)
+0056   1580           00423         MOVRA   r0x1009
+0057   0B00           00424         MOVAI   high (_RedTbl + 0)
+0058   3403           00425         JBCLR   STATUS,0
+0059   0E01           00426         ADDAI   0x01
+005A   1580           00427         MOVRA   r0x100A
+005B   1600           00428         MOVAR   r0x1009
+005C   1580           00429         MOVRA   STK01
+005D   1600           00430         MOVAR   r0x100A
+005E   1580           00431         MOVRA   STK00
+005F   0B80           00432         MOVAI   0x80
+0060   2000           00433         CALL    __gptrget1
+0061   1580           00434         MOVRA   _TRed
+                      00435 ;       .line   14; "CtrlSbr.c" TGreen = GreenTbl[Color];
+0062   1600           00436         MOVAR   _Color
+0063   0E00           00437         ADDAI   (_GreenTbl + 0)
+0064   1580           00438         MOVRA   r0x1009
+0065   0B00           00439         MOVAI   high (_GreenTbl + 0)
+0066   3403           00440         JBCLR   STATUS,0
+0067   0E01           00441         ADDAI   0x01
+0068   1580           00442         MOVRA   r0x100A
+0069   1600           00443         MOVAR   r0x1009
+006A   1580           00444         MOVRA   STK01
+006B   1600           00445         MOVAR   r0x100A
+006C   1580           00446         MOVRA   STK00
+006D   0B80           00447         MOVAI   0x80
+006E   2000           00448         CALL    __gptrget1
+006F   1580           00449         MOVRA   _TGreen
+                      00450 ;       .line   15; "CtrlSbr.c" TBlue = BlueTbl[Color];
+0070   1600           00451         MOVAR   _Color
+0071   0E00           00452         ADDAI   (_BlueTbl + 0)
+0072   1580           00453         MOVRA   r0x1009
+0073   0B00           00454         MOVAI   high (_BlueTbl + 0)
+0074   3403           00455         JBCLR   STATUS,0
+0075   0E01           00456         ADDAI   0x01
+0076   1580           00457         MOVRA   r0x100A
+0077   1600           00458         MOVAR   r0x1009
+0078   1580           00459         MOVRA   STK01
+0079   1600           00460         MOVAR   r0x100A
+007A   1580           00461         MOVRA   STK00
+007B   0B80           00462         MOVAI   0x80
+007C   2000           00463         CALL    __gptrget1
+007D   1580           00464         MOVRA   _TBlue
+007E   000C           00465         RETURN  
+                      00466 ; exit point of _ColorSbr
+                      00467 
+                      00468 
+                      00469 ;       code size estimation:
+                      00470 ;         127+    0 =   127 instructions (  254 byte)
+                      00471 
+                      00472         end
+gpasm-2.0.0_beta2 (Jun 23 2017)CtrlSbr.asm        2017-8-18  18:31:21          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00110_DS_                        00000028
+_00112_DS_                        0000002A
+_00114_DS_                        00000031
+_00116_DS_                        00000038
+_00118_DS_                        0000003F
+_00120_DS_                        00000046
+_00122_DS_                        0000004D
+_00127_DS_                        00000053
+_00135_DS_                        0000000D
+_00137_DS_                        00000010
+_BitCnt                           00000000
+_BlueTbl                          00000000
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_Color                            00000000
+_ColorSbr                         00000054
+_Custom                           00000000
+_CustomRev                        00000000
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_Dly100ms                         00000000
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FSR                              00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_GreenTbl                         00000000
+_INDF                             00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_IRCnt                            00000000
+_IRCode1                          00000000
+_IRCodeRev1                       00000000
+_IRTmr                            00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyCnt                           00000000
+_KeyCode                          00000000
+_LongIRCnt                        00000000
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MColorSbr                        00000011
+_Mode1Cnt                         00000000
+_Mode2Cnt2                        00000000
+_Mode2Cnt3                        00000000
+_Mode2Sbr                         00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_RedTbl                           00000000
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_STATUS                           00000000
+_STATUSbits                       00000000
+_Step                             00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_T1s                              00000000
+_T40ms                            00000000
+_TBlue                            00000000
+_TBluebak                         00000000
+_TGreen                           00000000
+_TGreenbak                        00000000
+_TMCR                             00000000
+_TMCRbits                         00000000
+_TRed                             00000000
+_TRedCnt                          00000000
+_TRedbak                          00000000
+_TStop                            00000000
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_Tmr                              00000000
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+__gptrget1                        00000000
+_delay                            00000000
+_delay05ms                        00000000
+r0x1009                           00000000
+r0x100A                           00000001
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

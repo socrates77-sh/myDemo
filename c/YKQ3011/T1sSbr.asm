@@ -1,14 +1,14 @@
 ;--------------------------------------------------------
-; File Created by SDCC : free open source ANSI-C Compiler
-; Version 0.0.1 (Jun 20 2013) (MINGW32)
-; This file was generated Wed Jun 26 16:25:00 2013
+; File Created by SN-SDCC : ANSI-C Compiler
+; Version 0.0.4 (Aug 18 2017) (MINGW32)
+; This file was generated Fri Aug 18 18:35:20 2017
 ;--------------------------------------------------------
-; MC30 port for the 14-bit core
+; MC3X port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"T1sSbr.c"
-	list	p=30p011
+	list	p=0311
 	radix dec
-	include "mc30p011.inc"
+	include "0311.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------
@@ -23,6 +23,7 @@
 	extern	_PUCONbits
 	extern	_INTECONbits
 	extern	_INTFLAGbits
+	extern	_T0CRbits
 	extern	_DDR0bits
 	extern	_DDR1bits
 	extern	_TMCRbits
@@ -82,15 +83,6 @@
 	extern	_T1LOAD
 	extern	_T1DATA
 
-	extern PSAVE
-	extern SSAVE
-	extern WSAVE
-	extern STK12
-	extern STK11
-	extern STK10
-	extern STK09
-	extern STK08
-	extern STK07
 	extern STK06
 	extern STK05
 	extern STK04
@@ -115,6 +107,81 @@
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
+
+;@Allocation info for local variables in function 'T1sSbr'
+;@T1sSbr IROffKeySbr               Allocated to registers ;size:2
+;@T1sSbr T1sSbr                    Allocated to registers ;size:2
+;@T1sSbr STATUSbits                Allocated to registers ;size:1
+;@T1sSbr P0bits                    Allocated to registers ;size:1
+;@T1sSbr P1bits                    Allocated to registers ;size:1
+;@T1sSbr MCRbits                   Allocated to registers ;size:1
+;@T1sSbr KBIMbits                  Allocated to registers ;size:1
+;@T1sSbr PDCONbits                 Allocated to registers ;size:1
+;@T1sSbr ODCONbits                 Allocated to registers ;size:1
+;@T1sSbr PUCONbits                 Allocated to registers ;size:1
+;@T1sSbr INTECONbits               Allocated to registers ;size:1
+;@T1sSbr INTFLAGbits               Allocated to registers ;size:1
+;@T1sSbr T0CRbits                  Allocated to registers ;size:1
+;@T1sSbr DDR0bits                  Allocated to registers ;size:1
+;@T1sSbr DDR1bits                  Allocated to registers ;size:1
+;@T1sSbr TMCRbits                  Allocated to registers ;size:1
+;@T1sSbr T1CRbits                  Allocated to registers ;size:1
+;@T1sSbr KeyCnt                    Allocated to registers ;size:1
+;@T1sSbr T1s                       Allocated to registers ;size:1
+;@T1sSbr TRedCnt                   Allocated to registers ;size:1
+;@T1sSbr TRed                      Allocated to registers ;size:1
+;@T1sSbr TGreen                    Allocated to registers ;size:1
+;@T1sSbr TBlue                     Allocated to registers ;size:1
+;@T1sSbr TRedbak                   Allocated to registers ;size:1
+;@T1sSbr TGreenbak                 Allocated to registers ;size:1
+;@T1sSbr TBluebak                  Allocated to registers ;size:1
+;@T1sSbr IRTmr                     Allocated to registers ;size:1
+;@T1sSbr KeyCode                   Allocated to registers ;size:1
+;@T1sSbr Custom                    Allocated to registers ;size:1
+;@T1sSbr CustomRev                 Allocated to registers ;size:1
+;@T1sSbr IRCode1                   Allocated to registers ;size:1
+;@T1sSbr IRCodeRev1                Allocated to registers ;size:1
+;@T1sSbr BitCnt                    Allocated to registers ;size:1
+;@T1sSbr LongIRCnt                 Allocated to registers ;size:1
+;@T1sSbr IRCnt                     Allocated to registers ;size:1
+;@T1sSbr Color                     Allocated to registers ;size:1
+;@T1sSbr Mode1Cnt                  Allocated to registers ;size:1
+;@T1sSbr delay                     Allocated to registers ;size:1
+;@T1sSbr Tmr                       Allocated to registers ;size:2
+;@T1sSbr TStop                     Allocated to registers ;size:1
+;@T1sSbr Step                      Allocated to registers ;size:1
+;@T1sSbr T40ms                     Allocated to registers ;size:1
+;@T1sSbr Dly100ms                  Allocated to registers ;size:1
+;@T1sSbr Mode2Cnt2                 Allocated to registers ;size:1
+;@T1sSbr Mode2Cnt3                 Allocated to registers ;size:1
+;@T1sSbr delay05ms                 Allocated to registers ;size:1
+;@T1sSbr Flag1                     Allocated to registers ;size:1
+;@T1sSbr Flag2                     Allocated to registers ;size:1
+;@T1sSbr INDF                      Allocated to registers ;size:1
+;@T1sSbr T0CNT                     Allocated to registers ;size:1
+;@T1sSbr PCL                       Allocated to registers ;size:1
+;@T1sSbr STATUS                    Allocated to registers ;size:1
+;@T1sSbr FSR                       Allocated to registers ;size:1
+;@T1sSbr P0                        Allocated to registers ;size:1
+;@T1sSbr P1                        Allocated to registers ;size:1
+;@T1sSbr MCR                       Allocated to registers ;size:1
+;@T1sSbr KBIM                      Allocated to registers ;size:1
+;@T1sSbr PCLATH                    Allocated to registers ;size:1
+;@T1sSbr PDCON                     Allocated to registers ;size:1
+;@T1sSbr ODCON                     Allocated to registers ;size:1
+;@T1sSbr PUCON                     Allocated to registers ;size:1
+;@T1sSbr INTECON                   Allocated to registers ;size:1
+;@T1sSbr INTFLAG                   Allocated to registers ;size:1
+;@T1sSbr T0CR                      Allocated to registers ;size:1
+;@T1sSbr DDR0                      Allocated to registers ;size:1
+;@T1sSbr DDR1                      Allocated to registers ;size:1
+;@T1sSbr TMCR                      Allocated to registers ;size:1
+;@T1sSbr T1CR                      Allocated to registers ;size:1
+;@T1sSbr T1CNT                     Allocated to registers ;size:1
+;@T1sSbr T1LOAD                    Allocated to registers ;size:1
+;@T1sSbr T1DATA                    Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'T1sSbr';
+
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------

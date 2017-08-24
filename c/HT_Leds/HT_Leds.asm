@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SN-SDCC : ANSI-C Compiler
-; Version 0.0.4 (Jun 22 2017) (MINGW32)
-; This file was generated Thu Jun 22 17:07:54 2017
+; Version 0.0.5 (Jun 22 2017) (MINGW32)
+; This file was generated Fri Jun 23 16:57:03 2017
 ;--------------------------------------------------------
 ; MC3X port for the RISC core
 ;--------------------------------------------------------
@@ -64,7 +64,6 @@
 	extern	_T1CNT
 	extern	_T1LOAD
 	extern	_T1DATA0
-	extern	__sdcc_gsinit_startup
 ;--------------------------------------------------------
 ; global declarations
 ;--------------------------------------------------------
@@ -550,7 +549,6 @@ _Tab_data11
 ; reset vector 
 ;--------------------------------------------------------
 STARTUP	code 0x0000
-	goto	__sdcc_gsinit_startup
 ;--------------------------------------------------------
 ; interrupt and initialization code
 ;--------------------------------------------------------

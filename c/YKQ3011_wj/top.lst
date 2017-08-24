@@ -1,0 +1,2256 @@
+gplink-2.0.0_beta2 (Jun 23 2017)
+Listing File Generated: 2017-8-18  18:31:22
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                                           ; This file was generated Fri Aug 18 18:31:20 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"YKQ3011.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_InitialSys
+                                           	extern	_InitalRAM
+                                           	extern	_Mode2Sbr
+                                           	extern	_MColorSbr
+                                           	extern	_T1sSbr
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_KeyCnt
+                                           	global	_T1s
+                                           	global	_TRedCnt
+                                           	global	_TRed
+                                           	global	_TGreen
+                                           	global	_TBlue
+                                           	global	_TRedbak
+                                           	global	_TGreenbak
+                                           	global	_TBluebak
+                                           	global	_IRTmr
+                                           	global	_KeyCode
+                                           	global	_Custom
+                                           	global	_CustomRev
+                                           	global	_IRCode1
+                                           	global	_IRCodeRev1
+                                           	global	_BitCnt
+                                           	global	_LongIRCnt
+                                           	global	_IRCnt
+                                           	global	_Color
+                                           	global	_Mode1Cnt
+                                           	global	_delay
+                                           	global	_Tmr
+                                           	global	_TStop
+                                           	global	_Step
+                                           	global	_T40ms
+                                           	global	_Dly100ms
+                                           	global	_Mode2Cnt2
+                                           	global	_Mode2Cnt3
+                                           	global	_delay05ms
+                                           	global	_Flag1
+                                           	global	_Flag2
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0010
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_YKQ3011_0	udata
+                                           _KeyCnt	res	1
+                                           
+                                           UD_YKQ3011_1	udata
+                                           _T1s	res	1
+                                           
+                                           UD_YKQ3011_2	udata
+                                           _TRedCnt	res	1
+                                           
+                                           UD_YKQ3011_3	udata
+                                           _TRed	res	1
+                                           
+                                           UD_YKQ3011_4	udata
+                                           _TGreen	res	1
+                                           
+                                           UD_YKQ3011_5	udata
+                                           _TBlue	res	1
+                                           
+                                           UD_YKQ3011_6	udata
+                                           _TRedbak	res	1
+                                           
+                                           UD_YKQ3011_7	udata
+                                           _TGreenbak	res	1
+                                           
+                                           UD_YKQ3011_8	udata
+                                           _TBluebak	res	1
+                                           
+                                           UD_YKQ3011_9	udata
+                                           _IRTmr	res	1
+                                           
+                                           UD_YKQ3011_10	udata
+                                           _KeyCode	res	1
+                                           
+                                           UD_YKQ3011_11	udata
+                                           _Custom	res	1
+                                           
+                                           UD_YKQ3011_12	udata
+                                           _CustomRev	res	1
+                                           
+                                           UD_YKQ3011_13	udata
+                                           _IRCode1	res	1
+                                           
+                                           UD_YKQ3011_14	udata
+                                           _IRCodeRev1	res	1
+                                           
+                                           UD_YKQ3011_15	udata
+                                           _BitCnt	res	1
+                                           
+                                           UD_YKQ3011_16	udata
+                                           _LongIRCnt	res	1
+                                           
+                                           UD_YKQ3011_17	udata
+                                           _IRCnt	res	1
+                                           
+                                           UD_YKQ3011_18	udata
+                                           _Color	res	1
+                                           
+                                           UD_YKQ3011_19	udata
+                                           _Mode1Cnt	res	1
+                                           
+                                           UD_YKQ3011_20	udata
+                                           _delay	res	1
+                                           
+                                           UD_YKQ3011_21	udata
+                                           _Tmr	res	2
+                                           
+                                           UD_YKQ3011_22	udata
+                                           _TStop	res	1
+                                           
+                                           UD_YKQ3011_23	udata
+                                           _Step	res	1
+                                           
+                                           UD_YKQ3011_24	udata
+                                           _T40ms	res	1
+                                           
+                                           UD_YKQ3011_25	udata
+                                           _Dly100ms	res	1
+                                           
+                                           UD_YKQ3011_26	udata
+                                           _Mode2Cnt2	res	1
+                                           
+                                           UD_YKQ3011_27	udata
+                                           _Mode2Cnt3	res	1
+                                           
+                                           UD_YKQ3011_28	udata
+                                           _delay05ms	res	1
+                                           
+                                           UD_YKQ3011_29	udata
+                                           _Flag1	res	1
+                                           
+                                           UD_YKQ3011_30	udata
+                                           _Flag2	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@main InitialSys                Allocated to registers ;size:2
+                                           ;@main InitalRAM                 Allocated to registers ;size:2
+                                           ;@main Mode2Sbr                  Allocated to registers ;size:2
+                                           ;@main MColorSbr                 Allocated to registers ;size:2
+                                           ;@main T1sSbr                    Allocated to registers ;size:2
+                                           ;@main main                      Allocated to registers ;size:2
+                                           ;@main STATUSbits                Allocated to registers ;size:1
+                                           ;@main P0bits                    Allocated to registers ;size:1
+                                           ;@main P1bits                    Allocated to registers ;size:1
+                                           ;@main MCRbits                   Allocated to registers ;size:1
+                                           ;@main KBIMbits                  Allocated to registers ;size:1
+                                           ;@main PDCONbits                 Allocated to registers ;size:1
+                                           ;@main ODCONbits                 Allocated to registers ;size:1
+                                           ;@main PUCONbits                 Allocated to registers ;size:1
+                                           ;@main INTECONbits               Allocated to registers ;size:1
+                                           ;@main INTFLAGbits               Allocated to registers ;size:1
+                                           ;@main T0CRbits                  Allocated to registers ;size:1
+                                           ;@main DDR0bits                  Allocated to registers ;size:1
+                                           ;@main DDR1bits                  Allocated to registers ;size:1
+                                           ;@main TMCRbits                  Allocated to registers ;size:1
+                                           ;@main T1CRbits                  Allocated to registers ;size:1
+                                           ;@main KeyCnt                    Allocated to registers ;size:1
+                                           ;@main T1s                       Allocated to registers ;size:1
+                                           ;@main TRedCnt                   Allocated to registers ;size:1
+                                           ;@main TRed                      Allocated to registers ;size:1
+                                           ;@main TGreen                    Allocated to registers ;size:1
+                                           ;@main TBlue                     Allocated to registers ;size:1
+                                           ;@main TRedbak                   Allocated to registers ;size:1
+                                           ;@main TGreenbak                 Allocated to registers ;size:1
+                                           ;@main TBluebak                  Allocated to registers ;size:1
+                                           ;@main IRTmr                     Allocated to registers ;size:1
+                                           ;@main KeyCode                   Allocated to registers ;size:1
+                                           ;@main Custom                    Allocated to registers ;size:1
+                                           ;@main CustomRev                 Allocated to registers ;size:1
+                                           ;@main IRCode1                   Allocated to registers ;size:1
+                                           ;@main IRCodeRev1                Allocated to registers ;size:1
+                                           ;@main BitCnt                    Allocated to registers ;size:1
+                                           ;@main LongIRCnt                 Allocated to registers ;size:1
+                                           ;@main IRCnt                     Allocated to registers ;size:1
+                                           ;@main Color                     Allocated to registers ;size:1
+                                           ;@main Mode1Cnt                  Allocated to registers ;size:1
+                                           ;@main delay                     Allocated to registers ;size:1
+                                           ;@main Tmr                       Allocated to registers ;size:2
+                                           ;@main TStop                     Allocated to registers ;size:1
+                                           ;@main Step                      Allocated to registers ;size:1
+                                           ;@main T40ms                     Allocated to registers ;size:1
+                                           ;@main Dly100ms                  Allocated to registers ;size:1
+                                           ;@main Mode2Cnt2                 Allocated to registers ;size:1
+                                           ;@main Mode2Cnt3                 Allocated to registers ;size:1
+                                           ;@main delay05ms                 Allocated to registers ;size:1
+                                           ;@main Flag1                     Allocated to registers ;size:1
+                                           ;@main Flag2                     Allocated to registers ;size:1
+                                           ;@main INDF                      Allocated to registers ;size:1
+                                           ;@main T0CNT                     Allocated to registers ;size:1
+                                           ;@main PCL                       Allocated to registers ;size:1
+                                           ;@main STATUS                    Allocated to registers ;size:1
+                                           ;@main FSR                       Allocated to registers ;size:1
+                                           ;@main P0                        Allocated to registers ;size:1
+                                           ;@main P1                        Allocated to registers ;size:1
+                                           ;@main MCR                       Allocated to registers ;size:1
+                                           ;@main KBIM                      Allocated to registers ;size:1
+                                           ;@main PCLATH                    Allocated to registers ;size:1
+                                           ;@main PDCON                     Allocated to registers ;size:1
+                                           ;@main ODCON                     Allocated to registers ;size:1
+                                           ;@main PUCON                     Allocated to registers ;size:1
+                                           ;@main INTECON                   Allocated to registers ;size:1
+                                           ;@main INTFLAG                   Allocated to registers ;size:1
+                                           ;@main T0CR                      Allocated to registers ;size:1
+                                           ;@main DDR0                      Allocated to registers ;size:1
+                                           ;@main DDR1                      Allocated to registers ;size:1
+                                           ;@main TMCR                      Allocated to registers ;size:1
+                                           ;@main T1CR                      Allocated to registers ;size:1
+                                           ;@main T1CNT                     Allocated to registers ;size:1
+                                           ;@main T1LOAD                    Allocated to registers ;size:1
+                                           ;@main T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   299a     goto    0x19a            	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_YKQ3011	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _InitialSys
+                                           ;   _InitalRAM
+                                           ;   _Mode2Sbr
+                                           ;   _MColorSbr
+                                           ;   _T1sSbr
+                                           ;   _InitialSys
+                                           ;   _InitalRAM
+                                           ;   _Mode2Sbr
+                                           ;   _MColorSbr
+                                           ;   _T1sSbr
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	16; "YKQ3011.c"	GIE = 0;    
+00019a   3f8e     bclr    0xe, 0x7         	BCLR	_INTECONbits,7
+                                           ;	.line	17; "YKQ3011.c"	ClrWdt();
+00019b   000e     clrwdt                   	clrwdt
+                                           ;	.line	18; "YKQ3011.c"	InitialSys();
+00019c   220d     call    0x20d            	CALL	_InitialSys
+                                           ;	.line	19; "YKQ3011.c"	InitalRAM();
+00019d   220a     call    0x20a            	CALL	_InitalRAM
+                                           ;	.line	20; "YKQ3011.c"	FMultiColor = 1;
+00019e   3a3b     bset    0x3b, 0x4        	BSET	_Flag2,4
+                                           ;	.line	21; "YKQ3011.c"	FOn = 1;
+00019f   383a     bset    0x3a, 0          	BSET	_Flag1,0
+                                           ;	.line	22; "YKQ3011.c"	pIR = 1;
+0001a0   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+                                           ;	.line	23; "YKQ3011.c"	KBIE = 1;
+0001a1   388e     bset    0xe, 0x1         	BSET	_INTECONbits,1
+                                           ;	.line	24; "YKQ3011.c"	KBIM3 = 1;
+0001a2   3989     bset    0x9, 0x3         	BSET	_KBIMbits,3
+                                           ;	.line	25; "YKQ3011.c"	GIE = 1;
+0001a3   3b8e     bset    0xe, 0x7         	BSET	_INTECONbits,7
+                                           _00138_DS_
+                                           ;	.line	28; "YKQ3011.c"	if (FStop)
+0001a4   30bb     jbset   0x3b, 0x1        	JBSET	_Flag2,1
+0001a5   29af     goto    0x1af            	GOTO	_00106_DS_
+                                           ;	.line	30; "YKQ3011.c"	T1IF = 0;
+0001a6   3c4b     bclr    0x4b, 0          	BCLR	_TMCRbits,0
+                                           ;	.line	31; "YKQ3011.c"	T0IF = 0;
+0001a7   3c0f     bclr    0xf, 0           	BCLR	_INTFLAGbits,0
+                                           ;	.line	32; "YKQ3011.c"	Nop();
+0001a8   0000     nop                      	nop
+                                           ;	.line	33; "YKQ3011.c"	Nop();
+0001a9   0000     nop                      	nop
+                                           ;	.line	34; "YKQ3011.c"	Nop();
+0001aa   0000     nop                      	nop
+                                           ;	.line	35; "YKQ3011.c"	Stop();
+0001ab   000b     sleep                    	stop
+                                           ;	.line	36; "YKQ3011.c"	Nop();
+0001ac   0000     nop                      	nop
+                                           ;	.line	37; "YKQ3011.c"	Nop();
+0001ad   0000     nop                      	nop
+                                           ;	.line	38; "YKQ3011.c"	Nop();
+0001ae   0000     nop                      	nop
+                                           _00106_DS_
+                                           ;	.line	40; "YKQ3011.c"	if ((delay05ms != 0)||(!FOn))
+0001af   0b00     movai   0                	MOVAI	0x00
+0001b0   1739     orar    0x39             	ORAR	_delay05ms
+0001b1   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0001b2   29b5     goto    0x1b5            	GOTO	_00112_DS_
+0001b3   343a     jbclr   0x3a, 0          	JBCLR	_Flag1,0
+0001b4   29b9     goto    0x1b9            	GOTO	_00113_DS_
+                                           _00112_DS_
+                                           ;	.line	42; "YKQ3011.c"	pRedC = 1;
+0001b5   3846     bset    0x46, 0          	BSET	_DDR1bits,0
+                                           ;	.line	43; "YKQ3011.c"	pGreenC = 1;
+0001b6   38c6     bset    0x46, 0x1        	BSET	_DDR1bits,1
+                                           ;	.line	44; "YKQ3011.c"	pBlueC = 1;
+0001b7   3946     bset    0x46, 0x2        	BSET	_DDR1bits,2
+0001b8   29c2     goto    0x1c2            	GOTO	_00114_DS_
+                                           _00113_DS_
+                                           ;	.line	48; "YKQ3011.c"	if (FMultiColor)
+0001b9   323b     jbset   0x3b, 0x4        	JBSET	_Flag2,4
+0001ba   29bf     goto    0x1bf            	GOTO	_00110_DS_
+                                           ;	.line	50; "YKQ3011.c"	pRedC = 0;
+0001bb   3c46     bclr    0x46, 0          	BCLR	_DDR1bits,0
+                                           ;	.line	51; "YKQ3011.c"	pGreenC = 0;
+0001bc   3cc6     bclr    0x46, 0x1        	BCLR	_DDR1bits,1
+                                           ;	.line	52; "YKQ3011.c"	pBlueC = 0;
+0001bd   3d46     bclr    0x46, 0x2        	BCLR	_DDR1bits,2
+0001be   29c2     goto    0x1c2            	GOTO	_00114_DS_
+                                           _00110_DS_
+                                           ;	.line	56; "YKQ3011.c"	if (FCandle) Mode2Sbr();
+0001bf   32bb     jbset   0x3b, 0x5        	JBSET	_Flag2,5
+0001c0   29c2     goto    0x1c2            	GOTO	_00114_DS_
+0001c1   211b     call    0x11b            	CALL	_Mode2Sbr
+                                           _00114_DS_
+                                           ;	.line	59; "YKQ3011.c"	if (F4ms)
+0001c2   313b     jbset   0x3b, 0x2        	JBSET	_Flag2,2
+0001c3   29a4     goto    0x1a4            	GOTO	_00138_DS_
+                                           ;	.line	61; "YKQ3011.c"	F4ms = 0;
+0001c4   3d3b     bclr    0x3b, 0x2        	BCLR	_Flag2,2
+                                           ;	.line	62; "YKQ3011.c"	ClrWdt();
+0001c5   000e     clrwdt                   	clrwdt
+                                           ;	.line	63; "YKQ3011.c"	if (delay05ms == 0)
+0001c6   0b00     movai   0                	MOVAI	0x00
+0001c7   1739     orar    0x39             	ORAR	_delay05ms
+0001c8   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0001c9   29e8     goto    0x1e8            	GOTO	_00133_DS_
+                                           ;	.line	65; "YKQ3011.c"	if (FOn)
+0001ca   303a     jbset   0x3a, 0          	JBSET	_Flag1,0
+0001cb   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           ;	.line	67; "YKQ3011.c"	if (FMultiColor) MColorSbr();
+0001cc   323b     jbset   0x3b, 0x4        	JBSET	_Flag2,4
+0001cd   29d0     goto    0x1d0            	GOTO	_00128_DS_
+0001ce   212c     call    0x12c            	CALL	_MColorSbr
+0001cf   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           _00128_DS_
+                                           ;	.line	70; "YKQ3011.c"	if (FCandle)
+0001d0   32bb     jbset   0x3b, 0x5        	JBSET	_Flag2,5
+0001d1   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           ;	.line	73; "YKQ3011.c"	if (++T40ms > 10)
+0001d2   19b5     incr    0x35             	INCR	_T40ms
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0xB=11), size=1
+0001d3   0b0b     movai   0xb              	MOVAI	0x0b
+0001d4   1235     rsubar  0x35             	RSUBAR	_T40ms
+0001d5   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0001d6   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+                                           ;	.line	75; "YKQ3011.c"	T40ms = 0;
+0001d7   1db5     clrr    0x35             	CLRR	_T40ms
+                                           ;	.line	76; "YKQ3011.c"	if (FDirection)
+0001d8   313a     jbset   0x3a, 0x2        	JBSET	_Flag1,2
+0001d9   29e1     goto    0x1e1            	GOTO	_00121_DS_
+                                           ;	.line	78; "YKQ3011.c"	if (++Mode2Cnt3 > 50) FDirection = 0;
+0001da   19b8     incr    0x38             	INCR	_Mode2Cnt3
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x33=51), size=1
+0001db   0b33     movai   0x33             	MOVAI	0x33
+0001dc   1238     rsubar  0x38             	RSUBAR	_Mode2Cnt3
+0001dd   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0001de   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+0001df   3d3a     bclr    0x3a, 0x2        	BCLR	_Flag1,2
+0001e0   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           _00121_DS_
+                                           ;	.line	82; "YKQ3011.c"	if (--Mode2Cnt3 < 10) FDirection = 1;
+0001e1   1bb8     decr    0x38             	DECR	_Mode2Cnt3
+                                           ;;unsigned compare: left < lit(0xA=10), size=1
+0001e2   0b0a     movai   0xa              	MOVAI	0x0a
+0001e3   1238     rsubar  0x38             	RSUBAR	_Mode2Cnt3
+0001e4   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+0001e5   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+0001e6   393a     bset    0x3a, 0x2        	BSET	_Flag1,2
+0001e7   29e9     goto    0x1e9            	GOTO	_00134_DS_
+                                           _00133_DS_
+                                           ;	.line	89; "YKQ3011.c"	else --delay05ms;
+0001e8   1bb9     decr    0x39             	DECR	_delay05ms
+                                           _00134_DS_
+                                           ;	.line	90; "YKQ3011.c"	T1sSbr();
+0001e9   21ec     call    0x1ec            	CALL	_T1sSbr
+0001ea   29a4     goto    0x1a4            	GOTO	_00138_DS_
+0001eb   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   73+    0 =    73 instructions (  146 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                                           ; This file was generated Fri Aug 18 18:31:21 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"initSys.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_KeyCnt
+                                           	extern	_T1s
+                                           	extern	_TRedCnt
+                                           	extern	_TRed
+                                           	extern	_TGreen
+                                           	extern	_TBlue
+                                           	extern	_TRedbak
+                                           	extern	_TGreenbak
+                                           	extern	_TBluebak
+                                           	extern	_IRTmr
+                                           	extern	_KeyCode
+                                           	extern	_Custom
+                                           	extern	_CustomRev
+                                           	extern	_IRCode1
+                                           	extern	_IRCodeRev1
+                                           	extern	_BitCnt
+                                           	extern	_LongIRCnt
+                                           	extern	_IRCnt
+                                           	extern	_Color
+                                           	extern	_Mode1Cnt
+                                           	extern	_delay
+                                           	extern	_Tmr
+                                           	extern	_TStop
+                                           	extern	_Step
+                                           	extern	_T40ms
+                                           	extern	_Dly100ms
+                                           	extern	_Mode2Cnt2
+                                           	extern	_Mode2Cnt3
+                                           	extern	_delay05ms
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_InitialSys
+                                           	global	_InitalRAM
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'InitialSys'
+                                           ;@InitialSys InitialSys                Allocated to registers ;size:2
+                                           ;@InitialSys STATUSbits                Allocated to registers ;size:1
+                                           ;@InitialSys P0bits                    Allocated to registers ;size:1
+                                           ;@InitialSys P1bits                    Allocated to registers ;size:1
+                                           ;@InitialSys MCRbits                   Allocated to registers ;size:1
+                                           ;@InitialSys KBIMbits                  Allocated to registers ;size:1
+                                           ;@InitialSys PDCONbits                 Allocated to registers ;size:1
+                                           ;@InitialSys ODCONbits                 Allocated to registers ;size:1
+                                           ;@InitialSys PUCONbits                 Allocated to registers ;size:1
+                                           ;@InitialSys INTECONbits               Allocated to registers ;size:1
+                                           ;@InitialSys INTFLAGbits               Allocated to registers ;size:1
+                                           ;@InitialSys T0CRbits                  Allocated to registers ;size:1
+                                           ;@InitialSys DDR0bits                  Allocated to registers ;size:1
+                                           ;@InitialSys DDR1bits                  Allocated to registers ;size:1
+                                           ;@InitialSys TMCRbits                  Allocated to registers ;size:1
+                                           ;@InitialSys T1CRbits                  Allocated to registers ;size:1
+                                           ;@InitialSys KeyCnt                    Allocated to registers ;size:1
+                                           ;@InitialSys T1s                       Allocated to registers ;size:1
+                                           ;@InitialSys TRedCnt                   Allocated to registers ;size:1
+                                           ;@InitialSys TRed                      Allocated to registers ;size:1
+                                           ;@InitialSys TGreen                    Allocated to registers ;size:1
+                                           ;@InitialSys TBlue                     Allocated to registers ;size:1
+                                           ;@InitialSys TRedbak                   Allocated to registers ;size:1
+                                           ;@InitialSys TGreenbak                 Allocated to registers ;size:1
+                                           ;@InitialSys TBluebak                  Allocated to registers ;size:1
+                                           ;@InitialSys IRTmr                     Allocated to registers ;size:1
+                                           ;@InitialSys KeyCode                   Allocated to registers ;size:1
+                                           ;@InitialSys Custom                    Allocated to registers ;size:1
+                                           ;@InitialSys CustomRev                 Allocated to registers ;size:1
+                                           ;@InitialSys IRCode1                   Allocated to registers ;size:1
+                                           ;@InitialSys IRCodeRev1                Allocated to registers ;size:1
+                                           ;@InitialSys BitCnt                    Allocated to registers ;size:1
+                                           ;@InitialSys LongIRCnt                 Allocated to registers ;size:1
+                                           ;@InitialSys IRCnt                     Allocated to registers ;size:1
+                                           ;@InitialSys Color                     Allocated to registers ;size:1
+                                           ;@InitialSys Mode1Cnt                  Allocated to registers ;size:1
+                                           ;@InitialSys delay                     Allocated to registers ;size:1
+                                           ;@InitialSys Tmr                       Allocated to registers ;size:2
+                                           ;@InitialSys TStop                     Allocated to registers ;size:1
+                                           ;@InitialSys Step                      Allocated to registers ;size:1
+                                           ;@InitialSys T40ms                     Allocated to registers ;size:1
+                                           ;@InitialSys Dly100ms                  Allocated to registers ;size:1
+                                           ;@InitialSys Mode2Cnt2                 Allocated to registers ;size:1
+                                           ;@InitialSys Mode2Cnt3                 Allocated to registers ;size:1
+                                           ;@InitialSys delay05ms                 Allocated to registers ;size:1
+                                           ;@InitialSys Flag1                     Allocated to registers ;size:1
+                                           ;@InitialSys Flag2                     Allocated to registers ;size:1
+                                           ;@InitialSys INDF                      Allocated to registers ;size:1
+                                           ;@InitialSys T0CNT                     Allocated to registers ;size:1
+                                           ;@InitialSys PCL                       Allocated to registers ;size:1
+                                           ;@InitialSys STATUS                    Allocated to registers ;size:1
+                                           ;@InitialSys FSR                       Allocated to registers ;size:1
+                                           ;@InitialSys P0                        Allocated to registers ;size:1
+                                           ;@InitialSys P1                        Allocated to registers ;size:1
+                                           ;@InitialSys MCR                       Allocated to registers ;size:1
+                                           ;@InitialSys KBIM                      Allocated to registers ;size:1
+                                           ;@InitialSys PCLATH                    Allocated to registers ;size:1
+                                           ;@InitialSys PDCON                     Allocated to registers ;size:1
+                                           ;@InitialSys ODCON                     Allocated to registers ;size:1
+                                           ;@InitialSys PUCON                     Allocated to registers ;size:1
+                                           ;@InitialSys INTECON                   Allocated to registers ;size:1
+                                           ;@InitialSys INTFLAG                   Allocated to registers ;size:1
+                                           ;@InitialSys T0CR                      Allocated to registers ;size:1
+                                           ;@InitialSys DDR0                      Allocated to registers ;size:1
+                                           ;@InitialSys DDR1                      Allocated to registers ;size:1
+                                           ;@InitialSys TMCR                      Allocated to registers ;size:1
+                                           ;@InitialSys T1CR                      Allocated to registers ;size:1
+                                           ;@InitialSys T1CNT                     Allocated to registers ;size:1
+                                           ;@InitialSys T1LOAD                    Allocated to registers ;size:1
+                                           ;@InitialSys T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'InitialSys';
+                                           ;@Allocation info for local variables in function 'InitalRAM'
+                                           ;@end Allocation info for local variables in function 'InitalRAM';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_initSys	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _InitalRAM	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _InitalRAM	;Function start
+                                           ; 2 exit points
+                                           ;	.line	59; "initSys.c"	T1s = 250;
+00020a   0bfa     movai   0xfa             	MOVAI	0xfa
+00020b   159f     movra   0x1f             	MOVRA	_T1s
+00020c   000c     return                   	RETURN	
+                                           ; exit point of _InitalRAM
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _InitialSys	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _InitialSys	;Function start
+                                           ; 2 exit points
+                                           ;	.line	10; "initSys.c"	pRed = 1;
+00020d   3806     bset    0x6, 0           	BSET	_P1bits,0
+                                           ;	.line	11; "initSys.c"	pGreen = 1;
+00020e   3886     bset    0x6, 0x1         	BSET	_P1bits,1
+                                           ;	.line	12; "initSys.c"	pBlue = 1;
+00020f   3906     bset    0x6, 0x2         	BSET	_P1bits,2
+                                           ;	.line	14; "initSys.c"	DDR0 = 0;
+000210   1dc5     clrr    0x45             	CLRR	_DDR0
+                                           ;	.line	15; "initSys.c"	DDR1 = 0;
+000211   1dc6     clrr    0x46             	CLRR	_DDR1
+                                           ;	.line	16; "initSys.c"	DDR1 |= 0x08;
+000212   39c6     bset    0x46, 0x3        	BSET	_DDR1,3
+                                           ;	.line	17; "initSys.c"	PDCON = 0xFF;                    
+000213   0bff     movai   0xff             	MOVAI	0xff
+000214   158b     movra   0xb              	MOVRA	_PDCON
+                                           ;	.line	18; "initSys.c"	PUCON = 0xFF;
+000215   0bff     movai   0xff             	MOVAI	0xff
+000216   158d     movra   0xd              	MOVRA	_PUCON
+                                           ;	.line	19; "initSys.c"	ODCON = 0;
+000217   1d8c     clrr    0xc              	CLRR	_ODCON
+                                           ;	.line	23; "initSys.c"	T0CR = 1;
+000218   0b01     movai   0x1              	MOVAI	0x01
+000219   15c1     movra   0x41             	MOVRA	_T0CR
+                                           ;	.line	24; "initSys.c"	T0CNT = CT0;
+00021a   0bf0     movai   0xf0             	MOVAI	0xf0
+00021b   1581     movra   0x1              	MOVRA	_T0CNT
+                                           ;	.line	25; "initSys.c"	T0IE = 1;		//;开定时中断
+00021c   380e     bset    0xe, 0           	BSET	_INTECONbits,0
+                                           ;	.line	31; "initSys.c"	TMCR = 0;
+00021d   1dcb     clrr    0x4b             	CLRR	_TMCR
+                                           ;	.line	32; "initSys.c"	T1CR = 0x86;
+00021e   0b86     movai   0x86             	MOVAI	0x86
+00021f   15cc     movra   0x4c             	MOVRA	_T1CR
+                                           ;	.line	33; "initSys.c"	T1LOAD = 249;
+000220   0bf9     movai   0xf9             	MOVAI	0xf9
+000221   15ce     movra   0x4e             	MOVRA	_T1LOAD
+                                           ;	.line	34; "initSys.c"	T1DATA = 0;
+000222   1dcf     clrr    0x4f             	CLRR	_T1DATA
+                                           ;	.line	37; "initSys.c"	MCR = 0x80;                    
+000223   0b80     movai   0x80             	MOVAI	0x80
+000224   1588     movra   0x8              	MOVRA	_MCR
+                                           ;	.line	39; "initSys.c"	KBIM = 0;                      
+000225   1d89     clrr    0x9              	CLRR	_KBIM
+000226   000c     return                   	RETURN	
+                                           ; exit point of _InitialSys
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   29+    0 =    29 instructions (   58 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                                           ; This file was generated Fri Aug 18 18:31:21 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"CtrlSbr.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_KeyCnt
+                                           	extern	_T1s
+                                           	extern	_TRedCnt
+                                           	extern	_TRed
+                                           	extern	_TGreen
+                                           	extern	_TBlue
+                                           	extern	_TRedbak
+                                           	extern	_TGreenbak
+                                           	extern	_TBluebak
+                                           	extern	_IRTmr
+                                           	extern	_KeyCode
+                                           	extern	_Custom
+                                           	extern	_CustomRev
+                                           	extern	_IRCode1
+                                           	extern	_IRCodeRev1
+                                           	extern	_BitCnt
+                                           	extern	_LongIRCnt
+                                           	extern	_IRCnt
+                                           	extern	_Color
+                                           	extern	_Mode1Cnt
+                                           	extern	_delay
+                                           	extern	_Tmr
+                                           	extern	_TStop
+                                           	extern	_Step
+                                           	extern	_T40ms
+                                           	extern	_Dly100ms
+                                           	extern	_Mode2Cnt2
+                                           	extern	_Mode2Cnt3
+                                           	extern	_delay05ms
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	__gptrget1
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_ColorSbr
+                                           	global	_MColorSbr
+                                           	global	_Mode2Sbr
+                                           	global	_BlueTbl
+                                           	global	_GreenTbl
+                                           	global	_RedTbl
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_CtrlSbr_0	udata
+                                           r0x1009	res	1
+                                           r0x100A	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ID_CtrlSbr_0	code
+                                           _BlueTbl
+000237   0aff     retai   0xff             	retai 0xff
+000238   0aff     retai   0xff             	retai 0xff
+000239   0a0e     retai   0xe              	retai 0x0e
+00023a   0afc     retai   0xfc             	retai 0xfc
+00023b   0af7     retai   0xf7             	retai 0xf7
+00023c   0a26     retai   0x26             	retai 0x26
+00023d   0aff     retai   0xff             	retai 0xff
+00023e   0aae     retai   0xae             	retai 0xae
+00023f   0ad6     retai   0xd6             	retai 0xd6
+000240   0a23     retai   0x23             	retai 0x23
+000241   0ad6     retai   0xd6             	retai 0xd6
+000242   0a75     retai   0x75             	retai 0x75
+                                           
+                                           
+                                           ID_CtrlSbr_1	code
+                                           _GreenTbl
+000243   0aff     retai   0xff             	retai 0xff
+000244   0a0e     retai   0xe              	retai 0x0e
+000245   0aff     retai   0xff             	retai 0xff
+000246   0a8b     retai   0x8b             	retai 0x8b
+000247   0a18     retai   0x18             	retai 0x18
+000248   0af7     retai   0xf7             	retai 0xf7
+000249   0a26     retai   0x26             	retai 0x26
+00024a   0a1f     retai   0x1f             	retai 0x1f
+00024b   0a26     retai   0x26             	retai 0x26
+00024c   0a58     retai   0x58             	retai 0x58
+00024d   0af7     retai   0xf7             	retai 0xf7
+00024e   0add     retai   0xdd             	retai 0xdd
+                                           
+                                           
+                                           ID_CtrlSbr_2	code
+                                           _RedTbl
+00024f   0a0e     retai   0xe              	retai 0x0e
+000250   0aff     retai   0xff             	retai 0xff
+000251   0aff     retai   0xff             	retai 0xff
+000252   0a1a     retai   0x1a             	retai 0x1a
+000253   0aa0     retai   0xa0             	retai 0xa0
+000254   0ae3     retai   0xe3             	retai 0xe3
+000255   0a00     retai   0                	retai 0x00
+000256   0aae     retai   0xae             	retai 0xae
+000257   0a31     retai   0x31             	retai 0x31
+000258   0ae3     retai   0xe3             	retai 0xe3
+000259   0a27     retai   0x27             	retai 0x27
+00025a   0aae     retai   0xae             	retai 0xae
+                                           
+                                           
+                                           ;@Allocation info for local variables in function 'ColorSbr'
+                                           ;@ColorSbr ColorSbr                  Allocated to registers ;size:2
+                                           ;@ColorSbr STATUSbits                Allocated to registers ;size:1
+                                           ;@ColorSbr P0bits                    Allocated to registers ;size:1
+                                           ;@ColorSbr P1bits                    Allocated to registers ;size:1
+                                           ;@ColorSbr MCRbits                   Allocated to registers ;size:1
+                                           ;@ColorSbr KBIMbits                  Allocated to registers ;size:1
+                                           ;@ColorSbr PDCONbits                 Allocated to registers ;size:1
+                                           ;@ColorSbr ODCONbits                 Allocated to registers ;size:1
+                                           ;@ColorSbr PUCONbits                 Allocated to registers ;size:1
+                                           ;@ColorSbr INTECONbits               Allocated to registers ;size:1
+                                           ;@ColorSbr INTFLAGbits               Allocated to registers ;size:1
+                                           ;@ColorSbr T0CRbits                  Allocated to registers ;size:1
+                                           ;@ColorSbr DDR0bits                  Allocated to registers ;size:1
+                                           ;@ColorSbr DDR1bits                  Allocated to registers ;size:1
+                                           ;@ColorSbr TMCRbits                  Allocated to registers ;size:1
+                                           ;@ColorSbr T1CRbits                  Allocated to registers ;size:1
+                                           ;@ColorSbr KeyCnt                    Allocated to registers ;size:1
+                                           ;@ColorSbr T1s                       Allocated to registers ;size:1
+                                           ;@ColorSbr TRedCnt                   Allocated to registers ;size:1
+                                           ;@ColorSbr TRed                      Allocated to registers ;size:1
+                                           ;@ColorSbr TGreen                    Allocated to registers ;size:1
+                                           ;@ColorSbr TBlue                     Allocated to registers ;size:1
+                                           ;@ColorSbr TRedbak                   Allocated to registers ;size:1
+                                           ;@ColorSbr TGreenbak                 Allocated to registers ;size:1
+                                           ;@ColorSbr TBluebak                  Allocated to registers ;size:1
+                                           ;@ColorSbr IRTmr                     Allocated to registers ;size:1
+                                           ;@ColorSbr KeyCode                   Allocated to registers ;size:1
+                                           ;@ColorSbr Custom                    Allocated to registers ;size:1
+                                           ;@ColorSbr CustomRev                 Allocated to registers ;size:1
+                                           ;@ColorSbr IRCode1                   Allocated to registers ;size:1
+                                           ;@ColorSbr IRCodeRev1                Allocated to registers ;size:1
+                                           ;@ColorSbr BitCnt                    Allocated to registers ;size:1
+                                           ;@ColorSbr LongIRCnt                 Allocated to registers ;size:1
+                                           ;@ColorSbr IRCnt                     Allocated to registers ;size:1
+                                           ;@ColorSbr Color                     Allocated to registers ;size:1
+                                           ;@ColorSbr Mode1Cnt                  Allocated to registers ;size:1
+                                           ;@ColorSbr delay                     Allocated to registers ;size:1
+                                           ;@ColorSbr Tmr                       Allocated to registers ;size:2
+                                           ;@ColorSbr TStop                     Allocated to registers ;size:1
+                                           ;@ColorSbr Step                      Allocated to registers ;size:1
+                                           ;@ColorSbr T40ms                     Allocated to registers ;size:1
+                                           ;@ColorSbr Dly100ms                  Allocated to registers ;size:1
+                                           ;@ColorSbr Mode2Cnt2                 Allocated to registers ;size:1
+                                           ;@ColorSbr Mode2Cnt3                 Allocated to registers ;size:1
+                                           ;@ColorSbr delay05ms                 Allocated to registers ;size:1
+                                           ;@ColorSbr Flag1                     Allocated to registers ;size:1
+                                           ;@ColorSbr Flag2                     Allocated to registers ;size:1
+                                           ;@ColorSbr INDF                      Allocated to registers ;size:1
+                                           ;@ColorSbr T0CNT                     Allocated to registers ;size:1
+                                           ;@ColorSbr PCL                       Allocated to registers ;size:1
+                                           ;@ColorSbr STATUS                    Allocated to registers ;size:1
+                                           ;@ColorSbr FSR                       Allocated to registers ;size:1
+                                           ;@ColorSbr P0                        Allocated to registers ;size:1
+                                           ;@ColorSbr P1                        Allocated to registers ;size:1
+                                           ;@ColorSbr MCR                       Allocated to registers ;size:1
+                                           ;@ColorSbr KBIM                      Allocated to registers ;size:1
+                                           ;@ColorSbr PCLATH                    Allocated to registers ;size:1
+                                           ;@ColorSbr PDCON                     Allocated to registers ;size:1
+                                           ;@ColorSbr ODCON                     Allocated to registers ;size:1
+                                           ;@ColorSbr PUCON                     Allocated to registers ;size:1
+                                           ;@ColorSbr INTECON                   Allocated to registers ;size:1
+                                           ;@ColorSbr INTFLAG                   Allocated to registers ;size:1
+                                           ;@ColorSbr T0CR                      Allocated to registers ;size:1
+                                           ;@ColorSbr DDR0                      Allocated to registers ;size:1
+                                           ;@ColorSbr DDR1                      Allocated to registers ;size:1
+                                           ;@ColorSbr TMCR                      Allocated to registers ;size:1
+                                           ;@ColorSbr T1CR                      Allocated to registers ;size:1
+                                           ;@ColorSbr T1CNT                     Allocated to registers ;size:1
+                                           ;@ColorSbr T1LOAD                    Allocated to registers ;size:1
+                                           ;@ColorSbr T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'ColorSbr';
+                                           ;@Allocation info for local variables in function 'MColorSbr'
+                                           ;@end Allocation info for local variables in function 'MColorSbr';
+                                           ;@Allocation info for local variables in function 'Mode2Sbr'
+                                           ;@end Allocation info for local variables in function 'Mode2Sbr';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_CtrlSbr	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Mode2Sbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Mode2Sbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	75; "CtrlSbr.c"	if (Mode2Cnt2 >= Mode2Cnt3)
+00011b   1638     movar   0x38             	MOVAR	_Mode2Cnt3
+00011c   1237     rsubar  0x37             	RSUBAR	_Mode2Cnt2
+00011d   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00011e   2928     goto    0x128            	GOTO	_00135_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+                                           ;	.line	77; "CtrlSbr.c"	pBlueC = 1;
+00011f   3946     bset    0x46, 0x2        	BSET	_DDR1bits,2
+                                           ;	.line	78; "CtrlSbr.c"	pRedC = 1;
+000120   3846     bset    0x46, 0          	BSET	_DDR1bits,0
+                                           ;	.line	79; "CtrlSbr.c"	pGreenC = 1;
+000121   38c6     bset    0x46, 0x1        	BSET	_DDR1bits,1
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x33=51), size=1
+                                           ;	.line	80; "CtrlSbr.c"	if (Mode2Cnt2 > 50) Mode2Cnt2 = 0;
+000122   0b33     movai   0x33             	MOVAI	0x33
+000123   1237     rsubar  0x37             	RSUBAR	_Mode2Cnt2
+000124   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000125   292b     goto    0x12b            	GOTO	_00137_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+000126   1db7     clrr    0x37             	CLRR	_Mode2Cnt2
+000127   292b     goto    0x12b            	GOTO	_00137_DS_
+                                           _00135_DS_
+                                           ;	.line	84; "CtrlSbr.c"	pBlueC = 0;
+000128   3d46     bclr    0x46, 0x2        	BCLR	_DDR1bits,2
+                                           ;	.line	85; "CtrlSbr.c"	pRedC = 0;
+000129   3c46     bclr    0x46, 0          	BCLR	_DDR1bits,0
+                                           ;	.line	86; "CtrlSbr.c"	pGreenC = 0;
+00012a   3cc6     bclr    0x46, 0x1        	BCLR	_DDR1bits,1
+                                           _00137_DS_
+00012b   000c     return                   	RETURN	
+                                           ; exit point of _Mode2Sbr
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _MColorSbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _MColorSbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	22; "CtrlSbr.c"	if (++delay >= 4) 
+00012c   19b2     incr    0x32             	INCR	_delay
+                                           ;;unsigned compare: left < lit(0x4=4), size=1
+00012d   0b04     movai   0x4              	MOVAI	0x04
+00012e   1232     rsubar  0x32             	RSUBAR	_delay
+00012f   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000130   296e     goto    0x16e            	GOTO	_00127_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+                                           ;	.line	24; "CtrlSbr.c"	delay = 0;
+000131   1db2     clrr    0x32             	CLRR	_delay
+                                           ;	.line	25; "CtrlSbr.c"	if (--Mode1Cnt == 0)
+000132   1bb1     decr    0x31             	DECR	_Mode1Cnt
+000133   0b00     movai   0                	MOVAI	0x00
+000134   1731     orar    0x31             	ORAR	_Mode1Cnt
+000135   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000136   2945     goto    0x145            	GOTO	_00112_DS_
+                                           ;	.line	27; "CtrlSbr.c"	TGreen = TColor;
+000137   0b7f     movai   0x7f             	MOVAI	0x7f
+000138   15a2     movra   0x22             	MOVRA	_TGreen
+                                           ;	.line	28; "CtrlSbr.c"	TRed = TColor;
+000139   0b7f     movai   0x7f             	MOVAI	0x7f
+00013a   15a1     movra   0x21             	MOVRA	_TRed
+                                           ;	.line	29; "CtrlSbr.c"	TBlue = TColor;
+00013b   0b7f     movai   0x7f             	MOVAI	0x7f
+00013c   15a3     movra   0x23             	MOVRA	_TBlue
+                                           ;	.line	30; "CtrlSbr.c"	if (++Step > 5) Step = 0;
+00013d   19b4     incr    0x34             	INCR	_Step
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x6=6), size=1
+00013e   0b06     movai   0x6              	MOVAI	0x06
+00013f   1234     rsubar  0x34             	RSUBAR	_Step
+000140   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000141   2943     goto    0x143            	GOTO	_00110_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+000142   1db4     clrr    0x34             	CLRR	_Step
+                                           _00110_DS_
+                                           ;	.line	31; "CtrlSbr.c"	Mode1Cnt = TSteplengh;
+000143   0b7f     movai   0x7f             	MOVAI	0x7f
+000144   15b1     movra   0x31             	MOVRA	_Mode1Cnt
+                                           _00112_DS_
+                                           ;	.line	33; "CtrlSbr.c"	if (Step == 0) {++TGreen;--TBlue;return;}
+000145   0b00     movai   0                	MOVAI	0x00
+000146   1734     orar    0x34             	ORAR	_Step
+000147   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000148   294c     goto    0x14c            	GOTO	_00114_DS_
+000149   19a2     incr    0x22             	INCR	_TGreen
+00014a   1ba3     decr    0x23             	DECR	_TBlue
+00014b   296e     goto    0x16e            	GOTO	_00127_DS_
+                                           _00114_DS_
+                                           ;	.line	34; "CtrlSbr.c"	if (Step == 1) {--TGreen;++TBlue;return;}
+00014c   1634     movar   0x34             	MOVAR	_Step
+00014d   0801     xorai   0x1              	XORAI	0x01
+00014e   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00014f   2953     goto    0x153            	GOTO	_00116_DS_
+000150   1ba2     decr    0x22             	DECR	_TGreen
+000151   19a3     incr    0x23             	INCR	_TBlue
+000152   296e     goto    0x16e            	GOTO	_00127_DS_
+                                           _00116_DS_
+                                           ;	.line	35; "CtrlSbr.c"	if (Step == 2) {++TRed;--TBlue;return;}
+000153   1634     movar   0x34             	MOVAR	_Step
+000154   0802     xorai   0x2              	XORAI	0x02
+000155   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000156   295a     goto    0x15a            	GOTO	_00118_DS_
+000157   19a1     incr    0x21             	INCR	_TRed
+000158   1ba3     decr    0x23             	DECR	_TBlue
+000159   296e     goto    0x16e            	GOTO	_00127_DS_
+                                           _00118_DS_
+                                           ;	.line	36; "CtrlSbr.c"	if (Step == 3) {--TRed;++TBlue;return;}
+00015a   1634     movar   0x34             	MOVAR	_Step
+00015b   0803     xorai   0x3              	XORAI	0x03
+00015c   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00015d   2961     goto    0x161            	GOTO	_00120_DS_
+00015e   1ba1     decr    0x21             	DECR	_TRed
+00015f   19a3     incr    0x23             	INCR	_TBlue
+000160   296e     goto    0x16e            	GOTO	_00127_DS_
+                                           _00120_DS_
+                                           ;	.line	37; "CtrlSbr.c"	if (Step == 4) {++TRed;--TGreen;return;}
+000161   1634     movar   0x34             	MOVAR	_Step
+000162   0804     xorai   0x4              	XORAI	0x04
+000163   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000164   2968     goto    0x168            	GOTO	_00122_DS_
+000165   19a1     incr    0x21             	INCR	_TRed
+000166   1ba2     decr    0x22             	DECR	_TGreen
+000167   296e     goto    0x16e            	GOTO	_00127_DS_
+                                           _00122_DS_
+                                           ;	.line	38; "CtrlSbr.c"	if (Step == 5) {--TRed;++TGreen;return;}
+000168   1634     movar   0x34             	MOVAR	_Step
+000169   0805     xorai   0x5              	XORAI	0x05
+00016a   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00016b   296e     goto    0x16e            	GOTO	_00127_DS_
+00016c   1ba1     decr    0x21             	DECR	_TRed
+00016d   19a2     incr    0x22             	INCR	_TGreen
+                                           _00127_DS_
+00016e   000c     return                   	RETURN	
+                                           ; exit point of _MColorSbr
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ColorSbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;4 compiler assigned registers:
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   STK01
+                                           ;   STK00
+                                           ;; Starting pCode block
+                                           _ColorSbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	13; "CtrlSbr.c"	TRed = RedTbl[Color];
+00016f   1630     movar   0x30             	MOVAR	_Color
+000170   0e4f     addai   0x4f             	ADDAI	(_RedTbl + 0)
+000171   159d     movra   0x1d             	MOVRA	r0x1009
+000172   0b02     movai   0x2              	MOVAI	high (_RedTbl + 0)
+000173   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000174   0e01     addai   0x1              	ADDAI	0x01
+000175   159e     movra   0x1e             	MOVRA	r0x100A
+000176   161d     movar   0x1d             	MOVAR	r0x1009
+000177   1595     movra   0x15             	MOVRA	STK01
+000178   161e     movar   0x1e             	MOVAR	r0x100A
+000179   1596     movra   0x16             	MOVRA	STK00
+00017a   0b80     movai   0x80             	MOVAI	0x80
+00017b   2227     call    0x227            	CALL	__gptrget1
+00017c   15a1     movra   0x21             	MOVRA	_TRed
+                                           ;	.line	14; "CtrlSbr.c"	TGreen = GreenTbl[Color];
+00017d   1630     movar   0x30             	MOVAR	_Color
+00017e   0e43     addai   0x43             	ADDAI	(_GreenTbl + 0)
+00017f   159d     movra   0x1d             	MOVRA	r0x1009
+000180   0b02     movai   0x2              	MOVAI	high (_GreenTbl + 0)
+000181   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000182   0e01     addai   0x1              	ADDAI	0x01
+000183   159e     movra   0x1e             	MOVRA	r0x100A
+000184   161d     movar   0x1d             	MOVAR	r0x1009
+000185   1595     movra   0x15             	MOVRA	STK01
+000186   161e     movar   0x1e             	MOVAR	r0x100A
+000187   1596     movra   0x16             	MOVRA	STK00
+000188   0b80     movai   0x80             	MOVAI	0x80
+000189   2227     call    0x227            	CALL	__gptrget1
+00018a   15a2     movra   0x22             	MOVRA	_TGreen
+                                           ;	.line	15; "CtrlSbr.c"	TBlue = BlueTbl[Color];
+00018b   1630     movar   0x30             	MOVAR	_Color
+00018c   0e37     addai   0x37             	ADDAI	(_BlueTbl + 0)
+00018d   159d     movra   0x1d             	MOVRA	r0x1009
+00018e   0b02     movai   0x2              	MOVAI	high (_BlueTbl + 0)
+00018f   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000190   0e01     addai   0x1              	ADDAI	0x01
+000191   159e     movra   0x1e             	MOVRA	r0x100A
+000192   161d     movar   0x1d             	MOVAR	r0x1009
+000193   1595     movra   0x15             	MOVRA	STK01
+000194   161e     movar   0x1e             	MOVAR	r0x100A
+000195   1596     movra   0x16             	MOVRA	STK00
+000196   0b80     movai   0x80             	MOVAI	0x80
+000197   2227     call    0x227            	CALL	__gptrget1
+000198   15a3     movra   0x23             	MOVRA	_TBlue
+000199   000c     return                   	RETURN	
+                                           ; exit point of _ColorSbr
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  127+    0 =   127 instructions (  254 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                                           ; This file was generated Fri Aug 18 18:31:21 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"T1sSbr.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_IROffKeySbr
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_KeyCnt
+                                           	extern	_T1s
+                                           	extern	_TRedCnt
+                                           	extern	_TRed
+                                           	extern	_TGreen
+                                           	extern	_TBlue
+                                           	extern	_TRedbak
+                                           	extern	_TGreenbak
+                                           	extern	_TBluebak
+                                           	extern	_IRTmr
+                                           	extern	_KeyCode
+                                           	extern	_Custom
+                                           	extern	_CustomRev
+                                           	extern	_IRCode1
+                                           	extern	_IRCodeRev1
+                                           	extern	_BitCnt
+                                           	extern	_LongIRCnt
+                                           	extern	_IRCnt
+                                           	extern	_Color
+                                           	extern	_Mode1Cnt
+                                           	extern	_delay
+                                           	extern	_Tmr
+                                           	extern	_TStop
+                                           	extern	_Step
+                                           	extern	_T40ms
+                                           	extern	_Dly100ms
+                                           	extern	_Mode2Cnt2
+                                           	extern	_Mode2Cnt3
+                                           	extern	_delay05ms
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_T1sSbr
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'T1sSbr'
+                                           ;@T1sSbr IROffKeySbr               Allocated to registers ;size:2
+                                           ;@T1sSbr T1sSbr                    Allocated to registers ;size:2
+                                           ;@T1sSbr STATUSbits                Allocated to registers ;size:1
+                                           ;@T1sSbr P0bits                    Allocated to registers ;size:1
+                                           ;@T1sSbr P1bits                    Allocated to registers ;size:1
+                                           ;@T1sSbr MCRbits                   Allocated to registers ;size:1
+                                           ;@T1sSbr KBIMbits                  Allocated to registers ;size:1
+                                           ;@T1sSbr PDCONbits                 Allocated to registers ;size:1
+                                           ;@T1sSbr ODCONbits                 Allocated to registers ;size:1
+                                           ;@T1sSbr PUCONbits                 Allocated to registers ;size:1
+                                           ;@T1sSbr INTECONbits               Allocated to registers ;size:1
+                                           ;@T1sSbr INTFLAGbits               Allocated to registers ;size:1
+                                           ;@T1sSbr T0CRbits                  Allocated to registers ;size:1
+                                           ;@T1sSbr DDR0bits                  Allocated to registers ;size:1
+                                           ;@T1sSbr DDR1bits                  Allocated to registers ;size:1
+                                           ;@T1sSbr TMCRbits                  Allocated to registers ;size:1
+                                           ;@T1sSbr T1CRbits                  Allocated to registers ;size:1
+                                           ;@T1sSbr KeyCnt                    Allocated to registers ;size:1
+                                           ;@T1sSbr T1s                       Allocated to registers ;size:1
+                                           ;@T1sSbr TRedCnt                   Allocated to registers ;size:1
+                                           ;@T1sSbr TRed                      Allocated to registers ;size:1
+                                           ;@T1sSbr TGreen                    Allocated to registers ;size:1
+                                           ;@T1sSbr TBlue                     Allocated to registers ;size:1
+                                           ;@T1sSbr TRedbak                   Allocated to registers ;size:1
+                                           ;@T1sSbr TGreenbak                 Allocated to registers ;size:1
+                                           ;@T1sSbr TBluebak                  Allocated to registers ;size:1
+                                           ;@T1sSbr IRTmr                     Allocated to registers ;size:1
+                                           ;@T1sSbr KeyCode                   Allocated to registers ;size:1
+                                           ;@T1sSbr Custom                    Allocated to registers ;size:1
+                                           ;@T1sSbr CustomRev                 Allocated to registers ;size:1
+                                           ;@T1sSbr IRCode1                   Allocated to registers ;size:1
+                                           ;@T1sSbr IRCodeRev1                Allocated to registers ;size:1
+                                           ;@T1sSbr BitCnt                    Allocated to registers ;size:1
+                                           ;@T1sSbr LongIRCnt                 Allocated to registers ;size:1
+                                           ;@T1sSbr IRCnt                     Allocated to registers ;size:1
+                                           ;@T1sSbr Color                     Allocated to registers ;size:1
+                                           ;@T1sSbr Mode1Cnt                  Allocated to registers ;size:1
+                                           ;@T1sSbr delay                     Allocated to registers ;size:1
+                                           ;@T1sSbr Tmr                       Allocated to registers ;size:2
+                                           ;@T1sSbr TStop                     Allocated to registers ;size:1
+                                           ;@T1sSbr Step                      Allocated to registers ;size:1
+                                           ;@T1sSbr T40ms                     Allocated to registers ;size:1
+                                           ;@T1sSbr Dly100ms                  Allocated to registers ;size:1
+                                           ;@T1sSbr Mode2Cnt2                 Allocated to registers ;size:1
+                                           ;@T1sSbr Mode2Cnt3                 Allocated to registers ;size:1
+                                           ;@T1sSbr delay05ms                 Allocated to registers ;size:1
+                                           ;@T1sSbr Flag1                     Allocated to registers ;size:1
+                                           ;@T1sSbr Flag2                     Allocated to registers ;size:1
+                                           ;@T1sSbr INDF                      Allocated to registers ;size:1
+                                           ;@T1sSbr T0CNT                     Allocated to registers ;size:1
+                                           ;@T1sSbr PCL                       Allocated to registers ;size:1
+                                           ;@T1sSbr STATUS                    Allocated to registers ;size:1
+                                           ;@T1sSbr FSR                       Allocated to registers ;size:1
+                                           ;@T1sSbr P0                        Allocated to registers ;size:1
+                                           ;@T1sSbr P1                        Allocated to registers ;size:1
+                                           ;@T1sSbr MCR                       Allocated to registers ;size:1
+                                           ;@T1sSbr KBIM                      Allocated to registers ;size:1
+                                           ;@T1sSbr PCLATH                    Allocated to registers ;size:1
+                                           ;@T1sSbr PDCON                     Allocated to registers ;size:1
+                                           ;@T1sSbr ODCON                     Allocated to registers ;size:1
+                                           ;@T1sSbr PUCON                     Allocated to registers ;size:1
+                                           ;@T1sSbr INTECON                   Allocated to registers ;size:1
+                                           ;@T1sSbr INTFLAG                   Allocated to registers ;size:1
+                                           ;@T1sSbr T0CR                      Allocated to registers ;size:1
+                                           ;@T1sSbr DDR0                      Allocated to registers ;size:1
+                                           ;@T1sSbr DDR1                      Allocated to registers ;size:1
+                                           ;@T1sSbr TMCR                      Allocated to registers ;size:1
+                                           ;@T1sSbr T1CR                      Allocated to registers ;size:1
+                                           ;@T1sSbr T1CNT                     Allocated to registers ;size:1
+                                           ;@T1sSbr T1LOAD                    Allocated to registers ;size:1
+                                           ;@T1sSbr T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'T1sSbr';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_T1sSbr	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _T1sSbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _IROffKeySbr
+                                           ;   _IROffKeySbr
+                                           ;   _IROffKeySbr
+                                           ;   _IROffKeySbr
+                                           ;; Starting pCode block
+                                           _T1sSbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	9; "T1sSbr.c"	if (--T1s != 0) return;
+0001ec   1b9f     decr    0x1f             	DECR	_T1s
+0001ed   0b00     movai   0                	MOVAI	0x00
+0001ee   171f     orar    0x1f             	ORAR	_T1s
+0001ef   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+0001f0   29f2     goto    0x1f2            	GOTO	_00106_DS_
+0001f1   2a09     goto    0x209            	GOTO	_00115_DS_
+                                           _00106_DS_
+                                           ;	.line	10; "T1sSbr.c"	T1s = 250;
+0001f2   0bfa     movai   0xfa             	MOVAI	0xfa
+0001f3   159f     movra   0x1f             	MOVRA	_T1s
+                                           ;	.line	12; "T1sSbr.c"	if (!FOn)
+0001f4   343a     jbclr   0x3a, 0          	JBCLR	_Flag1,0
+0001f5   29fd     goto    0x1fd            	GOTO	_00110_DS_
+                                           ;	.line	14; "T1sSbr.c"	if (--TStop == 0) IROffKeySbr();
+0001f6   1bb3     decr    0x33             	DECR	_TStop
+0001f7   0b00     movai   0                	MOVAI	0x00
+0001f8   1733     orar    0x33             	ORAR	_TStop
+0001f9   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0001fa   29fc     goto    0x1fc            	GOTO	_00108_DS_
+0001fb   20da     call    0xda             	CALL	_IROffKeySbr
+                                           _00108_DS_
+                                           ;	.line	15; "T1sSbr.c"	return;
+0001fc   2a09     goto    0x209            	GOTO	_00115_DS_
+                                           _00110_DS_
+                                           ;	.line	17; "T1sSbr.c"	if (!FTmr) return;
+0001fd   37ba     jbclr   0x3a, 0x7        	JBCLR	_Flag1,7
+0001fe   2a00     goto    0x200            	GOTO	_00112_DS_
+0001ff   2a09     goto    0x209            	GOTO	_00115_DS_
+                                           _00112_DS_
+                                           ;	.line	18; "T1sSbr.c"	if (--Tmr == 0) IROffKeySbr();
+000200   0bff     movai   0xff             	MOVAI	0xff
+000201   1f9b     addra   0x1b             	ADDRA	_Tmr
+000202   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000203   1b9c     decr    0x1c             	DECR	(_Tmr + 1)
+000204   161b     movar   0x1b             	MOVAR	_Tmr
+000205   171c     orar    0x1c             	ORAR	(_Tmr + 1)
+000206   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000207   2a09     goto    0x209            	GOTO	_00115_DS_
+000208   20da     call    0xda             	CALL	_IROffKeySbr
+                                           _00115_DS_
+000209   000c     return                   	RETURN	
+                                           ; exit point of _T1sSbr
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   30+    0 =    30 instructions (   60 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                                           ; This file was generated Fri Aug 18 18:31:22 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"IR.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_ColorSbr
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_KeyCnt
+                                           	extern	_T1s
+                                           	extern	_TRedCnt
+                                           	extern	_TRed
+                                           	extern	_TGreen
+                                           	extern	_TBlue
+                                           	extern	_TRedbak
+                                           	extern	_TGreenbak
+                                           	extern	_TBluebak
+                                           	extern	_IRTmr
+                                           	extern	_KeyCode
+                                           	extern	_Custom
+                                           	extern	_CustomRev
+                                           	extern	_IRCode1
+                                           	extern	_IRCodeRev1
+                                           	extern	_BitCnt
+                                           	extern	_LongIRCnt
+                                           	extern	_IRCnt
+                                           	extern	_Color
+                                           	extern	_Mode1Cnt
+                                           	extern	_delay
+                                           	extern	_Tmr
+                                           	extern	_TStop
+                                           	extern	_Step
+                                           	extern	_T40ms
+                                           	extern	_Dly100ms
+                                           	extern	_Mode2Cnt2
+                                           	extern	_Mode2Cnt3
+                                           	extern	_delay05ms
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_IRSbr4
+                                           	global	_IRSbr
+                                           	global	_IRKeyR
+                                           	global	_ColorKeySbr
+                                           	global	_IROffKeySbr
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_IR_0	udata
+                                           r0x1018	res	1
+                                           r0x1019	res	1
+                                           r0x101A	res	1
+                                           r0x101B	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'IRSbr'
+                                           ;@IRSbr IRSbr4                    Allocated to registers ;size:2
+                                           ;@IRSbr ColorSbr                  Allocated to registers ;size:2
+                                           ;@IRSbr IRSbr                     Allocated to registers ;size:2
+                                           ;@IRSbr STATUSbits                Allocated to registers ;size:1
+                                           ;@IRSbr P0bits                    Allocated to registers ;size:1
+                                           ;@IRSbr P1bits                    Allocated to registers ;size:1
+                                           ;@IRSbr MCRbits                   Allocated to registers ;size:1
+                                           ;@IRSbr KBIMbits                  Allocated to registers ;size:1
+                                           ;@IRSbr PDCONbits                 Allocated to registers ;size:1
+                                           ;@IRSbr ODCONbits                 Allocated to registers ;size:1
+                                           ;@IRSbr PUCONbits                 Allocated to registers ;size:1
+                                           ;@IRSbr INTECONbits               Allocated to registers ;size:1
+                                           ;@IRSbr INTFLAGbits               Allocated to registers ;size:1
+                                           ;@IRSbr T0CRbits                  Allocated to registers ;size:1
+                                           ;@IRSbr DDR0bits                  Allocated to registers ;size:1
+                                           ;@IRSbr DDR1bits                  Allocated to registers ;size:1
+                                           ;@IRSbr TMCRbits                  Allocated to registers ;size:1
+                                           ;@IRSbr T1CRbits                  Allocated to registers ;size:1
+                                           ;@IRSbr KeyCnt                    Allocated to registers ;size:1
+                                           ;@IRSbr T1s                       Allocated to registers ;size:1
+                                           ;@IRSbr TRedCnt                   Allocated to registers ;size:1
+                                           ;@IRSbr TRed                      Allocated to registers ;size:1
+                                           ;@IRSbr TGreen                    Allocated to registers ;size:1
+                                           ;@IRSbr TBlue                     Allocated to registers ;size:1
+                                           ;@IRSbr TRedbak                   Allocated to registers ;size:1
+                                           ;@IRSbr TGreenbak                 Allocated to registers ;size:1
+                                           ;@IRSbr TBluebak                  Allocated to registers ;size:1
+                                           ;@IRSbr IRTmr                     Allocated to registers ;size:1
+                                           ;@IRSbr KeyCode                   Allocated to registers ;size:1
+                                           ;@IRSbr Custom                    Allocated to registers ;size:1
+                                           ;@IRSbr CustomRev                 Allocated to registers ;size:1
+                                           ;@IRSbr IRCode1                   Allocated to registers ;size:1
+                                           ;@IRSbr IRCodeRev1                Allocated to registers ;size:1
+                                           ;@IRSbr BitCnt                    Allocated to registers ;size:1
+                                           ;@IRSbr LongIRCnt                 Allocated to registers ;size:1
+                                           ;@IRSbr IRCnt                     Allocated to registers ;size:1
+                                           ;@IRSbr Color                     Allocated to registers ;size:1
+                                           ;@IRSbr Mode1Cnt                  Allocated to registers ;size:1
+                                           ;@IRSbr delay                     Allocated to registers ;size:1
+                                           ;@IRSbr Tmr                       Allocated to registers ;size:2
+                                           ;@IRSbr TStop                     Allocated to registers ;size:1
+                                           ;@IRSbr Step                      Allocated to registers ;size:1
+                                           ;@IRSbr T40ms                     Allocated to registers ;size:1
+                                           ;@IRSbr Dly100ms                  Allocated to registers ;size:1
+                                           ;@IRSbr Mode2Cnt2                 Allocated to registers ;size:1
+                                           ;@IRSbr Mode2Cnt3                 Allocated to registers ;size:1
+                                           ;@IRSbr delay05ms                 Allocated to registers ;size:1
+                                           ;@IRSbr Flag1                     Allocated to registers ;size:1
+                                           ;@IRSbr Flag2                     Allocated to registers ;size:1
+                                           ;@IRSbr INDF                      Allocated to registers ;size:1
+                                           ;@IRSbr T0CNT                     Allocated to registers ;size:1
+                                           ;@IRSbr PCL                       Allocated to registers ;size:1
+                                           ;@IRSbr STATUS                    Allocated to registers ;size:1
+                                           ;@IRSbr FSR                       Allocated to registers ;size:1
+                                           ;@IRSbr P0                        Allocated to registers ;size:1
+                                           ;@IRSbr P1                        Allocated to registers ;size:1
+                                           ;@IRSbr MCR                       Allocated to registers ;size:1
+                                           ;@IRSbr KBIM                      Allocated to registers ;size:1
+                                           ;@IRSbr PCLATH                    Allocated to registers ;size:1
+                                           ;@IRSbr PDCON                     Allocated to registers ;size:1
+                                           ;@IRSbr ODCON                     Allocated to registers ;size:1
+                                           ;@IRSbr PUCON                     Allocated to registers ;size:1
+                                           ;@IRSbr INTECON                   Allocated to registers ;size:1
+                                           ;@IRSbr INTFLAG                   Allocated to registers ;size:1
+                                           ;@IRSbr T0CR                      Allocated to registers ;size:1
+                                           ;@IRSbr DDR0                      Allocated to registers ;size:1
+                                           ;@IRSbr DDR1                      Allocated to registers ;size:1
+                                           ;@IRSbr TMCR                      Allocated to registers ;size:1
+                                           ;@IRSbr T1CR                      Allocated to registers ;size:1
+                                           ;@IRSbr T1CNT                     Allocated to registers ;size:1
+                                           ;@IRSbr T1LOAD                    Allocated to registers ;size:1
+                                           ;@IRSbr T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'IRSbr';
+                                           ;@Allocation info for local variables in function 'IRKeyR'
+                                           ;@end Allocation info for local variables in function 'IRKeyR';
+                                           ;@Allocation info for local variables in function 'ColorKeySbr'
+                                           ;@ColorKeySbr i                         Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'ColorKeySbr';
+                                           ;@Allocation info for local variables in function 'IROffKeySbr'
+                                           ;@end Allocation info for local variables in function 'IROffKeySbr';
+                                           ;@Allocation info for local variables in function 'IRSbr4'
+                                           ;@IRSbr4 i                         Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'IRSbr4';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_IR	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _IRSbr4	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _IRKeyR
+                                           ;   _IROffKeySbr
+                                           ;   _IRKeyR
+                                           ;   _IRKeyR
+                                           ;   _IRKeyR
+                                           ;   _IRKeyR
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _IRKeyR
+                                           ;   _IROffKeySbr
+                                           ;   _IRKeyR
+                                           ;   _IRKeyR
+                                           ;   _IRKeyR
+                                           ;   _IRKeyR
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;   _ColorKeySbr
+                                           ;4 compiler assigned registers:
+                                           ;   r0x1018
+                                           ;   r0x1019
+                                           ;   r0x101A
+                                           ;   r0x101B
+                                           ;; Starting pCode block
+                                           _IRSbr4	;Function start
+                                           ; 2 exit points
+                                           ;	.line	97; "IR.c"	FLead = 0;
+000001   3f3a     bclr    0x3a, 0x6        	BCLR	_Flag1,6
+                                           ;	.line	98; "IR.c"	if (IRCodeRev1 != ~IRCode1) return;
+000002   162b     movar   0x2b             	MOVAR	_IRCode1
+000003   1597     movra   0x17             	MOVRA	r0x1018
+000004   1d98     clrr    0x18             	CLRR	r0x1019
+000005   1c17     comar   0x17             	COMAR	r0x1018
+000006   1597     movra   0x17             	MOVRA	r0x1018
+000007   1c18     comar   0x18             	COMAR	r0x1019
+000008   1598     movra   0x18             	MOVRA	r0x1019
+000009   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+00000a   1599     movra   0x19             	MOVRA	r0x101A
+00000b   1d9a     clrr    0x1a             	CLRR	r0x101B
+00000c   1617     movar   0x17             	MOVAR	r0x1018
+00000d   1019     xorar   0x19             	XORAR	r0x101A
+00000e   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00000f   2815     goto    0x15             	GOTO	_00237_DS_
+000010   1618     movar   0x18             	MOVAR	r0x1019
+000011   101a     xorar   0x1a             	XORAR	r0x101B
+000012   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000013   2815     goto    0x15             	GOTO	_00237_DS_
+000014   2816     goto    0x16             	GOTO	_00137_DS_
+                                           _00237_DS_
+000015   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00137_DS_
+                                           ;	.line	99; "IR.c"	if (CustomRev != ~Custom) return;
+000016   1629     movar   0x29             	MOVAR	_Custom
+000017   1597     movra   0x17             	MOVRA	r0x1018
+000018   1d98     clrr    0x18             	CLRR	r0x1019
+000019   1c17     comar   0x17             	COMAR	r0x1018
+00001a   1597     movra   0x17             	MOVRA	r0x1018
+00001b   1c18     comar   0x18             	COMAR	r0x1019
+00001c   1598     movra   0x18             	MOVRA	r0x1019
+00001d   162a     movar   0x2a             	MOVAR	_CustomRev
+00001e   1599     movra   0x19             	MOVRA	r0x101A
+00001f   1d9a     clrr    0x1a             	CLRR	r0x101B
+000020   1617     movar   0x17             	MOVAR	r0x1018
+000021   1019     xorar   0x19             	XORAR	r0x101A
+000022   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000023   2829     goto    0x29             	GOTO	_00238_DS_
+000024   1618     movar   0x18             	MOVAR	r0x1019
+000025   101a     xorar   0x1a             	XORAR	r0x101B
+000026   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000027   2829     goto    0x29             	GOTO	_00238_DS_
+000028   282a     goto    0x2a             	GOTO	_00139_DS_
+                                           _00238_DS_
+000029   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00139_DS_
+                                           ;	.line	100; "IR.c"	if (Custom != CIDCode) return;
+00002a   0b00     movai   0                	MOVAI	0x00
+00002b   1729     orar    0x29             	ORAR	_Custom
+00002c   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+00002d   282f     goto    0x2f             	GOTO	_00141_DS_
+00002e   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00141_DS_
+                                           ;	.line	102; "IR.c"	if (FIRAck) return;
+00002f   32ba     jbset   0x3a, 0x5        	JBSET	_Flag1,5
+000030   2832     goto    0x32             	GOTO	_00143_DS_
+000031   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00143_DS_
+                                           ;	.line	103; "IR.c"	FIRAck = 1;
+000032   3aba     bset    0x3a, 0x5        	BSET	_Flag1,5
+                                           ;	.line	105; "IR.c"	if (IRCodeRev1 == CIRON)
+000033   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000034   0845     xorai   0x45             	XORAI	0x45
+000035   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000036   283d     goto    0x3d             	GOTO	_00147_DS_
+                                           ;	.line	107; "IR.c"	if (FOn) return;
+000037   303a     jbset   0x3a, 0          	JBSET	_Flag1,0
+000038   283a     goto    0x3a             	GOTO	_00145_DS_
+000039   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00145_DS_
+                                           ;	.line	108; "IR.c"	FOn = 1;
+00003a   383a     bset    0x3a, 0          	BSET	_Flag1,0
+                                           ;	.line	109; "IR.c"	FTmr = 0;
+00003b   3fba     bclr    0x3a, 0x7        	BCLR	_Flag1,7
+                                           ;	.line	110; "IR.c"	IRKeyR();
+00003c   20e4     call    0xe4             	CALL	_IRKeyR
+                                           _00147_DS_
+                                           ;	.line	112; "IR.c"	if (!FOn) return;
+00003d   343a     jbclr   0x3a, 0          	JBCLR	_Flag1,0
+00003e   2840     goto    0x40             	GOTO	_00149_DS_
+00003f   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00149_DS_
+                                           ;	.line	114; "IR.c"	if (IRCodeRev1 == CIROFF)
+000040   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000041   0846     xorai   0x46             	XORAI	0x46
+000042   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000043   2847     goto    0x47             	GOTO	_00151_DS_
+                                           ;	.line	116; "IR.c"	IROffKeySbr();
+000044   20da     call    0xda             	CALL	_IROffKeySbr
+                                           ;	.line	117; "IR.c"	IRKeyR();
+000045   20e4     call    0xe4             	CALL	_IRKeyR
+                                           ;	.line	118; "IR.c"	return;
+000046   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00151_DS_
+                                           ;	.line	120; "IR.c"	if (IRCodeRev1 == CIRMODE)
+000047   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000048   0847     xorai   0x47             	XORAI	0x47
+000049   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00004a   2867     goto    0x67             	GOTO	_00153_DS_
+                                           ;	.line	122; "IR.c"	FCandle = !FCandle;
+00004b   1d97     clrr    0x17             	CLRR	r0x1018
+00004c   36bb     jbclr   0x3b, 0x5        	JBCLR	_Flag2,5
+00004d   1997     incr    0x17             	INCR	r0x1018
+00004e   1617     movar   0x17             	MOVAR	r0x1018
+00004f   0b00     movai   0                	MOVAI	0x00
+000050   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000051   0b01     movai   0x1              	MOVAI	0x01
+000052   1597     movra   0x17             	MOVRA	r0x1018
+000053   1598     movra   0x18             	MOVRA	r0x1019
+                                           ;;100	MOVAR	r0x1019
+000054   1317     rrar    0x17             	RRAR	r0x1018
+000055   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000056   3ebb     bclr    0x3b, 0x5        	BCLR	_Flag2,5
+000057   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000058   3abb     bset    0x3b, 0x5        	BSET	_Flag2,5
+                                           ;	.line	123; "IR.c"	TRedbak = TRed;
+000059   1621     movar   0x21             	MOVAR	_TRed
+00005a   15a4     movra   0x24             	MOVRA	_TRedbak
+                                           ;	.line	124; "IR.c"	TGreenbak = TGreen;
+00005b   1622     movar   0x22             	MOVAR	_TGreen
+00005c   15a5     movra   0x25             	MOVRA	_TGreenbak
+                                           ;	.line	125; "IR.c"	TBluebak = TBlue;
+00005d   1623     movar   0x23             	MOVAR	_TBlue
+00005e   15a6     movra   0x26             	MOVRA	_TBluebak
+                                           ;	.line	126; "IR.c"	Mode2Cnt3 = 10;
+00005f   0b0a     movai   0xa              	MOVAI	0x0a
+000060   15b8     movra   0x38             	MOVRA	_Mode2Cnt3
+                                           ;	.line	127; "IR.c"	FDirection = 0;
+000061   3d3a     bclr    0x3a, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	128; "IR.c"	Mode2Cnt2 = 0;
+000062   1db7     clrr    0x37             	CLRR	_Mode2Cnt2
+                                           ;	.line	129; "IR.c"	T40ms = 0xff;
+000063   0bff     movai   0xff             	MOVAI	0xff
+000064   15b5     movra   0x35             	MOVRA	_T40ms
+                                           ;	.line	130; "IR.c"	IRKeyR();
+000065   20e4     call    0xe4             	CALL	_IRKeyR
+                                           ;	.line	131; "IR.c"	return;
+000066   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00153_DS_
+                                           ;	.line	133; "IR.c"	if (IRCodeRev1 == CIR4H)
+000067   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000068   0844     xorai   0x44             	XORAI	0x44
+000069   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00006a   2874     goto    0x74             	GOTO	_00156_DS_
+                                           ;	.line	135; "IR.c"	Tmr = 0x3840;
+00006b   0b40     movai   0x40             	MOVAI	0x40
+00006c   159b     movra   0x1b             	MOVRA	_Tmr
+00006d   0b38     movai   0x38             	MOVAI	0x38
+00006e   159c     movra   0x1c             	MOVRA	(_Tmr + 1)
+                                           _00154_DS_
+                                           ;	.line	137; "IR.c"	T1s = 250;
+00006f   0bfa     movai   0xfa             	MOVAI	0xfa
+000070   159f     movra   0x1f             	MOVRA	_T1s
+                                           ;	.line	138; "IR.c"	FTmr = 1;
+000071   3bba     bset    0x3a, 0x7        	BSET	_Flag1,7
+                                           ;	.line	139; "IR.c"	IRKeyR();
+000072   20e4     call    0xe4             	CALL	_IRKeyR
+                                           ;	.line	140; "IR.c"	return;
+000073   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00156_DS_
+                                           ;	.line	142; "IR.c"	if (IRCodeRev1 == CIR8H)
+000074   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000075   0840     xorai   0x40             	XORAI	0x40
+000076   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000077   287d     goto    0x7d             	GOTO	_00158_DS_
+                                           ;	.line	144; "IR.c"	Tmr = 0x7080;
+000078   0b80     movai   0x80             	MOVAI	0x80
+000079   159b     movra   0x1b             	MOVRA	_Tmr
+00007a   0b70     movai   0x70             	MOVAI	0x70
+00007b   159c     movra   0x1c             	MOVRA	(_Tmr + 1)
+                                           ;	.line	145; "IR.c"	goto	IR4HKeySbr1;
+00007c   286f     goto    0x6f             	GOTO	_00154_DS_
+                                           _00158_DS_
+                                           ;	.line	147; "IR.c"	if (IRCodeRev1 == CIRMCOLR)
+00007d   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+00007e   0843     xorai   0x43             	XORAI	0x43
+00007f   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000080   2891     goto    0x91             	GOTO	_00160_DS_
+                                           ;	.line	149; "IR.c"	FMultiColor = !FMultiColor;
+000081   1d97     clrr    0x17             	CLRR	r0x1018
+000082   363b     jbclr   0x3b, 0x4        	JBCLR	_Flag2,4
+000083   1997     incr    0x17             	INCR	r0x1018
+000084   1617     movar   0x17             	MOVAR	r0x1018
+000085   0b00     movai   0                	MOVAI	0x00
+000086   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000087   0b01     movai   0x1              	MOVAI	0x01
+000088   1597     movra   0x17             	MOVRA	r0x1018
+000089   1598     movra   0x18             	MOVRA	r0x1019
+                                           ;;99	MOVAR	r0x1019
+00008a   1317     rrar    0x17             	RRAR	r0x1018
+00008b   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00008c   3e3b     bclr    0x3b, 0x4        	BCLR	_Flag2,4
+00008d   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+00008e   3a3b     bset    0x3b, 0x4        	BSET	_Flag2,4
+                                           ;	.line	150; "IR.c"	IRKeyR();
+00008f   20e4     call    0xe4             	CALL	_IRKeyR
+                                           ;	.line	151; "IR.c"	return;
+000090   28d9     goto    0xd9             	GOTO	_00185_DS_
+                                           _00160_DS_
+                                           ;	.line	153; "IR.c"	if (IRCodeRev1 == CIRCOLR1) {i = 0;ColorKeySbr(i);}
+000091   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000092   0816     xorai   0x16             	XORAI	0x16
+000093   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000094   2897     goto    0x97             	GOTO	_00162_DS_
+000095   0b00     movai   0                	MOVAI	0x00
+000096   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00162_DS_
+                                           ;	.line	154; "IR.c"	if (IRCodeRev1 == CIRCOLR2) {i = 1;ColorKeySbr(i);}
+000097   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+000098   0819     xorai   0x19             	XORAI	0x19
+000099   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+00009a   289d     goto    0x9d             	GOTO	_00164_DS_
+00009b   0b01     movai   0x1              	MOVAI	0x01
+00009c   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00164_DS_
+                                           ;	.line	155; "IR.c"	if (IRCodeRev1 == CIRCOLR3) {i = 2;ColorKeySbr(i);}
+00009d   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+00009e   080d     xorai   0xd              	XORAI	0x0d
+00009f   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000a0   28a3     goto    0xa3             	GOTO	_00166_DS_
+0000a1   0b02     movai   0x2              	MOVAI	0x02
+0000a2   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00166_DS_
+                                           ;	.line	156; "IR.c"	if (IRCodeRev1 == CIRCOLR4) {i = 3;ColorKeySbr(i);}
+0000a3   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000a4   080c     xorai   0xc              	XORAI	0x0c
+0000a5   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000a6   28a9     goto    0xa9             	GOTO	_00168_DS_
+0000a7   0b03     movai   0x3              	MOVAI	0x03
+0000a8   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00168_DS_
+                                           ;	.line	157; "IR.c"	if (IRCodeRev1 == CIRCOLR5) {i = 4;ColorKeySbr(i);}
+0000a9   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000aa   0818     xorai   0x18             	XORAI	0x18
+0000ab   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000ac   28af     goto    0xaf             	GOTO	_00170_DS_
+0000ad   0b04     movai   0x4              	MOVAI	0x04
+0000ae   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00170_DS_
+                                           ;	.line	158; "IR.c"	if (IRCodeRev1 == CIRCOLR6) {i = 5;ColorKeySbr(i);}
+0000af   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000b0   085e     xorai   0x5e             	XORAI	0x5e
+0000b1   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000b2   28b5     goto    0xb5             	GOTO	_00172_DS_
+0000b3   0b05     movai   0x5              	MOVAI	0x05
+0000b4   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00172_DS_
+                                           ;	.line	159; "IR.c"	if (IRCodeRev1 == CIRCOLR7) {i = 6;ColorKeySbr(i);}
+0000b5   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000b6   0808     xorai   0x8              	XORAI	0x08
+0000b7   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000b8   28bb     goto    0xbb             	GOTO	_00174_DS_
+0000b9   0b06     movai   0x6              	MOVAI	0x06
+0000ba   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00174_DS_
+                                           ;	.line	160; "IR.c"	if (IRCodeRev1 == CIRCOLR8) {i = 7;ColorKeySbr(i);}
+0000bb   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000bc   081c     xorai   0x1c             	XORAI	0x1c
+0000bd   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000be   28c1     goto    0xc1             	GOTO	_00176_DS_
+0000bf   0b07     movai   0x7              	MOVAI	0x07
+0000c0   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00176_DS_
+                                           ;	.line	161; "IR.c"	if (IRCodeRev1 == CIRCOLR9) {i = 8;ColorKeySbr(i);}
+0000c1   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000c2   085a     xorai   0x5a             	XORAI	0x5a
+0000c3   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000c4   28c7     goto    0xc7             	GOTO	_00178_DS_
+0000c5   0b08     movai   0x8              	MOVAI	0x08
+0000c6   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00178_DS_
+                                           ;	.line	162; "IR.c"	if (IRCodeRev1 == CIRCOLRA) {i = 9;ColorKeySbr(i);};
+0000c7   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000c8   0842     xorai   0x42             	XORAI	0x42
+0000c9   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000ca   28cd     goto    0xcd             	GOTO	_00180_DS_
+0000cb   0b09     movai   0x9              	MOVAI	0x09
+0000cc   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00180_DS_
+                                           ;	.line	163; "IR.c"	if (IRCodeRev1 == CIRCOLRB) {i = 10;ColorKeySbr(i);}
+0000cd   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000ce   0852     xorai   0x52             	XORAI	0x52
+0000cf   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000d0   28d3     goto    0xd3             	GOTO	_00182_DS_
+0000d1   0b0a     movai   0xa              	MOVAI	0x0a
+0000d2   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00182_DS_
+                                           ;	.line	164; "IR.c"	if (IRCodeRev1 == CIRCOLRC) {i = 11;ColorKeySbr(i);}
+0000d3   162c     movar   0x2c             	MOVAR	_IRCodeRev1
+0000d4   084a     xorai   0x4a             	XORAI	0x4a
+0000d5   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0000d6   28d9     goto    0xd9             	GOTO	_00185_DS_
+0000d7   0b0b     movai   0xb              	MOVAI	0x0b
+0000d8   20df     call    0xdf             	CALL	_ColorKeySbr
+                                           _00185_DS_
+0000d9   000c     return                   	RETURN	
+                                           ; exit point of _IRSbr4
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _IROffKeySbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _IROffKeySbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	88; "IR.c"	FOn = 0;
+0000da   3c3a     bclr    0x3a, 0          	BCLR	_Flag1,0
+                                           ;	.line	89; "IR.c"	FStop = 1;
+0000db   38bb     bset    0x3b, 0x1        	BSET	_Flag2,1
+                                           ;	.line	90; "IR.c"	TStop = 3;
+0000dc   0b03     movai   0x3              	MOVAI	0x03
+0000dd   15b3     movra   0x33             	MOVRA	_TStop
+0000de   000c     return                   	RETURN	
+                                           ; exit point of _IROffKeySbr
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ColorKeySbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _ColorSbr
+                                           ;   _IRKeyR
+                                           ;   _ColorSbr
+                                           ;   _IRKeyR
+                                           ;; Starting pCode block
+                                           _ColorKeySbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	78; "IR.c"	void ColorKeySbr(uchar i)
+0000df   15b0     movra   0x30             	MOVRA	_Color
+                                           ;	.line	81; "IR.c"	FMultiColor = 0;
+0000e0   3e3b     bclr    0x3b, 0x4        	BCLR	_Flag2,4
+                                           ;	.line	82; "IR.c"	ColorSbr();
+0000e1   216f     call    0x16f            	CALL	_ColorSbr
+                                           ;	.line	83; "IR.c"	IRKeyR();
+0000e2   20e4     call    0xe4             	CALL	_IRKeyR
+                                           ;	.line	84; "IR.c"	return;
+0000e3   000c     return                   	RETURN	
+                                           ; exit point of _ColorKeySbr
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _IRKeyR	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _IRKeyR	;Function start
+                                           ; 2 exit points
+                                           ;	.line	76; "IR.c"	Dly100ms = 25;
+0000e4   0b19     movai   0x19             	MOVAI	0x19
+0000e5   15b6     movra   0x36             	MOVRA	_Dly100ms
+0000e6   000c     return                   	RETURN	
+                                           ; exit point of _IRKeyR
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _IRSbr	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _IRSbr4
+                                           ;   _IRSbr4
+                                           ;   _IRSbr4
+                                           ;   _IRSbr4
+                                           ;; Starting pCode block
+                                           _IRSbr	;Function start
+                                           ; 2 exit points
+                                           ;	.line	37; "IR.c"	if (!FLead)									//;未收到头码
+0000e7   373a     jbclr   0x3a, 0x6        	JBCLR	_Flag1,6
+0000e8   28fc     goto    0xfc             	GOTO	_00110_DS_
+                                           ;;unsigned compare: left < lit(0x41=65), size=1
+                                           ;	.line	39; "IR.c"	if (IRTmr < CHEAD-5) return;
+0000e9   0b41     movai   0x41             	MOVAI	0x41
+0000ea   1227     rsubar  0x27             	RSUBAR	_IRTmr
+0000eb   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+0000ec   28ee     goto    0xee             	GOTO	_00106_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+0000ed   291a     goto    0x11a            	GOTO	_00119_DS_
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x4C=76), size=1
+                                           _00106_DS_
+                                           ;	.line	40; "IR.c"	if (IRTmr > CHEAD+5) return;
+0000ee   0b4c     movai   0x4c             	MOVAI	0x4c
+0000ef   1227     rsubar  0x27             	RSUBAR	_IRTmr
+0000f0   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000f1   28f3     goto    0xf3             	GOTO	_00108_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+0000f2   291a     goto    0x11a            	GOTO	_00119_DS_
+                                           _00108_DS_
+                                           ;	.line	41; "IR.c"	FLead = 1;						//;当前接收到的是头码
+0000f3   3b3a     bset    0x3a, 0x6        	BSET	_Flag1,6
+                                           ;	.line	42; "IR.c"	Custom = 0;
+0000f4   1da9     clrr    0x29             	CLRR	_Custom
+                                           ;	.line	43; "IR.c"	CustomRev = 0;
+0000f5   1daa     clrr    0x2a             	CLRR	_CustomRev
+                                           ;	.line	44; "IR.c"	IRCode1 = 0;
+0000f6   1dab     clrr    0x2b             	CLRR	_IRCode1
+                                           ;	.line	45; "IR.c"	IRCodeRev1 = 0;
+0000f7   1dac     clrr    0x2c             	CLRR	_IRCodeRev1
+                                           ;	.line	46; "IR.c"	FIRAck = 0;
+0000f8   3eba     bclr    0x3a, 0x5        	BCLR	_Flag1,5
+                                           ;	.line	47; "IR.c"	BitCnt = 32;
+0000f9   0b20     movai   0x20             	MOVAI	0x20
+0000fa   15ad     movra   0x2d             	MOVRA	_BitCnt
+                                           ;	.line	48; "IR.c"	return;
+0000fb   291a     goto    0x11a            	GOTO	_00119_DS_
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x29=41), size=1
+                                           _00110_DS_
+                                           ;	.line	51; "IR.c"	if (IRTmr > CCodeR+5) {FLead = 0; return;}
+0000fc   0b29     movai   0x29             	MOVAI	0x29
+0000fd   1227     rsubar  0x27             	RSUBAR	_IRTmr
+0000fe   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000ff   2902     goto    0x102            	GOTO	_00112_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+000100   3f3a     bclr    0x3a, 0x6        	BCLR	_Flag1,6
+000101   291a     goto    0x11a            	GOTO	_00119_DS_
+                                           ;;unsigned compare: left < lit(0x1E=30), size=1
+                                           _00112_DS_
+                                           ;	.line	52; "IR.c"	if (IRTmr >= CCodeR-5) 
+000102   0b1e     movai   0x1e             	MOVAI	0x1e
+000103   1227     rsubar  0x27             	RSUBAR	_IRTmr
+000104   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000105   290e     goto    0x10e            	GOTO	_00116_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+                                           ;	.line	55; "IR.c"	if (++LongIRCnt >= 6)
+000106   19ae     incr    0x2e             	INCR	_LongIRCnt
+                                           ;;unsigned compare: left < lit(0x6=6), size=1
+000107   0b06     movai   0x6              	MOVAI	0x06
+000108   122e     rsubar  0x2e             	RSUBAR	_LongIRCnt
+000109   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00010a   290d     goto    0x10d            	GOTO	_00114_DS_
+                                           ;;genSkipc:3251: created from rifx:0022609C
+                                           ;	.line	57; "IR.c"	FLongRKey = 1;
+00010b   383b     bset    0x3b, 0          	BSET	_Flag2,0
+                                           ;	.line	58; "IR.c"	IRSbr4();
+00010c   2001     call    0x1              	CALL	_IRSbr4
+                                           _00114_DS_
+                                           ;	.line	60; "IR.c"	return;
+00010d   291a     goto    0x11a            	GOTO	_00119_DS_
+                                           _00116_DS_
+                                           ;	.line	71; "IR.c"	__endasm;
+00010e   0b11     movai   0x11             	movai 8 +(26 -8)/2
+00010f   1227     rsubar  0x27             	rsubar _IRTmr
+000110   13ab     rrr     0x2b             	rrr _IRCode1
+000111   13ac     rrr     0x2c             	rrr _IRCodeRev1
+000112   13a9     rrr     0x29             	rrr _Custom
+000113   13aa     rrr     0x2a             	rrr _CustomRev
+                                           	
+                                           ;	.line	72; "IR.c"	if (--BitCnt == 0) IRSbr4();
+000114   1bad     decr    0x2d             	DECR	_BitCnt
+000115   0b00     movai   0                	MOVAI	0x00
+000116   172d     orar    0x2d             	ORAR	_BitCnt
+000117   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000118   291a     goto    0x11a            	GOTO	_00119_DS_
+000119   2001     call    0x1              	CALL	_IRSbr4
+                                           _00119_DS_
+00011a   000c     return                   	RETURN	
+                                           ; exit point of _IRSbr
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  276+    0 =   276 instructions (  552 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0380 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+03C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0400 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0440 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0480 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXX----------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   603
+

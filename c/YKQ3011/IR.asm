@@ -1,14 +1,14 @@
 ;--------------------------------------------------------
-; File Created by SDCC : free open source ANSI-C Compiler
-; Version 0.0.1 (Jun 20 2013) (MINGW32)
-; This file was generated Wed Jun 26 16:25:01 2013
+; File Created by SN-SDCC : ANSI-C Compiler
+; Version 0.0.4 (Aug 18 2017) (MINGW32)
+; This file was generated Fri Aug 18 18:35:20 2017
 ;--------------------------------------------------------
-; MC30 port for the 14-bit core
+; MC3X port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"IR.c"
-	list	p=30p011
+	list	p=0311
 	radix dec
-	include "mc30p011.inc"
+	include "0311.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------
@@ -23,6 +23,7 @@
 	extern	_PUCONbits
 	extern	_INTECONbits
 	extern	_INTFLAGbits
+	extern	_T0CRbits
 	extern	_DDR0bits
 	extern	_DDR1bits
 	extern	_TMCRbits
@@ -82,15 +83,6 @@
 	extern	_T1LOAD
 	extern	_T1DATA
 
-	extern PSAVE
-	extern SSAVE
-	extern WSAVE
-	extern STK12
-	extern STK11
-	extern STK10
-	extern STK09
-	extern STK08
-	extern STK07
 	extern STK06
 	extern STK05
 	extern STK04
@@ -124,6 +116,92 @@ r0x101B	res	1
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
+
+;@Allocation info for local variables in function 'IRSbr'
+;@IRSbr IRSbr4                    Allocated to registers ;size:2
+;@IRSbr ColorSbr                  Allocated to registers ;size:2
+;@IRSbr IRSbr                     Allocated to registers ;size:2
+;@IRSbr STATUSbits                Allocated to registers ;size:1
+;@IRSbr P0bits                    Allocated to registers ;size:1
+;@IRSbr P1bits                    Allocated to registers ;size:1
+;@IRSbr MCRbits                   Allocated to registers ;size:1
+;@IRSbr KBIMbits                  Allocated to registers ;size:1
+;@IRSbr PDCONbits                 Allocated to registers ;size:1
+;@IRSbr ODCONbits                 Allocated to registers ;size:1
+;@IRSbr PUCONbits                 Allocated to registers ;size:1
+;@IRSbr INTECONbits               Allocated to registers ;size:1
+;@IRSbr INTFLAGbits               Allocated to registers ;size:1
+;@IRSbr T0CRbits                  Allocated to registers ;size:1
+;@IRSbr DDR0bits                  Allocated to registers ;size:1
+;@IRSbr DDR1bits                  Allocated to registers ;size:1
+;@IRSbr TMCRbits                  Allocated to registers ;size:1
+;@IRSbr T1CRbits                  Allocated to registers ;size:1
+;@IRSbr KeyCnt                    Allocated to registers ;size:1
+;@IRSbr T1s                       Allocated to registers ;size:1
+;@IRSbr TRedCnt                   Allocated to registers ;size:1
+;@IRSbr TRed                      Allocated to registers ;size:1
+;@IRSbr TGreen                    Allocated to registers ;size:1
+;@IRSbr TBlue                     Allocated to registers ;size:1
+;@IRSbr TRedbak                   Allocated to registers ;size:1
+;@IRSbr TGreenbak                 Allocated to registers ;size:1
+;@IRSbr TBluebak                  Allocated to registers ;size:1
+;@IRSbr IRTmr                     Allocated to registers ;size:1
+;@IRSbr KeyCode                   Allocated to registers ;size:1
+;@IRSbr Custom                    Allocated to registers ;size:1
+;@IRSbr CustomRev                 Allocated to registers ;size:1
+;@IRSbr IRCode1                   Allocated to registers ;size:1
+;@IRSbr IRCodeRev1                Allocated to registers ;size:1
+;@IRSbr BitCnt                    Allocated to registers ;size:1
+;@IRSbr LongIRCnt                 Allocated to registers ;size:1
+;@IRSbr IRCnt                     Allocated to registers ;size:1
+;@IRSbr Color                     Allocated to registers ;size:1
+;@IRSbr Mode1Cnt                  Allocated to registers ;size:1
+;@IRSbr delay                     Allocated to registers ;size:1
+;@IRSbr Tmr                       Allocated to registers ;size:2
+;@IRSbr TStop                     Allocated to registers ;size:1
+;@IRSbr Step                      Allocated to registers ;size:1
+;@IRSbr T40ms                     Allocated to registers ;size:1
+;@IRSbr Dly100ms                  Allocated to registers ;size:1
+;@IRSbr Mode2Cnt2                 Allocated to registers ;size:1
+;@IRSbr Mode2Cnt3                 Allocated to registers ;size:1
+;@IRSbr delay05ms                 Allocated to registers ;size:1
+;@IRSbr Flag1                     Allocated to registers ;size:1
+;@IRSbr Flag2                     Allocated to registers ;size:1
+;@IRSbr INDF                      Allocated to registers ;size:1
+;@IRSbr T0CNT                     Allocated to registers ;size:1
+;@IRSbr PCL                       Allocated to registers ;size:1
+;@IRSbr STATUS                    Allocated to registers ;size:1
+;@IRSbr FSR                       Allocated to registers ;size:1
+;@IRSbr P0                        Allocated to registers ;size:1
+;@IRSbr P1                        Allocated to registers ;size:1
+;@IRSbr MCR                       Allocated to registers ;size:1
+;@IRSbr KBIM                      Allocated to registers ;size:1
+;@IRSbr PCLATH                    Allocated to registers ;size:1
+;@IRSbr PDCON                     Allocated to registers ;size:1
+;@IRSbr ODCON                     Allocated to registers ;size:1
+;@IRSbr PUCON                     Allocated to registers ;size:1
+;@IRSbr INTECON                   Allocated to registers ;size:1
+;@IRSbr INTFLAG                   Allocated to registers ;size:1
+;@IRSbr T0CR                      Allocated to registers ;size:1
+;@IRSbr DDR0                      Allocated to registers ;size:1
+;@IRSbr DDR1                      Allocated to registers ;size:1
+;@IRSbr TMCR                      Allocated to registers ;size:1
+;@IRSbr T1CR                      Allocated to registers ;size:1
+;@IRSbr T1CNT                     Allocated to registers ;size:1
+;@IRSbr T1LOAD                    Allocated to registers ;size:1
+;@IRSbr T1DATA                    Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'IRSbr';
+;@Allocation info for local variables in function 'IRKeyR'
+;@end Allocation info for local variables in function 'IRKeyR';
+;@Allocation info for local variables in function 'ColorKeySbr'
+;@ColorKeySbr i                         Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'ColorKeySbr';
+;@Allocation info for local variables in function 'IROffKeySbr'
+;@end Allocation info for local variables in function 'IROffKeySbr';
+;@Allocation info for local variables in function 'IRSbr4'
+;@IRSbr4 i                         Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'IRSbr4';
+
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -566,7 +644,7 @@ _IRSbr	;Function start
 	RSUBAR	_IRTmr
 	JBCLR	STATUS,0
 	GOTO	_00106_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	GOTO	_00119_DS_
 ;;swapping arguments (AOP_TYPEs 1/3)
 ;;unsigned compare: left >= lit(0x4C=76), size=1
@@ -576,7 +654,7 @@ _00106_DS_
 	RSUBAR	_IRTmr
 	JBSET	STATUS,0
 	GOTO	_00108_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	GOTO	_00119_DS_
 _00108_DS_
 ;	.line	41; "IR.c"	FLead = 1;						//;当前接收到的是头码
@@ -604,7 +682,7 @@ _00110_DS_
 	RSUBAR	_IRTmr
 	JBSET	STATUS,0
 	GOTO	_00112_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	BCLR	_Flag1,6
 	GOTO	_00119_DS_
 ;;unsigned compare: left < lit(0x1E=30), size=1
@@ -614,7 +692,7 @@ _00112_DS_
 	RSUBAR	_IRTmr
 	JBSET	STATUS,0
 	GOTO	_00116_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 ;	.line	55; "IR.c"	if (++LongIRCnt >= 6)
 	INCR	_LongIRCnt
 ;;unsigned compare: left < lit(0x6=6), size=1
@@ -622,7 +700,7 @@ _00112_DS_
 	RSUBAR	_LongIRCnt
 	JBSET	STATUS,0
 	GOTO	_00114_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 ;	.line	57; "IR.c"	FLongRKey = 1;
 	BSET	_Flag2,0
 ;	.line	58; "IR.c"	IRSbr4();
@@ -631,6 +709,7 @@ _00114_DS_
 ;	.line	60; "IR.c"	return;
 	GOTO	_00119_DS_
 _00116_DS_
+;	.line	71; "IR.c"	__endasm;
 	movai 8 +(26 -8)/2
 	rsubar _IRTmr
 	rrr _IRCode1

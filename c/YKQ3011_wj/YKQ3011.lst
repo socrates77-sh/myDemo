@@ -1,0 +1,727 @@
+gpasm-2.0.0_beta2 (Jun 23 2017)YKQ3011.asm        2017-8-18  18:31:20          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 18:31:20 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "YKQ3011.c"
+                      00009         list    p=0311
+                      00010         radix dec
+                      00011         include "0311.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _InitialSys
+                      00016         extern  _InitalRAM
+                      00017         extern  _Mode2Sbr
+                      00018         extern  _MColorSbr
+                      00019         extern  _T1sSbr
+                      00020         extern  _STATUSbits
+                      00021         extern  _P0bits
+                      00022         extern  _P1bits
+                      00023         extern  _MCRbits
+                      00024         extern  _KBIMbits
+                      00025         extern  _PDCONbits
+                      00026         extern  _ODCONbits
+                      00027         extern  _PUCONbits
+                      00028         extern  _INTECONbits
+                      00029         extern  _INTFLAGbits
+                      00030         extern  _T0CRbits
+                      00031         extern  _DDR0bits
+                      00032         extern  _DDR1bits
+                      00033         extern  _TMCRbits
+                      00034         extern  _T1CRbits
+                      00035         extern  _INDF
+                      00036         extern  _T0CNT
+                      00037         extern  _PCL
+                      00038         extern  _STATUS
+                      00039         extern  _FSR
+                      00040         extern  _P0
+                      00041         extern  _P1
+                      00042         extern  _MCR
+                      00043         extern  _KBIM
+                      00044         extern  _PCLATH
+                      00045         extern  _PDCON
+                      00046         extern  _ODCON
+                      00047         extern  _PUCON
+                      00048         extern  _INTECON
+                      00049         extern  _INTFLAG
+                      00050         extern  _T0CR
+                      00051         extern  _DDR0
+                      00052         extern  _DDR1
+                      00053         extern  _TMCR
+                      00054         extern  _T1CR
+                      00055         extern  _T1CNT
+                      00056         extern  _T1LOAD
+                      00057         extern  _T1DATA
+                      00058 ;--------------------------------------------------------
+                      00059 ; global declarations
+                      00060 ;--------------------------------------------------------
+                      00061         global  _main
+                      00062         global  _KeyCnt
+                      00063         global  _T1s
+                      00064         global  _TRedCnt
+                      00065         global  _TRed
+                      00066         global  _TGreen
+                      00067         global  _TBlue
+                      00068         global  _TRedbak
+                      00069         global  _TGreenbak
+                      00070         global  _TBluebak
+                      00071         global  _IRTmr
+                      00072         global  _KeyCode
+                      00073         global  _Custom
+                      00074         global  _CustomRev
+                      00075         global  _IRCode1
+                      00076         global  _IRCodeRev1
+                      00077         global  _BitCnt
+                      00078         global  _LongIRCnt
+                      00079         global  _IRCnt
+                      00080         global  _Color
+                      00081         global  _Mode1Cnt
+                      00082         global  _delay
+                      00083         global  _Tmr
+                      00084         global  _TStop
+                      00085         global  _Step
+                      00086         global  _T40ms
+                      00087         global  _Dly100ms
+                      00088         global  _Mode2Cnt2
+                      00089         global  _Mode2Cnt3
+                      00090         global  _delay05ms
+                      00091         global  _Flag1
+                      00092         global  _Flag2
+                      00093 
+                      00094         global STK06
+                      00095         global STK05
+                      00096         global STK04
+                      00097         global STK03
+                      00098         global STK02
+                      00099         global STK01
+                      00100         global STK00
+                      00101 
+                      00102 sharebank udata_ovr 0x0010
+0008                  00103 STK06   res 1
+0008                  00104 STK05   res 1
+0009                  00105 STK04   res 1
+0009                  00106 STK03   res 1
+000A                  00107 STK02   res 1
+000A                  00108 STK01   res 1
+000B                  00109 STK00   res 1
+                      00110 
+                      00111 ;--------------------------------------------------------
+                      00112 ; global definitions
+                      00113 ;--------------------------------------------------------
+                      00114 UD_YKQ3011_0    udata
+0000                  00115 _KeyCnt res     1
+                      00116 
+                      00117 UD_YKQ3011_1    udata
+0000                  00118 _T1s    res     1
+                      00119 
+                      00120 UD_YKQ3011_2    udata
+0000                  00121 _TRedCnt        res     1
+                      00122 
+                      00123 UD_YKQ3011_3    udata
+0000                  00124 _TRed   res     1
+                      00125 
+                      00126 UD_YKQ3011_4    udata
+0000                  00127 _TGreen res     1
+                      00128 
+                      00129 UD_YKQ3011_5    udata
+0000                  00130 _TBlue  res     1
+                      00131 
+                      00132 UD_YKQ3011_6    udata
+0000                  00133 _TRedbak        res     1
+                      00134 
+                      00135 UD_YKQ3011_7    udata
+0000                  00136 _TGreenbak      res     1
+                      00137 
+                      00138 UD_YKQ3011_8    udata
+0000                  00139 _TBluebak       res     1
+                      00140 
+                      00141 UD_YKQ3011_9    udata
+0000                  00142 _IRTmr  res     1
+                      00143 
+                      00144 UD_YKQ3011_10   udata
+0000                  00145 _KeyCode        res     1
+                      00146 
+                      00147 UD_YKQ3011_11   udata
+0000                  00148 _Custom res     1
+                      00149 
+                      00150 UD_YKQ3011_12   udata
+0000                  00151 _CustomRev      res     1
+                      00152 
+                      00153 UD_YKQ3011_13   udata
+0000                  00154 _IRCode1        res     1
+                      00155 
+                      00156 UD_YKQ3011_14   udata
+0000                  00157 _IRCodeRev1     res     1
+                      00158 
+                      00159 UD_YKQ3011_15   udata
+0000                  00160 _BitCnt res     1
+                      00161 
+                      00162 UD_YKQ3011_16   udata
+0000                  00163 _LongIRCnt      res     1
+                      00164 
+                      00165 UD_YKQ3011_17   udata
+0000                  00166 _IRCnt  res     1
+                      00167 
+                      00168 UD_YKQ3011_18   udata
+0000                  00169 _Color  res     1
+                      00170 
+                      00171 UD_YKQ3011_19   udata
+0000                  00172 _Mode1Cnt       res     1
+                      00173 
+                      00174 UD_YKQ3011_20   udata
+0000                  00175 _delay  res     1
+                      00176 
+                      00177 UD_YKQ3011_21   udata
+0000                  00178 _Tmr    res     2
+                      00179 
+                      00180 UD_YKQ3011_22   udata
+0000                  00181 _TStop  res     1
+                      00182 
+                      00183 UD_YKQ3011_23   udata
+0000                  00184 _Step   res     1
+                      00185 
+                      00186 UD_YKQ3011_24   udata
+0000                  00187 _T40ms  res     1
+                      00188 
+                      00189 UD_YKQ3011_25   udata
+0000                  00190 _Dly100ms       res     1
+                      00191 
+                      00192 UD_YKQ3011_26   udata
+0000                  00193 _Mode2Cnt2      res     1
+                      00194 
+                      00195 UD_YKQ3011_27   udata
+0000                  00196 _Mode2Cnt3      res     1
+                      00197 
+                      00198 UD_YKQ3011_28   udata
+0000                  00199 _delay05ms      res     1
+                      00200 
+                      00201 UD_YKQ3011_29   udata
+0000                  00202 _Flag1  res     1
+                      00203 
+                      00204 UD_YKQ3011_30   udata
+0000                  00205 _Flag2  res     1
+                      00206 
+                      00207 ;--------------------------------------------------------
+                      00208 ; absolute symbol definitions
+                      00209 ;--------------------------------------------------------
+                      00210 ;--------------------------------------------------------
+                      00211 ; compiler-defined variables
+                      00212 ;--------------------------------------------------------
+                      00213 ;--------------------------------------------------------
+                      00214 ; initialized data
+                      00215 ;--------------------------------------------------------
+                      00216 
+                      00217 ;@Allocation info for local variables in function 'main'
+                      00218 ;@main InitialSys                Allocated to registers ;size:2
+                      00219 ;@main InitalRAM                 Allocated to registers ;size:2
+                      00220 ;@main Mode2Sbr                  Allocated to registers ;size:2
+                      00221 ;@main MColorSbr                 Allocated to registers ;size:2
+                      00222 ;@main T1sSbr                    Allocated to registers ;size:2
+                      00223 ;@main main                      Allocated to registers ;size:2
+                      00224 ;@main STATUSbits                Allocated to registers ;size:1
+                      00225 ;@main P0bits                    Allocated to registers ;size:1
+                      00226 ;@main P1bits                    Allocated to registers ;size:1
+                      00227 ;@main MCRbits                   Allocated to registers ;size:1
+                      00228 ;@main KBIMbits                  Allocated to registers ;size:1
+                      00229 ;@main PDCONbits                 Allocated to registers ;size:1
+                      00230 ;@main ODCONbits                 Allocated to registers ;size:1
+                      00231 ;@main PUCONbits                 Allocated to registers ;size:1
+                      00232 ;@main INTECONbits               Allocated to registers ;size:1
+                      00233 ;@main INTFLAGbits               Allocated to registers ;size:1
+                      00234 ;@main T0CRbits                  Allocated to registers ;size:1
+                      00235 ;@main DDR0bits                  Allocated to registers ;size:1
+                      00236 ;@main DDR1bits                  Allocated to registers ;size:1
+                      00237 ;@main TMCRbits                  Allocated to registers ;size:1
+                      00238 ;@main T1CRbits                  Allocated to registers ;size:1
+                      00239 ;@main KeyCnt                    Allocated to registers ;size:1
+                      00240 ;@main T1s                       Allocated to registers ;size:1
+                      00241 ;@main TRedCnt                   Allocated to registers ;size:1
+                      00242 ;@main TRed                      Allocated to registers ;size:1
+                      00243 ;@main TGreen                    Allocated to registers ;size:1
+                      00244 ;@main TBlue                     Allocated to registers ;size:1
+                      00245 ;@main TRedbak                   Allocated to registers ;size:1
+                      00246 ;@main TGreenbak                 Allocated to registers ;size:1
+                      00247 ;@main TBluebak                  Allocated to registers ;size:1
+                      00248 ;@main IRTmr                     Allocated to registers ;size:1
+                      00249 ;@main KeyCode                   Allocated to registers ;size:1
+                      00250 ;@main Custom                    Allocated to registers ;size:1
+                      00251 ;@main CustomRev                 Allocated to registers ;size:1
+                      00252 ;@main IRCode1                   Allocated to registers ;size:1
+                      00253 ;@main IRCodeRev1                Allocated to registers ;size:1
+                      00254 ;@main BitCnt                    Allocated to registers ;size:1
+                      00255 ;@main LongIRCnt                 Allocated to registers ;size:1
+                      00256 ;@main IRCnt                     Allocated to registers ;size:1
+                      00257 ;@main Color                     Allocated to registers ;size:1
+                      00258 ;@main Mode1Cnt                  Allocated to registers ;size:1
+                      00259 ;@main delay                     Allocated to registers ;size:1
+                      00260 ;@main Tmr                       Allocated to registers ;size:2
+                      00261 ;@main TStop                     Allocated to registers ;size:1
+                      00262 ;@main Step                      Allocated to registers ;size:1
+                      00263 ;@main T40ms                     Allocated to registers ;size:1
+                      00264 ;@main Dly100ms                  Allocated to registers ;size:1
+                      00265 ;@main Mode2Cnt2                 Allocated to registers ;size:1
+                      00266 ;@main Mode2Cnt3                 Allocated to registers ;size:1
+                      00267 ;@main delay05ms                 Allocated to registers ;size:1
+                      00268 ;@main Flag1                     Allocated to registers ;size:1
+                      00269 ;@main Flag2                     Allocated to registers ;size:1
+                      00270 ;@main INDF                      Allocated to registers ;size:1
+                      00271 ;@main T0CNT                     Allocated to registers ;size:1
+                      00272 ;@main PCL                       Allocated to registers ;size:1
+                      00273 ;@main STATUS                    Allocated to registers ;size:1
+                      00274 ;@main FSR                       Allocated to registers ;size:1
+                      00275 ;@main P0                        Allocated to registers ;size:1
+                      00276 ;@main P1                        Allocated to registers ;size:1
+                      00277 ;@main MCR                       Allocated to registers ;size:1
+                      00278 ;@main KBIM                      Allocated to registers ;size:1
+                      00279 ;@main PCLATH                    Allocated to registers ;size:1
+                      00280 ;@main PDCON                     Allocated to registers ;size:1
+                      00281 ;@main ODCON                     Allocated to registers ;size:1
+                      00282 ;@main PUCON                     Allocated to registers ;size:1
+                      00283 ;@main INTECON                   Allocated to registers ;size:1
+                      00284 ;@main INTFLAG                   Allocated to registers ;size:1
+                      00285 ;@main T0CR                      Allocated to registers ;size:1
+                      00286 ;@main DDR0                      Allocated to registers ;size:1
+                      00287 ;@main DDR1                      Allocated to registers ;size:1
+                      00288 ;@main TMCR                      Allocated to registers ;size:1
+                      00289 ;@main T1CR                      Allocated to registers ;size:1
+                      00290 ;@main T1CNT                     Allocated to registers ;size:1
+                      00291 ;@main T1LOAD                    Allocated to registers ;size:1
+                      00292 ;@main T1DATA                    Allocated to registers ;size:1
+                      00293 ;@end Allocation info for local variables in function 'main';
+                      00294 
+                      00295 ;--------------------------------------------------------
+                      00296 ; overlayable items in internal ram 
+                      00297 ;--------------------------------------------------------
+                      00298 ;       udata_ovr
+                      00299 ;--------------------------------------------------------
+                      00300 ; reset vector 
+                      00301 ;--------------------------------------------------------
+                      00302 STARTUP code 0x0000
+0000   2800           00303         goto    _main
+                      00304 ;--------------------------------------------------------
+                      00305 ; code
+                      00306 ;--------------------------------------------------------
+                      00307 code_YKQ3011    code
+                      00308 ;***
+                      00309 ;  pBlock Stats: dbName = M
+                      00310 ;***
+                      00311 ;entry:  _main  ;Function start
+                      00312 ; 2 exit points
+                      00313 ;has an exit
+                      00314 ;functions called:
+                      00315 ;   _InitialSys
+                      00316 ;   _InitalRAM
+                      00317 ;   _Mode2Sbr
+                      00318 ;   _MColorSbr
+                      00319 ;   _T1sSbr
+                      00320 ;   _InitialSys
+                      00321 ;   _InitalRAM
+                      00322 ;   _Mode2Sbr
+                      00323 ;   _MColorSbr
+                      00324 ;   _T1sSbr
+                      00325 ;; Starting pCode block
+0000                  00326 _main   ;Function start
+                      00327 ; 2 exit points
+                      00328 ;       .line   16; "YKQ3011.c" GIE = 0;    
+0000   3F80           00329         BCLR    _INTECONbits,7
+                      00330 ;       .line   17; "YKQ3011.c" ClrWdt();
+0001   000E           00331         clrwdt
+                      00332 ;       .line   18; "YKQ3011.c" InitialSys();
+0002   2000           00333         CALL    _InitialSys
+                      00334 ;       .line   19; "YKQ3011.c" InitalRAM();
+0003   2000           00335         CALL    _InitalRAM
+                      00336 ;       .line   20; "YKQ3011.c" FMultiColor = 1;
+0004   3A00           00337         BSET    _Flag2,4
+                      00338 ;       .line   21; "YKQ3011.c" FOn = 1;
+0005   3800           00339         BSET    _Flag1,0
+                      00340 ;       .line   22; "YKQ3011.c" pIR = 1;
+0006   3980           00341         BSET    _P1bits,3
+                      00342 ;       .line   23; "YKQ3011.c" KBIE = 1;
+0007   3880           00343         BSET    _INTECONbits,1
+                      00344 ;       .line   24; "YKQ3011.c" KBIM3 = 1;
+0008   3980           00345         BSET    _KBIMbits,3
+                      00346 ;       .line   25; "YKQ3011.c" GIE = 1;
+0009   3B80           00347         BSET    _INTECONbits,7
+000A                  00348 _00138_DS_
+                      00349 ;       .line   28; "YKQ3011.c" if (FStop)
+000A   3080           00350         JBSET   _Flag2,1
+000B   2800           00351         GOTO    _00106_DS_
+                      00352 ;       .line   30; "YKQ3011.c" T1IF = 0;
+000C   3C00           00353         BCLR    _TMCRbits,0
+                      00354 ;       .line   31; "YKQ3011.c" T0IF = 0;
+000D   3C00           00355         BCLR    _INTFLAGbits,0
+                      00356 ;       .line   32; "YKQ3011.c" Nop();
+000E   0000           00357         nop
+                      00358 ;       .line   33; "YKQ3011.c" Nop();
+000F   0000           00359         nop
+                      00360 ;       .line   34; "YKQ3011.c" Nop();
+0010   0000           00361         nop
+                      00362 ;       .line   35; "YKQ3011.c" Stop();
+0011   000B           00363         stop
+                      00364 ;       .line   36; "YKQ3011.c" Nop();
+0012   0000           00365         nop
+                      00366 ;       .line   37; "YKQ3011.c" Nop();
+0013   0000           00367         nop
+                      00368 ;       .line   38; "YKQ3011.c" Nop();
+0014   0000           00369         nop
+0015                  00370 _00106_DS_
+                      00371 ;       .line   40; "YKQ3011.c" if ((delay05ms != 0)||(!FOn))
+0015   0B00           00372         MOVAI   0x00
+0016   1700           00373         ORAR    _delay05ms
+0017   3103           00374         JBSET   STATUS,2
+0018   2800           00375         GOTO    _00112_DS_
+0019   3400           00376         JBCLR   _Flag1,0
+001A   2800           00377         GOTO    _00113_DS_
+001B                  00378 _00112_DS_
+                      00379 ;       .line   42; "YKQ3011.c" pRedC = 1;
+001B   3800           00380         BSET    _DDR1bits,0
+                      00381 ;       .line   43; "YKQ3011.c" pGreenC = 1;
+001C   3880           00382         BSET    _DDR1bits,1
+                      00383 ;       .line   44; "YKQ3011.c" pBlueC = 1;
+001D   3900           00384         BSET    _DDR1bits,2
+001E   2800           00385         GOTO    _00114_DS_
+001F                  00386 _00113_DS_
+                      00387 ;       .line   48; "YKQ3011.c" if (FMultiColor)
+001F   3200           00388         JBSET   _Flag2,4
+0020   2800           00389         GOTO    _00110_DS_
+                      00390 ;       .line   50; "YKQ3011.c" pRedC = 0;
+0021   3C00           00391         BCLR    _DDR1bits,0
+                      00392 ;       .line   51; "YKQ3011.c" pGreenC = 0;
+0022   3C80           00393         BCLR    _DDR1bits,1
+                      00394 ;       .line   52; "YKQ3011.c" pBlueC = 0;
+0023   3D00           00395         BCLR    _DDR1bits,2
+0024   2800           00396         GOTO    _00114_DS_
+0025                  00397 _00110_DS_
+                      00398 ;       .line   56; "YKQ3011.c" if (FCandle) Mode2Sbr();
+0025   3280           00399         JBSET   _Flag2,5
+0026   2800           00400         GOTO    _00114_DS_
+0027   2000           00401         CALL    _Mode2Sbr
+0028                  00402 _00114_DS_
+                      00403 ;       .line   59; "YKQ3011.c" if (F4ms)
+0028   3100           00404         JBSET   _Flag2,2
+0029   2800           00405         GOTO    _00138_DS_
+                      00406 ;       .line   61; "YKQ3011.c" F4ms = 0;
+002A   3D00           00407         BCLR    _Flag2,2
+                      00408 ;       .line   62; "YKQ3011.c" ClrWdt();
+002B   000E           00409         clrwdt
+                      00410 ;       .line   63; "YKQ3011.c" if (delay05ms == 0)
+002C   0B00           00411         MOVAI   0x00
+002D   1700           00412         ORAR    _delay05ms
+002E   3103           00413         JBSET   STATUS,2
+002F   2800           00414         GOTO    _00133_DS_
+                      00415 ;       .line   65; "YKQ3011.c" if (FOn)
+0030   3000           00416         JBSET   _Flag1,0
+0031   2800           00417         GOTO    _00134_DS_
+                      00418 ;       .line   67; "YKQ3011.c" if (FMultiColor) MColorSbr();
+0032   3200           00419         JBSET   _Flag2,4
+0033   2800           00420         GOTO    _00128_DS_
+0034   2000           00421         CALL    _MColorSbr
+0035   2800           00422         GOTO    _00134_DS_
+0036                  00423 _00128_DS_
+                      00424 ;       .line   70; "YKQ3011.c" if (FCandle)
+0036   3280           00425         JBSET   _Flag2,5
+0037   2800           00426         GOTO    _00134_DS_
+                      00427 ;       .line   73; "YKQ3011.c" if (++T40ms > 10)
+0038   1980           00428         INCR    _T40ms
+                      00429 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00430 ;;unsigned compare: left >= lit(0xB=11), size=1
+0039   0B0B           00431         MOVAI   0x0b
+003A   1200           00432         RSUBAR  _T40ms
+003B   3003           00433         JBSET   STATUS,0
+003C   2800           00434         GOTO    _00134_DS_
+                      00435 ;;genSkipc:3251: created from rifx:0022609C
+                      00436 ;       .line   75; "YKQ3011.c" T40ms = 0;
+003D   1D80           00437         CLRR    _T40ms
+                      00438 ;       .line   76; "YKQ3011.c" if (FDirection)
+003E   3100           00439         JBSET   _Flag1,2
+003F   2800           00440         GOTO    _00121_DS_
+                      00441 ;       .line   78; "YKQ3011.c" if (++Mode2Cnt3 > 50) FDirection = 0;
+0040   1980           00442         INCR    _Mode2Cnt3
+                      00443 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00444 ;;unsigned compare: left >= lit(0x33=51), size=1
+0041   0B33           00445         MOVAI   0x33
+0042   1200           00446         RSUBAR  _Mode2Cnt3
+0043   3003           00447         JBSET   STATUS,0
+0044   2800           00448         GOTO    _00134_DS_
+                      00449 ;;genSkipc:3251: created from rifx:0022609C
+0045   3D00           00450         BCLR    _Flag1,2
+0046   2800           00451         GOTO    _00134_DS_
+0047                  00452 _00121_DS_
+                      00453 ;       .line   82; "YKQ3011.c" if (--Mode2Cnt3 < 10) FDirection = 1;
+0047   1B80           00454         DECR    _Mode2Cnt3
+                      00455 ;;unsigned compare: left < lit(0xA=10), size=1
+0048   0B0A           00456         MOVAI   0x0a
+0049   1200           00457         RSUBAR  _Mode2Cnt3
+004A   3403           00458         JBCLR   STATUS,0
+004B   2800           00459         GOTO    _00134_DS_
+                      00460 ;;genSkipc:3251: created from rifx:0022609C
+004C   3900           00461         BSET    _Flag1,2
+004D   2800           00462         GOTO    _00134_DS_
+004E                  00463 _00133_DS_
+                      00464 ;       .line   89; "YKQ3011.c" else --delay05ms;
+004E   1B80           00465         DECR    _delay05ms
+004F                  00466 _00134_DS_
+                      00467 ;       .line   90; "YKQ3011.c" T1sSbr();
+004F   2000           00468         CALL    _T1sSbr
+0050   2800           00469         GOTO    _00138_DS_
+0051   000C           00470         RETURN  
+                      00471 ; exit point of _main
+                      00472 
+                      00473 
+                      00474 ;       code size estimation:
+                      00475 ;          73+    0 =    73 instructions (  146 byte)
+                      00476 
+                      00477         end
+gpasm-2.0.0_beta2 (Jun 23 2017)YKQ3011.asm        2017-8-18  18:31:20          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000016
+STK01                             00000015
+STK02                             00000014
+STK03                             00000013
+STK04                             00000012
+STK05                             00000011
+STK06                             00000010
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00106_DS_                        00000015
+_00110_DS_                        00000025
+_00112_DS_                        0000001B
+_00113_DS_                        0000001F
+_00114_DS_                        00000028
+_00121_DS_                        00000047
+_00128_DS_                        00000036
+_00133_DS_                        0000004E
+_00134_DS_                        0000004F
+_00138_DS_                        0000000A
+_BitCnt                           00000000
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_Color                            00000000
+_Custom                           00000000
+_CustomRev                        00000000
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_Dly100ms                         00000000
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FSR                              00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_INDF                             00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_IRCnt                            00000000
+_IRCode1                          00000000
+_IRCodeRev1                       00000000
+_IRTmr                            00000000
+_InitalRAM                        00000000
+_InitialSys                       00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyCnt                           00000000
+_KeyCode                          00000000
+_LongIRCnt                        00000000
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MColorSbr                        00000000
+_Mode1Cnt                         00000000
+_Mode2Cnt2                        00000000
+_Mode2Cnt3                        00000000
+_Mode2Sbr                         00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_STATUS                           00000000
+_STATUSbits                       00000000
+_Step                             00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_T1s                              00000000
+_T1sSbr                           00000000
+_T40ms                            00000000
+_TBlue                            00000000
+_TBluebak                         00000000
+_TGreen                           00000000
+_TGreenbak                        00000000
+_TMCR                             00000000
+_TMCRbits                         00000000
+_TRed                             00000000
+_TRedCnt                          00000000
+_TRedbak                          00000000
+_TStop                            00000000
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_Tmr                              00000000
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+__30P011                          00000001
+_delay                            00000000
+_delay05ms                        00000000
+_main                             00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

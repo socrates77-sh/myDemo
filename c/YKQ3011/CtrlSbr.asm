@@ -1,14 +1,14 @@
 ;--------------------------------------------------------
-; File Created by SDCC : free open source ANSI-C Compiler
-; Version 0.0.1 (Jun 20 2013) (MINGW32)
-; This file was generated Wed Jun 26 16:24:59 2013
+; File Created by SN-SDCC : ANSI-C Compiler
+; Version 0.0.4 (Aug 18 2017) (MINGW32)
+; This file was generated Fri Aug 18 18:35:20 2017
 ;--------------------------------------------------------
-; MC30 port for the 14-bit core
+; MC3X port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"CtrlSbr.c"
-	list	p=30p011
+	list	p=0311
 	radix dec
-	include "mc30p011.inc"
+	include "0311.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------
@@ -22,6 +22,7 @@
 	extern	_PUCONbits
 	extern	_INTECONbits
 	extern	_INTFLAGbits
+	extern	_T0CRbits
 	extern	_DDR0bits
 	extern	_DDR1bits
 	extern	_TMCRbits
@@ -82,15 +83,6 @@
 	extern	_T1DATA
 	extern	__gptrget1
 
-	extern PSAVE
-	extern SSAVE
-	extern WSAVE
-	extern STK12
-	extern STK11
-	extern STK10
-	extern STK09
-	extern STK08
-	extern STK07
 	extern STK06
 	extern STK05
 	extern STK04
@@ -171,6 +163,84 @@ _RedTbl
 	retai 0x27
 	retai 0xae
 
+
+;@Allocation info for local variables in function 'ColorSbr'
+;@ColorSbr ColorSbr                  Allocated to registers ;size:2
+;@ColorSbr STATUSbits                Allocated to registers ;size:1
+;@ColorSbr P0bits                    Allocated to registers ;size:1
+;@ColorSbr P1bits                    Allocated to registers ;size:1
+;@ColorSbr MCRbits                   Allocated to registers ;size:1
+;@ColorSbr KBIMbits                  Allocated to registers ;size:1
+;@ColorSbr PDCONbits                 Allocated to registers ;size:1
+;@ColorSbr ODCONbits                 Allocated to registers ;size:1
+;@ColorSbr PUCONbits                 Allocated to registers ;size:1
+;@ColorSbr INTECONbits               Allocated to registers ;size:1
+;@ColorSbr INTFLAGbits               Allocated to registers ;size:1
+;@ColorSbr T0CRbits                  Allocated to registers ;size:1
+;@ColorSbr DDR0bits                  Allocated to registers ;size:1
+;@ColorSbr DDR1bits                  Allocated to registers ;size:1
+;@ColorSbr TMCRbits                  Allocated to registers ;size:1
+;@ColorSbr T1CRbits                  Allocated to registers ;size:1
+;@ColorSbr KeyCnt                    Allocated to registers ;size:1
+;@ColorSbr T1s                       Allocated to registers ;size:1
+;@ColorSbr TRedCnt                   Allocated to registers ;size:1
+;@ColorSbr TRed                      Allocated to registers ;size:1
+;@ColorSbr TGreen                    Allocated to registers ;size:1
+;@ColorSbr TBlue                     Allocated to registers ;size:1
+;@ColorSbr TRedbak                   Allocated to registers ;size:1
+;@ColorSbr TGreenbak                 Allocated to registers ;size:1
+;@ColorSbr TBluebak                  Allocated to registers ;size:1
+;@ColorSbr IRTmr                     Allocated to registers ;size:1
+;@ColorSbr KeyCode                   Allocated to registers ;size:1
+;@ColorSbr Custom                    Allocated to registers ;size:1
+;@ColorSbr CustomRev                 Allocated to registers ;size:1
+;@ColorSbr IRCode1                   Allocated to registers ;size:1
+;@ColorSbr IRCodeRev1                Allocated to registers ;size:1
+;@ColorSbr BitCnt                    Allocated to registers ;size:1
+;@ColorSbr LongIRCnt                 Allocated to registers ;size:1
+;@ColorSbr IRCnt                     Allocated to registers ;size:1
+;@ColorSbr Color                     Allocated to registers ;size:1
+;@ColorSbr Mode1Cnt                  Allocated to registers ;size:1
+;@ColorSbr delay                     Allocated to registers ;size:1
+;@ColorSbr Tmr                       Allocated to registers ;size:2
+;@ColorSbr TStop                     Allocated to registers ;size:1
+;@ColorSbr Step                      Allocated to registers ;size:1
+;@ColorSbr T40ms                     Allocated to registers ;size:1
+;@ColorSbr Dly100ms                  Allocated to registers ;size:1
+;@ColorSbr Mode2Cnt2                 Allocated to registers ;size:1
+;@ColorSbr Mode2Cnt3                 Allocated to registers ;size:1
+;@ColorSbr delay05ms                 Allocated to registers ;size:1
+;@ColorSbr Flag1                     Allocated to registers ;size:1
+;@ColorSbr Flag2                     Allocated to registers ;size:1
+;@ColorSbr INDF                      Allocated to registers ;size:1
+;@ColorSbr T0CNT                     Allocated to registers ;size:1
+;@ColorSbr PCL                       Allocated to registers ;size:1
+;@ColorSbr STATUS                    Allocated to registers ;size:1
+;@ColorSbr FSR                       Allocated to registers ;size:1
+;@ColorSbr P0                        Allocated to registers ;size:1
+;@ColorSbr P1                        Allocated to registers ;size:1
+;@ColorSbr MCR                       Allocated to registers ;size:1
+;@ColorSbr KBIM                      Allocated to registers ;size:1
+;@ColorSbr PCLATH                    Allocated to registers ;size:1
+;@ColorSbr PDCON                     Allocated to registers ;size:1
+;@ColorSbr ODCON                     Allocated to registers ;size:1
+;@ColorSbr PUCON                     Allocated to registers ;size:1
+;@ColorSbr INTECON                   Allocated to registers ;size:1
+;@ColorSbr INTFLAG                   Allocated to registers ;size:1
+;@ColorSbr T0CR                      Allocated to registers ;size:1
+;@ColorSbr DDR0                      Allocated to registers ;size:1
+;@ColorSbr DDR1                      Allocated to registers ;size:1
+;@ColorSbr TMCR                      Allocated to registers ;size:1
+;@ColorSbr T1CR                      Allocated to registers ;size:1
+;@ColorSbr T1CNT                     Allocated to registers ;size:1
+;@ColorSbr T1LOAD                    Allocated to registers ;size:1
+;@ColorSbr T1DATA                    Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'ColorSbr';
+;@Allocation info for local variables in function 'MColorSbr'
+;@end Allocation info for local variables in function 'MColorSbr';
+;@Allocation info for local variables in function 'Mode2Sbr'
+;@end Allocation info for local variables in function 'Mode2Sbr';
+
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -193,7 +263,7 @@ _Mode2Sbr	;Function start
 	RSUBAR	_Mode2Cnt2
 	JBSET	STATUS,0
 	GOTO	_00135_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 ;	.line	77; "CtrlSbr.c"	pBlueC = 1;
 	BSET	_DDR1bits,2
 ;	.line	78; "CtrlSbr.c"	pRedC = 1;
@@ -207,7 +277,7 @@ _Mode2Sbr	;Function start
 	RSUBAR	_Mode2Cnt2
 	JBSET	STATUS,0
 	GOTO	_00137_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	CLRR	_Mode2Cnt2
 	GOTO	_00137_DS_
 _00135_DS_
@@ -237,7 +307,7 @@ _MColorSbr	;Function start
 	RSUBAR	_delay
 	JBSET	STATUS,0
 	GOTO	_00127_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 ;	.line	24; "CtrlSbr.c"	delay = 0;
 	CLRR	_delay
 ;	.line	25; "CtrlSbr.c"	if (--Mode1Cnt == 0)
@@ -263,7 +333,7 @@ _MColorSbr	;Function start
 	RSUBAR	_Step
 	JBSET	STATUS,0
 	GOTO	_00110_DS_
-;;genSkipc:3244: created from rifx:0022608C
+;;genSkipc:3251: created from rifx:0022609C
 	CLRR	_Step
 _00110_DS_
 ;	.line	31; "CtrlSbr.c"	Mode1Cnt = TSteplengh;

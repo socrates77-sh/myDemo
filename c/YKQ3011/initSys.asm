@@ -1,14 +1,14 @@
 ;--------------------------------------------------------
-; File Created by SDCC : free open source ANSI-C Compiler
-; Version 0.0.1 (Jun 20 2013) (MINGW32)
-; This file was generated Wed Jun 26 16:24:57 2013
+; File Created by SN-SDCC : ANSI-C Compiler
+; Version 0.0.4 (Aug 18 2017) (MINGW32)
+; This file was generated Fri Aug 18 18:35:19 2017
 ;--------------------------------------------------------
-; MC30 port for the 14-bit core
+; MC3X port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"initSys.c"
-	list	p=30p011
+	list	p=0311
 	radix dec
-	include "mc30p011.inc"
+	include "0311.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------
@@ -22,6 +22,7 @@
 	extern	_PUCONbits
 	extern	_INTECONbits
 	extern	_INTFLAGbits
+	extern	_T0CRbits
 	extern	_DDR0bits
 	extern	_DDR1bits
 	extern	_TMCRbits
@@ -81,15 +82,6 @@
 	extern	_T1LOAD
 	extern	_T1DATA
 
-	extern PSAVE
-	extern SSAVE
-	extern WSAVE
-	extern STK12
-	extern STK11
-	extern STK10
-	extern STK09
-	extern STK08
-	extern STK07
 	extern STK06
 	extern STK05
 	extern STK04
@@ -115,6 +107,82 @@
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
+
+;@Allocation info for local variables in function 'InitialSys'
+;@InitialSys InitialSys                Allocated to registers ;size:2
+;@InitialSys STATUSbits                Allocated to registers ;size:1
+;@InitialSys P0bits                    Allocated to registers ;size:1
+;@InitialSys P1bits                    Allocated to registers ;size:1
+;@InitialSys MCRbits                   Allocated to registers ;size:1
+;@InitialSys KBIMbits                  Allocated to registers ;size:1
+;@InitialSys PDCONbits                 Allocated to registers ;size:1
+;@InitialSys ODCONbits                 Allocated to registers ;size:1
+;@InitialSys PUCONbits                 Allocated to registers ;size:1
+;@InitialSys INTECONbits               Allocated to registers ;size:1
+;@InitialSys INTFLAGbits               Allocated to registers ;size:1
+;@InitialSys T0CRbits                  Allocated to registers ;size:1
+;@InitialSys DDR0bits                  Allocated to registers ;size:1
+;@InitialSys DDR1bits                  Allocated to registers ;size:1
+;@InitialSys TMCRbits                  Allocated to registers ;size:1
+;@InitialSys T1CRbits                  Allocated to registers ;size:1
+;@InitialSys KeyCnt                    Allocated to registers ;size:1
+;@InitialSys T1s                       Allocated to registers ;size:1
+;@InitialSys TRedCnt                   Allocated to registers ;size:1
+;@InitialSys TRed                      Allocated to registers ;size:1
+;@InitialSys TGreen                    Allocated to registers ;size:1
+;@InitialSys TBlue                     Allocated to registers ;size:1
+;@InitialSys TRedbak                   Allocated to registers ;size:1
+;@InitialSys TGreenbak                 Allocated to registers ;size:1
+;@InitialSys TBluebak                  Allocated to registers ;size:1
+;@InitialSys IRTmr                     Allocated to registers ;size:1
+;@InitialSys KeyCode                   Allocated to registers ;size:1
+;@InitialSys Custom                    Allocated to registers ;size:1
+;@InitialSys CustomRev                 Allocated to registers ;size:1
+;@InitialSys IRCode1                   Allocated to registers ;size:1
+;@InitialSys IRCodeRev1                Allocated to registers ;size:1
+;@InitialSys BitCnt                    Allocated to registers ;size:1
+;@InitialSys LongIRCnt                 Allocated to registers ;size:1
+;@InitialSys IRCnt                     Allocated to registers ;size:1
+;@InitialSys Color                     Allocated to registers ;size:1
+;@InitialSys Mode1Cnt                  Allocated to registers ;size:1
+;@InitialSys delay                     Allocated to registers ;size:1
+;@InitialSys Tmr                       Allocated to registers ;size:2
+;@InitialSys TStop                     Allocated to registers ;size:1
+;@InitialSys Step                      Allocated to registers ;size:1
+;@InitialSys T40ms                     Allocated to registers ;size:1
+;@InitialSys Dly100ms                  Allocated to registers ;size:1
+;@InitialSys Mode2Cnt2                 Allocated to registers ;size:1
+;@InitialSys Mode2Cnt3                 Allocated to registers ;size:1
+;@InitialSys delay05ms                 Allocated to registers ;size:1
+;@InitialSys Flag1                     Allocated to registers ;size:1
+;@InitialSys Flag2                     Allocated to registers ;size:1
+;@InitialSys INDF                      Allocated to registers ;size:1
+;@InitialSys T0CNT                     Allocated to registers ;size:1
+;@InitialSys PCL                       Allocated to registers ;size:1
+;@InitialSys STATUS                    Allocated to registers ;size:1
+;@InitialSys FSR                       Allocated to registers ;size:1
+;@InitialSys P0                        Allocated to registers ;size:1
+;@InitialSys P1                        Allocated to registers ;size:1
+;@InitialSys MCR                       Allocated to registers ;size:1
+;@InitialSys KBIM                      Allocated to registers ;size:1
+;@InitialSys PCLATH                    Allocated to registers ;size:1
+;@InitialSys PDCON                     Allocated to registers ;size:1
+;@InitialSys ODCON                     Allocated to registers ;size:1
+;@InitialSys PUCON                     Allocated to registers ;size:1
+;@InitialSys INTECON                   Allocated to registers ;size:1
+;@InitialSys INTFLAG                   Allocated to registers ;size:1
+;@InitialSys T0CR                      Allocated to registers ;size:1
+;@InitialSys DDR0                      Allocated to registers ;size:1
+;@InitialSys DDR1                      Allocated to registers ;size:1
+;@InitialSys TMCR                      Allocated to registers ;size:1
+;@InitialSys T1CR                      Allocated to registers ;size:1
+;@InitialSys T1CNT                     Allocated to registers ;size:1
+;@InitialSys T1LOAD                    Allocated to registers ;size:1
+;@InitialSys T1DATA                    Allocated to registers ;size:1
+;@end Allocation info for local variables in function 'InitialSys';
+;@Allocation info for local variables in function 'InitalRAM'
+;@end Allocation info for local variables in function 'InitalRAM';
+
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------

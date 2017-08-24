@@ -1,0 +1,305 @@
+gplink-2.0.0_beta2 (Jun 23 2017)
+Map File - Created 2017-6-23  16:57:03
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+           ID_HT_Leds_0_i       code   00000000    program   0x000002
+           ID_HT_Leds_1_i       code   0x000001    program   0x000002
+           ID_HT_Leds_2_i       code   0x000002    program   0x000002
+           ID_HT_Leds_3_i       code   0x000003    program   0x000002
+              c_interrupt       code   0x000008    program   0x000090
+             code_HT_Leds       code   0x000050    program   0x00053c
+                   .cinit       code   0x0002ee    program   0x000034
+             ID_HT_Leds_4       code   0x000308    program   0x000028
+             ID_HT_Leds_5       code   0x00031c    program   0x000028
+             ID_HT_Leds_6       code   0x000330    program   0x000028
+             ID_HT_Leds_7       code   0x000344    program   0x000028
+             ID_HT_Leds_8       code   0x000358    program   0x000028
+             ID_HT_Leds_9       code   0x00036c    program   0x000028
+            ID_HT_Leds_10       code   0x000380    program   0x000028
+            ID_HT_Leds_11       code   0x000394    program   0x000028
+            ID_HT_Leds_12       code   0x0003a8    program   0x000028
+            ID_HT_Leds_13       code   0x0003bc    program   0x000028
+            ID_HT_Leds_14       code   0x0003d0    program   0x000028
+            ID_HT_Leds_15       code   0x0003e4    program   0x000028
+             ID_HT_Leds_0      idata   0x00003b       data   0x000001
+             ID_HT_Leds_1      idata   0x00003c       data   0x000001
+             ID_HT_Leds_2      idata   0x00003d       data   0x000001
+             ID_HT_Leds_3      idata   0x00003e       data   0x000001
+            UD_abs_6060_0      udata   00000000       data   0x000001
+            UD_abs_6060_1      udata   0x000001       data   0x000001
+            UD_abs_6060_2      udata   0x000002       data   0x000001
+            UD_abs_6060_3      udata   0x000003       data   0x000001
+            UD_abs_6060_4      udata   0x000004       data   0x000001
+            UD_abs_6060_5      udata   0x000005       data   0x000001
+            UD_abs_6060_6      udata   0x000006       data   0x000001
+         UD_abs_HT_Leds_7      udata   0x000007       data   0x000001
+            UD_abs_6060_8      udata   0x000008       data   0x000001
+            UD_abs_6060_9      udata   0x000009       data   0x000001
+            UD_abs_6060_a      udata   0x00000a       data   0x000001
+            UD_abs_6060_b      udata   0x00000b       data   0x000001
+            UD_abs_6060_c      udata   0x00000c       data   0x000001
+            UD_abs_6060_d      udata   0x00000d       data   0x000001
+            UD_abs_6060_e      udata   0x00000e       data   0x000001
+            UD_abs_6060_f      udata   0x00000f       data   0x000001
+                sharebank      udata   0x000010       data   0x000007
+            UDL_HT_Leds_0      udata   0x000017       data   0x00000b
+             UD_HT_Leds_8      udata   0x000022       data   0x000004
+             UD_HT_Leds_0      udata   0x000026       data   0x000001
+             UD_HT_Leds_1      udata   0x000027       data   0x000001
+             UD_HT_Leds_2      udata   0x000028       data   0x000001
+             UD_HT_Leds_3      udata   0x000029       data   0x000001
+             UD_HT_Leds_4      udata   0x00002a       data   0x000001
+             UD_HT_Leds_5      udata   0x00002b       data   0x000001
+             UD_HT_Leds_6      udata   0x00002c       data   0x000001
+             UD_HT_Leds_7      udata   0x00002d       data   0x000001
+             UD_HT_Leds_9      udata   0x00002e       data   0x000001
+            UD_HT_Leds_10      udata   0x00002f       data   0x000001
+            UD_HT_Leds_11      udata   0x000030       data   0x000001
+            UD_HT_Leds_12      udata   0x000031       data   0x000001
+            UD_HT_Leds_13      udata   0x000032       data   0x000001
+            UD_HT_Leds_14      udata   0x000033       data   0x000001
+            UD_HT_Leds_15      udata   0x000034       data   0x000001
+            UD_HT_Leds_16      udata   0x000035       data   0x000001
+            UD_HT_Leds_17      udata   0x000036       data   0x000001
+            UD_HT_Leds_18      udata   0x000037       data   0x000001
+            UD_HT_Leds_19      udata   0x000038       data   0x000001
+            UD_HT_Leds_20      udata   0x000039       data   0x000001
+            UD_HT_Leds_21      udata   0x00003a       data   0x000001
+           UD_abs_6060_41      udata   0x000041       data   0x000001
+           UD_abs_6060_45      udata   0x000045       data   0x000001
+           UD_abs_6060_46      udata   0x000046       data   0x000001
+           UD_abs_6060_48      udata   0x000048       data   0x000001
+           UD_abs_6060_49      udata   0x000049       data   0x000001
+           UD_abs_6060_4a      udata   0x00004a       data   0x000001
+           UD_abs_6060_4b      udata   0x00004b       data   0x000001
+           UD_abs_6060_4c      udata   0x00004c       data   0x000001
+           UD_abs_6060_4d      udata   0x00004d       data   0x000001
+           UD_abs_6060_4e      udata   0x00004e       data   0x000001
+           UD_abs_6060_4f      udata   0x00004f       data   0x000001
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            00000000    00000000
+                            0x000001    0x000001
+                            0x000002    0x000002
+                            0x000003    0x000003
+                            0x000308    0x00031b
+                            0x00031c    0x00032f
+                            0x000330    0x000343
+                            0x000344    0x000357
+                            0x000358    0x00036b
+                            0x00036c    0x00037f
+                            0x000380    0x000393
+                            0x000394    0x0003a7
+                            0x0003a8    0x0003bb
+                            0x0003bc    0x0003cf
+                            0x0003d0    0x0003e3
+                            0x0003e4    0x0003f7
+                            0x000008    0x00004f
+                            0x000050    0x0002ed
+                            0x0002ee    0x000307
+ 
+                            1012 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+                    STK06   0x000010       data     extern HT_Leds.asm
+                    STK05   0x000011       data     extern HT_Leds.asm
+                    STK04   0x000012       data     extern HT_Leds.asm
+                    STK03   0x000013       data     extern HT_Leds.asm
+                    STK02   0x000014       data     extern HT_Leds.asm
+                    STK01   0x000015       data     extern HT_Leds.asm
+                    STK00   0x000016       data     extern HT_Leds.asm
+                    _ABuf   0x000026       data     extern HT_Leds.asm
+                    _R_r1   0x000027       data     extern HT_Leds.asm
+              _R_keycount   0x000028       data     extern HT_Leds.asm
+              _R_keyvalue   0x000029       data     extern HT_Leds.asm
+                _R_keybak   0x00002a       data     extern HT_Leds.asm
+           _R_timer0count   0x00002b       data     extern HT_Leds.asm
+               _R_irtimes   0x00002c       data     extern HT_Leds.asm
+               _R_irbytes   0x00002d       data     extern HT_Leds.asm
+               _R_irtable   0x000022       data     extern HT_Leds.asm
+            _R_timecontr1   0x00002e       data     extern HT_Leds.asm
+            _R_timecontr2   0x00002f       data     extern HT_Leds.asm
+            _R_timecontr3   0x000030       data     extern HT_Leds.asm
+            _R_timecontr4   0x000031       data     extern HT_Leds.asm
+                   _Flag1   0x000032       data     extern HT_Leds.asm
+                   _Flag2   0x000033       data     extern HT_Leds.asm
+                _time_us1   0x000034       data     extern HT_Leds.asm
+                _time_key   0x000035       data     extern HT_Leds.asm
+               _time_beep   0x000036       data     extern HT_Leds.asm
+                  _key_id   0x000037       data     extern HT_Leds.asm
+               _led_state   0x000038       data     extern HT_Leds.asm
+                _ir_state   0x000039       data     extern HT_Leds.asm
+                _iic_data   0x00003a       data     extern HT_Leds.asm
+                     _GPR   0x000007       data     extern HT_Leds.asm
+                  r0x101B   0x000017       data     static HT_Leds.asm
+                  r0x101C   0x000018       data     static HT_Leds.asm
+                  r0x101A   0x000019       data     static HT_Leds.asm
+                  r0x1014   0x00001a       data     static HT_Leds.asm
+                  r0x1015   0x00001b       data     static HT_Leds.asm
+                  r0x1016   0x00001c       data     static HT_Leds.asm
+                  r0x1018   0x00001d       data     static HT_Leds.asm
+                  r0x1019   0x00001e       data     static HT_Leds.asm
+                  r0x1017   0x00001f       data     static HT_Leds.asm
+                  r0x101D   0x000020       data     static HT_Leds.asm
+                  r0x101E   0x000021       data     static HT_Leds.asm
+                       _n   0x00003b       data     extern HT_Leds.asm
+               _StatusBuf   0x00003c       data     extern HT_Leds.asm
+                _R_irdata   0x00003d       data     extern HT_Leds.asm
+               _R_ircount   0x00003e       data     extern HT_Leds.asm
+                _Tab_data   0x000308    program     extern HT_Leds.asm
+               _Tab_data1   0x00031c    program     extern HT_Leds.asm
+               _Tab_data2   0x000330    program     extern HT_Leds.asm
+               _Tab_data3   0x000344    program     extern HT_Leds.asm
+               _Tab_data4   0x000358    program     extern HT_Leds.asm
+               _Tab_data5   0x00036c    program     extern HT_Leds.asm
+               _Tab_data6   0x000380    program     extern HT_Leds.asm
+               _Tab_data7   0x000394    program     extern HT_Leds.asm
+               _Tab_data8   0x0003a8    program     extern HT_Leds.asm
+               _Tab_data9   0x0003bc    program     extern HT_Leds.asm
+              _Tab_data10   0x0003d0    program     extern HT_Leds.asm
+              _Tab_data11   0x0003e4    program     extern HT_Leds.asm
+         __sdcc_interrupt   0x000008    program     static HT_Leds.asm
+                 _int_isr   0x000008    program     extern HT_Leds.asm
+               _00370_DS_   0x000019    program     static HT_Leds.asm
+               _00372_DS_   0x00001e    program     static HT_Leds.asm
+               _00374_DS_   0x000023    program     static HT_Leds.asm
+               _00378_DS_   0x000028    program     static HT_Leds.asm
+               _00380_DS_   0x000036    program     static HT_Leds.asm
+               _00381_DS_   0x000037    program     static HT_Leds.asm
+               _00383_DS_   0x000039    program     static HT_Leds.asm
+               _00385_DS_   0x000045    program     static HT_Leds.asm
+               _00387_DS_   0x00004b    program     static HT_Leds.asm
+         END_OF_INTERRUPT   0x00004f    program     static HT_Leds.asm
+                    _main   0x000050    program     extern HT_Leds.asm
+               _00252_DS_   0x000060    program     static HT_Leds.asm
+               _00220_DS_   0x000067    program     static HT_Leds.asm
+               _00222_DS_   0x000070    program     static HT_Leds.asm
+               _00300_DS_   0x000077    program     static HT_Leds.asm
+               _00301_DS_   0x00007c    program     static HT_Leds.asm
+               _00302_DS_   0x000081    program     static HT_Leds.asm
+               _00303_DS_   0x000086    program     static HT_Leds.asm
+               _00304_DS_   0x00008b    program     static HT_Leds.asm
+               _00305_DS_   0x000090    program     static HT_Leds.asm
+               _00306_DS_   0x000095    program     static HT_Leds.asm
+               _00307_DS_   0x00009a    program     static HT_Leds.asm
+               _00308_DS_   0x00009f    program     static HT_Leds.asm
+               _00309_DS_   0x0000a4    program     static HT_Leds.asm
+               _00310_DS_   0x0000a9    program     static HT_Leds.asm
+               _00311_DS_   0x0000ae    program     static HT_Leds.asm
+               _00223_DS_   0x0000af    program     static HT_Leds.asm
+               _00224_DS_   0x0000b6    program     static HT_Leds.asm
+               _00225_DS_   0x0000ba    program     static HT_Leds.asm
+               _00228_DS_   0x0000c2    program     static HT_Leds.asm
+               _00230_DS_   0x0000c7    program     static HT_Leds.asm
+               _00233_DS_   0x0000cd    program     static HT_Leds.asm
+               _00234_DS_   0x0000d0    program     static HT_Leds.asm
+               _00235_DS_   0x0000d2    program     static HT_Leds.asm
+               _00238_DS_   0x0000d4    program     static HT_Leds.asm
+               _00241_DS_   0x0000de    program     static HT_Leds.asm
+               _00244_DS_   0x0000e8    program     static HT_Leds.asm
+        _IIC_read_onebyte   0x0000f3    program     extern HT_Leds.asm
+       _IIC_write_onebyte   0x000112    program     extern HT_Leds.asm
+         _I2C_ReceiveByte   0x00011e    program     extern HT_Leds.asm
+               _00353_DS_   0x000121    program     static HT_Leds.asm
+               _00355_DS_   0x00012f    program     static HT_Leds.asm
+               _00356_DS_   0x000131    program     static HT_Leds.asm
+            _I2C_SendByte   0x000135    program     extern HT_Leds.asm
+               _00343_DS_   0x000137    program     static HT_Leds.asm
+               _00341_DS_   0x000142    program     static HT_Leds.asm
+               _00342_DS_   0x000143    program     static HT_Leds.asm
+               _00346_DS_   0x00014b    program     static HT_Leds.asm
+               _I2C_NoAck   0x00014e    program     extern HT_Leds.asm
+                 _I2C_Ack   0x000159    program     extern HT_Leds.asm
+                _I2C_Stop   0x000165    program     extern HT_Leds.asm
+               _I2C_Start   0x000170    program     extern HT_Leds.asm
+               _I2C_delay   0x00017b    program     extern HT_Leds.asm
+               _00316_DS_   0x00017d    program     static HT_Leds.asm
+               _00319_DS_   0x000183    program     static HT_Leds.asm
+                    _stop   0x000184    program     extern HT_Leds.asm
+                 _InitRam   0x0001b4    program     extern HT_Leds.asm
+       _code_HT_Leds_017D   0x0001cd    program     static HT_Leds.asm
+                _Init_sys   0x0001d1    program     extern HT_Leds.asm
+               _Timecontr   0x0001eb    program     extern HT_Leds.asm
+               _00202_DS_   0x0001ff    program     static HT_Leds.asm
+               _Ir_Decode   0x000200    program     extern HT_Leds.asm
+               _00162_DS_   0x00020e    program     static HT_Leds.asm
+               _00108_DS_   0x000226    program     static HT_Leds.asm
+               _00113_DS_   0x000228    program     static HT_Leds.asm
+               _00127_DS_   0x00022a    program     static HT_Leds.asm
+               _00116_DS_   0x000242    program     static HT_Leds.asm
+               _00119_DS_   0x000244    program     static HT_Leds.asm
+               _00124_DS_   0x000246    program     static HT_Leds.asm
+               _00159_DS_   0x000248    program     static HT_Leds.asm
+               _00130_DS_   0x00025e    program     static HT_Leds.asm
+               _00135_DS_   0x000260    program     static HT_Leds.asm
+               _00156_DS_   0x000262    program     static HT_Leds.asm
+               _00146_DS_   0x000291    program     static HT_Leds.asm
+               _00153_DS_   0x0002b2    program     static HT_Leds.asm
+               _00189_DS_   0x0002b4    program     static HT_Leds.asm
+               _00165_DS_   0x0002cc    program     static HT_Leds.asm
+               _00170_DS_   0x0002ce    program     static HT_Leds.asm
+               _00184_DS_   0x0002d0    program     static HT_Leds.asm
+               _00173_DS_   0x0002e8    program     static HT_Leds.asm
+               _00176_DS_   0x0002ea    program     static HT_Leds.asm
+               _00181_DS_   0x0002ec    program     static HT_Leds.asm
+               _00191_DS_   0x0002ed    program     static HT_Leds.asm
+                _INDFbits   00000000       data     extern 6060.asm
+                    _INDF   00000000       data     extern 6060.asm
+               _T0CNTbits   0x000001       data     extern 6060.asm
+                   _T0CNT   0x000001       data     extern 6060.asm
+                 _PCLbits   0x000002       data     extern 6060.asm
+                     _PCL   0x000002       data     extern 6060.asm
+              _STATUSbits   0x000003       data     extern 6060.asm
+                  _STATUS   0x000003       data     extern 6060.asm
+                 _FSRbits   0x000004       data     extern 6060.asm
+                     _FSR   0x000004       data     extern 6060.asm
+                  _P0bits   0x000005       data     extern 6060.asm
+                      _P0   0x000005       data     extern 6060.asm
+                  _P1bits   0x000006       data     extern 6060.asm
+                      _P1   0x000006       data     extern 6060.asm
+                 _MCRbits   0x000008       data     extern 6060.asm
+                     _MCR   0x000008       data     extern 6060.asm
+                _KBIMbits   0x000009       data     extern 6060.asm
+                    _KBIM   0x000009       data     extern 6060.asm
+              _PCLATHbits   0x00000a       data     extern 6060.asm
+                  _PCLATH   0x00000a       data     extern 6060.asm
+               _PDCONbits   0x00000b       data     extern 6060.asm
+                   _PDCON   0x00000b       data     extern 6060.asm
+               _ODCONbits   0x00000c       data     extern 6060.asm
+                   _ODCON   0x00000c       data     extern 6060.asm
+               _PUCONbits   0x00000d       data     extern 6060.asm
+                   _PUCON   0x00000d       data     extern 6060.asm
+             _INTECONbits   0x00000e       data     extern 6060.asm
+                 _INTECON   0x00000e       data     extern 6060.asm
+             _INTFLAGbits   0x00000f       data     extern 6060.asm
+                 _INTFLAG   0x00000f       data     extern 6060.asm
+                _T0CRbits   0x000041       data     extern 6060.asm
+                    _T0CR   0x000041       data     extern 6060.asm
+                _DDR0bits   0x000045       data     extern 6060.asm
+                    _DDR0   0x000045       data     extern 6060.asm
+                _DDR1bits   0x000046       data     extern 6060.asm
+                    _DDR1   0x000046       data     extern 6060.asm
+               _PWMCRbits   0x000048       data     extern 6060.asm
+                   _PWMCR   0x000048       data     extern 6060.asm
+             _T1DATA1bits   0x000049       data     extern 6060.asm
+                 _T1DATA1   0x000049       data     extern 6060.asm
+             _T1DATA2bits   0x00004a       data     extern 6060.asm
+                 _T1DATA2   0x00004a       data     extern 6060.asm
+               _TM0CRbits   0x00004b       data     extern 6060.asm
+                   _TM0CR   0x00004b       data     extern 6060.asm
+                _T1CRbits   0x00004c       data     extern 6060.asm
+                    _T1CR   0x00004c       data     extern 6060.asm
+               _T1CNTbits   0x00004d       data     extern 6060.asm
+                   _T1CNT   0x00004d       data     extern 6060.asm
+              _T1LOADbits   0x00004e       data     extern 6060.asm
+                  _T1LOAD   0x00004e       data     extern 6060.asm
+             _T1DATA0bits   0x00004f       data     extern 6060.asm
+                 _T1DATA0   0x00004f       data     extern 6060.asm
+                   _cinit   0x0002ee    program     extern  
+ 
