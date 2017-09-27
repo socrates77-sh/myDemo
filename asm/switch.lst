@@ -1,0 +1,629 @@
+gpasm-2.0.0_beta2 (Aug 27 2017)switch.asm         2017-9-25  14:29:50          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.0.0 (Sep 11 2017) (MINGW32)
+                      00004 ; This file was generated Mon Sep 25 14:11:03 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC30/MC32 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "switch.c"
+Warning[215]: Processor superseded by command line.
+                      00009         list    p=3221
+                      00010         radix dec
+                      00011         include "mc32p21.inc"
+                      00001                 LIST
+                      00002 ;mc32p21.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00261                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         
+                      00016 ;--------------------------------------------------------
+                      00017 ; global declarations
+                      00018 ;--------------------------------------------------------
+                      00019 ;       global  _fun1
+                      00020 ;       global  _main
+                      00021 ;       global  _rom
+                      00022 ;
+                      00023 
+                      00024 
+                      00025 
+                      00026 
+                      00027 ;--------------------------------------------------------
+                      00028 ; global definitions
+                      00029 ;--------------------------------------------------------
+                      00030 ;--------------------------------------------------------
+                      00031 ; absolute symbol definitions
+                      00032 ;--------------------------------------------------------
+                      00033 ;--------------------------------------------------------
+                      00034 ; compiler-defined variables
+                      00035 ;--------------------------------------------------------
+                      00036 UDL_switch_0    udata
+0000                  00037 r0x1000 res     1
+                      00038 ;--------------------------------------------------------
+                      00039 ; initialized data
+                      00040 ;--------------------------------------------------------
+                      00041 
+                      00042 ID_switch_0     code
+0000                  00043 _rom
+0000   3B01           00044         retai 0x01
+0001   3B02           00045         retai 0x02
+0002   3B00           00046         retai 0x00
+0003   3B00           00047         retai 0x00
+0004   3B00           00048         retai 0x00
+0005   3B00           00049         retai 0x00
+0006   3B00           00050         retai 0x00
+0007   3B00           00051         retai 0x00
+0008   3B00           00052         retai 0x00
+0009   3B00           00053         retai 0x00
+000A   3B00           00054         retai 0x00
+000B   3B00           00055         retai 0x00
+000C   3B00           00056         retai 0x00
+000D   3B00           00057         retai 0x00
+000E   3B00           00058         retai 0x00
+000F   3B00           00059         retai 0x00
+0010   3B00           00060         retai 0x00
+0011   3B00           00061         retai 0x00
+0012   3B00           00062         retai 0x00
+0013   3B00           00063         retai 0x00
+0014   3B00           00064         retai 0x00
+0015   3B00           00065         retai 0x00
+0016   3B00           00066         retai 0x00
+0017   3B00           00067         retai 0x00
+0018   3B00           00068         retai 0x00
+0019   3B00           00069         retai 0x00
+001A   3B00           00070         retai 0x00
+001B   3B00           00071         retai 0x00
+001C   3B00           00072         retai 0x00
+001D   3B00           00073         retai 0x00
+001E   3B00           00074         retai 0x00
+001F   3B00           00075         retai 0x00
+0020   3B00           00076         retai 0x00
+0021   3B00           00077         retai 0x00
+0022   3B00           00078         retai 0x00
+0023   3B00           00079         retai 0x00
+0024   3B00           00080         retai 0x00
+0025   3B00           00081         retai 0x00
+0026   3B00           00082         retai 0x00
+0027   3B00           00083         retai 0x00
+0028   3B00           00084         retai 0x00
+0029   3B00           00085         retai 0x00
+002A   3B00           00086         retai 0x00
+002B   3B00           00087         retai 0x00
+002C   3B00           00088         retai 0x00
+002D   3B00           00089         retai 0x00
+002E   3B00           00090         retai 0x00
+002F   3B00           00091         retai 0x00
+0030   3B00           00092         retai 0x00
+0031   3B00           00093         retai 0x00
+0032   3B00           00094         retai 0x00
+0033   3B00           00095         retai 0x00
+0034   3B00           00096         retai 0x00
+0035   3B00           00097         retai 0x00
+0036   3B00           00098         retai 0x00
+0037   3B00           00099         retai 0x00
+0038   3B00           00100         retai 0x00
+0039   3B00           00101         retai 0x00
+003A   3B00           00102         retai 0x00
+003B   3B00           00103         retai 0x00
+003C   3B00           00104         retai 0x00
+003D   3B00           00105         retai 0x00
+003E   3B00           00106         retai 0x00
+003F   3B00           00107         retai 0x00
+0040   3B00           00108         retai 0x00
+0041   3B00           00109         retai 0x00
+0042   3B00           00110         retai 0x00
+0043   3B00           00111         retai 0x00
+0044   3B00           00112         retai 0x00
+0045   3B00           00113         retai 0x00
+0046   3B00           00114         retai 0x00
+0047   3B00           00115         retai 0x00
+0048   3B00           00116         retai 0x00
+0049   3B00           00117         retai 0x00
+004A   3B00           00118         retai 0x00
+004B   3B00           00119         retai 0x00
+004C   3B00           00120         retai 0x00
+004D   3B00           00121         retai 0x00
+004E   3B00           00122         retai 0x00
+004F   3B00           00123         retai 0x00
+0050   3B00           00124         retai 0x00
+0051   3B00           00125         retai 0x00
+0052   3B00           00126         retai 0x00
+0053   3B00           00127         retai 0x00
+0054   3B00           00128         retai 0x00
+0055   3B00           00129         retai 0x00
+0056   3B00           00130         retai 0x00
+0057   3B00           00131         retai 0x00
+0058   3B00           00132         retai 0x00
+0059   3B00           00133         retai 0x00
+005A   3B00           00134         retai 0x00
+005B   3B00           00135         retai 0x00
+005C   3B00           00136         retai 0x00
+005D   3B00           00137         retai 0x00
+005E   3B00           00138         retai 0x00
+005F   3B00           00139         retai 0x00
+0060   3B00           00140         retai 0x00
+0061   3B00           00141         retai 0x00
+0062   3B00           00142         retai 0x00
+0063   3B00           00143         retai 0x00
+0064   3B00           00144         retai 0x00
+0065   3B00           00145         retai 0x00
+0066   3B00           00146         retai 0x00
+0067   3B00           00147         retai 0x00
+0068   3B00           00148         retai 0x00
+0069   3B00           00149         retai 0x00
+006A   3B00           00150         retai 0x00
+006B   3B00           00151         retai 0x00
+006C   3B00           00152         retai 0x00
+006D   3B00           00153         retai 0x00
+006E   3B00           00154         retai 0x00
+006F   3B00           00155         retai 0x00
+0070   3B00           00156         retai 0x00
+0071   3B00           00157         retai 0x00
+0072   3B00           00158         retai 0x00
+0073   3B00           00159         retai 0x00
+0074   3B00           00160         retai 0x00
+0075   3B00           00161         retai 0x00
+0076   3B00           00162         retai 0x00
+0077   3B00           00163         retai 0x00
+0078   3B00           00164         retai 0x00
+0079   3B00           00165         retai 0x00
+007A   3B00           00166         retai 0x00
+007B   3B00           00167         retai 0x00
+007C   3B00           00168         retai 0x00
+007D   3B00           00169         retai 0x00
+007E   3B00           00170         retai 0x00
+007F   3B00           00171         retai 0x00
+0080   3B00           00172         retai 0x00
+0081   3B00           00173         retai 0x00
+0082   3B00           00174         retai 0x00
+0083   3B00           00175         retai 0x00
+0084   3B00           00176         retai 0x00
+0085   3B00           00177         retai 0x00
+0086   3B00           00178         retai 0x00
+0087   3B00           00179         retai 0x00
+0088   3B00           00180         retai 0x00
+0089   3B00           00181         retai 0x00
+008A   3B00           00182         retai 0x00
+008B   3B00           00183         retai 0x00
+008C   3B00           00184         retai 0x00
+008D   3B00           00185         retai 0x00
+008E   3B00           00186         retai 0x00
+008F   3B00           00187         retai 0x00
+0090   3B00           00188         retai 0x00
+0091   3B00           00189         retai 0x00
+0092   3B00           00190         retai 0x00
+0093   3B00           00191         retai 0x00
+0094   3B00           00192         retai 0x00
+0095   3B00           00193         retai 0x00
+0096   3B00           00194         retai 0x00
+0097   3B00           00195         retai 0x00
+0098   3B00           00196         retai 0x00
+0099   3B00           00197         retai 0x00
+009A   3B00           00198         retai 0x00
+009B   3B00           00199         retai 0x00
+009C   3B00           00200         retai 0x00
+009D   3B00           00201         retai 0x00
+009E   3B00           00202         retai 0x00
+009F   3B00           00203         retai 0x00
+00A0   3B00           00204         retai 0x00
+00A1   3B00           00205         retai 0x00
+00A2   3B00           00206         retai 0x00
+00A3   3B00           00207         retai 0x00
+00A4   3B00           00208         retai 0x00
+00A5   3B00           00209         retai 0x00
+00A6   3B00           00210         retai 0x00
+00A7   3B00           00211         retai 0x00
+00A8   3B00           00212         retai 0x00
+00A9   3B00           00213         retai 0x00
+00AA   3B00           00214         retai 0x00
+00AB   3B00           00215         retai 0x00
+00AC   3B00           00216         retai 0x00
+00AD   3B00           00217         retai 0x00
+00AE   3B00           00218         retai 0x00
+00AF   3B00           00219         retai 0x00
+00B0   3B00           00220         retai 0x00
+00B1   3B00           00221         retai 0x00
+00B2   3B00           00222         retai 0x00
+00B3   3B00           00223         retai 0x00
+00B4   3B00           00224         retai 0x00
+00B5   3B00           00225         retai 0x00
+00B6   3B00           00226         retai 0x00
+00B7   3B00           00227         retai 0x00
+00B8   3B00           00228         retai 0x00
+00B9   3B00           00229         retai 0x00
+00BA   3B00           00230         retai 0x00
+00BB   3B00           00231         retai 0x00
+00BC   3B00           00232         retai 0x00
+00BD   3B00           00233         retai 0x00
+00BE   3B00           00234         retai 0x00
+00BF   3B00           00235         retai 0x00
+00C0   3B00           00236         retai 0x00
+00C1   3B00           00237         retai 0x00
+00C2   3B00           00238         retai 0x00
+00C3   3B00           00239         retai 0x00
+00C4   3B00           00240         retai 0x00
+00C5   3B00           00241         retai 0x00
+00C6   3B00           00242         retai 0x00
+00C7   3B00           00243         retai 0x00
+00C8   3B00           00244         retai 0x00
+00C9   3B00           00245         retai 0x00
+00CA   3B00           00246         retai 0x00
+00CB   3B00           00247         retai 0x00
+00CC   3B00           00248         retai 0x00
+00CD   3B00           00249         retai 0x00
+00CE   3B00           00250         retai 0x00
+00CF   3B00           00251         retai 0x00
+00D0   3B00           00252         retai 0x00
+00D1   3B00           00253         retai 0x00
+00D2   3B00           00254         retai 0x00
+00D3   3B00           00255         retai 0x00
+00D4   3B00           00256         retai 0x00
+00D5   3B00           00257         retai 0x00
+00D6   3B00           00258         retai 0x00
+00D7   3B00           00259         retai 0x00
+00D8   3B00           00260         retai 0x00
+00D9   3B00           00261         retai 0x00
+00DA   3B00           00262         retai 0x00
+00DB   3B00           00263         retai 0x00
+00DC   3B00           00264         retai 0x00
+00DD   3B00           00265         retai 0x00
+00DE   3B00           00266         retai 0x00
+00DF   3B00           00267         retai 0x00
+00E0   3B00           00268         retai 0x00
+00E1   3B00           00269         retai 0x00
+00E2   3B00           00270         retai 0x00
+00E3   3B00           00271         retai 0x00
+00E4   3B00           00272         retai 0x00
+00E5   3B00           00273         retai 0x00
+00E6   3B00           00274         retai 0x00
+00E7   3B00           00275         retai 0x00
+00E8   3B00           00276         retai 0x00
+00E9   3B00           00277         retai 0x00
+00EA   3B00           00278         retai 0x00
+00EB   3B00           00279         retai 0x00
+00EC   3B00           00280         retai 0x00
+00ED   3B00           00281         retai 0x00
+00EE   3B00           00282         retai 0x00
+00EF   3B00           00283         retai 0x00
+00F0   3B00           00284         retai 0x00
+00F1   3B00           00285         retai 0x00
+00F2   3B00           00286         retai 0x00
+                      00287 
+                      00288 
+                      00289 ;@Allocation info for local variables in function 'fun1'
+                      00290 ;@fun1 fun1                      Allocated to registers ;size:2
+                      00291 ;@fun1 STATUSbits                Allocated to registers ;size:1
+                      00292 ;@fun1 MCRbits                   Allocated to registers ;size:1
+                      00293 ;@fun1 INTEbits                  Allocated to registers ;size:1
+                      00294 ;@fun1 INTFbits                  Allocated to registers ;size:1
+                      00295 ;@fun1 IOP0bits                  Allocated to registers ;size:1
+                      00296 ;@fun1 OEP0bits                  Allocated to registers ;size:1
+                      00297 ;@fun1 PUP0bits                  Allocated to registers ;size:1
+                      00298 ;@fun1 ANSELbits                 Allocated to registers ;size:1
+                      00299 ;@fun1 IOP1bits                  Allocated to registers ;size:1
+                      00300 ;@fun1 OEP1bits                  Allocated to registers ;size:1
+                      00301 ;@fun1 PUP1bits                  Allocated to registers ;size:1
+                      00302 ;@fun1 KBIMbits                  Allocated to registers ;size:1
+                      00303 ;@fun1 T0CRbits                  Allocated to registers ;size:1
+                      00304 ;@fun1 T1CRbits                  Allocated to registers ;size:1
+                      00305 ;@fun1 LVDCRbits                 Allocated to registers ;size:1
+                      00306 ;@fun1 OSCMbits                  Allocated to registers ;size:1
+                      00307 ;@fun1 ADCR0bits                 Allocated to registers ;size:1
+                      00308 ;@fun1 ADCR1bits                 Allocated to registers ;size:1
+                      00309 ;@fun1 n                         Allocated to registers r0x1000 ;size:1
+                      00310 ;@fun1 INDF                      Allocated to registers ;size:1
+                      00311 ;@fun1 INDF0                     Allocated to registers ;size:1
+                      00312 ;@fun1 INDF1                     Allocated to registers ;size:1
+                      00313 ;@fun1 INDF2                     Allocated to registers ;size:1
+                      00314 ;@fun1 HIBYTE                    Allocated to registers ;size:1
+                      00315 ;@fun1 FSR                       Allocated to registers ;size:1
+                      00316 ;@fun1 FSR0                      Allocated to registers ;size:1
+                      00317 ;@fun1 FSR1                      Allocated to registers ;size:1
+                      00318 ;@fun1 PCL                       Allocated to registers ;size:1
+                      00319 ;@fun1 STATUS                    Allocated to registers ;size:1
+                      00320 ;@fun1 MCR                       Allocated to registers ;size:1
+                      00321 ;@fun1 INDF3                     Allocated to registers ;size:1
+                      00322 ;@fun1 INTE                      Allocated to registers ;size:1
+                      00323 ;@fun1 INTF                      Allocated to registers ;size:1
+                      00324 ;@fun1 IOP0                      Allocated to registers ;size:1
+                      00325 ;@fun1 OEP0                      Allocated to registers ;size:1
+                      00326 ;@fun1 PUP0                      Allocated to registers ;size:1
+                      00327 ;@fun1 ANSEL                     Allocated to registers ;size:1
+                      00328 ;@fun1 IOP1                      Allocated to registers ;size:1
+                      00329 ;@fun1 OEP1                      Allocated to registers ;size:1
+                      00330 ;@fun1 PUP1                      Allocated to registers ;size:1
+                      00331 ;@fun1 KBIM                      Allocated to registers ;size:1
+                      00332 ;@fun1 T0CR                      Allocated to registers ;size:1
+                      00333 ;@fun1 T0CNT                     Allocated to registers ;size:1
+                      00334 ;@fun1 T0LOAD                    Allocated to registers ;size:1
+                      00335 ;@fun1 T0DATA                    Allocated to registers ;size:1
+                      00336 ;@fun1 T1CR                      Allocated to registers ;size:1
+                      00337 ;@fun1 T1CNT                     Allocated to registers ;size:1
+                      00338 ;@fun1 T1LOAD                    Allocated to registers ;size:1
+                      00339 ;@fun1 T1DATA                    Allocated to registers ;size:1
+                      00340 ;@fun1 LVDCR                     Allocated to registers ;size:1
+                      00341 ;@fun1 OSCM                      Allocated to registers ;size:1
+                      00342 ;@fun1 ADCR0                     Allocated to registers ;size:1
+                      00343 ;@fun1 ADCR1                     Allocated to registers ;size:1
+                      00344 ;@fun1 ADRH                      Allocated to registers ;size:1
+                      00345 ;@fun1 ADRL                      Allocated to registers ;size:1
+                      00346 ;@fun1 OSCAL                     Allocated to registers ;size:1
+                      00347 ;@end Allocation info for local variables in function 'fun1';
+                      00348 ;@Allocation info for local variables in function 'main'
+                      00349 ;@main i                         Allocated to registers ;size:1
+                      00350 ;@end Allocation info for local variables in function 'main';
+                      00351 
+                      00352 ;--------------------------------------------------------
+                      00353 ; overlayable items in internal ram 
+                      00354 ;--------------------------------------------------------
+                      00355 ;       udata_ovr
+                      00356 ;--------------------------------------------------------
+                      00357 ; reset vector 
+                      00358 ;--------------------------------------------------------
+                      00359 STARTUP code 0x0000
+0000   A000           00360         goto    _main
+                      00361 ;--------------------------------------------------------
+                      00362 ; code
+                      00363 ;--------------------------------------------------------
+                      00364 code_switch     code
+                      00365 ;***
+                      00366 ;  pBlock Stats: dbName = M
+                      00367 ;***
+                      00368 ;entry:  _main  ;Function start
+                      00369 ; 2 exit points
+                      00370 ;has an exit
+                      00371 ;functions called:
+                      00372 ;   _fun1
+                      00373 ;   _fun1
+                      00374 ;; Starting pCode block
+0000                  00375 _main   ;Function start
+                      00376 ; 2 exit points
+                      00377 ;       .line   31; "switch.c"  fun1(i);
+0000   3C03           00378         MOVAI   0x03
+0001   8000           00379         CALL    _fun1
+0002   000C           00380         RETURN  
+                      00381 ; exit point of _main
+                      00382 
+                      00383 ;***
+                      00384 ;  pBlock Stats: dbName = C
+                      00385 ;***
+                      00386 ;entry:  _fun1  ;Function start
+                      00387 ; 2 exit points
+                      00388 ;has an exit
+                      00389 ;1 compiler assigned register :
+                      00390 ;   r0x1000
+                      00391 ;; Starting pCode block
+0003                  00392 _fun1   ;Function start
+                      00393 ; 2 exit points
+                      00394 ;       .line   5; "switch.c"   void fun1(unsigned char n)
+0003   5600           00395         MOVRA   r0x1000
+                      00396 ;;swapping arguments (AOP_TYPEs 1/2)
+                      00397 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      00398 ;       .line   7; "switch.c"   switch(n)
+0004   3C04           00399         MOVAI   0x04
+0005   4800           00400         RSUBAR  r0x1000
+0006   F187           00401         JBCLR   STATUS,0
+0007   A000           00402         GOTO    _00111_DS_
+                      00403 ;;genSkipc:3194: created from rifx:00CC608C
+0008   3C00           00404         MOVAI   _00116_DS_
+0009   7C00           00405         ADDAR   r0x1000
+000A   5786           00406         MOVRA   PCL
+000B                  00407 _00116_DS_
+000B   A000           00408         GOTO    _00105_DS_
+000C   A000           00409         GOTO    _00106_DS_
+000D   A000           00410         GOTO    _00107_DS_
+000E   A000           00411         GOTO    _00108_DS_
+000F                  00412 _00105_DS_
+                      00413 ;       .line   10; "switch.c"  IOP0=1;
+000F   3C01           00414         MOVAI   0x01
+0010   5790           00415         MOVRA   IOP0
+                      00416 ;       .line   11; "switch.c"  break;                  
+0011   A000           00417         GOTO    _00111_DS_
+0012                  00418 _00106_DS_
+                      00419 ;       .line   13; "switch.c"  IOP0=0;         
+0012   7790           00420         CLRR    IOP0
+                      00421 ;       .line   14; "switch.c"  break;          
+0013   A000           00422         GOTO    _00111_DS_
+0014                  00423 _00107_DS_
+                      00424 ;       .line   16; "switch.c"  IOP1=1;
+0014   3C01           00425         MOVAI   0x01
+0015   5794           00426         MOVRA   IOP1
+                      00427 ;       .line   17; "switch.c"  break;
+0016   A000           00428         GOTO    _00111_DS_
+0017                  00429 _00108_DS_
+                      00430 ;       .line   19; "switch.c"  IOP1=0;
+0017   7794           00431         CLRR    IOP1
+0018                  00432 _00111_DS_
+                      00433 ;       .line   23; "switch.c"  }
+0018   000C           00434         RETURN  
+                      00435 ; exit point of _fun1
+                      00436 
+                      00437 
+                      00438 ;       code size estimation:
+                      00439 ;          25+    0 =    25 instructions (   50 byte)
+                      00440 
+                      00441         end
+gpasm-2.0.0_beta2 (Aug 27 2017)switch.asm         2017-9-25  14:29:50          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBIE                              00000004
+KBIF                              00000004
+KBIM                              00000197
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+LFEN                              00000001
+LVDCR                             000001AD
+LVDEN                             00000007
+LVDF                              00000000
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCAL                             000001FB
+OSCM                              000001AE
+P00                               00000000
+P00ANS                            00000000
+P00OE                             00000000
+P00PU                             00000000
+P01                               00000001
+P01ANS                            00000001
+P01OE                             00000001
+P01PU                             00000001
+P02                               00000002
+P02ANS                            00000002
+P02OE                             00000002
+P02PU                             00000002
+P03                               00000003
+P03ANS                            00000003
+P03OE                             00000003
+P03PU                             00000003
+P04                               00000004
+P04ANS                            00000004
+P04OE                             00000004
+P04PU                             00000004
+P10                               00000000
+P10OE                             00000000
+P10PU                             00000000
+P11                               00000001
+P11OE                             00000001
+P11PU                             00000001
+P12                               00000002
+P12ANS                            00000005
+P12OE                             00000002
+P12PU                             00000002
+P13                               00000003
+P13ANS                            00000006
+P13OE                             00000003
+P13PU                             00000003
+P14                               00000004
+P14OE                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OE                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OE                             00000006
+P16PU                             00000006
+PCL                               00000186
+PD                                00000004
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STATUS                            00000187
+STBH                              00000004
+STBL                              00000005
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+Z                                 00000002
+_00105_DS_                        0000000F
+_00106_DS_                        00000012
+_00107_DS_                        00000014
+_00108_DS_                        00000017
+_00111_DS_                        00000018
+_00116_DS_                        0000000B
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_CP_ALL                           00007FFF
+_FCPU_128T                        0000FFEF
+_FCPU_16T                         0000FFBF
+_FCPU_256T                        0000FFFF
+_FCPU_2T                          0000FF8F
+_FCPU_32T                         0000FFCF
+_FCPU_4T                          0000FF9F
+_FCPU_64T                         0000FFDF
+_FCPU_8T                          0000FFAF
+_HRC_LRC                          0000FCFF
+_HRC_LXT                          0000FDFF
+_HXT_LRC                          0000FEFF
+_MCLR_OFF                         0000FF7F
+_MCLR_ON                          0000FFFF
+_PTWRT_16_1024                    0000FFF7
+_PTWRT_16_16                      0000DFF7
+_PTWRT_256_256                    0000DFFF
+_PTWRT_256_4096                   0000FFFF
+_PTWRT_4_4                        0000DFF3
+_PTWRT_4_512                      0000FFF3
+_PTWRT_64_2048                    0000FFFB
+_PTWRT_64_64                      0000DFFB
+_VLVR_160                         0000E3FF
+_VLVR_185                         0000E7FF
+_VLVR_205                         0000EBFF
+_VLVR_218                         0000EFFF
+_VLVR_232                         0000F3FF
+_VLVR_245                         0000F7FF
+_VLVR_305                         0000FBFF
+_VLVR_360                         0000FFFF
+_WDT_ALWAYS_OFF                   0000FFFC
+_WDT_ALWAYS_ON                    0000FFFF
+_WDT_SLEEP_OFF                    0000FFFD
+__32P21                           00000001
+_fun1                             00000003
+_main                             00000000
+_rom                              00000000
+r0x1000                           00000000
+
+Errors   :     0
+Warnings :     1 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
