@@ -1,14 +1,14 @@
 ;--------------------------------------------------------
 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
-; Version 1.0.0 (Sep 27 2017) (MINGW32)
-; This file was generated Wed Sep 27 18:12:49 2017
+; Version 1.0.0 (Sep 28 2017) (MINGW32)
+; This file was generated Thu Sep 28 13:57:53 2017
 ;--------------------------------------------------------
 ; MC35 port for the RISC core
 ;--------------------------------------------------------
 ;	.file	"main.c"
-	list	p=3221
+	list	p=7030
 	radix dec
-	include "3221.inc"
+	include "7030.inc"
 ;--------------------------------------------------------
 ; external declarations
 ;--------------------------------------------------------

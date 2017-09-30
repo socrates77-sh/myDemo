@@ -1,11 +1,11 @@
 ;--------------------------------------------------------
 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
 ; Version 1.0.0 (Sep 28 2017) (MINGW32)
-; This file was generated Thu Sep 28 10:51:51 2017
+; This file was generated Sat Sep 30 12:13:14 2017
 ;--------------------------------------------------------
 ; MC35 port for the RISC core
 ;--------------------------------------------------------
-;	.file	"asm.c"
+;	.file	"incr.c"
 	list	p=7030
 	radix dec
 	include "7030.inc"
@@ -67,13 +67,10 @@
 	extern	_ADRH
 	extern	_ADRL
 	extern	_OSCAL
-	extern	__gptrget1
 ;--------------------------------------------------------
 ; global declarations
 ;--------------------------------------------------------
 	global	_main
-	global	_c_a
-	global	_c_b
 
 	global STK06
 	global STK05
@@ -95,25 +92,19 @@ STK00	res 1
 ;--------------------------------------------------------
 ; global definitions
 ;--------------------------------------------------------
-UD_asm_0	udata
-_c_a	res	1
-
 ;--------------------------------------------------------
 ; absolute symbol definitions
 ;--------------------------------------------------------
 ;--------------------------------------------------------
 ; compiler-defined variables
 ;--------------------------------------------------------
-UDL_asm_0	udata
+UDL_incr_0	udata
+r0x1000	res	1
 r0x1001	res	1
+r0x1002	res	1
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
-
-ID_asm_0	code
-_c_b
-	retai 0x64
-
 
 ;@Allocation info for local variables in function 'main'
 ;@main main                      Allocated to registers ;size:2
@@ -135,7 +126,9 @@ _c_b
 ;@main OSCMbits                  Allocated to registers ;size:1
 ;@main ADCR0bits                 Allocated to registers ;size:1
 ;@main ADCR1bits                 Allocated to registers ;size:1
-;@main c_a                       Allocated to registers ;size:1
+;@main i                         Allocated to registers r0x1001 ;size:1
+;@main a                         Allocated to registers r0x1000 ;size:1
+;@main b                         Allocated to registers r0x1000 ;size:1
 ;@main INDF                      Allocated to registers ;size:1
 ;@main INDF0                     Allocated to registers ;size:1
 ;@main INDF1                     Allocated to registers ;size:1
@@ -187,62 +180,60 @@ STARTUP	code 0x0000
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
-code_asm	code
+code_incr	code
 ;***
 ;  pBlock Stats: dbName = M
 ;***
 ;entry:  _main	;Function start
 ; 2 exit points
 ;has an exit
-;functions called:
-;   __gptrget1
-;   __gptrget1
 ;3 compiler assigned registers:
-;   STK01
-;   STK00
+;   r0x1000
 ;   r0x1001
+;   r0x1002
 ;; Starting pCode block
 _main	;Function start
 ; 2 exit points
-;	.line	8; "asm.c"	c_a = MCR;
+;	.line	11; "incr.c"	a = MCR;
 	MOVAR	_MCR
-	MOVRA	_c_a
-;;genAssign from CODESPACE
-;	.line	11; "asm.c"	IOP0 = c_a + c_b;
-	MOVAR	low (_c_b+0)
-	MOVRA	STK01
-	MOVAR	low (_c_b+1)
-	MOVRA	STK00
-	MOVAI	0x80
-	CALL	__gptrget1
-	MOVRA	r0x1001
-	MOVAR	r0x1001
-	ADDAR	_c_a
+	MOVRA	r0x1000
+;	.line	12; "incr.c"	IOP0 = a;
+	MOVAR	r0x1000
 	MOVRA	_IOP0
-;	.line	12; "asm.c"	IOP1 = c_a - c_b;
-	MOVAR	r0x1001
-	RSUBAR	_c_a
+;	.line	13; "incr.c"	b = a + 1;
+	MOVAI	0x01
+	ADDRA	r0x1000
+;	.line	14; "incr.c"	IOP1 = b;
+	MOVAR	r0x1000
 	MOVRA	_IOP1
-;	.line	17; "asm.c"	__endasm;
-	movai 100
-	movra IOP1
-	
-;	.line	19; "asm.c"	__asm__("stop");
-	stop
-;	.line	21; "asm.c"	Nop();
-	nop
-;	.line	22; "asm.c"	ClrWdt();
-	clrwdt
-;	.line	23; "asm.c"	Stop();
-	stop
+;	.line	28; "incr.c"	for(i=0; i++; i<10)
+	CLRR	r0x1001
+_00108_DS_
+	MOVAR	r0x1001
+	MOVRA	r0x1002
+	MOVAI	0x01
+	ADDRA	r0x1001
+	MOVAI	0x00
+	ORAR	r0x1002
+	JBCLR	STATUS,2
+	GOTO	_00106_DS_
+;	.line	30; "incr.c"	IOP0 = i;
+	MOVAR	r0x1001
+	MOVRA	_IOP0
+;	.line	32; "incr.c"	b = a + 1;
+	JZAR	r0x1001
+	NOP	
+	MOVRA	_IOP1
+;	.line	28; "incr.c"	for(i=0; i++; i<10)
+	GOTO	_00108_DS_
 _00106_DS_
-;	.line	25; "asm.c"	while(1);
+;	.line	42; "incr.c"	while(1);   
 	GOTO	_00106_DS_
 	RETURN	
 ; exit point of _main
 
 
 ;	code size estimation:
-;	   17+    0 =    17 instructions (   34 byte)
+;	   25+    0 =    25 instructions (   50 byte)
 
 	end

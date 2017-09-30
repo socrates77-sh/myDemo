@@ -1,4 +1,4 @@
-gpasm-2.0.0_beta2 (Aug 27 2017)main.asm           2017-9-27  18:12:49          PAGE  1
+gpasm-2.0.0_beta2 (Aug 27 2017)main.asm           2017-9-28  13:57:53          PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -6,15 +6,15 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 
                       00001 ;--------------------------------------------------------
                       00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
-                      00003 ; Version 1.0.0 (Sep 27 2017) (MINGW32)
-                      00004 ; This file was generated Wed Sep 27 18:12:49 2017
+                      00003 ; Version 1.0.0 (Sep 28 2017) (MINGW32)
+                      00004 ; This file was generated Thu Sep 28 13:57:53 2017
                       00005 ;--------------------------------------------------------
                       00006 ; MC35 port for the RISC core
                       00007 ;--------------------------------------------------------
                       00008 ;       .file   "main.c"
-                      00009         list    p=3221
+                      00009         list    p=7030
                       00010         radix dec
-                      00011         include "3221.inc"
+                      00011         include "7030.inc"
                       00001 
                       00002 ;==========================================================================
                       00003 ;
@@ -568,7 +568,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00180 ; reset vector 
                       00181 ;--------------------------------------------------------
                       00182 STARTUP code 0x0000
-0000   A000           00183         goto    _main
+0000   8000           00183         goto    _main
                       00184 ;--------------------------------------------------------
                       00185 ; code
                       00186 ;--------------------------------------------------------
@@ -586,21 +586,22 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000                  00198 _main   ;Function start
                       00199 ; 2 exit points
                       00200 ;       .line   21; "main.c"    gVar = 18;
-0000   3C12           00201         MOVAI   0x12
-0001   5600           00202         MOVRA   _gVar
+0000   2D12           00201         MOVAI   0x12
+0001   1F00           00202         MOVRA   _gVar
                       00203 ;       .line   22; "main.c"    fun1();
-0002   8000           00204         CALL    _fun1
+0002   C000           00204         CALL    _fun1
                       00205 ;       .line   24; "main.c"    IOP0 = 0XFF;
-0003   3CFF           00206         MOVAI   0xff
-0004   5600           00207         MOVRA   _IOP0
+0003   2DFF           00206         MOVAI   0xff
+0004   1F00           00207         MOVRA   _IOP0
 0005                  00208 _00114_DS_
                       00209 ;       .line   28; "main.c"    IOP0=~IOP0;
-0005   7000           00210         COMAR   _IOP0
-0006   5600           00211         MOVRA   _IOP0
+Error[182]  : Unknown opcode "COMAR"
+                      00210         COMAR   _IOP0
+0005   1F00           00211         MOVRA   _IOP0
                       00212 ;       .line   29; "main.c"    P00 = ~P00;       
-0007   C000           00213         BSET    _IOP0bits,0
-0008   A000           00214         GOTO    _00114_DS_
-0009   000C           00215         RETURN  
+0006   4800           00213         BSET    _IOP0bits,0
+0007   8000           00214         GOTO    _00114_DS_
+0008   0E00           00215         RETURN  
                       00216 ; exit point of _main
                       00217 
                       00218 ;***
@@ -612,25 +613,26 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00224 ;1 compiler assigned register :
                       00225 ;   r0x1001
                       00226 ;; Starting pCode block
-000A                  00227 _fun1   ;Function start
+0009                  00227 _fun1   ;Function start
                       00228 ; 2 exit points
                       00229 ;       .line   8; "main.c"     lVar = gVar-1;
-000A   6C00           00230         DECAR   _gVar
-000B   5600           00231         MOVRA   r0x1001
+Error[182]  : Unknown opcode "DECAR"
+                      00230         DECAR   _gVar
+0009   1F00           00231         MOVRA   r0x1001
                       00232 ;       .line   9; "main.c"     if(lVar==18)
-000C   5800           00233         MOVAR   r0x1001
-000D   3912           00234         XORAI   0x12
-000E   E587           00235         JBSET   STATUS,2
-000F   A000           00236         GOTO    _00106_DS_
+000A   1E00           00233         MOVAR   r0x1001
+000B   1D12           00234         XORAI   0x12
+000C   5A87           00235         JBSET   STATUS,2
+000D   8000           00236         GOTO    _00106_DS_
                       00237 ;       .line   11; "main.c"    IOP1 = 0;
-0010   7600           00238         CLRR    _IOP1
-0011   A000           00239         GOTO    _00108_DS_
-0012                  00240 _00106_DS_
+000E   2B00           00238         CLRR    _IOP1
+000F   8000           00239         GOTO    _00108_DS_
+0010                  00240 _00106_DS_
                       00241 ;       .line   15; "main.c"    IOP1 = 1;
-0012   3C01           00242         MOVAI   0x01
-0013   5600           00243         MOVRA   _IOP1
-0014                  00244 _00108_DS_
-0014   000C           00245         RETURN  
+0010   2D01           00242         MOVAI   0x01
+0011   1F00           00243         MOVRA   _IOP1
+0012                  00244 _00108_DS_
+0012   0E00           00245         RETURN  
                       00246 ; exit point of _fun1
                       00247 
                       00248 
@@ -638,7 +640,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00250 ;          21+    0 =    21 instructions (   42 byte)
                       00251 
                       00252         end
-gpasm-2.0.0_beta2 (Aug 27 2017)main.asm           2017-9-27  18:12:49          PAGE  2
+gpasm-2.0.0_beta2 (Aug 27 2017)main.asm           2017-9-28  13:57:53          PAGE  2
 
 
 SYMBOL TABLE
@@ -686,8 +688,8 @@ T1CNT                             000001A5
 T1CR                              000001A4
 T1DATA                            000001A7
 T1LOAD                            000001A6
-_00106_DS_                        00000012
-_00108_DS_                        00000014
+_00106_DS_                        00000010
+_00108_DS_                        00000012
 _00114_DS_                        00000005
 _ADCR0                            00000000
 _ADCR0bits                        00000000
@@ -744,8 +746,8 @@ _T1CR                             00000000
 _T1CRbits                         00000000
 _T1DATA                           00000000
 _T1LOAD                           00000000
-__32P21                           00000001
-_fun1                             0000000A
+__32P7030                         00000001
+_fun1                             00000009
 _gVar                             00000000
 _main                             00000000
 r0x1001                           00000000
@@ -998,7 +1000,7 @@ VRS1                              ADCR1,1
 VRS2                              ADCR1,2
 Z                                 STATUS,2
 
-Errors   :     0
+Errors   :     2
 Warnings :     0 reported,     0 suppressed
 Messages :     0 reported,     0 suppressed
 

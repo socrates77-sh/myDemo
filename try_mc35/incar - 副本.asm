@@ -1,11 +1,11 @@
 ;--------------------------------------------------------
 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
 ; Version 1.0.0 (Sep 28 2017) (MINGW32)
-; This file was generated Thu Sep 28 10:51:51 2017
+; This file was generated Thu Sep 28 13:21:05 2017
 ;--------------------------------------------------------
 ; MC35 port for the RISC core
 ;--------------------------------------------------------
-;	.file	"asm.c"
+;	.file	"incar.c"
 	list	p=7030
 	radix dec
 	include "7030.inc"
@@ -67,13 +67,10 @@
 	extern	_ADRH
 	extern	_ADRL
 	extern	_OSCAL
-	extern	__gptrget1
 ;--------------------------------------------------------
 ; global declarations
 ;--------------------------------------------------------
 	global	_main
-	global	_c_a
-	global	_c_b
 
 	global STK06
 	global STK05
@@ -95,25 +92,19 @@ STK00	res 1
 ;--------------------------------------------------------
 ; global definitions
 ;--------------------------------------------------------
-UD_asm_0	udata
-_c_a	res	1
-
 ;--------------------------------------------------------
 ; absolute symbol definitions
 ;--------------------------------------------------------
 ;--------------------------------------------------------
 ; compiler-defined variables
 ;--------------------------------------------------------
-UDL_asm_0	udata
+UDL_incar_0	udata
+r0x1000	res	1
 r0x1001	res	1
+r0x1002	res	1
 ;--------------------------------------------------------
 ; initialized data
 ;--------------------------------------------------------
-
-ID_asm_0	code
-_c_b
-	retai 0x64
-
 
 ;@Allocation info for local variables in function 'main'
 ;@main main                      Allocated to registers ;size:2
@@ -135,7 +126,8 @@ _c_b
 ;@main OSCMbits                  Allocated to registers ;size:1
 ;@main ADCR0bits                 Allocated to registers ;size:1
 ;@main ADCR1bits                 Allocated to registers ;size:1
-;@main c_a                       Allocated to registers ;size:1
+;@main a                         Allocated to registers r0x1000 ;size:1
+;@main b                         Allocated to registers r0x1000 ;size:1
 ;@main INDF                      Allocated to registers ;size:1
 ;@main INDF0                     Allocated to registers ;size:1
 ;@main INDF1                     Allocated to registers ;size:1
@@ -187,57 +179,62 @@ STARTUP	code 0x0000
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
-code_asm	code
+code_incar	code
 ;***
 ;  pBlock Stats: dbName = M
 ;***
 ;entry:  _main	;Function start
 ; 2 exit points
 ;has an exit
-;functions called:
-;   __gptrget1
-;   __gptrget1
-;3 compiler assigned registers:
-;   STK01
-;   STK00
+;4 compiler assigned registers:
+;   r0x1000
 ;   r0x1001
+;   r0x1002
+;   r0x1003
 ;; Starting pCode block
+;;[ICODE] incar.c:4:  _entry($5) :
+;;[ICODE] incar.c:4: 	proc _main [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
 _main	;Function start
 ; 2 exit points
-;	.line	8; "asm.c"	c_a = MCR;
+;;[ICODE] incar.c:9: 	iTemp0 [k2 lr3:5 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _main_a_1_1}[r0x1000 ] := _MCR [k4 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr}
+;	.line	9; "incar.c"	a = MCR;
 	MOVAR	_MCR
-	MOVRA	_c_a
-;;genAssign from CODESPACE
-;	.line	11; "asm.c"	IOP0 = c_a + c_b;
-	MOVAR	low (_c_b+0)
-	MOVRA	STK01
-	MOVAR	low (_c_b+1)
-	MOVRA	STK00
-	MOVAI	0x80
-	CALL	__gptrget1
-	MOVRA	r0x1001
-	MOVAR	r0x1001
-	ADDAR	_c_a
+	MOVRA	r0x1000
+;;[ICODE] incar.c:10: 	_IOP0 [k5 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr} := iTemp0 [k2 lr3:5 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _main_a_1_1}[r0x1000 ]
+;	.line	10; "incar.c"	IOP0 = a;
+	MOVAR	r0x1000
 	MOVRA	_IOP0
-;	.line	12; "asm.c"	IOP1 = c_a - c_b;
-	MOVAR	r0x1001
-	RSUBAR	_c_a
+;;[ICODE] incar.c:11: 	iTemp1 [k6 lr5:15 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _main_b_1_1}[r0x1000 ] = iTemp0 [k2 lr3:5 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _main_a_1_1}[r0x1000 ] + 0x1 {const-unsigned-char literal}
+;	.line	11; "incar.c"	b = a + 1;
+	INCR	r0x1000
+;;[ICODE] incar.c:12: 	_IOP1 [k9 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr} := iTemp1 [k6 lr5:15 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _main_b_1_1}[r0x1000 ]
+;	.line	12; "incar.c"	IOP1 = b;
+	MOVAR	r0x1000
 	MOVRA	_IOP1
-;	.line	17; "asm.c"	__endasm;
-	movai 100
-	movra IOP1
-	
-;	.line	19; "asm.c"	__asm__("stop");
-	stop
-;	.line	21; "asm.c"	Nop();
-	nop
-;	.line	22; "asm.c"	ClrWdt();
-	clrwdt
-;	.line	23; "asm.c"	Stop();
-	stop
+;;[ICODE] incar.c:14: 	iTemp4 [k13 lr8:10 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} near* fixed}[remat] = &[_IOP0bits [k10 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-struct __00000018 fixed}]
+;;[ICODE] incar.c:14: 	iTemp5 [k14 lr10:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} fixed}[r0x1001 ] = @[iTemp4 [k13 lr8:10 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} near* fixed}[remat] + 0x0 {const-unsigned-char literal}]
+;	.line	14; "incar.c"	b += P00;
+	CLRR	r0x1001
+	JBCLR	_IOP0bits,0
+	INCR	r0x1001
+;;[ICODE] incar.c:14: 	iTemp6 [k15 lr11:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x1002 ] = (char fixed)iTemp1 [k6 lr5:15 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _main_b_1_1}[r0x1000 ]
+	MOVAR	r0x1000
+	MOVRA	r0x1002
+;;[ICODE] incar.c:14: 	iTemp7 [k16 lr12:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x1003 ] = (char fixed)iTemp5 [k14 lr10:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} fixed}[r0x1001 ]
+;;101	MOVAR	r0x1001
+;;99	MOVRA	r0x1003
+;;[ICODE] incar.c:14: 	_IOP1 [k9 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr} = iTemp6 [k15 lr11:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x1002 ] + iTemp7 [k16 lr12:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x1003 ]
+;;100	MOVAR	r0x1003
+	MOVAR	r0x1001
+	ADDAR	r0x1002
+	MOVRA	_IOP1
+;;[ICODE] incar.c:31:  _whilebody_0($2) :
+;;[ICODE] incar.c:31: 	 goto _whilebody_0($2)
 _00106_DS_
-;	.line	25; "asm.c"	while(1);
+;	.line	31; "incar.c"	while(1);   
 	GOTO	_00106_DS_
+;;[ICODE] incar.c:31:  _return($4) :
+;;[ICODE] incar.c:31: 	eproc _main [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
 	RETURN	
 ; exit point of _main
 
