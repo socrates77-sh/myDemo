@@ -1,0 +1,674 @@
+gpasm-2.0.0_beta2 (Aug 27 2017)Uart.asm           2017-10-13  17:26:50         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                      00004 ; This file was generated Fri Oct 13 17:26:50 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "Uart.c"
+                      00009         list    p=0311
+                      00010         radix dec
+                      00011         include "0311.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _WorkOnInit
+                      00016         extern  _Detection
+                      00017         extern  _Actuation
+                      00018         extern  _ConsecutiveFive
+                      00019         extern  _init
+                      00020         extern  _ClrrRAM
+                      00021         extern  _KeyScan
+                      00022         extern  _NeedSleep
+                      00023         extern  _STATUSbits
+                      00024         extern  _P0bits
+                      00025         extern  _P1bits
+                      00026         extern  _MCRbits
+                      00027         extern  _KBIMbits
+                      00028         extern  _PDCONbits
+                      00029         extern  _ODCONbits
+                      00030         extern  _PUCONbits
+                      00031         extern  _INTECONbits
+                      00032         extern  _INTFLAGbits
+                      00033         extern  _T0CRbits
+                      00034         extern  _DDR0bits
+                      00035         extern  _DDR1bits
+                      00036         extern  _TMCRbits
+                      00037         extern  _T1CRbits
+                      00038         extern  _WorkONInitStep
+                      00039         extern  _LEDFlashTimes
+                      00040         extern  _LEDFlashSpace
+                      00041         extern  _RXDebounce
+                      00042         extern  _RXCnt
+                      00043         extern  _DetectSpace
+                      00044         extern  _DetectStep
+                      00045         extern  _SleepCnt
+                      00046         extern  _MaxRunTimes
+                      00047         extern  _MaxMotorTimes
+                      00048         extern  _MotorFiveCnt
+                      00049         extern  _PositionDelay
+                      00050         extern  _Flag1
+                      00051         extern  _Flag2
+                      00052         extern  _INDF
+                      00053         extern  _T0CNT
+                      00054         extern  _PCL
+                      00055         extern  _STATUS
+                      00056         extern  _FSR
+                      00057         extern  _P0
+                      00058         extern  _P1
+                      00059         extern  _MCR
+                      00060         extern  _KBIM
+                      00061         extern  _PCLATH
+                      00062         extern  _PDCON
+                      00063         extern  _ODCON
+                      00064         extern  _PUCON
+                      00065         extern  _INTECON
+                      00066         extern  _INTFLAG
+                      00067         extern  _T0CR
+                      00068         extern  _DDR0
+                      00069         extern  _DDR1
+                      00070         extern  _TMCR
+                      00071         extern  _T1CR
+                      00072         extern  _T1CNT
+                      00073         extern  _T1LOAD
+                      00074         extern  _T1DATA
+                      00075         extern  __gptrget1
+                      00076 
+                      00077         extern STK06
+                      00078         extern STK05
+                      00079         extern STK04
+                      00080         extern STK03
+                      00081         extern STK02
+                      00082         extern STK01
+                      00083         extern STK00
+                      00084 ;--------------------------------------------------------
+                      00085 ; global declarations
+                      00086 ;--------------------------------------------------------
+                      00087         global  _UartSendInt
+                      00088         global  _UartSendByte
+                      00089         global  _UartDelay
+                      00090         global  _EndUart
+                      00091         global  _InitUart
+                      00092         global  _UartStep
+                      00093         global  _UartTemp
+                      00094 
+                      00095 ;--------------------------------------------------------
+                      00096 ; global definitions
+                      00097 ;--------------------------------------------------------
+                      00098 UD_Uart_0       udata
+0000                  00099 _UartStep       res     1
+                      00100 
+                      00101 UD_Uart_1       udata
+0000                  00102 _UartTemp       res     1
+                      00103 
+                      00104 ;--------------------------------------------------------
+                      00105 ; absolute symbol definitions
+                      00106 ;--------------------------------------------------------
+                      00107 ;--------------------------------------------------------
+                      00108 ; compiler-defined variables
+                      00109 ;--------------------------------------------------------
+                      00110 UDL_Uart_0      udata
+0000                  00111 r0x1000 res     1
+0000                  00112 r0x1001 res     1
+0001                  00113 r0x1002 res     1
+0001                  00114 r0x1005 res     1
+0002                  00115 r0x1004 res     1
+0002                  00116 r0x1003 res     1
+0003                  00117 r0x1006 res     1
+                      00118 ;--------------------------------------------------------
+                      00119 ; initialized data
+                      00120 ;--------------------------------------------------------
+                      00121 
+                      00122 ;@Allocation info for local variables in function 'InitUart'
+                      00123 ;@InitUart WorkOnInit                Allocated to registers ;size:2
+                      00124 ;@InitUart Detection                 Allocated to registers ;size:2
+                      00125 ;@InitUart Actuation                 Allocated to registers ;size:2
+                      00126 ;@InitUart ConsecutiveFive           Allocated to registers ;size:2
+                      00127 ;@InitUart init                      Allocated to registers ;size:2
+                      00128 ;@InitUart ClrrRAM                   Allocated to registers ;size:2
+                      00129 ;@InitUart KeyScan                   Allocated to registers ;size:2
+                      00130 ;@InitUart NeedSleep                 Allocated to registers ;size:2
+                      00131 ;@InitUart EndUart                   Allocated to registers ;size:2
+                      00132 ;@InitUart UartSendByte              Allocated to registers ;size:2
+                      00133 ;@InitUart UartDelay                 Allocated to registers ;size:2
+                      00134 ;@InitUart UartSendInt               Allocated to registers ;size:2
+                      00135 ;@InitUart STATUSbits                Allocated to registers ;size:1
+                      00136 ;@InitUart P0bits                    Allocated to registers ;size:1
+                      00137 ;@InitUart P1bits                    Allocated to registers ;size:1
+                      00138 ;@InitUart MCRbits                   Allocated to registers ;size:1
+                      00139 ;@InitUart KBIMbits                  Allocated to registers ;size:1
+                      00140 ;@InitUart PDCONbits                 Allocated to registers ;size:1
+                      00141 ;@InitUart ODCONbits                 Allocated to registers ;size:1
+                      00142 ;@InitUart PUCONbits                 Allocated to registers ;size:1
+                      00143 ;@InitUart INTECONbits               Allocated to registers ;size:1
+                      00144 ;@InitUart INTFLAGbits               Allocated to registers ;size:1
+                      00145 ;@InitUart T0CRbits                  Allocated to registers ;size:1
+                      00146 ;@InitUart DDR0bits                  Allocated to registers ;size:1
+                      00147 ;@InitUart DDR1bits                  Allocated to registers ;size:1
+                      00148 ;@InitUart TMCRbits                  Allocated to registers ;size:1
+                      00149 ;@InitUart T1CRbits                  Allocated to registers ;size:1
+                      00150 ;@InitUart WorkONInitStep            Allocated to registers ;size:1
+                      00151 ;@InitUart LEDFlashTimes             Allocated to registers ;size:1
+                      00152 ;@InitUart LEDFlashSpace             Allocated to registers ;size:1
+                      00153 ;@InitUart RXDebounce                Allocated to registers ;size:1
+                      00154 ;@InitUart RXCnt                     Allocated to registers ;size:1
+                      00155 ;@InitUart DetectSpace               Allocated to registers ;size:1
+                      00156 ;@InitUart DetectStep                Allocated to registers ;size:1
+                      00157 ;@InitUart SleepCnt                  Allocated to registers ;size:1
+                      00158 ;@InitUart MaxRunTimes               Allocated to registers ;size:2
+                      00159 ;@InitUart MaxMotorTimes             Allocated to registers ;size:2
+                      00160 ;@InitUart MotorFiveCnt              Allocated to registers ;size:1
+                      00161 ;@InitUart PositionDelay             Allocated to registers ;size:1
+                      00162 ;@InitUart Flag1                     Allocated to registers ;size:1
+                      00163 ;@InitUart Flag2                     Allocated to registers ;size:1
+                      00164 ;@InitUart UartStep                  Allocated to registers ;size:1
+                      00165 ;@InitUart UartTemp                  Allocated to registers ;size:1
+                      00166 ;@InitUart INDF                      Allocated to registers ;size:1
+                      00167 ;@InitUart T0CNT                     Allocated to registers ;size:1
+                      00168 ;@InitUart PCL                       Allocated to registers ;size:1
+                      00169 ;@InitUart STATUS                    Allocated to registers ;size:1
+                      00170 ;@InitUart FSR                       Allocated to registers ;size:1
+                      00171 ;@InitUart P0                        Allocated to registers ;size:1
+                      00172 ;@InitUart P1                        Allocated to registers ;size:1
+                      00173 ;@InitUart MCR                       Allocated to registers ;size:1
+                      00174 ;@InitUart KBIM                      Allocated to registers ;size:1
+                      00175 ;@InitUart PCLATH                    Allocated to registers ;size:1
+                      00176 ;@InitUart PDCON                     Allocated to registers ;size:1
+                      00177 ;@InitUart ODCON                     Allocated to registers ;size:1
+                      00178 ;@InitUart PUCON                     Allocated to registers ;size:1
+                      00179 ;@InitUart INTECON                   Allocated to registers ;size:1
+                      00180 ;@InitUart INTFLAG                   Allocated to registers ;size:1
+                      00181 ;@InitUart T0CR                      Allocated to registers ;size:1
+                      00182 ;@InitUart DDR0                      Allocated to registers ;size:1
+                      00183 ;@InitUart DDR1                      Allocated to registers ;size:1
+                      00184 ;@InitUart TMCR                      Allocated to registers ;size:1
+                      00185 ;@InitUart T1CR                      Allocated to registers ;size:1
+                      00186 ;@InitUart T1CNT                     Allocated to registers ;size:1
+                      00187 ;@InitUart T1LOAD                    Allocated to registers ;size:1
+                      00188 ;@InitUart T1DATA                    Allocated to registers ;size:1
+                      00189 ;@end Allocation info for local variables in function 'InitUart';
+                      00190 ;@Allocation info for local variables in function 'EndUart'
+                      00191 ;@end Allocation info for local variables in function 'EndUart';
+                      00192 ;@Allocation info for local variables in function 'UartDelay'
+                      00193 ;@UartDelay SetBaud                   Allocated to registers r0x1000 ;size:1
+                      00194 ;@end Allocation info for local variables in function 'UartDelay';
+                      00195 ;@Allocation info for local variables in function 'UartSendByte'
+                      00196 ;@UartSendByte Data                      Allocated to registers ;size:1
+                      00197 ;@UartSendByte i                         Allocated to registers r0x1002 ;size:1
+                      00198 ;@UartSendByte temp                      Allocated to registers r0x1001 ;size:1
+                      00199 ;@end Allocation info for local variables in function 'UartSendByte';
+                      00200 ;@Allocation info for local variables in function 'UartSendInt'
+                      00201 ;@UartSendInt String                    Allocated to registers ;size:3
+                      00202 ;@UartSendInt temp                      Allocated to registers r0x1006 ;size:1
+                      00203 ;@end Allocation info for local variables in function 'UartSendInt';
+                      00204 
+                      00205 ;--------------------------------------------------------
+                      00206 ; overlayable items in internal ram 
+                      00207 ;--------------------------------------------------------
+                      00208 ;       udata_ovr
+                      00209 ;--------------------------------------------------------
+                      00210 ; code
+                      00211 ;--------------------------------------------------------
+                      00212 code_Uart       code
+                      00213 ;***
+                      00214 ;  pBlock Stats: dbName = C
+                      00215 ;***
+                      00216 ;entry:  _UartSendInt   ;Function start
+                      00217 ; 2 exit points
+                      00218 ;has an exit
+                      00219 ;functions called:
+                      00220 ;   __gptrget1
+                      00221 ;   _UartSendByte
+                      00222 ;   __gptrget1
+                      00223 ;   _UartSendByte
+                      00224 ;6 compiler assigned registers:
+                      00225 ;   r0x1003
+                      00226 ;   STK00
+                      00227 ;   r0x1004
+                      00228 ;   STK01
+                      00229 ;   r0x1005
+                      00230 ;   r0x1006
+                      00231 ;; Starting pCode block
+0000                  00232 _UartSendInt    ;Function start
+                      00233 ; 2 exit points
+                      00234 ;       .line   58; "Uart.c"    void UartSendInt(const unsigned char *String)
+0000   1580           00235         MOVRA   r0x1003
+0001   1600           00236         MOVAR   STK00
+0002   1580           00237         MOVRA   r0x1004
+0003   1600           00238         MOVAR   STK01
+0004   1580           00239         MOVRA   r0x1005
+0005                  00240 _00132_DS_
+                      00241 ;       .line   61; "Uart.c"    while(*String != '\0')
+0005   1600           00242         MOVAR   r0x1005
+0006   1580           00243         MOVRA   STK01
+0007   1600           00244         MOVAR   r0x1004
+0008   1580           00245         MOVRA   STK00
+0009   1600           00246         MOVAR   r0x1003
+000A   2000           00247         CALL    __gptrget1
+000B   1580           00248         MOVRA   r0x1006
+000C   0B00           00249         MOVAI   0x00
+000D   1700           00250         ORAR    r0x1006
+000E   3503           00251         JBCLR   STATUS,2
+000F   2800           00252         GOTO    _00135_DS_
+                      00253 ;       .line   64; "Uart.c"    UartSendByte(temp);
+0010   1600           00254         MOVAR   r0x1006
+0011   2000           00255         CALL    _UartSendByte
+                      00256 ;       .line   65; "Uart.c"    String++;
+0012   1980           00257         INCR    r0x1005
+0013   3503           00258         JBCLR   STATUS,2
+0014   1980           00259         INCR    r0x1004
+0015   3503           00260         JBCLR   STATUS,2
+0016   1980           00261         INCR    r0x1003
+0017   2800           00262         GOTO    _00132_DS_
+0018                  00263 _00135_DS_
+0018   000C           00264         RETURN  
+                      00265 ; exit point of _UartSendInt
+                      00266 
+                      00267 ;***
+                      00268 ;  pBlock Stats: dbName = C
+                      00269 ;***
+                      00270 ;entry:  _UartSendByte  ;Function start
+                      00271 ; 2 exit points
+                      00272 ;has an exit
+                      00273 ;functions called:
+                      00274 ;   _UartDelay
+                      00275 ;   _UartDelay
+                      00276 ;   _UartDelay
+                      00277 ;   _UartDelay
+                      00278 ;   _UartDelay
+                      00279 ;   _UartDelay
+                      00280 ;   _UartDelay
+                      00281 ;   _UartDelay
+                      00282 ;   _UartDelay
+                      00283 ;   _UartDelay
+                      00284 ;2 compiler assigned registers:
+                      00285 ;   r0x1001
+                      00286 ;   r0x1002
+                      00287 ;; Starting pCode block
+0019                  00288 _UartSendByte   ;Function start
+                      00289 ; 2 exit points
+                      00290 ;       .line   31; "Uart.c"    void UartSendByte(unsigned char Data)
+0019   1580           00291         MOVRA   r0x1001
+                      00292 ;       .line   35; "Uart.c"    UartTx = 0;
+001A   3F80           00293         BCLR    _P1bits,7
+                      00294 ;       .line   36; "Uart.c"    UartDelay(88);
+001B   0B58           00295         MOVAI   0x58
+001C   2000           00296         CALL    _UartDelay
+                      00297 ;       .line   37; "Uart.c"    for(i=0;i<8;i++)
+001D   1D80           00298         CLRR    r0x1002
+                      00299 ;;unsigned compare: left < lit(0x8=8), size=1
+001E                  00300 _00124_DS_
+001E   0B08           00301         MOVAI   0x08
+001F   1200           00302         RSUBAR  r0x1002
+0020   3403           00303         JBCLR   STATUS,0
+0021   2800           00304         GOTO    _00127_DS_
+                      00305 ;;genSkipc:3193: created from rifx:00CC608C
+                      00306 ;       .line   39; "Uart.c"    if(temp & 0x01)
+0022   3000           00307         JBSET   r0x1001,0
+0023   2800           00308         GOTO    _00122_DS_
+                      00309 ;       .line   41; "Uart.c"    UartTx = 1;
+0024   3B80           00310         BSET    _P1bits,7
+0025   2800           00311         GOTO    _00123_DS_
+0026                  00312 _00122_DS_
+                      00313 ;       .line   45; "Uart.c"    UartTx = 0;
+0026   3F80           00314         BCLR    _P1bits,7
+                      00315 ;;shiftRight_Left2ResultLit:5214: shCount=1, size=1, sign=0, same=1, offr=0
+0027                  00316 _00123_DS_
+                      00317 ;       .line   47; "Uart.c"    temp >>= 1;
+0027   3C03           00318         BCLR    STATUS,0
+0028   1380           00319         RRR     r0x1001
+                      00320 ;       .line   48; "Uart.c"    UartDelay(88);
+0029   0B58           00321         MOVAI   0x58
+002A   2000           00322         CALL    _UartDelay
+                      00323 ;       .line   37; "Uart.c"    for(i=0;i<8;i++)
+002B   1980           00324         INCR    r0x1002
+002C   2800           00325         GOTO    _00124_DS_
+002D                  00326 _00127_DS_
+                      00327 ;       .line   50; "Uart.c"    UartTx = 1;
+002D   3B80           00328         BSET    _P1bits,7
+                      00329 ;       .line   51; "Uart.c"    UartDelay(88);
+002E   0B58           00330         MOVAI   0x58
+002F   2000           00331         CALL    _UartDelay
+                      00332 ;       .line   52; "Uart.c"    UartDelay(88);
+0030   0B58           00333         MOVAI   0x58
+0031   2000           00334         CALL    _UartDelay
+                      00335 ;       .line   53; "Uart.c"    UartDelay(88);
+0032   0B58           00336         MOVAI   0x58
+0033   2000           00337         CALL    _UartDelay
+0034   000C           00338         RETURN  
+                      00339 ; exit point of _UartSendByte
+                      00340 
+                      00341 ;***
+                      00342 ;  pBlock Stats: dbName = C
+                      00343 ;***
+                      00344 ;entry:  _UartDelay     ;Function start
+                      00345 ; 2 exit points
+                      00346 ;has an exit
+                      00347 ;1 compiler assigned register :
+                      00348 ;   r0x1000
+                      00349 ;; Starting pCode block
+0035                  00350 _UartDelay      ;Function start
+                      00351 ; 2 exit points
+                      00352 ;       .line   20; "Uart.c"    void UartDelay(unsigned char SetBaud)   // 
+0035   1580           00353         MOVRA   r0x1000
+                      00354 ;       .line   23; "Uart.c"    T0CR = 0;
+0036   1D80           00355         CLRR    _T0CR
+0037                  00356 _00113_DS_
+                      00357 ;       .line   24; "Uart.c"    while(T0CR < SetBaud)
+0037   1600           00358         MOVAR   r0x1000
+0038   1200           00359         RSUBAR  _T0CR
+0039   3403           00360         JBCLR   STATUS,0
+003A   2800           00361         GOTO    _00116_DS_
+                      00362 ;;genSkipc:3193: created from rifx:00CC608C
+                      00363 ;       .line   26; "Uart.c"    ClrWdt();       
+003B   000E           00364         clrwdt
+003C   2800           00365         GOTO    _00113_DS_
+003D                  00366 _00116_DS_
+003D   000C           00367         RETURN  
+                      00368 ; exit point of _UartDelay
+                      00369 
+                      00370 ;***
+                      00371 ;  pBlock Stats: dbName = C
+                      00372 ;***
+                      00373 ;entry:  _EndUart       ;Function start
+                      00374 ; 2 exit points
+                      00375 ;has an exit
+                      00376 ;; Starting pCode block
+003E                  00377 _EndUart        ;Function start
+                      00378 ; 2 exit points
+                      00379 ;       .line   16; "Uart.c"    T1DATA = 0x00;
+003E   1D80           00380         CLRR    _T1DATA
+                      00381 ;       .line   17; "Uart.c"    P12PD = 1;
+003F   3B00           00382         BSET    _PDCONbits,6
+                      00383 ;       .line   18; "Uart.c"    GIE = 1;
+0040   3B80           00384         BSET    _INTECONbits,7
+0041   000C           00385         RETURN  
+                      00386 ; exit point of _EndUart
+                      00387 
+                      00388 ;***
+                      00389 ;  pBlock Stats: dbName = C
+                      00390 ;***
+                      00391 ;entry:  _InitUart      ;Function start
+                      00392 ; 2 exit points
+                      00393 ;has an exit
+                      00394 ;functions called:
+                      00395 ;   _UartDelay
+                      00396 ;   _UartDelay
+                      00397 ;   _UartDelay
+                      00398 ;   _UartDelay
+                      00399 ;; Starting pCode block
+0042                  00400 _InitUart       ;Function start
+                      00401 ; 2 exit points
+                      00402 ;       .line   6; "Uart.c"     T0SE = 1;               //
+0042   3A00           00403         BSET    _T0CRbits,4
+                      00404 ;       .line   7; "Uart.c"     DDR12 = 0;              // 256 级
+0043   3D00           00405         BCLR    _DDR1bits,2
+                      00406 ;       .line   8; "Uart.c"     T1DATA = BIN(1,1,1,0,0,0,0,0);  // 16/2 最小间隔 0.125us
+0044   0BE0           00407         MOVAI   0xe0
+0045   1580           00408         MOVRA   _T1DATA
+                      00409 ;       .line   9; "Uart.c"     UartTx = 1;
+0046   3B80           00410         BSET    _P1bits,7
+                      00411 ;       .line   10; "Uart.c"    UartDelay(108);
+0047   0B6C           00412         MOVAI   0x6c
+0048   2000           00413         CALL    _UartDelay
+                      00414 ;       .line   11; "Uart.c"    UartDelay(108);
+0049   0B6C           00415         MOVAI   0x6c
+004A   2000           00416         CALL    _UartDelay
+                      00417 ;       .line   12; "Uart.c"    GIE = 0;
+004B   3F80           00418         BCLR    _INTECONbits,7
+004C   000C           00419         RETURN  
+                      00420 ; exit point of _InitUart
+                      00421 
+                      00422 
+                      00423 ;       code size estimation:
+                      00424 ;          76+    0 =    76 instructions (  152 byte)
+                      00425 
+                      00426         end
+gpasm-2.0.0_beta2 (Aug 27 2017)Uart.asm           2017-10-13  17:26:50         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00113_DS_                        00000037
+_00116_DS_                        0000003D
+_00122_DS_                        00000026
+_00123_DS_                        00000027
+_00124_DS_                        0000001E
+_00127_DS_                        0000002D
+_00132_DS_                        00000005
+_00135_DS_                        00000018
+_Actuation                        00000000
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_ClrrRAM                          00000000
+_ConsecutiveFive                  00000000
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_DetectSpace                      00000000
+_DetectStep                       00000000
+_Detection                        00000000
+_EndUart                          0000003E
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FSR                              00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_INDF                             00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_InitUart                         00000042
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyScan                          00000000
+_LEDFlashSpace                    00000000
+_LEDFlashTimes                    00000000
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MaxMotorTimes                    00000000
+_MaxRunTimes                      00000000
+_MotorFiveCnt                     00000000
+_NeedSleep                        00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_PositionDelay                    00000000
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_RXCnt                            00000000
+_RXDebounce                       00000000
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_STATUS                           00000000
+_STATUSbits                       00000000
+_SleepCnt                         00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_TMCR                             00000000
+_TMCRbits                         00000000
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_UartDelay                        00000035
+_UartSendByte                     00000019
+_UartSendInt                      00000000
+_UartStep                         00000000
+_UartTemp                         00000000
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+_WorkONInitStep                   00000000
+_WorkOnInit                       00000000
+__30P011                          00000001
+__gptrget1                        00000000
+_init                             00000000
+r0x1000                           00000000
+r0x1001                           00000001
+r0x1002                           00000002
+r0x1003                           00000005
+r0x1004                           00000004
+r0x1005                           00000003
+r0x1006                           00000006
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

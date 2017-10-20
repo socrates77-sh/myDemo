@@ -1,0 +1,1416 @@
+gpasm-2.0.0_beta2 (Aug 27 2017)ad.asm             2017-10-13  17:26:49         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                      00004 ; This file was generated Fri Oct 13 17:26:49 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "ad.c"
+                      00009         list    p=0311
+                      00010         radix dec
+                      00011         include "0311.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _init
+                      00016         extern  _ClrrRAM
+                      00017         extern  _KeyScan
+                      00018         extern  _NeedSleep
+                      00019         extern  _InitUart
+                      00020         extern  _EndUart
+                      00021         extern  _UartSendByte
+                      00022         extern  _UartDelay
+                      00023         extern  _UartSendInt
+                      00024         extern  _STATUSbits
+                      00025         extern  _P0bits
+                      00026         extern  _P1bits
+                      00027         extern  _MCRbits
+                      00028         extern  _KBIMbits
+                      00029         extern  _PDCONbits
+                      00030         extern  _ODCONbits
+                      00031         extern  _PUCONbits
+                      00032         extern  _INTECONbits
+                      00033         extern  _INTFLAGbits
+                      00034         extern  _T0CRbits
+                      00035         extern  _DDR0bits
+                      00036         extern  _DDR1bits
+                      00037         extern  _TMCRbits
+                      00038         extern  _T1CRbits
+                      00039         extern  _UartStep
+                      00040         extern  _UartTemp
+                      00041         extern  _INDF
+                      00042         extern  _T0CNT
+                      00043         extern  _PCL
+                      00044         extern  _STATUS
+                      00045         extern  _FSR
+                      00046         extern  _P0
+                      00047         extern  _P1
+                      00048         extern  _MCR
+                      00049         extern  _KBIM
+                      00050         extern  _PCLATH
+                      00051         extern  _PDCON
+                      00052         extern  _ODCON
+                      00053         extern  _PUCON
+                      00054         extern  _INTECON
+                      00055         extern  _INTFLAG
+                      00056         extern  _T0CR
+                      00057         extern  _DDR0
+                      00058         extern  _DDR1
+                      00059         extern  _TMCR
+                      00060         extern  _T1CR
+                      00061         extern  _T1CNT
+                      00062         extern  _T1LOAD
+                      00063         extern  _T1DATA
+                      00064 
+                      00065         extern STK06
+                      00066         extern STK05
+                      00067         extern STK04
+                      00068         extern STK03
+                      00069         extern STK02
+                      00070         extern STK01
+                      00071         extern STK00
+                      00072 ;--------------------------------------------------------
+                      00073 ; global declarations
+                      00074 ;--------------------------------------------------------
+                      00075         global  _ConsecutiveFive
+                      00076         global  _Actuation
+                      00077         global  _Detection
+                      00078         global  _WorkOnInit
+                      00079         global  _delay
+                      00080         global  _WorkONInitStep
+                      00081         global  _LEDFlashTimes
+                      00082         global  _LEDFlashSpace
+                      00083         global  _RXDebounce
+                      00084         global  _RXCnt
+                      00085         global  _DetectSpace
+                      00086         global  _DetectStep
+                      00087         global  _SleepCnt
+                      00088         global  _MaxRunTimes
+                      00089         global  _MaxMotorTimes
+                      00090         global  _MotorFiveCnt
+                      00091         global  _PositionDelay
+                      00092         global  _Flag1
+                      00093         global  _Flag2
+                      00094 
+                      00095 ;--------------------------------------------------------
+                      00096 ; global definitions
+                      00097 ;--------------------------------------------------------
+                      00098 UD_ad_0 udata
+0000                  00099 _WorkONInitStep res     1
+                      00100 
+                      00101 UD_ad_1 udata
+0000                  00102 _LEDFlashTimes  res     1
+                      00103 
+                      00104 UD_ad_2 udata
+0000                  00105 _LEDFlashSpace  res     1
+                      00106 
+                      00107 UD_ad_3 udata
+0000                  00108 _RXDebounce     res     1
+                      00109 
+                      00110 UD_ad_4 udata
+0000                  00111 _RXCnt  res     1
+                      00112 
+                      00113 UD_ad_5 udata
+0000                  00114 _DetectSpace    res     1
+                      00115 
+                      00116 UD_ad_6 udata
+0000                  00117 _DetectStep     res     1
+                      00118 
+                      00119 UD_ad_7 udata
+0000                  00120 _SleepCnt       res     1
+                      00121 
+                      00122 UD_ad_8 udata
+0000                  00123 _MaxRunTimes    res     2
+                      00124 
+                      00125 UD_ad_9 udata
+0000                  00126 _MaxMotorTimes  res     2
+                      00127 
+                      00128 UD_ad_10        udata
+0000                  00129 _MotorFiveCnt   res     1
+                      00130 
+                      00131 UD_ad_11        udata
+0000                  00132 _PositionDelay  res     1
+                      00133 
+                      00134 UD_ad_12        udata
+0000                  00135 _Flag1  res     1
+                      00136 
+                      00137 UD_ad_13        udata
+0000                  00138 _Flag2  res     1
+                      00139 
+                      00140 ;--------------------------------------------------------
+                      00141 ; absolute symbol definitions
+                      00142 ;--------------------------------------------------------
+                      00143 ;--------------------------------------------------------
+                      00144 ; compiler-defined variables
+                      00145 ;--------------------------------------------------------
+                      00146 UDL_ad_0        udata
+0000                  00147 r0x100F res     1
+0000                  00148 r0x1010 res     1
+0001                  00149 r0x1013 res     1
+0001                  00150 r0x1014 res     1
+0002                  00151 r0x1011 res     1
+                      00152 ;--------------------------------------------------------
+                      00153 ; initialized data
+                      00154 ;--------------------------------------------------------
+                      00155 
+                      00156 ;@Allocation info for local variables in function 'delay'
+                      00157 ;@delay WorkOnInit                Allocated to registers ;size:2
+                      00158 ;@delay Detection                 Allocated to registers ;size:2
+                      00159 ;@delay Actuation                 Allocated to registers ;size:2
+                      00160 ;@delay ConsecutiveFive           Allocated to registers ;size:2
+                      00161 ;@delay init                      Allocated to registers ;size:2
+                      00162 ;@delay ClrrRAM                   Allocated to registers ;size:2
+                      00163 ;@delay KeyScan                   Allocated to registers ;size:2
+                      00164 ;@delay NeedSleep                 Allocated to registers ;size:2
+                      00165 ;@delay InitUart                  Allocated to registers ;size:2
+                      00166 ;@delay EndUart                   Allocated to registers ;size:2
+                      00167 ;@delay UartSendByte              Allocated to registers ;size:2
+                      00168 ;@delay UartDelay                 Allocated to registers ;size:2
+                      00169 ;@delay UartSendInt               Allocated to registers ;size:2
+                      00170 ;@delay delay                     Allocated to registers ;size:2
+                      00171 ;@delay STATUSbits                Allocated to registers ;size:1
+                      00172 ;@delay P0bits                    Allocated to registers ;size:1
+                      00173 ;@delay P1bits                    Allocated to registers ;size:1
+                      00174 ;@delay MCRbits                   Allocated to registers ;size:1
+                      00175 ;@delay KBIMbits                  Allocated to registers ;size:1
+                      00176 ;@delay PDCONbits                 Allocated to registers ;size:1
+                      00177 ;@delay ODCONbits                 Allocated to registers ;size:1
+                      00178 ;@delay PUCONbits                 Allocated to registers ;size:1
+                      00179 ;@delay INTECONbits               Allocated to registers ;size:1
+                      00180 ;@delay INTFLAGbits               Allocated to registers ;size:1
+                      00181 ;@delay T0CRbits                  Allocated to registers ;size:1
+                      00182 ;@delay DDR0bits                  Allocated to registers ;size:1
+                      00183 ;@delay DDR1bits                  Allocated to registers ;size:1
+                      00184 ;@delay TMCRbits                  Allocated to registers ;size:1
+                      00185 ;@delay T1CRbits                  Allocated to registers ;size:1
+                      00186 ;@delay WorkONInitStep            Allocated to registers ;size:1
+                      00187 ;@delay LEDFlashTimes             Allocated to registers ;size:1
+                      00188 ;@delay LEDFlashSpace             Allocated to registers ;size:1
+                      00189 ;@delay RXDebounce                Allocated to registers ;size:1
+                      00190 ;@delay RXCnt                     Allocated to registers ;size:1
+                      00191 ;@delay DetectSpace               Allocated to registers ;size:1
+                      00192 ;@delay DetectStep                Allocated to registers ;size:1
+                      00193 ;@delay SleepCnt                  Allocated to registers ;size:1
+                      00194 ;@delay MaxRunTimes               Allocated to registers ;size:2
+                      00195 ;@delay MaxMotorTimes             Allocated to registers ;size:2
+                      00196 ;@delay MotorFiveCnt              Allocated to registers ;size:1
+                      00197 ;@delay PositionDelay             Allocated to registers ;size:1
+                      00198 ;@delay UartStep                  Allocated to registers ;size:1
+                      00199 ;@delay UartTemp                  Allocated to registers ;size:1
+                      00200 ;@delay Flag1                     Allocated to registers ;size:1
+                      00201 ;@delay Flag2                     Allocated to registers ;size:1
+                      00202 ;@delay i                         Allocated to registers r0x100F ;size:1
+                      00203 ;@delay INDF                      Allocated to registers ;size:1
+                      00204 ;@delay T0CNT                     Allocated to registers ;size:1
+                      00205 ;@delay PCL                       Allocated to registers ;size:1
+                      00206 ;@delay STATUS                    Allocated to registers ;size:1
+                      00207 ;@delay FSR                       Allocated to registers ;size:1
+                      00208 ;@delay P0                        Allocated to registers ;size:1
+                      00209 ;@delay P1                        Allocated to registers ;size:1
+                      00210 ;@delay MCR                       Allocated to registers ;size:1
+                      00211 ;@delay KBIM                      Allocated to registers ;size:1
+                      00212 ;@delay PCLATH                    Allocated to registers ;size:1
+                      00213 ;@delay PDCON                     Allocated to registers ;size:1
+                      00214 ;@delay ODCON                     Allocated to registers ;size:1
+                      00215 ;@delay PUCON                     Allocated to registers ;size:1
+                      00216 ;@delay INTECON                   Allocated to registers ;size:1
+                      00217 ;@delay INTFLAG                   Allocated to registers ;size:1
+                      00218 ;@delay T0CR                      Allocated to registers ;size:1
+                      00219 ;@delay DDR0                      Allocated to registers ;size:1
+                      00220 ;@delay DDR1                      Allocated to registers ;size:1
+                      00221 ;@delay TMCR                      Allocated to registers ;size:1
+                      00222 ;@delay T1CR                      Allocated to registers ;size:1
+                      00223 ;@delay T1CNT                     Allocated to registers ;size:1
+                      00224 ;@delay T1LOAD                    Allocated to registers ;size:1
+                      00225 ;@delay T1DATA                    Allocated to registers ;size:1
+                      00226 ;@end Allocation info for local variables in function 'delay';
+                      00227 ;@Allocation info for local variables in function 'WorkOnInit'
+                      00228 ;@end Allocation info for local variables in function 'WorkOnInit';
+                      00229 ;@Allocation info for local variables in function 'Detection'
+                      00230 ;@end Allocation info for local variables in function 'Detection';
+                      00231 ;@Allocation info for local variables in function 'Actuation'
+                      00232 ;@end Allocation info for local variables in function 'Actuation';
+                      00233 ;@Allocation info for local variables in function 'ConsecutiveFive'
+                      00234 ;@end Allocation info for local variables in function 'ConsecutiveFive';
+                      00235 
+                      00236 ;--------------------------------------------------------
+                      00237 ; overlayable items in internal ram 
+                      00238 ;--------------------------------------------------------
+                      00239 ;       udata_ovr
+                      00240 ;--------------------------------------------------------
+                      00241 ; code
+                      00242 ;--------------------------------------------------------
+                      00243 code_ad code
+                      00244 ;***
+                      00245 ;  pBlock Stats: dbName = C
+                      00246 ;***
+                      00247 ;entry:  _ConsecutiveFive       ;Function start
+                      00248 ; 2 exit points
+                      00249 ;has an exit
+                      00250 ;; Starting pCode block
+0000                  00251 _ConsecutiveFive        ;Function start
+                      00252 ; 2 exit points
+                      00253 ;       .line   403; "ad.c"     if(fConsecutiveFive)
+0000   3280           00254         JBSET   _Flag1,5
+0001   2800           00255         GOTO    _00357_DS_
+                      00256 ;       .line   405; "ad.c"     fConsecutiveFive = 0;
+0002   3E80           00257         BCLR    _Flag1,5
+                      00258 ;       .line   406; "ad.c"     fDetection = 1;
+0003   3880           00259         BSET    _Flag1,1
+0004                  00260 _00357_DS_
+0004   000C           00261         RETURN  
+                      00262 ; exit point of _ConsecutiveFive
+                      00263 
+                      00264 ;***
+                      00265 ;  pBlock Stats: dbName = C
+                      00266 ;***
+                      00267 ;entry:  _Actuation     ;Function start
+                      00268 ; 2 exit points
+                      00269 ;has an exit
+                      00270 ;; Starting pCode block
+0005                  00271 _Actuation      ;Function start
+                      00272 ; 2 exit points
+                      00273 ;       .line   349; "ad.c"     if(fWorkON && fActuation)
+0005   3080           00274         JBSET   _Flag2,1
+0006   2800           00275         GOTO    _00326_DS_
+0007   3180           00276         JBSET   _Flag1,3
+0008   2800           00277         GOTO    _00326_DS_
+                      00278 ;       .line   351; "ad.c"     MOSENB();
+0009   3800           00279         BSET    _P1bits,0
+000A   3880           00280         BSET    _P1bits,1
+000B   3900           00281         BSET    _P1bits,2
+                      00282 ;       .line   352; "ad.c"     if(fMotorT)
+000C   3200           00283         JBSET   _Flag1,4
+000D   2800           00284         GOTO    _00326_DS_
+                      00285 ;       .line   354; "ad.c"     fMotorT = 0;
+000E   3E00           00286         BCLR    _Flag1,4
+                      00287 ;       .line   356; "ad.c"     if(!POSITION)
+000F   3680           00288         JBCLR   _P1bits,5
+0010   2800           00289         GOTO    _00310_DS_
+                      00290 ;       .line   358; "ad.c"     PositionDelay++;
+0011   1980           00291         INCR    _PositionDelay
+                      00292 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00293 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      00294 ;       .line   359; "ad.c"     if(PositionDelay>3)
+0012   0B04           00295         MOVAI   0x04
+0013   1200           00296         RSUBAR  _PositionDelay
+0014   3003           00297         JBSET   STATUS,0
+0015   2800           00298         GOTO    _00310_DS_
+                      00299 ;;genSkipc:3193: created from rifx:00CC608C
+                      00300 ;       .line   361; "ad.c"     PositionDelay = 0;
+0016   1D80           00301         CLRR    _PositionDelay
+                      00302 ;       .line   362; "ad.c"     fWaiteRelease = 1;
+0017   3B00           00303         BSET    _Flag1,6
+0018                  00304 _00310_DS_
+                      00305 ;       .line   366; "ad.c"     if(fWaiteRelease)
+0018   3300           00306         JBSET   _Flag1,6
+0019   2800           00307         GOTO    _00316_DS_
+                      00308 ;       .line   368; "ad.c"     if(POSITION)
+001A   3280           00309         JBSET   _P1bits,5
+001B   2800           00310         GOTO    _00316_DS_
+                      00311 ;       .line   370; "ad.c"     PositionDelay++;
+001C   1980           00312         INCR    _PositionDelay
+                      00313 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00314 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      00315 ;       .line   371; "ad.c"     if(PositionDelay>3)
+001D   0B04           00316         MOVAI   0x04
+001E   1200           00317         RSUBAR  _PositionDelay
+001F   3003           00318         JBSET   STATUS,0
+0020   2800           00319         GOTO    _00316_DS_
+                      00320 ;;genSkipc:3193: created from rifx:00CC608C
+                      00321 ;       .line   373; "ad.c"     PositionDelay = 0;
+0021   1D80           00322         CLRR    _PositionDelay
+                      00323 ;       .line   374; "ad.c"     fWaiteRelease = 0;
+0022   3F00           00324         BCLR    _Flag1,6
+                      00325 ;       .line   375; "ad.c"     fActuation = 0;
+0023   3D80           00326         BCLR    _Flag1,3
+                      00327 ;       .line   376; "ad.c"     MOSDIS();
+0024   3C00           00328         BCLR    _P1bits,0
+0025   3C80           00329         BCLR    _P1bits,1
+0026   3D00           00330         BCLR    _P1bits,2
+                      00331 ;       .line   377; "ad.c"     fDetection = 1;
+0027   3880           00332         BSET    _Flag1,1
+0028                  00333 _00316_DS_
+                      00334 ;       .line   382; "ad.c"     MaxMotorTimes++;
+0028   1980           00335         INCR    _MaxMotorTimes
+0029   3503           00336         JBCLR   STATUS,2
+002A   1980           00337         INCR    (_MaxMotorTimes + 1)
+                      00338 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00339 ;;unsigned compare: left >= lit(0x1389=5001), size=2
+                      00340 ;       .line   383; "ad.c"     if(MaxMotorTimes > 5000)
+002B   0B13           00341         MOVAI   0x13
+002C   1200           00342         RSUBAR  (_MaxMotorTimes + 1)
+002D   3103           00343         JBSET   STATUS,2
+002E   2800           00344         GOTO    _00350_DS_
+002F   0B89           00345         MOVAI   0x89
+0030   1200           00346         RSUBAR  _MaxMotorTimes
+0031                  00347 _00350_DS_
+0031   3003           00348         JBSET   STATUS,0
+0032   2800           00349         GOTO    _00326_DS_
+                      00350 ;;genSkipc:3193: created from rifx:00CC608C
+                      00351 ;       .line   385; "ad.c"     MaxMotorTimes = 0;
+0033   1D80           00352         CLRR    _MaxMotorTimes
+0034   1D80           00353         CLRR    (_MaxMotorTimes + 1)
+                      00354 ;       .line   386; "ad.c"     MOSDIS();
+0035   3C00           00355         BCLR    _P1bits,0
+0036   3C80           00356         BCLR    _P1bits,1
+0037   3D00           00357         BCLR    _P1bits,2
+                      00358 ;       .line   387; "ad.c"     MotorFiveCnt++;
+0038   1980           00359         INCR    _MotorFiveCnt
+                      00360 ;;unsigned compare: left < lit(0x2=2), size=1
+                      00361 ;       .line   388; "ad.c"     if(MotorFiveCnt>=2)
+0039   0B02           00362         MOVAI   0x02
+003A   1200           00363         RSUBAR  _MotorFiveCnt
+003B   3003           00364         JBSET   STATUS,0
+003C   2800           00365         GOTO    _00326_DS_
+                      00366 ;;genSkipc:3193: created from rifx:00CC608C
+                      00367 ;       .line   390; "ad.c"     MotorFiveCnt = 0;
+003D   1D80           00368         CLRR    _MotorFiveCnt
+                      00369 ;       .line   391; "ad.c"     fConsecutiveFive = 1;
+003E   3A80           00370         BSET    _Flag1,5
+                      00371 ;       .line   392; "ad.c"     fActuation = 0;
+003F   3D80           00372         BCLR    _Flag1,3
+                      00373 ;       .line   393; "ad.c"     fDetection = 1;
+0040   3880           00374         BSET    _Flag1,1
+0041                  00375 _00326_DS_
+0041   000C           00376         RETURN  
+                      00377 ; exit point of _Actuation
+                      00378 
+                      00379 ;***
+                      00380 ;  pBlock Stats: dbName = C
+                      00381 ;***
+                      00382 ;entry:  _Detection     ;Function start
+                      00383 ; 2 exit points
+                      00384 ;has an exit
+                      00385 ;functions called:
+                      00386 ;   _delay
+                      00387 ;   _delay
+                      00388 ;   _delay
+                      00389 ;   _delay
+                      00390 ;   _delay
+                      00391 ;   _delay
+                      00392 ;   _delay
+                      00393 ;   _delay
+                      00394 ;   _delay
+                      00395 ;   _delay
+                      00396 ;   _delay
+                      00397 ;   _delay
+                      00398 ;   _delay
+                      00399 ;   _delay
+                      00400 ;   _delay
+                      00401 ;   _delay
+                      00402 ;2 compiler assigned registers:
+                      00403 ;   r0x1011
+                      00404 ;   r0x1012
+                      00405 ;; Starting pCode block
+0042                  00406 _Detection      ;Function start
+                      00407 ; 2 exit points
+                      00408 ;       .line   91; "ad.c"      if(fWorkON && fDetection)
+0042   3080           00409         JBSET   _Flag2,1
+0043   2800           00410         GOTO    _00243_DS_
+0044   3080           00411         JBSET   _Flag1,1
+0045   2800           00412         GOTO    _00243_DS_
+                      00413 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00414 ;;unsigned compare: left >= lit(0x10=16), size=1
+                      00415 ;       .line   93; "ad.c"      switch(DetectStep)
+0046   0B10           00416         MOVAI   0x10
+0047   1200           00417         RSUBAR  _DetectStep
+0048   3403           00418         JBCLR   STATUS,0
+0049   2800           00419         GOTO    _00238_DS_
+                      00420 ;;genSkipc:3193: created from rifx:00CC608C
+004A   0B00           00421         MOVAI   _00302_DS_
+004B   1F00           00422         ADDAR   _DetectStep
+004C   1582           00423         MOVRA   PCL
+004D                  00424 _00302_DS_
+004D   2800           00425         GOTO    _00163_DS_
+004E   2800           00426         GOTO    _00167_DS_
+004F   2800           00427         GOTO    _00172_DS_
+0050   2800           00428         GOTO    _00176_DS_
+0051   2800           00429         GOTO    _00181_DS_
+0052   2800           00430         GOTO    _00185_DS_
+0053   2800           00431         GOTO    _00190_DS_
+0054   2800           00432         GOTO    _00194_DS_
+0055   2800           00433         GOTO    _00199_DS_
+0056   2800           00434         GOTO    _00203_DS_
+0057   2800           00435         GOTO    _00208_DS_
+0058   2800           00436         GOTO    _00212_DS_
+0059   2800           00437         GOTO    _00217_DS_
+005A   2800           00438         GOTO    _00221_DS_
+005B   2800           00439         GOTO    _00226_DS_
+005C   2800           00440         GOTO    _00230_DS_
+005D                  00441 _00163_DS_
+                      00442 ;       .line   96; "ad.c"      RXENB();
+005D   3C80           00443         BCLR    _P0bits,1
+                      00444 ;       .line   97; "ad.c"      TXENB();
+005E   3E00           00445         BCLR    _P1bits,4
+005F   3D80           00446         BCLR    _P1bits,3
+                      00447 ;       .line   98; "ad.c"      delay();
+0060   2000           00448         CALL    _delay
+                      00449 ;       .line   99; "ad.c"      if(!RX)
+0061   3400           00450         JBCLR   _P0bits,0
+0062   2800           00451         GOTO    _00165_DS_
+                      00452 ;       .line   101; "ad.c"     DetectStep++;
+0063   1980           00453         INCR    _DetectStep
+                      00454 ;       .line   102; "ad.c"     RXDIS();
+0064   3880           00455         BSET    _P0bits,1
+                      00456 ;       .line   103; "ad.c"     TXDIS();
+0065   3A00           00457         BSET    _P1bits,4
+0066   3980           00458         BSET    _P1bits,3
+0067   2800           00459         GOTO    _00243_DS_
+0068                  00460 _00165_DS_
+                      00461 ;       .line   107; "ad.c"     DetectStep = 15;
+0068   0B0F           00462         MOVAI   0x0f
+0069   1580           00463         MOVRA   _DetectStep
+                      00464 ;       .line   109; "ad.c"     break;
+006A   2800           00465         GOTO    _00243_DS_
+006B                  00466 _00167_DS_
+                      00467 ;       .line   111; "ad.c"     if(fDetectionT)
+006B   3100           00468         JBSET   _Flag1,2
+006C   2800           00469         GOTO    _00243_DS_
+                      00470 ;       .line   113; "ad.c"     fDetectionT = 0;
+006D   3D00           00471         BCLR    _Flag1,2
+                      00472 ;       .line   114; "ad.c"     DetectSpace++;
+006E   1980           00473         INCR    _DetectSpace
+                      00474 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00475 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00476 ;       .line   115; "ad.c"     if(DetectSpace>20)
+006F   0B15           00477         MOVAI   0x15
+0070   1200           00478         RSUBAR  _DetectSpace
+0071   3003           00479         JBSET   STATUS,0
+0072   2800           00480         GOTO    _00243_DS_
+                      00481 ;;genSkipc:3193: created from rifx:00CC608C
+                      00482 ;       .line   117; "ad.c"     DetectSpace = 0;
+0073   1D80           00483         CLRR    _DetectSpace
+                      00484 ;       .line   118; "ad.c"     DetectStep++;
+0074   1980           00485         INCR    _DetectStep
+                      00486 ;       .line   121; "ad.c"     break;
+0075   2800           00487         GOTO    _00243_DS_
+0076                  00488 _00172_DS_
+                      00489 ;       .line   123; "ad.c"     RXENB();
+0076   3C80           00490         BCLR    _P0bits,1
+                      00491 ;       .line   124; "ad.c"     TXENB();
+0077   3E00           00492         BCLR    _P1bits,4
+0078   3D80           00493         BCLR    _P1bits,3
+                      00494 ;       .line   125; "ad.c"     delay();
+0079   2000           00495         CALL    _delay
+                      00496 ;       .line   126; "ad.c"     if(!RX)
+007A   3400           00497         JBCLR   _P0bits,0
+007B   2800           00498         GOTO    _00174_DS_
+                      00499 ;       .line   128; "ad.c"     DetectStep++;
+007C   1980           00500         INCR    _DetectStep
+                      00501 ;       .line   129; "ad.c"     RXDIS();
+007D   3880           00502         BSET    _P0bits,1
+                      00503 ;       .line   130; "ad.c"     TXDIS();
+007E   3A00           00504         BSET    _P1bits,4
+007F   3980           00505         BSET    _P1bits,3
+0080   2800           00506         GOTO    _00243_DS_
+0081                  00507 _00174_DS_
+                      00508 ;       .line   134; "ad.c"     DetectStep = 15;
+0081   0B0F           00509         MOVAI   0x0f
+0082   1580           00510         MOVRA   _DetectStep
+                      00511 ;       .line   136; "ad.c"     break;
+0083   2800           00512         GOTO    _00243_DS_
+0084                  00513 _00176_DS_
+                      00514 ;       .line   138; "ad.c"     if(fDetectionT)
+0084   3100           00515         JBSET   _Flag1,2
+0085   2800           00516         GOTO    _00243_DS_
+                      00517 ;       .line   140; "ad.c"     fDetectionT = 0;
+0086   3D00           00518         BCLR    _Flag1,2
+                      00519 ;       .line   141; "ad.c"     DetectSpace++;
+0087   1980           00520         INCR    _DetectSpace
+                      00521 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00522 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00523 ;       .line   142; "ad.c"     if(DetectSpace>20)
+0088   0B15           00524         MOVAI   0x15
+0089   1200           00525         RSUBAR  _DetectSpace
+008A   3003           00526         JBSET   STATUS,0
+008B   2800           00527         GOTO    _00243_DS_
+                      00528 ;;genSkipc:3193: created from rifx:00CC608C
+                      00529 ;       .line   144; "ad.c"     DetectSpace = 0;
+008C   1D80           00530         CLRR    _DetectSpace
+                      00531 ;       .line   145; "ad.c"     DetectStep++;
+008D   1980           00532         INCR    _DetectStep
+                      00533 ;       .line   148; "ad.c"     break;
+008E   2800           00534         GOTO    _00243_DS_
+008F                  00535 _00181_DS_
+                      00536 ;       .line   150; "ad.c"     RXENB();
+008F   3C80           00537         BCLR    _P0bits,1
+                      00538 ;       .line   151; "ad.c"     TXENB();
+0090   3E00           00539         BCLR    _P1bits,4
+0091   3D80           00540         BCLR    _P1bits,3
+                      00541 ;       .line   152; "ad.c"     delay();
+0092   2000           00542         CALL    _delay
+                      00543 ;       .line   153; "ad.c"     if(!RX)
+0093   3400           00544         JBCLR   _P0bits,0
+0094   2800           00545         GOTO    _00183_DS_
+                      00546 ;       .line   155; "ad.c"     DetectStep++;
+0095   1980           00547         INCR    _DetectStep
+                      00548 ;       .line   156; "ad.c"     RXDIS();
+0096   3880           00549         BSET    _P0bits,1
+                      00550 ;       .line   157; "ad.c"     TXDIS();
+0097   3A00           00551         BSET    _P1bits,4
+0098   3980           00552         BSET    _P1bits,3
+0099   2800           00553         GOTO    _00243_DS_
+009A                  00554 _00183_DS_
+                      00555 ;       .line   161; "ad.c"     DetectStep = 15;
+009A   0B0F           00556         MOVAI   0x0f
+009B   1580           00557         MOVRA   _DetectStep
+                      00558 ;       .line   163; "ad.c"     break;
+009C   2800           00559         GOTO    _00243_DS_
+009D                  00560 _00185_DS_
+                      00561 ;       .line   165; "ad.c"     if(fDetectionT)
+009D   3100           00562         JBSET   _Flag1,2
+009E   2800           00563         GOTO    _00243_DS_
+                      00564 ;       .line   167; "ad.c"     fDetectionT = 0;
+009F   3D00           00565         BCLR    _Flag1,2
+                      00566 ;       .line   168; "ad.c"     DetectSpace++;
+00A0   1980           00567         INCR    _DetectSpace
+                      00568 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00569 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00570 ;       .line   169; "ad.c"     if(DetectSpace>20)
+00A1   0B15           00571         MOVAI   0x15
+00A2   1200           00572         RSUBAR  _DetectSpace
+00A3   3003           00573         JBSET   STATUS,0
+00A4   2800           00574         GOTO    _00243_DS_
+                      00575 ;;genSkipc:3193: created from rifx:00CC608C
+                      00576 ;       .line   171; "ad.c"     DetectSpace = 0;
+00A5   1D80           00577         CLRR    _DetectSpace
+                      00578 ;       .line   172; "ad.c"     DetectStep++;
+00A6   1980           00579         INCR    _DetectStep
+                      00580 ;       .line   175; "ad.c"     break;
+00A7   2800           00581         GOTO    _00243_DS_
+00A8                  00582 _00190_DS_
+                      00583 ;       .line   177; "ad.c"     RXENB();
+00A8   3C80           00584         BCLR    _P0bits,1
+                      00585 ;       .line   178; "ad.c"     TXENB();
+00A9   3E00           00586         BCLR    _P1bits,4
+00AA   3D80           00587         BCLR    _P1bits,3
+                      00588 ;       .line   179; "ad.c"     delay();
+00AB   2000           00589         CALL    _delay
+                      00590 ;       .line   180; "ad.c"     if(!RX)
+00AC   3400           00591         JBCLR   _P0bits,0
+00AD   2800           00592         GOTO    _00192_DS_
+                      00593 ;       .line   182; "ad.c"     DetectStep++;
+00AE   1980           00594         INCR    _DetectStep
+                      00595 ;       .line   183; "ad.c"     RXDIS();
+00AF   3880           00596         BSET    _P0bits,1
+                      00597 ;       .line   184; "ad.c"     TXDIS();
+00B0   3A00           00598         BSET    _P1bits,4
+00B1   3980           00599         BSET    _P1bits,3
+00B2   2800           00600         GOTO    _00243_DS_
+00B3                  00601 _00192_DS_
+                      00602 ;       .line   188; "ad.c"     DetectStep = 15;
+00B3   0B0F           00603         MOVAI   0x0f
+00B4   1580           00604         MOVRA   _DetectStep
+                      00605 ;       .line   190; "ad.c"     break;
+00B5   2800           00606         GOTO    _00243_DS_
+00B6                  00607 _00194_DS_
+                      00608 ;       .line   192; "ad.c"     if(fDetectionT)
+00B6   3100           00609         JBSET   _Flag1,2
+00B7   2800           00610         GOTO    _00243_DS_
+                      00611 ;       .line   194; "ad.c"     fDetectionT = 0;
+00B8   3D00           00612         BCLR    _Flag1,2
+                      00613 ;       .line   195; "ad.c"     DetectSpace++;
+00B9   1980           00614         INCR    _DetectSpace
+                      00615 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00616 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00617 ;       .line   196; "ad.c"     if(DetectSpace>20)
+00BA   0B15           00618         MOVAI   0x15
+00BB   1200           00619         RSUBAR  _DetectSpace
+00BC   3003           00620         JBSET   STATUS,0
+00BD   2800           00621         GOTO    _00243_DS_
+                      00622 ;;genSkipc:3193: created from rifx:00CC608C
+                      00623 ;       .line   198; "ad.c"     DetectSpace = 0;
+00BE   1D80           00624         CLRR    _DetectSpace
+                      00625 ;       .line   199; "ad.c"     DetectStep++;
+00BF   1980           00626         INCR    _DetectStep
+                      00627 ;       .line   202; "ad.c"     break;
+00C0   2800           00628         GOTO    _00243_DS_
+00C1                  00629 _00199_DS_
+                      00630 ;       .line   204; "ad.c"     RXENB();
+00C1   3C80           00631         BCLR    _P0bits,1
+                      00632 ;       .line   205; "ad.c"     TXENB();
+00C2   3E00           00633         BCLR    _P1bits,4
+00C3   3D80           00634         BCLR    _P1bits,3
+                      00635 ;       .line   206; "ad.c"     delay();
+00C4   2000           00636         CALL    _delay
+                      00637 ;       .line   207; "ad.c"     if(!RX)
+00C5   3400           00638         JBCLR   _P0bits,0
+00C6   2800           00639         GOTO    _00201_DS_
+                      00640 ;       .line   209; "ad.c"     DetectStep++;
+00C7   1980           00641         INCR    _DetectStep
+                      00642 ;       .line   210; "ad.c"     RXDIS();
+00C8   3880           00643         BSET    _P0bits,1
+                      00644 ;       .line   211; "ad.c"     TXDIS();
+00C9   3A00           00645         BSET    _P1bits,4
+00CA   3980           00646         BSET    _P1bits,3
+00CB   2800           00647         GOTO    _00243_DS_
+00CC                  00648 _00201_DS_
+                      00649 ;       .line   215; "ad.c"     DetectStep = 15;
+00CC   0B0F           00650         MOVAI   0x0f
+00CD   1580           00651         MOVRA   _DetectStep
+                      00652 ;       .line   217; "ad.c"     break;
+00CE   2800           00653         GOTO    _00243_DS_
+00CF                  00654 _00203_DS_
+                      00655 ;       .line   219; "ad.c"     if(fDetectionT)
+00CF   3100           00656         JBSET   _Flag1,2
+00D0   2800           00657         GOTO    _00243_DS_
+                      00658 ;       .line   221; "ad.c"     fDetectionT = 0;
+00D1   3D00           00659         BCLR    _Flag1,2
+                      00660 ;       .line   222; "ad.c"     DetectSpace++;
+00D2   1980           00661         INCR    _DetectSpace
+                      00662 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00663 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00664 ;       .line   223; "ad.c"     if(DetectSpace>20)
+00D3   0B15           00665         MOVAI   0x15
+00D4   1200           00666         RSUBAR  _DetectSpace
+00D5   3003           00667         JBSET   STATUS,0
+00D6   2800           00668         GOTO    _00243_DS_
+                      00669 ;;genSkipc:3193: created from rifx:00CC608C
+                      00670 ;       .line   225; "ad.c"     DetectSpace = 0;
+00D7   1D80           00671         CLRR    _DetectSpace
+                      00672 ;       .line   226; "ad.c"     DetectStep++;
+00D8   1980           00673         INCR    _DetectStep
+                      00674 ;       .line   229; "ad.c"     break;
+00D9   2800           00675         GOTO    _00243_DS_
+00DA                  00676 _00208_DS_
+                      00677 ;       .line   231; "ad.c"     RXENB();
+00DA   3C80           00678         BCLR    _P0bits,1
+                      00679 ;       .line   232; "ad.c"     TXENB();
+00DB   3E00           00680         BCLR    _P1bits,4
+00DC   3D80           00681         BCLR    _P1bits,3
+                      00682 ;       .line   233; "ad.c"     delay();
+00DD   2000           00683         CALL    _delay
+                      00684 ;       .line   234; "ad.c"     if(!RX)
+00DE   3400           00685         JBCLR   _P0bits,0
+00DF   2800           00686         GOTO    _00210_DS_
+                      00687 ;       .line   236; "ad.c"     DetectStep++;
+00E0   1980           00688         INCR    _DetectStep
+                      00689 ;       .line   237; "ad.c"     RXDIS();
+00E1   3880           00690         BSET    _P0bits,1
+                      00691 ;       .line   238; "ad.c"     TXDIS();
+00E2   3A00           00692         BSET    _P1bits,4
+00E3   3980           00693         BSET    _P1bits,3
+00E4   2800           00694         GOTO    _00243_DS_
+00E5                  00695 _00210_DS_
+                      00696 ;       .line   242; "ad.c"     DetectStep = 15;
+00E5   0B0F           00697         MOVAI   0x0f
+00E6   1580           00698         MOVRA   _DetectStep
+                      00699 ;       .line   244; "ad.c"     break;
+00E7   2800           00700         GOTO    _00243_DS_
+00E8                  00701 _00212_DS_
+                      00702 ;       .line   246; "ad.c"     if(fDetectionT)
+00E8   3100           00703         JBSET   _Flag1,2
+00E9   2800           00704         GOTO    _00243_DS_
+                      00705 ;       .line   248; "ad.c"     fDetectionT = 0;
+00EA   3D00           00706         BCLR    _Flag1,2
+                      00707 ;       .line   249; "ad.c"     DetectSpace++;
+00EB   1980           00708         INCR    _DetectSpace
+                      00709 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00710 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00711 ;       .line   250; "ad.c"     if(DetectSpace>20)
+00EC   0B15           00712         MOVAI   0x15
+00ED   1200           00713         RSUBAR  _DetectSpace
+00EE   3003           00714         JBSET   STATUS,0
+00EF   2800           00715         GOTO    _00243_DS_
+                      00716 ;;genSkipc:3193: created from rifx:00CC608C
+                      00717 ;       .line   252; "ad.c"     DetectSpace = 0;
+00F0   1D80           00718         CLRR    _DetectSpace
+                      00719 ;       .line   253; "ad.c"     DetectStep++;
+00F1   1980           00720         INCR    _DetectStep
+                      00721 ;       .line   256; "ad.c"     break;
+00F2   2800           00722         GOTO    _00243_DS_
+00F3                  00723 _00217_DS_
+                      00724 ;       .line   258; "ad.c"     RXENB();
+00F3   3C80           00725         BCLR    _P0bits,1
+                      00726 ;       .line   259; "ad.c"     TXENB();
+00F4   3E00           00727         BCLR    _P1bits,4
+00F5   3D80           00728         BCLR    _P1bits,3
+                      00729 ;       .line   260; "ad.c"     delay();
+00F6   2000           00730         CALL    _delay
+                      00731 ;       .line   261; "ad.c"     if(!RX)
+00F7   3400           00732         JBCLR   _P0bits,0
+00F8   2800           00733         GOTO    _00219_DS_
+                      00734 ;       .line   263; "ad.c"     DetectStep++;
+00F9   1980           00735         INCR    _DetectStep
+                      00736 ;       .line   264; "ad.c"     RXDIS();
+00FA   3880           00737         BSET    _P0bits,1
+                      00738 ;       .line   265; "ad.c"     TXDIS();
+00FB   3A00           00739         BSET    _P1bits,4
+00FC   3980           00740         BSET    _P1bits,3
+00FD   2800           00741         GOTO    _00243_DS_
+00FE                  00742 _00219_DS_
+                      00743 ;       .line   269; "ad.c"     DetectStep = 15;
+00FE   0B0F           00744         MOVAI   0x0f
+00FF   1580           00745         MOVRA   _DetectStep
+                      00746 ;       .line   271; "ad.c"     break;
+0100   2800           00747         GOTO    _00243_DS_
+0101                  00748 _00221_DS_
+                      00749 ;       .line   273; "ad.c"     if(fDetectionT)
+0101   3100           00750         JBSET   _Flag1,2
+0102   2800           00751         GOTO    _00243_DS_
+                      00752 ;       .line   275; "ad.c"     fDetectionT = 0;
+0103   3D00           00753         BCLR    _Flag1,2
+                      00754 ;       .line   276; "ad.c"     DetectSpace++;
+0104   1980           00755         INCR    _DetectSpace
+                      00756 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00757 ;;unsigned compare: left >= lit(0x15=21), size=1
+                      00758 ;       .line   277; "ad.c"     if(DetectSpace>20)
+0105   0B15           00759         MOVAI   0x15
+0106   1200           00760         RSUBAR  _DetectSpace
+0107   3003           00761         JBSET   STATUS,0
+0108   2800           00762         GOTO    _00243_DS_
+                      00763 ;;genSkipc:3193: created from rifx:00CC608C
+                      00764 ;       .line   279; "ad.c"     DetectSpace = 0;
+0109   1D80           00765         CLRR    _DetectSpace
+                      00766 ;       .line   280; "ad.c"     DetectStep++;
+010A   1980           00767         INCR    _DetectStep
+                      00768 ;       .line   283; "ad.c"     break;
+010B   2800           00769         GOTO    _00243_DS_
+010C                  00770 _00226_DS_
+                      00771 ;       .line   285; "ad.c"     RXENB();
+010C   3C80           00772         BCLR    _P0bits,1
+                      00773 ;       .line   286; "ad.c"     TXENB();
+010D   3E00           00774         BCLR    _P1bits,4
+010E   3D80           00775         BCLR    _P1bits,3
+                      00776 ;       .line   287; "ad.c"     delay();
+010F   2000           00777         CALL    _delay
+                      00778 ;       .line   288; "ad.c"     if(!RX)
+0110   3400           00779         JBCLR   _P0bits,0
+0111   2800           00780         GOTO    _00228_DS_
+                      00781 ;       .line   290; "ad.c"     DetectStep++;
+0112   1980           00782         INCR    _DetectStep
+                      00783 ;       .line   291; "ad.c"     RXDIS();
+0113   3880           00784         BSET    _P0bits,1
+                      00785 ;       .line   292; "ad.c"     TXDIS();
+0114   3A00           00786         BSET    _P1bits,4
+0115   3980           00787         BSET    _P1bits,3
+                      00788 ;       .line   293; "ad.c"     fDetection = 0;
+0116   3C80           00789         BCLR    _Flag1,1
+                      00790 ;       .line   294; "ad.c"     fActuation = 1;
+0117   3980           00791         BSET    _Flag1,3
+                      00792 ;       .line   295; "ad.c"     MaxRunTimes++;
+0118   1980           00793         INCR    _MaxRunTimes
+0119   3503           00794         JBCLR   STATUS,2
+011A   1980           00795         INCR    (_MaxRunTimes + 1)
+                      00796 ;       .line   296; "ad.c"     MaxMotorTimes = 0;
+011B   1D80           00797         CLRR    _MaxMotorTimes
+011C   1D80           00798         CLRR    (_MaxMotorTimes + 1)
+                      00799 ;       .line   297; "ad.c"     fWaiteRelease = 0;
+011D   3F00           00800         BCLR    _Flag1,6
+011E   2800           00801         GOTO    _00243_DS_
+011F                  00802 _00228_DS_
+                      00803 ;       .line   301; "ad.c"     DetectStep = 15;
+011F   0B0F           00804         MOVAI   0x0f
+0120   1580           00805         MOVRA   _DetectStep
+                      00806 ;       .line   303; "ad.c"     break;
+0121   2800           00807         GOTO    _00243_DS_
+0122                  00808 _00230_DS_
+                      00809 ;       .line   306; "ad.c"     P17=!P17;
+0122   1D80           00810         CLRR    r0x1011
+0123   3780           00811         JBCLR   _P1bits,7
+0124   1980           00812         INCR    r0x1011
+0125   1600           00813         MOVAR   r0x1011
+0126   0B00           00814         MOVAI   0x00
+0127   3503           00815         JBCLR   STATUS,2
+0128   0B01           00816         MOVAI   0x01
+0129   1580           00817         MOVRA   r0x1011
+                      00818 ;;1     MOVRA   r0x1012
+                      00819 ;;99    MOVAR   r0x1012
+012A   1300           00820         RRAR    r0x1011
+012B   3003           00821         JBSET   STATUS,0
+012C   3F80           00822         BCLR    _P1bits,7
+012D   3403           00823         JBCLR   STATUS,0
+012E   3B80           00824         BSET    _P1bits,7
+                      00825 ;       .line   307; "ad.c"     RXDIS();
+012F   3880           00826         BSET    _P0bits,1
+                      00827 ;       .line   308; "ad.c"     TXDIS();
+0130   3A00           00828         BSET    _P1bits,4
+0131   3980           00829         BSET    _P1bits,3
+                      00830 ;       .line   309; "ad.c"     if(fSleepT)
+0132   3380           00831         JBSET   _Flag1,7
+0133   2800           00832         GOTO    _00243_DS_
+                      00833 ;       .line   311; "ad.c"     fSleepT = 0;
+0134   3F80           00834         BCLR    _Flag1,7
+                      00835 ;       .line   312; "ad.c"     SleepCnt++;
+0135   1980           00836         INCR    _SleepCnt
+                      00837 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00838 ;;unsigned compare: left >= lit(0xC9=201), size=1
+                      00839 ;       .line   313; "ad.c"     if(SleepCnt>200)
+0136   0BC9           00840         MOVAI   0xc9
+0137   1200           00841         RSUBAR  _SleepCnt
+0138   3003           00842         JBSET   STATUS,0
+0139   2800           00843         GOTO    _00243_DS_
+                      00844 ;;genSkipc:3193: created from rifx:00CC608C
+                      00845 ;       .line   315; "ad.c"     SleepCnt = 0;
+013A   1D80           00846         CLRR    _SleepCnt
+                      00847 ;       .line   316; "ad.c"     KBIM =   BIN(0,0,0,0,1,0,0,0);          
+013B   0B08           00848         MOVAI   0x08
+013C   1580           00849         MOVRA   _KBIM
+                      00850 ;       .line   317; "ad.c"     MCR = BIN(0,0,0,0,1,0,0,0);
+013D   0B08           00851         MOVAI   0x08
+013E   1580           00852         MOVRA   _MCR
+                      00853 ;       .line   318; "ad.c"     ClrWdt();
+013F   000E           00854         clrwdt
+                      00855 ;       .line   320; "ad.c"     Stop();
+0140   000B           00856         stop
+                      00857 ;       .line   322; "ad.c"     if(!PD)
+0141   3580           00858         JBCLR   _STATUSbits,3
+0142   2800           00859         GOTO    _00232_DS_
+                      00860 ;       .line   324; "ad.c"     DetectStep=0;
+0143   1D80           00861         CLRR    _DetectStep
+                      00862 ;       .line   325; "ad.c"     SleepCnt = 0;   
+0144   1D80           00863         CLRR    _SleepCnt
+0145   2800           00864         GOTO    _00233_DS_
+0146                  00865 _00232_DS_
+                      00866 ;       .line   329; "ad.c"     SleepCnt = 0;
+0146   1D80           00867         CLRR    _SleepCnt
+0147                  00868 _00233_DS_
+                      00869 ;       .line   331; "ad.c"     MCR = 0X00;
+0147   1D80           00870         CLRR    _MCR
+                      00871 ;       .line   332; "ad.c"     KBIM = BIN(0,0,0,0,0,0,0,1);
+0148   0B01           00872         MOVAI   0x01
+0149   1580           00873         MOVRA   _KBIM
+                      00874 ;       .line   333; "ad.c"     PDCON  = BIN(1,1,0,0,0,0,0,0);
+014A   0BC0           00875         MOVAI   0xc0
+014B   1580           00876         MOVRA   _PDCON
+                      00877 ;       .line   334; "ad.c"     ClrWdt();
+014C   000E           00878         clrwdt
+                      00879 ;       .line   338; "ad.c"     break;
+014D   2800           00880         GOTO    _00243_DS_
+014E                  00881 _00238_DS_
+                      00882 ;       .line   339; "ad.c"     default:DetectStep = 15;break;
+014E   0B0F           00883         MOVAI   0x0f
+014F   1580           00884         MOVRA   _DetectStep
+0150                  00885 _00243_DS_
+                      00886 ;       .line   342; "ad.c"     }
+0150   000C           00887         RETURN  
+                      00888 ; exit point of _Detection
+                      00889 
+                      00890 ;***
+                      00891 ;  pBlock Stats: dbName = C
+                      00892 ;***
+                      00893 ;entry:  _WorkOnInit    ;Function start
+                      00894 ; 2 exit points
+                      00895 ;has an exit
+                      00896 ;2 compiler assigned registers:
+                      00897 ;   r0x1013
+                      00898 ;   r0x1014
+                      00899 ;; Starting pCode block
+0151                  00900 _WorkOnInit     ;Function start
+                      00901 ; 2 exit points
+                      00902 ;       .line   14; "ad.c"      if(fWorkON && fWorkONInit)
+0151   3080           00903         JBSET   _Flag2,1
+0152   2800           00904         GOTO    _00135_DS_
+0153   3100           00905         JBSET   _Flag2,2
+0154   2800           00906         GOTO    _00135_DS_
+                      00907 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00908 ;;unsigned compare: left >= lit(0x3=3), size=1
+                      00909 ;       .line   16; "ad.c"      switch(WorkONInitStep)
+0155   0B03           00910         MOVAI   0x03
+0156   1200           00911         RSUBAR  _WorkONInitStep
+0157   3403           00912         JBCLR   STATUS,0
+0158   2800           00913         GOTO    _00135_DS_
+                      00914 ;;genSkipc:3193: created from rifx:00CC608C
+0159   0B00           00915         MOVAI   _00158_DS_
+015A   1F00           00916         ADDAR   _WorkONInitStep
+015B   1582           00917         MOVRA   PCL
+015C                  00918 _00158_DS_
+015C   2800           00919         GOTO    _00112_DS_
+015D   2800           00920         GOTO    _00119_DS_
+015E   2800           00921         GOTO    _00129_DS_
+015F                  00922 _00112_DS_
+                      00923 ;       .line   19; "ad.c"      if(fWorkONInitT)
+015F   3000           00924         JBSET   _Flag1,0
+0160   2800           00925         GOTO    _00135_DS_
+                      00926 ;       .line   21; "ad.c"      fWorkONInitT = 0;
+0161   3C00           00927         BCLR    _Flag1,0
+                      00928 ;       .line   22; "ad.c"      LEDFlashSpace++;
+0162   1980           00929         INCR    _LEDFlashSpace
+                      00930 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00931 ;;unsigned compare: left >= lit(0x65=101), size=1
+                      00932 ;       .line   23; "ad.c"      if(LEDFlashSpace> 100)
+0163   0B65           00933         MOVAI   0x65
+0164   1200           00934         RSUBAR  _LEDFlashSpace
+0165   3003           00935         JBSET   STATUS,0
+0166   2800           00936         GOTO    _00135_DS_
+                      00937 ;;genSkipc:3193: created from rifx:00CC608C
+                      00938 ;       .line   25; "ad.c"      LEDFlashSpace = 0;
+0167   1D80           00939         CLRR    _LEDFlashSpace
+                      00940 ;       .line   26; "ad.c"      LED1 = !LED1;
+0168   1D80           00941         CLRR    r0x1013
+0169   3480           00942         JBCLR   _P0bits,1
+016A   1980           00943         INCR    r0x1013
+016B   1600           00944         MOVAR   r0x1013
+016C   0B00           00945         MOVAI   0x00
+016D   3503           00946         JBCLR   STATUS,2
+016E   0B01           00947         MOVAI   0x01
+016F   1580           00948         MOVRA   r0x1013
+0170   1580           00949         MOVRA   r0x1014
+                      00950 ;;103   MOVAR   r0x1014
+0171   1300           00951         RRAR    r0x1013
+0172   3003           00952         JBSET   STATUS,0
+0173   3C80           00953         BCLR    _P0bits,1
+0174   3403           00954         JBCLR   STATUS,0
+0175   3880           00955         BSET    _P0bits,1
+                      00956 ;       .line   27; "ad.c"      LED2 = !LED2;
+0176   1D80           00957         CLRR    r0x1013
+0177   3500           00958         JBCLR   _P0bits,2
+0178   1980           00959         INCR    r0x1013
+0179   1600           00960         MOVAR   r0x1013
+017A   0B00           00961         MOVAI   0x00
+017B   3503           00962         JBCLR   STATUS,2
+017C   0B01           00963         MOVAI   0x01
+017D   1580           00964         MOVRA   r0x1013
+017E   1580           00965         MOVRA   r0x1014
+                      00966 ;;102   MOVAR   r0x1014
+017F   1300           00967         RRAR    r0x1013
+0180   3003           00968         JBSET   STATUS,0
+0181   3D00           00969         BCLR    _P0bits,2
+0182   3403           00970         JBCLR   STATUS,0
+0183   3900           00971         BSET    _P0bits,2
+                      00972 ;       .line   28; "ad.c"      LEDFlashTimes++;
+0184   1980           00973         INCR    _LEDFlashTimes
+                      00974 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00975 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      00976 ;       .line   29; "ad.c"      if(LEDFlashTimes > 3)
+0185   0B04           00977         MOVAI   0x04
+0186   1200           00978         RSUBAR  _LEDFlashTimes
+0187   3003           00979         JBSET   STATUS,0
+0188   2800           00980         GOTO    _00135_DS_
+                      00981 ;;genSkipc:3193: created from rifx:00CC608C
+                      00982 ;       .line   31; "ad.c"      LEDFlashTimes = 0;
+0189   1D80           00983         CLRR    _LEDFlashTimes
+                      00984 ;       .line   32; "ad.c"      WorkONInitStep++;
+018A   1980           00985         INCR    _WorkONInitStep
+                      00986 ;       .line   36; "ad.c"      break;
+018B   2800           00987         GOTO    _00135_DS_
+018C                  00988 _00119_DS_
+                      00989 ;       .line   38; "ad.c"      RXENB();
+018C   3C80           00990         BCLR    _P0bits,1
+                      00991 ;       .line   39; "ad.c"      TXENB();
+018D   3E00           00992         BCLR    _P1bits,4
+018E   3D80           00993         BCLR    _P1bits,3
+                      00994 ;       .line   41; "ad.c"      if(fWorkONInitT)
+018F   3000           00995         JBSET   _Flag1,0
+0190   2800           00996         GOTO    _00135_DS_
+                      00997 ;       .line   43; "ad.c"      fWorkONInitT = 0;
+0191   3C00           00998         BCLR    _Flag1,0
+                      00999 ;       .line   44; "ad.c"      LEDFlashSpace++;
+0192   1980           01000         INCR    _LEDFlashSpace
+                      01001 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01002 ;;unsigned compare: left >= lit(0xFB=251), size=1
+                      01003 ;       .line   45; "ad.c"      if(LEDFlashSpace>250)
+0193   0BFB           01004         MOVAI   0xfb
+0194   1200           01005         RSUBAR  _LEDFlashSpace
+0195   3003           01006         JBSET   STATUS,0
+0196   2800           01007         GOTO    _00121_DS_
+                      01008 ;;genSkipc:3193: created from rifx:00CC608C
+                      01009 ;       .line   47; "ad.c"      LEDFlashSpace = 0;
+0197   1D80           01010         CLRR    _LEDFlashSpace
+                      01011 ;       .line   48; "ad.c"      LED1 = !LED1;
+0198   1D80           01012         CLRR    r0x1013
+0199   3480           01013         JBCLR   _P0bits,1
+019A   1980           01014         INCR    r0x1013
+019B   1600           01015         MOVAR   r0x1013
+019C   0B00           01016         MOVAI   0x00
+019D   3503           01017         JBCLR   STATUS,2
+019E   0B01           01018         MOVAI   0x01
+019F   1580           01019         MOVRA   r0x1013
+01A0   1580           01020         MOVRA   r0x1014
+                      01021 ;;101   MOVAR   r0x1014
+01A1   1300           01022         RRAR    r0x1013
+01A2   3003           01023         JBSET   STATUS,0
+01A3   3C80           01024         BCLR    _P0bits,1
+01A4   3403           01025         JBCLR   STATUS,0
+01A5   3880           01026         BSET    _P0bits,1
+                      01027 ;       .line   49; "ad.c"      LED2 = !LED2;
+01A6   1D80           01028         CLRR    r0x1013
+01A7   3500           01029         JBCLR   _P0bits,2
+01A8   1980           01030         INCR    r0x1013
+01A9   1600           01031         MOVAR   r0x1013
+01AA   0B00           01032         MOVAI   0x00
+01AB   3503           01033         JBCLR   STATUS,2
+01AC   0B01           01034         MOVAI   0x01
+01AD   1580           01035         MOVRA   r0x1013
+01AE   1580           01036         MOVRA   r0x1014
+                      01037 ;;100   MOVAR   r0x1014
+01AF   1300           01038         RRAR    r0x1013
+01B0   3003           01039         JBSET   STATUS,0
+01B1   3D00           01040         BCLR    _P0bits,2
+01B2   3403           01041         JBCLR   STATUS,0
+01B3   3900           01042         BSET    _P0bits,2
+01B4                  01043 _00121_DS_
+                      01044 ;       .line   51; "ad.c"      if( RX )
+01B4   3000           01045         JBSET   _P0bits,0
+01B5   2800           01046         GOTO    _00125_DS_
+                      01047 ;       .line   53; "ad.c"      RXDebounce++;
+01B6   1980           01048         INCR    _RXDebounce
+                      01049 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01050 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      01051 ;       .line   54; "ad.c"      if(RXDebounce > 3)
+01B7   0B04           01052         MOVAI   0x04
+01B8   1200           01053         RSUBAR  _RXDebounce
+01B9   3003           01054         JBSET   STATUS,0
+01BA   2800           01055         GOTO    _00135_DS_
+                      01056 ;;genSkipc:3193: created from rifx:00CC608C
+                      01057 ;       .line   56; "ad.c"      RXDebounce = 0;
+01BB   1D80           01058         CLRR    _RXDebounce
+                      01059 ;       .line   57; "ad.c"      WorkONInitStep++;
+01BC   1980           01060         INCR    _WorkONInitStep
+                      01061 ;       .line   59; "ad.c"      RXDIS();
+01BD   3880           01062         BSET    _P0bits,1
+                      01063 ;       .line   60; "ad.c"      TXDIS();
+01BE   3A00           01064         BSET    _P1bits,4
+01BF   3980           01065         BSET    _P1bits,3
+                      01066 ;       .line   61; "ad.c"      LEDOFF();
+01C0   3880           01067         BSET    _P0bits,1
+01C1   3900           01068         BSET    _P0bits,2
+01C2   2800           01069         GOTO    _00135_DS_
+01C3                  01070 _00125_DS_
+                      01071 ;       .line   66; "ad.c"      RXDebounce = 0;
+01C3   1D80           01072         CLRR    _RXDebounce
+                      01073 ;       .line   69; "ad.c"      break;
+01C4   2800           01074         GOTO    _00135_DS_
+01C5                  01075 _00129_DS_
+                      01076 ;       .line   72; "ad.c"      MCR =   BIN(0,0,0,0,1,0,0,0);           
+01C5   0B08           01077         MOVAI   0x08
+01C6   1580           01078         MOVRA   _MCR
+                      01079 ;       .line   73; "ad.c"      KBIM = BIN(0,0,0,0,1,0,0,0);
+01C7   0B08           01080         MOVAI   0x08
+01C8   1580           01081         MOVRA   _KBIM
+                      01082 ;       .line   74; "ad.c"      ClrWdt();
+01C9   000E           01083         clrwdt
+                      01084 ;       .line   76; "ad.c"      Stop();
+01CA   000B           01085         stop
+                      01086 ;       .line   77; "ad.c"      KBIM = 0X00;
+01CB   1D80           01087         CLRR    _KBIM
+                      01088 ;       .line   78; "ad.c"      MCR = BIN(0,0,0,0,0,0,0,1);
+01CC   0B01           01089         MOVAI   0x01
+01CD   1580           01090         MOVRA   _MCR
+                      01091 ;       .line   79; "ad.c"      PUCON  = BIN(1,1,0,0,0,0,0,0);
+01CE   0BC0           01092         MOVAI   0xc0
+01CF   1580           01093         MOVRA   _PUCON
+                      01094 ;       .line   80; "ad.c"      fWorkONInit = 0;
+01D0   3D00           01095         BCLR    _Flag2,2
+                      01096 ;       .line   81; "ad.c"      fDetection = 1;
+01D1   3880           01097         BSET    _Flag1,1
+                      01098 ;       .line   82; "ad.c"      DetectStep = 0;
+01D2   1D80           01099         CLRR    _DetectStep
+01D3                  01100 _00135_DS_
+                      01101 ;       .line   85; "ad.c"      }
+01D3   000C           01102         RETURN  
+                      01103 ; exit point of _WorkOnInit
+                      01104 
+                      01105 ;***
+                      01106 ;  pBlock Stats: dbName = C
+                      01107 ;***
+                      01108 ;entry:  _delay ;Function start
+                      01109 ; 2 exit points
+                      01110 ;has an exit
+                      01111 ;2 compiler assigned registers:
+                      01112 ;   r0x100F
+                      01113 ;   r0x1010
+                      01114 ;; Starting pCode block
+01D4                  01115 _delay  ;Function start
+                      01116 ; 2 exit points
+                      01117 ;       .line   10; "ad.c"      for(i=0;i<20;i++);
+01D4   0B14           01118         MOVAI   0x14
+01D5   1580           01119         MOVRA   r0x100F
+01D6                  01120 _00107_DS_
+01D6   1600           01121         MOVAR   r0x100F
+01D7   1580           01122         MOVRA   r0x1010
+01D8   1B00           01123         DECAR   r0x1010
+01D9   1580           01124         MOVRA   r0x100F
+01DA   0B00           01125         MOVAI   0x00
+01DB   1700           01126         ORAR    r0x100F
+01DC   3103           01127         JBSET   STATUS,2
+01DD   2800           01128         GOTO    _00107_DS_
+01DE   000C           01129         RETURN  
+                      01130 ; exit point of _delay
+                      01131 
+                      01132 
+                      01133 ;       code size estimation:
+                      01134 ;         474+    0 =   474 instructions (  948 byte)
+                      01135 
+                      01136         end
+gpasm-2.0.0_beta2 (Aug 27 2017)ad.asm             2017-10-13  17:26:49         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00107_DS_                        000001D6
+_00112_DS_                        0000015F
+_00119_DS_                        0000018C
+_00121_DS_                        000001B4
+_00125_DS_                        000001C3
+_00129_DS_                        000001C5
+_00135_DS_                        000001D3
+_00158_DS_                        0000015C
+_00163_DS_                        0000005D
+_00165_DS_                        00000068
+_00167_DS_                        0000006B
+_00172_DS_                        00000076
+_00174_DS_                        00000081
+_00176_DS_                        00000084
+_00181_DS_                        0000008F
+_00183_DS_                        0000009A
+_00185_DS_                        0000009D
+_00190_DS_                        000000A8
+_00192_DS_                        000000B3
+_00194_DS_                        000000B6
+_00199_DS_                        000000C1
+_00201_DS_                        000000CC
+_00203_DS_                        000000CF
+_00208_DS_                        000000DA
+_00210_DS_                        000000E5
+_00212_DS_                        000000E8
+_00217_DS_                        000000F3
+_00219_DS_                        000000FE
+_00221_DS_                        00000101
+_00226_DS_                        0000010C
+_00228_DS_                        0000011F
+_00230_DS_                        00000122
+_00232_DS_                        00000146
+_00233_DS_                        00000147
+_00238_DS_                        0000014E
+_00243_DS_                        00000150
+_00302_DS_                        0000004D
+_00310_DS_                        00000018
+_00316_DS_                        00000028
+_00326_DS_                        00000041
+_00350_DS_                        00000031
+_00357_DS_                        00000004
+_Actuation                        00000005
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_ClrrRAM                          00000000
+_ConsecutiveFive                  00000000
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_DetectSpace                      00000000
+_DetectStep                       00000000
+_Detection                        00000042
+_EndUart                          00000000
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FSR                              00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_INDF                             00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_InitUart                         00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyScan                          00000000
+_LEDFlashSpace                    00000000
+_LEDFlashTimes                    00000000
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MaxMotorTimes                    00000000
+_MaxRunTimes                      00000000
+_MotorFiveCnt                     00000000
+_NeedSleep                        00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_PositionDelay                    00000000
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_RXCnt                            00000000
+_RXDebounce                       00000000
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_STATUS                           00000000
+_STATUSbits                       00000000
+_SleepCnt                         00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_TMCR                             00000000
+_TMCRbits                         00000000
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_UartDelay                        00000000
+_UartSendByte                     00000000
+_UartSendInt                      00000000
+_UartStep                         00000000
+_UartTemp                         00000000
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+_WorkONInitStep                   00000000
+_WorkOnInit                       00000151
+__30P011                          00000001
+_delay                            000001D4
+_init                             00000000
+r0x100F                           00000000
+r0x1010                           00000001
+r0x1011                           00000004
+r0x1013                           00000002
+r0x1014                           00000003
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

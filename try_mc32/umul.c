@@ -29,10 +29,9 @@ void main(void)
    	ui_a = uiram0;
    	ui_b = uiram1;
 
-   	ulram0 = (ulong)ui_a * (ulong)i_b;     	   	// 0xffb727e8? (0x2b2f27e8)
+   	ulram0 = (ulong)ui_a * (ulong)ui_b;     	   	// 0xffb727e8? (0x2b2f27e8)
    	ulram0 = ui_a * ui_b;     	   	   	   		   	// 0x000027e8
 
-   	
-
    	while(1);
+
 }

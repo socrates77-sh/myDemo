@@ -1,0 +1,520 @@
+gpasm-2.0.0_beta2 (Aug 27 2017)main.asm           2017-10-13  17:26:51         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : ANSI-C Compiler
+                      00003 ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                      00004 ; This file was generated Fri Oct 13 17:26:50 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC3X port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "main.c"
+                      00009         list    p=0311
+                      00010         radix dec
+                      00011         include "0311.inc"
+                      00001                 LIST
+                      00002 ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00225                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _WorkOnInit
+                      00016         extern  _Detection
+                      00017         extern  _Actuation
+                      00018         extern  _ConsecutiveFive
+                      00019         extern  _init
+                      00020         extern  _ClrrRAM
+                      00021         extern  _KeyScan
+                      00022         extern  _NeedSleep
+                      00023         extern  _InitUart
+                      00024         extern  _EndUart
+                      00025         extern  _UartSendByte
+                      00026         extern  _UartDelay
+                      00027         extern  _UartSendInt
+                      00028         extern  _STATUSbits
+                      00029         extern  _P0bits
+                      00030         extern  _P1bits
+                      00031         extern  _MCRbits
+                      00032         extern  _KBIMbits
+                      00033         extern  _PDCONbits
+                      00034         extern  _ODCONbits
+                      00035         extern  _PUCONbits
+                      00036         extern  _INTECONbits
+                      00037         extern  _INTFLAGbits
+                      00038         extern  _T0CRbits
+                      00039         extern  _DDR0bits
+                      00040         extern  _DDR1bits
+                      00041         extern  _TMCRbits
+                      00042         extern  _T1CRbits
+                      00043         extern  _WorkONInitStep
+                      00044         extern  _LEDFlashTimes
+                      00045         extern  _LEDFlashSpace
+                      00046         extern  _RXDebounce
+                      00047         extern  _RXCnt
+                      00048         extern  _DetectSpace
+                      00049         extern  _DetectStep
+                      00050         extern  _SleepCnt
+                      00051         extern  _MaxRunTimes
+                      00052         extern  _MaxMotorTimes
+                      00053         extern  _MotorFiveCnt
+                      00054         extern  _PositionDelay
+                      00055         extern  _Flag1
+                      00056         extern  _Flag2
+                      00057         extern  _UartStep
+                      00058         extern  _UartTemp
+                      00059         extern  _INDF
+                      00060         extern  _T0CNT
+                      00061         extern  _PCL
+                      00062         extern  _STATUS
+                      00063         extern  _FSR
+                      00064         extern  _P0
+                      00065         extern  _P1
+                      00066         extern  _MCR
+                      00067         extern  _KBIM
+                      00068         extern  _PCLATH
+                      00069         extern  _PDCON
+                      00070         extern  _ODCON
+                      00071         extern  _PUCON
+                      00072         extern  _INTECON
+                      00073         extern  _INTFLAG
+                      00074         extern  _T0CR
+                      00075         extern  _DDR0
+                      00076         extern  _DDR1
+                      00077         extern  _TMCR
+                      00078         extern  _T1CR
+                      00079         extern  _T1CNT
+                      00080         extern  _T1LOAD
+                      00081         extern  _T1DATA
+                      00082 ;--------------------------------------------------------
+                      00083 ; global declarations
+                      00084 ;--------------------------------------------------------
+                      00085         global  _main
+                      00086         global  _int_isr
+                      00087 
+                      00088         global STK06
+                      00089         global STK05
+                      00090         global STK04
+                      00091         global STK03
+                      00092         global STK02
+                      00093         global STK01
+                      00094         global STK00
+                      00095 
+                      00096 sharebank udata_ovr 0x0010
+0008                  00097 STK06   res 1
+0008                  00098 STK05   res 1
+0009                  00099 STK04   res 1
+0009                  00100 STK03   res 1
+000A                  00101 STK02   res 1
+000A                  00102 STK01   res 1
+000B                  00103 STK00   res 1
+                      00104 
+                      00105 ;--------------------------------------------------------
+                      00106 ; global definitions
+                      00107 ;--------------------------------------------------------
+                      00108 ;--------------------------------------------------------
+                      00109 ; absolute symbol definitions
+                      00110 ;--------------------------------------------------------
+                      00111 ;--------------------------------------------------------
+                      00112 ; compiler-defined variables
+                      00113 ;--------------------------------------------------------
+                      00114 ;--------------------------------------------------------
+                      00115 ; initialized data
+                      00116 ;--------------------------------------------------------
+                      00117 
+                      00118 ;@Allocation info for local variables in function 'main'
+                      00119 ;@main WorkOnInit                Allocated to registers ;size:2
+                      00120 ;@main Detection                 Allocated to registers ;size:2
+                      00121 ;@main Actuation                 Allocated to registers ;size:2
+                      00122 ;@main ConsecutiveFive           Allocated to registers ;size:2
+                      00123 ;@main init                      Allocated to registers ;size:2
+                      00124 ;@main ClrrRAM                   Allocated to registers ;size:2
+                      00125 ;@main KeyScan                   Allocated to registers ;size:2
+                      00126 ;@main NeedSleep                 Allocated to registers ;size:2
+                      00127 ;@main InitUart                  Allocated to registers ;size:2
+                      00128 ;@main EndUart                   Allocated to registers ;size:2
+                      00129 ;@main UartSendByte              Allocated to registers ;size:2
+                      00130 ;@main UartDelay                 Allocated to registers ;size:2
+                      00131 ;@main UartSendInt               Allocated to registers ;size:2
+                      00132 ;@main main                      Allocated to registers ;size:2
+                      00133 ;@main STATUSbits                Allocated to registers ;size:1
+                      00134 ;@main P0bits                    Allocated to registers ;size:1
+                      00135 ;@main P1bits                    Allocated to registers ;size:1
+                      00136 ;@main MCRbits                   Allocated to registers ;size:1
+                      00137 ;@main KBIMbits                  Allocated to registers ;size:1
+                      00138 ;@main PDCONbits                 Allocated to registers ;size:1
+                      00139 ;@main ODCONbits                 Allocated to registers ;size:1
+                      00140 ;@main PUCONbits                 Allocated to registers ;size:1
+                      00141 ;@main INTECONbits               Allocated to registers ;size:1
+                      00142 ;@main INTFLAGbits               Allocated to registers ;size:1
+                      00143 ;@main T0CRbits                  Allocated to registers ;size:1
+                      00144 ;@main DDR0bits                  Allocated to registers ;size:1
+                      00145 ;@main DDR1bits                  Allocated to registers ;size:1
+                      00146 ;@main TMCRbits                  Allocated to registers ;size:1
+                      00147 ;@main T1CRbits                  Allocated to registers ;size:1
+                      00148 ;@main WorkONInitStep            Allocated to registers ;size:1
+                      00149 ;@main LEDFlashTimes             Allocated to registers ;size:1
+                      00150 ;@main LEDFlashSpace             Allocated to registers ;size:1
+                      00151 ;@main RXDebounce                Allocated to registers ;size:1
+                      00152 ;@main RXCnt                     Allocated to registers ;size:1
+                      00153 ;@main DetectSpace               Allocated to registers ;size:1
+                      00154 ;@main DetectStep                Allocated to registers ;size:1
+                      00155 ;@main SleepCnt                  Allocated to registers ;size:1
+                      00156 ;@main MaxRunTimes               Allocated to registers ;size:2
+                      00157 ;@main MaxMotorTimes             Allocated to registers ;size:2
+                      00158 ;@main MotorFiveCnt              Allocated to registers ;size:1
+                      00159 ;@main PositionDelay             Allocated to registers ;size:1
+                      00160 ;@main Flag1                     Allocated to registers ;size:1
+                      00161 ;@main Flag2                     Allocated to registers ;size:1
+                      00162 ;@main UartStep                  Allocated to registers ;size:1
+                      00163 ;@main UartTemp                  Allocated to registers ;size:1
+                      00164 ;@main INDF                      Allocated to registers ;size:1
+                      00165 ;@main T0CNT                     Allocated to registers ;size:1
+                      00166 ;@main PCL                       Allocated to registers ;size:1
+                      00167 ;@main STATUS                    Allocated to registers ;size:1
+                      00168 ;@main FSR                       Allocated to registers ;size:1
+                      00169 ;@main P0                        Allocated to registers ;size:1
+                      00170 ;@main P1                        Allocated to registers ;size:1
+                      00171 ;@main MCR                       Allocated to registers ;size:1
+                      00172 ;@main KBIM                      Allocated to registers ;size:1
+                      00173 ;@main PCLATH                    Allocated to registers ;size:1
+                      00174 ;@main PDCON                     Allocated to registers ;size:1
+                      00175 ;@main ODCON                     Allocated to registers ;size:1
+                      00176 ;@main PUCON                     Allocated to registers ;size:1
+                      00177 ;@main INTECON                   Allocated to registers ;size:1
+                      00178 ;@main INTFLAG                   Allocated to registers ;size:1
+                      00179 ;@main T0CR                      Allocated to registers ;size:1
+                      00180 ;@main DDR0                      Allocated to registers ;size:1
+                      00181 ;@main DDR1                      Allocated to registers ;size:1
+                      00182 ;@main TMCR                      Allocated to registers ;size:1
+                      00183 ;@main T1CR                      Allocated to registers ;size:1
+                      00184 ;@main T1CNT                     Allocated to registers ;size:1
+                      00185 ;@main T1LOAD                    Allocated to registers ;size:1
+                      00186 ;@main T1DATA                    Allocated to registers ;size:1
+                      00187 ;@end Allocation info for local variables in function 'main';
+                      00188 ;@Allocation info for local variables in function 'int_isr'
+                      00189 ;@end Allocation info for local variables in function 'int_isr';
+                      00190 
+                      00191 ;--------------------------------------------------------
+                      00192 ; overlayable items in internal ram 
+                      00193 ;--------------------------------------------------------
+                      00194 ;       udata_ovr
+                      00195 ;--------------------------------------------------------
+                      00196 ; reset vector 
+                      00197 ;--------------------------------------------------------
+                      00198 STARTUP code 0x0000
+0000   2800           00199         goto    _main
+                      00200 ;--------------------------------------------------------
+                      00201 ; interrupt and initialization code
+                      00202 ;--------------------------------------------------------
+                      00203 c_interrupt     code    0x8
+0008                  00204 __sdcc_interrupt
+                      00205 ;***
+                      00206 ;  pBlock Stats: dbName = I
+                      00207 ;***
+                      00208 ;entry:  _int_isr       ;Function start
+                      00209 ; 0 exit points
+                      00210 ;; Starting pCode block
+0008                  00211 _int_isr        ;Function start
+                      00212 ; 0 exit points
+                      00213 ;       .line   37; "main.c"    if(T0SE)                        // ¶¨Ê±1ms
+0008   3200           00214         JBSET   _T0CRbits,4
+0009   2800           00215         GOTO    END_OF_INTERRUPT
+                      00216 ;       .line   39; "main.c"    T0SE = 0;
+000A   3E00           00217         BCLR    _T0CRbits,4
+                      00218 ;       .line   40; "main.c"    T1CR = 0X05;
+000B   0B05           00219         MOVAI   0x05
+000C   1580           00220         MOVRA   _T1CR
+                      00221 ;       .line   41; "main.c"    fKeyT = 1;
+000D   3800           00222         BSET    _Flag2,0
+                      00223 ;       .line   42; "main.c"    fWorkONInitT = 1;
+000E   3800           00224         BSET    _Flag1,0
+                      00225 ;       .line   43; "main.c"    fDetectionT = 1;
+000F   3900           00226         BSET    _Flag1,2
+                      00227 ;       .line   44; "main.c"    fMotorT = 1;
+0010   3A00           00228         BSET    _Flag1,4
+                      00229 ;       .line   45; "main.c"    fSleepT = 1;
+0011   3B80           00230         BSET    _Flag1,7
+0012                  00231 END_OF_INTERRUPT
+0012   000D           00232         RETIE   
+                      00233 
+                      00234 ;--------------------------------------------------------
+                      00235 ; code
+                      00236 ;--------------------------------------------------------
+                      00237 code_main       code
+                      00238 ;***
+                      00239 ;  pBlock Stats: dbName = M
+                      00240 ;***
+                      00241 ;entry:  _main  ;Function start
+                      00242 ; 2 exit points
+                      00243 ;has an exit
+                      00244 ;functions called:
+                      00245 ;   _init
+                      00246 ;   _KeyScan
+                      00247 ;   _WorkOnInit
+                      00248 ;   _Detection
+                      00249 ;   _Actuation
+                      00250 ;   _init
+                      00251 ;   _KeyScan
+                      00252 ;   _WorkOnInit
+                      00253 ;   _Detection
+                      00254 ;   _Actuation
+                      00255 ;; Starting pCode block
+0000                  00256 _main   ;Function start
+                      00257 ; 2 exit points
+                      00258 ;       .line   6; "main.c"     init();
+0000   2000           00259         CALL    _init
+                      00260 ;       .line   7; "main.c"     P00 = 1;
+0001   3800           00261         BSET    _P0bits,0
+                      00262 ;       .line   8; "main.c"     P13 = 1;
+0002   3980           00263         BSET    _P1bits,3
+0003                  00264 _00106_DS_
+                      00265 ;       .line   24; "main.c"    ClrWdt();
+0003   000E           00266         clrwdt
+                      00267 ;       .line   25; "main.c"    KeyScan();
+0004   2000           00268         CALL    _KeyScan
+                      00269 ;       .line   26; "main.c"    WorkOnInit();
+0005   2000           00270         CALL    _WorkOnInit
+                      00271 ;       .line   27; "main.c"    Detection();
+0006   2000           00272         CALL    _Detection
+                      00273 ;       .line   28; "main.c"    Actuation();
+0007   2000           00274         CALL    _Actuation
+0008   2800           00275         GOTO    _00106_DS_
+0009   000C           00276         RETURN  
+                      00277 ; exit point of _main
+                      00278 
+                      00279 
+                      00280 ;       code size estimation:
+                      00281 ;          20+    0 =    20 instructions (   40 byte)
+                      00282 
+                      00283         end
+gpasm-2.0.0_beta2 (Aug 27 2017)main.asm           2017-10-13  17:26:51         PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZOUT                            00000005
+C                                 00000000
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+END_OF_INTERRUPT                  00000012
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INT0IE                            00000002
+INT0IF                            00000002
+INT0M                             00000006
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00                               00000000
+P00PD                             00000000
+P01                               00000001
+P01PD                             00000001
+P02                               00000002
+P02PD                             00000002
+P03                               00000003
+P03PD                             00000003
+P1                                00000006
+P10                               00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11                               00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12                               00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13                               00000003
+P14                               00000004
+P14OD                             00000004
+P14PU                             00000004
+P15                               00000005
+P15OD                             00000005
+P15PU                             00000005
+P16                               00000006
+P16OD                             00000006
+P16PU                             00000006
+P17                               00000007
+P17OD                             00000007
+P17PU                             00000007
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PUCON                             0000000D
+PWMOUT                            00000006
+RST                               00000007
+STATUS                            00000003
+STK00                             00000016
+STK01                             00000015
+STK02                             00000014
+STK03                             00000013
+STK04                             00000012
+STK05                             00000011
+STK06                             00000010
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DATA                            0000004F
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+TBS                               00000007
+TMCR                              0000004B
+TMR1EN                            00000007
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00106_DS_                        00000003
+_Actuation                        00000000
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_CP_ALL                           00001FFF
+_ClrrRAM                          00000000
+_ConsecutiveFive                  00000000
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_DetectSpace                      00000000
+_DetectStep                       00000000
+_Detection                        00000000
+_EndUart                          00000000
+_FCPU_2T                          00003F7F
+_FCPU_4T                          00003FFF
+_FSR                              00000000
+_Flag1                            00000000
+_Flag2                            00000000
+_INDF                             00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_IRC_1M                           00003FCF
+_IRC_2M                           00003FDF
+_IRC_444K                         00003FAF
+_IRC_4M                           00003FEF
+_IRC_8M                           00003FFF
+_InitUart                         00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyScan                          00000000
+_LEDFlashSpace                    00000000
+_LEDFlashTimes                    00000000
+_MCLR_OFF                         00003FF7
+_MCLR_ON                          00003FFF
+_MCR                              00000000
+_MCRbits                          00000000
+_MaxMotorTimes                    00000000
+_MaxRunTimes                      00000000
+_MotorFiveCnt                     00000000
+_NeedSleep                        00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_OSC_HXT                          00002FFF
+_OSC_IRC                          000037FF
+_OSC_IRC_RTC                      00003FFF
+_OSC_LXT                          000027FF
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWRT_OFF                         00003BFF
+_PWRT_ON                          00003FFF
+_PositionDelay                    00000000
+_RD_FROM_PIN                      00003FFF
+_RD_FROM_REG                      00003EFF
+_RXCnt                            00000000
+_RXDebounce                       00000000
+_SMT_OFF                          00003FFF
+_SMT_ON                           00003DFF
+_STATUS                           00000000
+_STATUSbits                       00000000
+_SleepCnt                         00000000
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_TMCR                             00000000
+_TMCRbits                         00000000
+_TWDT_18MS                        00003FFF
+_TWDT_288MS                       00003DFF
+_TWDT_4P5MS                       00003EFF
+_TWDT_72MS                        00003CFF
+_UartDelay                        00000000
+_UartSendByte                     00000000
+_UartSendInt                      00000000
+_UartStep                         00000000
+_UartTemp                         00000000
+_VBOR_15                          00003FF8
+_VBOR_18                          00003FF9
+_VBOR_20                          00003FFA
+_VBOR_22                          00003FFB
+_VBOR_24                          00003FFC
+_VBOR_26                          00003FFD
+_VBOR_30                          00003FFE
+_VBOR_36                          00003FFF
+_WDT_OFF                          000037FF
+_WDT_ON                           00003FFF
+_WorkONInitStep                   00000000
+_WorkOnInit                       00000000
+__30P011                          00000001
+__sdcc_interrupt                  00000008
+_init                             00000000
+_int_isr                          00000008
+_main                             00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

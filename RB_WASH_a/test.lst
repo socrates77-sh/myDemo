@@ -1,0 +1,2658 @@
+gplink-2.0.0_beta2 (Aug 27 2017)
+Listing File Generated: 2017-10-13  17:26:51
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                                           ; This file was generated Fri Oct 13 17:26:49 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"ad.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_init
+                                           	extern	_ClrrRAM
+                                           	extern	_KeyScan
+                                           	extern	_NeedSleep
+                                           	extern	_InitUart
+                                           	extern	_EndUart
+                                           	extern	_UartSendByte
+                                           	extern	_UartDelay
+                                           	extern	_UartSendInt
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_UartStep
+                                           	extern	_UartTemp
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_ConsecutiveFive
+                                           	global	_Actuation
+                                           	global	_Detection
+                                           	global	_WorkOnInit
+                                           	global	_delay
+                                           	global	_WorkONInitStep
+                                           	global	_LEDFlashTimes
+                                           	global	_LEDFlashSpace
+                                           	global	_RXDebounce
+                                           	global	_RXCnt
+                                           	global	_DetectSpace
+                                           	global	_DetectStep
+                                           	global	_SleepCnt
+                                           	global	_MaxRunTimes
+                                           	global	_MaxMotorTimes
+                                           	global	_MotorFiveCnt
+                                           	global	_PositionDelay
+                                           	global	_Flag1
+                                           	global	_Flag2
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_ad_0	udata
+                                           _WorkONInitStep	res	1
+                                           
+                                           UD_ad_1	udata
+                                           _LEDFlashTimes	res	1
+                                           
+                                           UD_ad_2	udata
+                                           _LEDFlashSpace	res	1
+                                           
+                                           UD_ad_3	udata
+                                           _RXDebounce	res	1
+                                           
+                                           UD_ad_4	udata
+                                           _RXCnt	res	1
+                                           
+                                           UD_ad_5	udata
+                                           _DetectSpace	res	1
+                                           
+                                           UD_ad_6	udata
+                                           _DetectStep	res	1
+                                           
+                                           UD_ad_7	udata
+                                           _SleepCnt	res	1
+                                           
+                                           UD_ad_8	udata
+                                           _MaxRunTimes	res	2
+                                           
+                                           UD_ad_9	udata
+                                           _MaxMotorTimes	res	2
+                                           
+                                           UD_ad_10	udata
+                                           _MotorFiveCnt	res	1
+                                           
+                                           UD_ad_11	udata
+                                           _PositionDelay	res	1
+                                           
+                                           UD_ad_12	udata
+                                           _Flag1	res	1
+                                           
+                                           UD_ad_13	udata
+                                           _Flag2	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_ad_0	udata
+                                           r0x100F	res	1
+                                           r0x1010	res	1
+                                           r0x1013	res	1
+                                           r0x1014	res	1
+                                           r0x1011	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'delay'
+                                           ;@delay WorkOnInit                Allocated to registers ;size:2
+                                           ;@delay Detection                 Allocated to registers ;size:2
+                                           ;@delay Actuation                 Allocated to registers ;size:2
+                                           ;@delay ConsecutiveFive           Allocated to registers ;size:2
+                                           ;@delay init                      Allocated to registers ;size:2
+                                           ;@delay ClrrRAM                   Allocated to registers ;size:2
+                                           ;@delay KeyScan                   Allocated to registers ;size:2
+                                           ;@delay NeedSleep                 Allocated to registers ;size:2
+                                           ;@delay InitUart                  Allocated to registers ;size:2
+                                           ;@delay EndUart                   Allocated to registers ;size:2
+                                           ;@delay UartSendByte              Allocated to registers ;size:2
+                                           ;@delay UartDelay                 Allocated to registers ;size:2
+                                           ;@delay UartSendInt               Allocated to registers ;size:2
+                                           ;@delay delay                     Allocated to registers ;size:2
+                                           ;@delay STATUSbits                Allocated to registers ;size:1
+                                           ;@delay P0bits                    Allocated to registers ;size:1
+                                           ;@delay P1bits                    Allocated to registers ;size:1
+                                           ;@delay MCRbits                   Allocated to registers ;size:1
+                                           ;@delay KBIMbits                  Allocated to registers ;size:1
+                                           ;@delay PDCONbits                 Allocated to registers ;size:1
+                                           ;@delay ODCONbits                 Allocated to registers ;size:1
+                                           ;@delay PUCONbits                 Allocated to registers ;size:1
+                                           ;@delay INTECONbits               Allocated to registers ;size:1
+                                           ;@delay INTFLAGbits               Allocated to registers ;size:1
+                                           ;@delay T0CRbits                  Allocated to registers ;size:1
+                                           ;@delay DDR0bits                  Allocated to registers ;size:1
+                                           ;@delay DDR1bits                  Allocated to registers ;size:1
+                                           ;@delay TMCRbits                  Allocated to registers ;size:1
+                                           ;@delay T1CRbits                  Allocated to registers ;size:1
+                                           ;@delay WorkONInitStep            Allocated to registers ;size:1
+                                           ;@delay LEDFlashTimes             Allocated to registers ;size:1
+                                           ;@delay LEDFlashSpace             Allocated to registers ;size:1
+                                           ;@delay RXDebounce                Allocated to registers ;size:1
+                                           ;@delay RXCnt                     Allocated to registers ;size:1
+                                           ;@delay DetectSpace               Allocated to registers ;size:1
+                                           ;@delay DetectStep                Allocated to registers ;size:1
+                                           ;@delay SleepCnt                  Allocated to registers ;size:1
+                                           ;@delay MaxRunTimes               Allocated to registers ;size:2
+                                           ;@delay MaxMotorTimes             Allocated to registers ;size:2
+                                           ;@delay MotorFiveCnt              Allocated to registers ;size:1
+                                           ;@delay PositionDelay             Allocated to registers ;size:1
+                                           ;@delay UartStep                  Allocated to registers ;size:1
+                                           ;@delay UartTemp                  Allocated to registers ;size:1
+                                           ;@delay Flag1                     Allocated to registers ;size:1
+                                           ;@delay Flag2                     Allocated to registers ;size:1
+                                           ;@delay i                         Allocated to registers r0x100F ;size:1
+                                           ;@delay INDF                      Allocated to registers ;size:1
+                                           ;@delay T0CNT                     Allocated to registers ;size:1
+                                           ;@delay PCL                       Allocated to registers ;size:1
+                                           ;@delay STATUS                    Allocated to registers ;size:1
+                                           ;@delay FSR                       Allocated to registers ;size:1
+                                           ;@delay P0                        Allocated to registers ;size:1
+                                           ;@delay P1                        Allocated to registers ;size:1
+                                           ;@delay MCR                       Allocated to registers ;size:1
+                                           ;@delay KBIM                      Allocated to registers ;size:1
+                                           ;@delay PCLATH                    Allocated to registers ;size:1
+                                           ;@delay PDCON                     Allocated to registers ;size:1
+                                           ;@delay ODCON                     Allocated to registers ;size:1
+                                           ;@delay PUCON                     Allocated to registers ;size:1
+                                           ;@delay INTECON                   Allocated to registers ;size:1
+                                           ;@delay INTFLAG                   Allocated to registers ;size:1
+                                           ;@delay T0CR                      Allocated to registers ;size:1
+                                           ;@delay DDR0                      Allocated to registers ;size:1
+                                           ;@delay DDR1                      Allocated to registers ;size:1
+                                           ;@delay TMCR                      Allocated to registers ;size:1
+                                           ;@delay T1CR                      Allocated to registers ;size:1
+                                           ;@delay T1CNT                     Allocated to registers ;size:1
+                                           ;@delay T1LOAD                    Allocated to registers ;size:1
+                                           ;@delay T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'delay';
+                                           ;@Allocation info for local variables in function 'WorkOnInit'
+                                           ;@end Allocation info for local variables in function 'WorkOnInit';
+                                           ;@Allocation info for local variables in function 'Detection'
+                                           ;@end Allocation info for local variables in function 'Detection';
+                                           ;@Allocation info for local variables in function 'Actuation'
+                                           ;@end Allocation info for local variables in function 'Actuation';
+                                           ;@Allocation info for local variables in function 'ConsecutiveFive'
+                                           ;@end Allocation info for local variables in function 'ConsecutiveFive';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_ad	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ConsecutiveFive	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _ConsecutiveFive	;Function start
+                                           ; 2 exit points
+                                           ;	.line	403; "ad.c"	if(fConsecutiveFive)
+000013   32b0     jbset   0x30, 0x5        	JBSET	_Flag1,5
+000014   2817     goto    0x17             	GOTO	_00357_DS_
+                                           ;	.line	405; "ad.c"	fConsecutiveFive = 0;
+000015   3eb0     bclr    0x30, 0x5        	BCLR	_Flag1,5
+                                           ;	.line	406; "ad.c"	fDetection = 1;
+000016   38b0     bset    0x30, 0x1        	BSET	_Flag1,1
+                                           _00357_DS_
+000017   000c     return                   	RETURN	
+                                           ; exit point of _ConsecutiveFive
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Actuation	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _Actuation	;Function start
+                                           ; 2 exit points
+                                           ;	.line	349; "ad.c"	if(fWorkON && fActuation)
+000018   30b1     jbset   0x31, 0x1        	JBSET	_Flag2,1
+000019   2854     goto    0x54             	GOTO	_00326_DS_
+00001a   31b0     jbset   0x30, 0x3        	JBSET	_Flag1,3
+00001b   2854     goto    0x54             	GOTO	_00326_DS_
+                                           ;	.line	351; "ad.c"	MOSENB();
+00001c   3806     bset    0x6, 0           	BSET	_P1bits,0
+00001d   3886     bset    0x6, 0x1         	BSET	_P1bits,1
+00001e   3906     bset    0x6, 0x2         	BSET	_P1bits,2
+                                           ;	.line	352; "ad.c"	if(fMotorT)
+00001f   3230     jbset   0x30, 0x4        	JBSET	_Flag1,4
+000020   2854     goto    0x54             	GOTO	_00326_DS_
+                                           ;	.line	354; "ad.c"	fMotorT = 0;
+000021   3e30     bclr    0x30, 0x4        	BCLR	_Flag1,4
+                                           ;	.line	356; "ad.c"	if(!POSITION)
+000022   3686     jbclr   0x6, 0x5         	JBCLR	_P1bits,5
+000023   282b     goto    0x2b             	GOTO	_00310_DS_
+                                           ;	.line	358; "ad.c"	PositionDelay++;
+000024   19af     incr    0x2f             	INCR	_PositionDelay
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x4=4), size=1
+                                           ;	.line	359; "ad.c"	if(PositionDelay>3)
+000025   0b04     movai   0x4              	MOVAI	0x04
+000026   122f     rsubar  0x2f             	RSUBAR	_PositionDelay
+000027   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000028   282b     goto    0x2b             	GOTO	_00310_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	361; "ad.c"	PositionDelay = 0;
+000029   1daf     clrr    0x2f             	CLRR	_PositionDelay
+                                           ;	.line	362; "ad.c"	fWaiteRelease = 1;
+00002a   3b30     bset    0x30, 0x6        	BSET	_Flag1,6
+                                           _00310_DS_
+                                           ;	.line	366; "ad.c"	if(fWaiteRelease)
+00002b   3330     jbset   0x30, 0x6        	JBSET	_Flag1,6
+00002c   283b     goto    0x3b             	GOTO	_00316_DS_
+                                           ;	.line	368; "ad.c"	if(POSITION)
+00002d   3286     jbset   0x6, 0x5         	JBSET	_P1bits,5
+00002e   283b     goto    0x3b             	GOTO	_00316_DS_
+                                           ;	.line	370; "ad.c"	PositionDelay++;
+00002f   19af     incr    0x2f             	INCR	_PositionDelay
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x4=4), size=1
+                                           ;	.line	371; "ad.c"	if(PositionDelay>3)
+000030   0b04     movai   0x4              	MOVAI	0x04
+000031   122f     rsubar  0x2f             	RSUBAR	_PositionDelay
+000032   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000033   283b     goto    0x3b             	GOTO	_00316_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	373; "ad.c"	PositionDelay = 0;
+000034   1daf     clrr    0x2f             	CLRR	_PositionDelay
+                                           ;	.line	374; "ad.c"	fWaiteRelease = 0;
+000035   3f30     bclr    0x30, 0x6        	BCLR	_Flag1,6
+                                           ;	.line	375; "ad.c"	fActuation = 0;
+000036   3db0     bclr    0x30, 0x3        	BCLR	_Flag1,3
+                                           ;	.line	376; "ad.c"	MOSDIS();
+000037   3c06     bclr    0x6, 0           	BCLR	_P1bits,0
+000038   3c86     bclr    0x6, 0x1         	BCLR	_P1bits,1
+000039   3d06     bclr    0x6, 0x2         	BCLR	_P1bits,2
+                                           ;	.line	377; "ad.c"	fDetection = 1;
+00003a   38b0     bset    0x30, 0x1        	BSET	_Flag1,1
+                                           _00316_DS_
+                                           ;	.line	382; "ad.c"	MaxMotorTimes++;
+00003b   19a5     incr    0x25             	INCR	_MaxMotorTimes
+00003c   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+00003d   19a6     incr    0x26             	INCR	(_MaxMotorTimes + 1)
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x1389=5001), size=2
+                                           ;	.line	383; "ad.c"	if(MaxMotorTimes > 5000)
+00003e   0b13     movai   0x13             	MOVAI	0x13
+00003f   1226     rsubar  0x26             	RSUBAR	(_MaxMotorTimes + 1)
+000040   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000041   2844     goto    0x44             	GOTO	_00350_DS_
+000042   0b89     movai   0x89             	MOVAI	0x89
+000043   1225     rsubar  0x25             	RSUBAR	_MaxMotorTimes
+                                           _00350_DS_
+000044   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000045   2854     goto    0x54             	GOTO	_00326_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	385; "ad.c"	MaxMotorTimes = 0;
+000046   1da5     clrr    0x25             	CLRR	_MaxMotorTimes
+000047   1da6     clrr    0x26             	CLRR	(_MaxMotorTimes + 1)
+                                           ;	.line	386; "ad.c"	MOSDIS();
+000048   3c06     bclr    0x6, 0           	BCLR	_P1bits,0
+000049   3c86     bclr    0x6, 0x1         	BCLR	_P1bits,1
+00004a   3d06     bclr    0x6, 0x2         	BCLR	_P1bits,2
+                                           ;	.line	387; "ad.c"	MotorFiveCnt++;
+00004b   19ae     incr    0x2e             	INCR	_MotorFiveCnt
+                                           ;;unsigned compare: left < lit(0x2=2), size=1
+                                           ;	.line	388; "ad.c"	if(MotorFiveCnt>=2)
+00004c   0b02     movai   0x2              	MOVAI	0x02
+00004d   122e     rsubar  0x2e             	RSUBAR	_MotorFiveCnt
+00004e   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00004f   2854     goto    0x54             	GOTO	_00326_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	390; "ad.c"	MotorFiveCnt = 0;
+000050   1dae     clrr    0x2e             	CLRR	_MotorFiveCnt
+                                           ;	.line	391; "ad.c"	fConsecutiveFive = 1;
+000051   3ab0     bset    0x30, 0x5        	BSET	_Flag1,5
+                                           ;	.line	392; "ad.c"	fActuation = 0;
+000052   3db0     bclr    0x30, 0x3        	BCLR	_Flag1,3
+                                           ;	.line	393; "ad.c"	fDetection = 1;
+000053   38b0     bset    0x30, 0x1        	BSET	_Flag1,1
+                                           _00326_DS_
+000054   000c     return                   	RETURN	
+                                           ; exit point of _Actuation
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _Detection	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;   _delay
+                                           ;2 compiler assigned registers:
+                                           ;   r0x1011
+                                           ;   r0x1012
+                                           ;; Starting pCode block
+                                           _Detection	;Function start
+                                           ; 2 exit points
+                                           ;	.line	91; "ad.c"	if(fWorkON && fDetection)
+000055   30b1     jbset   0x31, 0x1        	JBSET	_Flag2,1
+000056   2963     goto    0x163            	GOTO	_00243_DS_
+000057   30b0     jbset   0x30, 0x1        	JBSET	_Flag1,1
+000058   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x10=16), size=1
+                                           ;	.line	93; "ad.c"	switch(DetectStep)
+000059   0b10     movai   0x10             	MOVAI	0x10
+00005a   122c     rsubar  0x2c             	RSUBAR	_DetectStep
+00005b   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+00005c   2961     goto    0x161            	GOTO	_00238_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+00005d   0b60     movai   0x60             	MOVAI	_00302_DS_
+00005e   1f2c     addar   0x2c             	ADDAR	_DetectStep
+00005f   1582     movra   0x2              	MOVRA	PCL
+                                           _00302_DS_
+000060   2870     goto    0x70             	GOTO	_00163_DS_
+000061   287e     goto    0x7e             	GOTO	_00167_DS_
+000062   2889     goto    0x89             	GOTO	_00172_DS_
+000063   2897     goto    0x97             	GOTO	_00176_DS_
+000064   28a2     goto    0xa2             	GOTO	_00181_DS_
+000065   28b0     goto    0xb0             	GOTO	_00185_DS_
+000066   28bb     goto    0xbb             	GOTO	_00190_DS_
+000067   28c9     goto    0xc9             	GOTO	_00194_DS_
+000068   28d4     goto    0xd4             	GOTO	_00199_DS_
+000069   28e2     goto    0xe2             	GOTO	_00203_DS_
+00006a   28ed     goto    0xed             	GOTO	_00208_DS_
+00006b   28fb     goto    0xfb             	GOTO	_00212_DS_
+00006c   2906     goto    0x106            	GOTO	_00217_DS_
+00006d   2914     goto    0x114            	GOTO	_00221_DS_
+00006e   291f     goto    0x11f            	GOTO	_00226_DS_
+00006f   2935     goto    0x135            	GOTO	_00230_DS_
+                                           _00163_DS_
+                                           ;	.line	96; "ad.c"	RXENB();
+000070   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	97; "ad.c"	TXENB();
+000071   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+000072   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	98; "ad.c"	delay();
+000073   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	99; "ad.c"	if(!RX)
+000074   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+000075   287b     goto    0x7b             	GOTO	_00165_DS_
+                                           ;	.line	101; "ad.c"	DetectStep++;
+000076   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	102; "ad.c"	RXDIS();
+000077   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	103; "ad.c"	TXDIS();
+000078   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+000079   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+00007a   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00165_DS_
+                                           ;	.line	107; "ad.c"	DetectStep = 15;
+00007b   0b0f     movai   0xf              	MOVAI	0x0f
+00007c   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	109; "ad.c"	break;
+00007d   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00167_DS_
+                                           ;	.line	111; "ad.c"	if(fDetectionT)
+00007e   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+00007f   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	113; "ad.c"	fDetectionT = 0;
+000080   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	114; "ad.c"	DetectSpace++;
+000081   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	115; "ad.c"	if(DetectSpace>20)
+000082   0b15     movai   0x15             	MOVAI	0x15
+000083   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+000084   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000085   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	117; "ad.c"	DetectSpace = 0;
+000086   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	118; "ad.c"	DetectStep++;
+000087   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	121; "ad.c"	break;
+000088   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00172_DS_
+                                           ;	.line	123; "ad.c"	RXENB();
+000089   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	124; "ad.c"	TXENB();
+00008a   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+00008b   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	125; "ad.c"	delay();
+00008c   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	126; "ad.c"	if(!RX)
+00008d   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+00008e   2894     goto    0x94             	GOTO	_00174_DS_
+                                           ;	.line	128; "ad.c"	DetectStep++;
+00008f   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	129; "ad.c"	RXDIS();
+000090   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	130; "ad.c"	TXDIS();
+000091   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+000092   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+000093   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00174_DS_
+                                           ;	.line	134; "ad.c"	DetectStep = 15;
+000094   0b0f     movai   0xf              	MOVAI	0x0f
+000095   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	136; "ad.c"	break;
+000096   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00176_DS_
+                                           ;	.line	138; "ad.c"	if(fDetectionT)
+000097   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+000098   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	140; "ad.c"	fDetectionT = 0;
+000099   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	141; "ad.c"	DetectSpace++;
+00009a   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	142; "ad.c"	if(DetectSpace>20)
+00009b   0b15     movai   0x15             	MOVAI	0x15
+00009c   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+00009d   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00009e   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	144; "ad.c"	DetectSpace = 0;
+00009f   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	145; "ad.c"	DetectStep++;
+0000a0   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	148; "ad.c"	break;
+0000a1   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00181_DS_
+                                           ;	.line	150; "ad.c"	RXENB();
+0000a2   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	151; "ad.c"	TXENB();
+0000a3   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+0000a4   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	152; "ad.c"	delay();
+0000a5   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	153; "ad.c"	if(!RX)
+0000a6   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+0000a7   28ad     goto    0xad             	GOTO	_00183_DS_
+                                           ;	.line	155; "ad.c"	DetectStep++;
+0000a8   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	156; "ad.c"	RXDIS();
+0000a9   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	157; "ad.c"	TXDIS();
+0000aa   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+0000ab   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+0000ac   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00183_DS_
+                                           ;	.line	161; "ad.c"	DetectStep = 15;
+0000ad   0b0f     movai   0xf              	MOVAI	0x0f
+0000ae   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	163; "ad.c"	break;
+0000af   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00185_DS_
+                                           ;	.line	165; "ad.c"	if(fDetectionT)
+0000b0   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+0000b1   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	167; "ad.c"	fDetectionT = 0;
+0000b2   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	168; "ad.c"	DetectSpace++;
+0000b3   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	169; "ad.c"	if(DetectSpace>20)
+0000b4   0b15     movai   0x15             	MOVAI	0x15
+0000b5   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+0000b6   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000b7   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	171; "ad.c"	DetectSpace = 0;
+0000b8   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	172; "ad.c"	DetectStep++;
+0000b9   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	175; "ad.c"	break;
+0000ba   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00190_DS_
+                                           ;	.line	177; "ad.c"	RXENB();
+0000bb   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	178; "ad.c"	TXENB();
+0000bc   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+0000bd   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	179; "ad.c"	delay();
+0000be   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	180; "ad.c"	if(!RX)
+0000bf   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+0000c0   28c6     goto    0xc6             	GOTO	_00192_DS_
+                                           ;	.line	182; "ad.c"	DetectStep++;
+0000c1   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	183; "ad.c"	RXDIS();
+0000c2   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	184; "ad.c"	TXDIS();
+0000c3   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+0000c4   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+0000c5   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00192_DS_
+                                           ;	.line	188; "ad.c"	DetectStep = 15;
+0000c6   0b0f     movai   0xf              	MOVAI	0x0f
+0000c7   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	190; "ad.c"	break;
+0000c8   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00194_DS_
+                                           ;	.line	192; "ad.c"	if(fDetectionT)
+0000c9   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+0000ca   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	194; "ad.c"	fDetectionT = 0;
+0000cb   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	195; "ad.c"	DetectSpace++;
+0000cc   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	196; "ad.c"	if(DetectSpace>20)
+0000cd   0b15     movai   0x15             	MOVAI	0x15
+0000ce   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+0000cf   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000d0   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	198; "ad.c"	DetectSpace = 0;
+0000d1   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	199; "ad.c"	DetectStep++;
+0000d2   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	202; "ad.c"	break;
+0000d3   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00199_DS_
+                                           ;	.line	204; "ad.c"	RXENB();
+0000d4   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	205; "ad.c"	TXENB();
+0000d5   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+0000d6   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	206; "ad.c"	delay();
+0000d7   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	207; "ad.c"	if(!RX)
+0000d8   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+0000d9   28df     goto    0xdf             	GOTO	_00201_DS_
+                                           ;	.line	209; "ad.c"	DetectStep++;
+0000da   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	210; "ad.c"	RXDIS();
+0000db   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	211; "ad.c"	TXDIS();
+0000dc   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+0000dd   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+0000de   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00201_DS_
+                                           ;	.line	215; "ad.c"	DetectStep = 15;
+0000df   0b0f     movai   0xf              	MOVAI	0x0f
+0000e0   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	217; "ad.c"	break;
+0000e1   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00203_DS_
+                                           ;	.line	219; "ad.c"	if(fDetectionT)
+0000e2   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+0000e3   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	221; "ad.c"	fDetectionT = 0;
+0000e4   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	222; "ad.c"	DetectSpace++;
+0000e5   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	223; "ad.c"	if(DetectSpace>20)
+0000e6   0b15     movai   0x15             	MOVAI	0x15
+0000e7   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+0000e8   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0000e9   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	225; "ad.c"	DetectSpace = 0;
+0000ea   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	226; "ad.c"	DetectStep++;
+0000eb   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	229; "ad.c"	break;
+0000ec   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00208_DS_
+                                           ;	.line	231; "ad.c"	RXENB();
+0000ed   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	232; "ad.c"	TXENB();
+0000ee   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+0000ef   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	233; "ad.c"	delay();
+0000f0   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	234; "ad.c"	if(!RX)
+0000f1   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+0000f2   28f8     goto    0xf8             	GOTO	_00210_DS_
+                                           ;	.line	236; "ad.c"	DetectStep++;
+0000f3   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	237; "ad.c"	RXDIS();
+0000f4   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	238; "ad.c"	TXDIS();
+0000f5   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+0000f6   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+0000f7   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00210_DS_
+                                           ;	.line	242; "ad.c"	DetectStep = 15;
+0000f8   0b0f     movai   0xf              	MOVAI	0x0f
+0000f9   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	244; "ad.c"	break;
+0000fa   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00212_DS_
+                                           ;	.line	246; "ad.c"	if(fDetectionT)
+0000fb   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+0000fc   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	248; "ad.c"	fDetectionT = 0;
+0000fd   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	249; "ad.c"	DetectSpace++;
+0000fe   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	250; "ad.c"	if(DetectSpace>20)
+0000ff   0b15     movai   0x15             	MOVAI	0x15
+000100   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+000101   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000102   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	252; "ad.c"	DetectSpace = 0;
+000103   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	253; "ad.c"	DetectStep++;
+000104   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	256; "ad.c"	break;
+000105   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00217_DS_
+                                           ;	.line	258; "ad.c"	RXENB();
+000106   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	259; "ad.c"	TXENB();
+000107   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+000108   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	260; "ad.c"	delay();
+000109   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	261; "ad.c"	if(!RX)
+00010a   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+00010b   2911     goto    0x111            	GOTO	_00219_DS_
+                                           ;	.line	263; "ad.c"	DetectStep++;
+00010c   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	264; "ad.c"	RXDIS();
+00010d   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	265; "ad.c"	TXDIS();
+00010e   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+00010f   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+000110   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00219_DS_
+                                           ;	.line	269; "ad.c"	DetectStep = 15;
+000111   0b0f     movai   0xf              	MOVAI	0x0f
+000112   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	271; "ad.c"	break;
+000113   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00221_DS_
+                                           ;	.line	273; "ad.c"	if(fDetectionT)
+000114   3130     jbset   0x30, 0x2        	JBSET	_Flag1,2
+000115   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	275; "ad.c"	fDetectionT = 0;
+000116   3d30     bclr    0x30, 0x2        	BCLR	_Flag1,2
+                                           ;	.line	276; "ad.c"	DetectSpace++;
+000117   19ab     incr    0x2b             	INCR	_DetectSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	277; "ad.c"	if(DetectSpace>20)
+000118   0b15     movai   0x15             	MOVAI	0x15
+000119   122b     rsubar  0x2b             	RSUBAR	_DetectSpace
+00011a   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00011b   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	279; "ad.c"	DetectSpace = 0;
+00011c   1dab     clrr    0x2b             	CLRR	_DetectSpace
+                                           ;	.line	280; "ad.c"	DetectStep++;
+00011d   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	283; "ad.c"	break;
+00011e   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00226_DS_
+                                           ;	.line	285; "ad.c"	RXENB();
+00011f   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	286; "ad.c"	TXENB();
+000120   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+000121   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	287; "ad.c"	delay();
+000122   21e7     call    0x1e7            	CALL	_delay
+                                           ;	.line	288; "ad.c"	if(!RX)
+000123   3405     jbclr   0x5, 0           	JBCLR	_P0bits,0
+000124   2932     goto    0x132            	GOTO	_00228_DS_
+                                           ;	.line	290; "ad.c"	DetectStep++;
+000125   19ac     incr    0x2c             	INCR	_DetectStep
+                                           ;	.line	291; "ad.c"	RXDIS();
+000126   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	292; "ad.c"	TXDIS();
+000127   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+000128   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+                                           ;	.line	293; "ad.c"	fDetection = 0;
+000129   3cb0     bclr    0x30, 0x1        	BCLR	_Flag1,1
+                                           ;	.line	294; "ad.c"	fActuation = 1;
+00012a   39b0     bset    0x30, 0x3        	BSET	_Flag1,3
+                                           ;	.line	295; "ad.c"	MaxRunTimes++;
+00012b   19a3     incr    0x23             	INCR	_MaxRunTimes
+00012c   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+00012d   19a4     incr    0x24             	INCR	(_MaxRunTimes + 1)
+                                           ;	.line	296; "ad.c"	MaxMotorTimes = 0;
+00012e   1da5     clrr    0x25             	CLRR	_MaxMotorTimes
+00012f   1da6     clrr    0x26             	CLRR	(_MaxMotorTimes + 1)
+                                           ;	.line	297; "ad.c"	fWaiteRelease = 0;
+000130   3f30     bclr    0x30, 0x6        	BCLR	_Flag1,6
+000131   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00228_DS_
+                                           ;	.line	301; "ad.c"	DetectStep = 15;
+000132   0b0f     movai   0xf              	MOVAI	0x0f
+000133   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           ;	.line	303; "ad.c"	break;
+000134   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00230_DS_
+                                           ;	.line	306; "ad.c"	P17=!P17;
+000135   1da2     clrr    0x22             	CLRR	r0x1011
+000136   3786     jbclr   0x6, 0x7         	JBCLR	_P1bits,7
+000137   19a2     incr    0x22             	INCR	r0x1011
+000138   1622     movar   0x22             	MOVAR	r0x1011
+000139   0b00     movai   0                	MOVAI	0x00
+00013a   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+00013b   0b01     movai   0x1              	MOVAI	0x01
+00013c   15a2     movra   0x22             	MOVRA	r0x1011
+                                           ;;1	MOVRA	r0x1012
+                                           ;;99	MOVAR	r0x1012
+00013d   1322     rrar    0x22             	RRAR	r0x1011
+00013e   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00013f   3f86     bclr    0x6, 0x7         	BCLR	_P1bits,7
+000140   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000141   3b86     bset    0x6, 0x7         	BSET	_P1bits,7
+                                           ;	.line	307; "ad.c"	RXDIS();
+000142   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	308; "ad.c"	TXDIS();
+000143   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+000144   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+                                           ;	.line	309; "ad.c"	if(fSleepT)
+000145   33b0     jbset   0x30, 0x7        	JBSET	_Flag1,7
+000146   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;	.line	311; "ad.c"	fSleepT = 0;
+000147   3fb0     bclr    0x30, 0x7        	BCLR	_Flag1,7
+                                           ;	.line	312; "ad.c"	SleepCnt++;
+000148   19ad     incr    0x2d             	INCR	_SleepCnt
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0xC9=201), size=1
+                                           ;	.line	313; "ad.c"	if(SleepCnt>200)
+000149   0bc9     movai   0xc9             	MOVAI	0xc9
+00014a   122d     rsubar  0x2d             	RSUBAR	_SleepCnt
+00014b   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00014c   2963     goto    0x163            	GOTO	_00243_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	315; "ad.c"	SleepCnt = 0;
+00014d   1dad     clrr    0x2d             	CLRR	_SleepCnt
+                                           ;	.line	316; "ad.c"	KBIM =   BIN(0,0,0,0,1,0,0,0);		
+00014e   0b08     movai   0x8              	MOVAI	0x08
+00014f   1589     movra   0x9              	MOVRA	_KBIM
+                                           ;	.line	317; "ad.c"	MCR = BIN(0,0,0,0,1,0,0,0);
+000150   0b08     movai   0x8              	MOVAI	0x08
+000151   1588     movra   0x8              	MOVRA	_MCR
+                                           ;	.line	318; "ad.c"	ClrWdt();
+000152   000e     clrwdt                   	clrwdt
+                                           ;	.line	320; "ad.c"	Stop();
+000153   000b     sleep                    	stop
+                                           ;	.line	322; "ad.c"	if(!PD)
+000154   3583     jbclr   0x3, 0x3         	JBCLR	_STATUSbits,3
+000155   2959     goto    0x159            	GOTO	_00232_DS_
+                                           ;	.line	324; "ad.c"	DetectStep=0;
+000156   1dac     clrr    0x2c             	CLRR	_DetectStep
+                                           ;	.line	325; "ad.c"	SleepCnt = 0;	
+000157   1dad     clrr    0x2d             	CLRR	_SleepCnt
+000158   295a     goto    0x15a            	GOTO	_00233_DS_
+                                           _00232_DS_
+                                           ;	.line	329; "ad.c"	SleepCnt = 0;
+000159   1dad     clrr    0x2d             	CLRR	_SleepCnt
+                                           _00233_DS_
+                                           ;	.line	331; "ad.c"	MCR = 0X00;
+00015a   1d88     clrr    0x8              	CLRR	_MCR
+                                           ;	.line	332; "ad.c"	KBIM = BIN(0,0,0,0,0,0,0,1);
+00015b   0b01     movai   0x1              	MOVAI	0x01
+00015c   1589     movra   0x9              	MOVRA	_KBIM
+                                           ;	.line	333; "ad.c"	PDCON  = BIN(1,1,0,0,0,0,0,0);
+00015d   0bc0     movai   0xc0             	MOVAI	0xc0
+00015e   158b     movra   0xb              	MOVRA	_PDCON
+                                           ;	.line	334; "ad.c"	ClrWdt();
+00015f   000e     clrwdt                   	clrwdt
+                                           ;	.line	338; "ad.c"	break;
+000160   2963     goto    0x163            	GOTO	_00243_DS_
+                                           _00238_DS_
+                                           ;	.line	339; "ad.c"	default:DetectStep = 15;break;
+000161   0b0f     movai   0xf              	MOVAI	0x0f
+000162   15ac     movra   0x2c             	MOVRA	_DetectStep
+                                           _00243_DS_
+                                           ;	.line	342; "ad.c"	}
+000163   000c     return                   	RETURN	
+                                           ; exit point of _Detection
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _WorkOnInit	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;2 compiler assigned registers:
+                                           ;   r0x1013
+                                           ;   r0x1014
+                                           ;; Starting pCode block
+                                           _WorkOnInit	;Function start
+                                           ; 2 exit points
+                                           ;	.line	14; "ad.c"	if(fWorkON && fWorkONInit)
+000164   30b1     jbset   0x31, 0x1        	JBSET	_Flag2,1
+000165   29e6     goto    0x1e6            	GOTO	_00135_DS_
+000166   3131     jbset   0x31, 0x2        	JBSET	_Flag2,2
+000167   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x3=3), size=1
+                                           ;	.line	16; "ad.c"	switch(WorkONInitStep)
+000168   0b03     movai   0x3              	MOVAI	0x03
+000169   1207     rsubar  0x7              	RSUBAR	_WorkONInitStep
+00016a   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+00016b   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+00016c   0b6f     movai   0x6f             	MOVAI	_00158_DS_
+00016d   1f07     addar   0x7              	ADDAR	_WorkONInitStep
+00016e   1582     movra   0x2              	MOVRA	PCL
+                                           _00158_DS_
+00016f   2972     goto    0x172            	GOTO	_00112_DS_
+000170   299f     goto    0x19f            	GOTO	_00119_DS_
+000171   29d8     goto    0x1d8            	GOTO	_00129_DS_
+                                           _00112_DS_
+                                           ;	.line	19; "ad.c"	if(fWorkONInitT)
+000172   3030     jbset   0x30, 0          	JBSET	_Flag1,0
+000173   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;	.line	21; "ad.c"	fWorkONInitT = 0;
+000174   3c30     bclr    0x30, 0          	BCLR	_Flag1,0
+                                           ;	.line	22; "ad.c"	LEDFlashSpace++;
+000175   19a8     incr    0x28             	INCR	_LEDFlashSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x65=101), size=1
+                                           ;	.line	23; "ad.c"	if(LEDFlashSpace> 100)
+000176   0b65     movai   0x65             	MOVAI	0x65
+000177   1228     rsubar  0x28             	RSUBAR	_LEDFlashSpace
+000178   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000179   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	25; "ad.c"	LEDFlashSpace = 0;
+00017a   1da8     clrr    0x28             	CLRR	_LEDFlashSpace
+                                           ;	.line	26; "ad.c"	LED1 = !LED1;
+00017b   1da0     clrr    0x20             	CLRR	r0x1013
+00017c   3485     jbclr   0x5, 0x1         	JBCLR	_P0bits,1
+00017d   19a0     incr    0x20             	INCR	r0x1013
+00017e   1620     movar   0x20             	MOVAR	r0x1013
+00017f   0b00     movai   0                	MOVAI	0x00
+000180   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000181   0b01     movai   0x1              	MOVAI	0x01
+000182   15a0     movra   0x20             	MOVRA	r0x1013
+000183   15a1     movra   0x21             	MOVRA	r0x1014
+                                           ;;103	MOVAR	r0x1014
+000184   1320     rrar    0x20             	RRAR	r0x1013
+000185   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000186   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+000187   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000188   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	27; "ad.c"	LED2 = !LED2;
+000189   1da0     clrr    0x20             	CLRR	r0x1013
+00018a   3505     jbclr   0x5, 0x2         	JBCLR	_P0bits,2
+00018b   19a0     incr    0x20             	INCR	r0x1013
+00018c   1620     movar   0x20             	MOVAR	r0x1013
+00018d   0b00     movai   0                	MOVAI	0x00
+00018e   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+00018f   0b01     movai   0x1              	MOVAI	0x01
+000190   15a0     movra   0x20             	MOVRA	r0x1013
+000191   15a1     movra   0x21             	MOVRA	r0x1014
+                                           ;;102	MOVAR	r0x1014
+000192   1320     rrar    0x20             	RRAR	r0x1013
+000193   3003     jbset   0x3, 0           	JBSET	STATUS,0
+000194   3d05     bclr    0x5, 0x2         	BCLR	_P0bits,2
+000195   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000196   3905     bset    0x5, 0x2         	BSET	_P0bits,2
+                                           ;	.line	28; "ad.c"	LEDFlashTimes++;
+000197   19a7     incr    0x27             	INCR	_LEDFlashTimes
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x4=4), size=1
+                                           ;	.line	29; "ad.c"	if(LEDFlashTimes > 3)
+000198   0b04     movai   0x4              	MOVAI	0x04
+000199   1227     rsubar  0x27             	RSUBAR	_LEDFlashTimes
+00019a   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00019b   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	31; "ad.c"	LEDFlashTimes = 0;
+00019c   1da7     clrr    0x27             	CLRR	_LEDFlashTimes
+                                           ;	.line	32; "ad.c"	WorkONInitStep++;
+00019d   1987     incr    0x7              	INCR	_WorkONInitStep
+                                           ;	.line	36; "ad.c"	break;
+00019e   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           _00119_DS_
+                                           ;	.line	38; "ad.c"	RXENB();
+00019f   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+                                           ;	.line	39; "ad.c"	TXENB();
+0001a0   3e06     bclr    0x6, 0x4         	BCLR	_P1bits,4
+0001a1   3d86     bclr    0x6, 0x3         	BCLR	_P1bits,3
+                                           ;	.line	41; "ad.c"	if(fWorkONInitT)
+0001a2   3030     jbset   0x30, 0          	JBSET	_Flag1,0
+0001a3   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;	.line	43; "ad.c"	fWorkONInitT = 0;
+0001a4   3c30     bclr    0x30, 0          	BCLR	_Flag1,0
+                                           ;	.line	44; "ad.c"	LEDFlashSpace++;
+0001a5   19a8     incr    0x28             	INCR	_LEDFlashSpace
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0xFB=251), size=1
+                                           ;	.line	45; "ad.c"	if(LEDFlashSpace>250)
+0001a6   0bfb     movai   0xfb             	MOVAI	0xfb
+0001a7   1228     rsubar  0x28             	RSUBAR	_LEDFlashSpace
+0001a8   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0001a9   29c7     goto    0x1c7            	GOTO	_00121_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	47; "ad.c"	LEDFlashSpace = 0;
+0001aa   1da8     clrr    0x28             	CLRR	_LEDFlashSpace
+                                           ;	.line	48; "ad.c"	LED1 = !LED1;
+0001ab   1da0     clrr    0x20             	CLRR	r0x1013
+0001ac   3485     jbclr   0x5, 0x1         	JBCLR	_P0bits,1
+0001ad   19a0     incr    0x20             	INCR	r0x1013
+0001ae   1620     movar   0x20             	MOVAR	r0x1013
+0001af   0b00     movai   0                	MOVAI	0x00
+0001b0   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+0001b1   0b01     movai   0x1              	MOVAI	0x01
+0001b2   15a0     movra   0x20             	MOVRA	r0x1013
+0001b3   15a1     movra   0x21             	MOVRA	r0x1014
+                                           ;;101	MOVAR	r0x1014
+0001b4   1320     rrar    0x20             	RRAR	r0x1013
+0001b5   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0001b6   3c85     bclr    0x5, 0x1         	BCLR	_P0bits,1
+0001b7   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+0001b8   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	49; "ad.c"	LED2 = !LED2;
+0001b9   1da0     clrr    0x20             	CLRR	r0x1013
+0001ba   3505     jbclr   0x5, 0x2         	JBCLR	_P0bits,2
+0001bb   19a0     incr    0x20             	INCR	r0x1013
+0001bc   1620     movar   0x20             	MOVAR	r0x1013
+0001bd   0b00     movai   0                	MOVAI	0x00
+0001be   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+0001bf   0b01     movai   0x1              	MOVAI	0x01
+0001c0   15a0     movra   0x20             	MOVRA	r0x1013
+0001c1   15a1     movra   0x21             	MOVRA	r0x1014
+                                           ;;100	MOVAR	r0x1014
+0001c2   1320     rrar    0x20             	RRAR	r0x1013
+0001c3   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0001c4   3d05     bclr    0x5, 0x2         	BCLR	_P0bits,2
+0001c5   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+0001c6   3905     bset    0x5, 0x2         	BSET	_P0bits,2
+                                           _00121_DS_
+                                           ;	.line	51; "ad.c"	if( RX )
+0001c7   3005     jbset   0x5, 0           	JBSET	_P0bits,0
+0001c8   29d6     goto    0x1d6            	GOTO	_00125_DS_
+                                           ;	.line	53; "ad.c"	RXDebounce++;
+0001c9   19a9     incr    0x29             	INCR	_RXDebounce
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x4=4), size=1
+                                           ;	.line	54; "ad.c"	if(RXDebounce > 3)
+0001ca   0b04     movai   0x4              	MOVAI	0x04
+0001cb   1229     rsubar  0x29             	RSUBAR	_RXDebounce
+0001cc   3003     jbset   0x3, 0           	JBSET	STATUS,0
+0001cd   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	56; "ad.c"	RXDebounce = 0;
+0001ce   1da9     clrr    0x29             	CLRR	_RXDebounce
+                                           ;	.line	57; "ad.c"	WorkONInitStep++;
+0001cf   1987     incr    0x7              	INCR	_WorkONInitStep
+                                           ;	.line	59; "ad.c"	RXDIS();
+0001d0   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	60; "ad.c"	TXDIS();
+0001d1   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+0001d2   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+                                           ;	.line	61; "ad.c"	LEDOFF();
+0001d3   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+0001d4   3905     bset    0x5, 0x2         	BSET	_P0bits,2
+0001d5   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           _00125_DS_
+                                           ;	.line	66; "ad.c"	RXDebounce = 0;
+0001d6   1da9     clrr    0x29             	CLRR	_RXDebounce
+                                           ;	.line	69; "ad.c"	break;
+0001d7   29e6     goto    0x1e6            	GOTO	_00135_DS_
+                                           _00129_DS_
+                                           ;	.line	72; "ad.c"	MCR =   BIN(0,0,0,0,1,0,0,0);		
+0001d8   0b08     movai   0x8              	MOVAI	0x08
+0001d9   1588     movra   0x8              	MOVRA	_MCR
+                                           ;	.line	73; "ad.c"	KBIM = BIN(0,0,0,0,1,0,0,0);
+0001da   0b08     movai   0x8              	MOVAI	0x08
+0001db   1589     movra   0x9              	MOVRA	_KBIM
+                                           ;	.line	74; "ad.c"	ClrWdt();
+0001dc   000e     clrwdt                   	clrwdt
+                                           ;	.line	76; "ad.c"	Stop();
+0001dd   000b     sleep                    	stop
+                                           ;	.line	77; "ad.c"	KBIM = 0X00;
+0001de   1d89     clrr    0x9              	CLRR	_KBIM
+                                           ;	.line	78; "ad.c"	MCR = BIN(0,0,0,0,0,0,0,1);
+0001df   0b01     movai   0x1              	MOVAI	0x01
+0001e0   1588     movra   0x8              	MOVRA	_MCR
+                                           ;	.line	79; "ad.c"	PUCON  = BIN(1,1,0,0,0,0,0,0);
+0001e1   0bc0     movai   0xc0             	MOVAI	0xc0
+0001e2   158d     movra   0xd              	MOVRA	_PUCON
+                                           ;	.line	80; "ad.c"	fWorkONInit = 0;
+0001e3   3d31     bclr    0x31, 0x2        	BCLR	_Flag2,2
+                                           ;	.line	81; "ad.c"	fDetection = 1;
+0001e4   38b0     bset    0x30, 0x1        	BSET	_Flag1,1
+                                           ;	.line	82; "ad.c"	DetectStep = 0;
+0001e5   1dac     clrr    0x2c             	CLRR	_DetectStep
+                                           _00135_DS_
+                                           ;	.line	85; "ad.c"	}
+0001e6   000c     return                   	RETURN	
+                                           ; exit point of _WorkOnInit
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _delay	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;2 compiler assigned registers:
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;; Starting pCode block
+                                           _delay	;Function start
+                                           ; 2 exit points
+                                           ;	.line	10; "ad.c"	for(i=0;i<20;i++);
+0001e7   0b14     movai   0x14             	MOVAI	0x14
+0001e8   159e     movra   0x1e             	MOVRA	r0x100F
+                                           _00107_DS_
+0001e9   161e     movar   0x1e             	MOVAR	r0x100F
+0001ea   159f     movra   0x1f             	MOVRA	r0x1010
+0001eb   1b1f     decar   0x1f             	DECAR	r0x1010
+0001ec   159e     movra   0x1e             	MOVRA	r0x100F
+0001ed   0b00     movai   0                	MOVAI	0x00
+0001ee   171e     orar    0x1e             	ORAR	r0x100F
+0001ef   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+0001f0   29e9     goto    0x1e9            	GOTO	_00107_DS_
+0001f1   000c     return                   	RETURN	
+                                           ; exit point of _delay
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  474+    0 =   474 instructions (  948 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                                           ; This file was generated Fri Oct 13 17:26:49 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"init.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_WorkOnInit
+                                           	extern	_Detection
+                                           	extern	_Actuation
+                                           	extern	_ConsecutiveFive
+                                           	extern	_KeyScan
+                                           	extern	_NeedSleep
+                                           	extern	_InitUart
+                                           	extern	_EndUart
+                                           	extern	_UartSendByte
+                                           	extern	_UartDelay
+                                           	extern	_UartSendInt
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_WorkONInitStep
+                                           	extern	_LEDFlashTimes
+                                           	extern	_LEDFlashSpace
+                                           	extern	_RXDebounce
+                                           	extern	_RXCnt
+                                           	extern	_DetectSpace
+                                           	extern	_DetectStep
+                                           	extern	_SleepCnt
+                                           	extern	_MaxRunTimes
+                                           	extern	_MaxMotorTimes
+                                           	extern	_MotorFiveCnt
+                                           	extern	_PositionDelay
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_UartStep
+                                           	extern	_UartTemp
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_ClrrRAM
+                                           	global	_init
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'init'
+                                           ;@init WorkOnInit                Allocated to registers ;size:2
+                                           ;@init Detection                 Allocated to registers ;size:2
+                                           ;@init Actuation                 Allocated to registers ;size:2
+                                           ;@init ConsecutiveFive           Allocated to registers ;size:2
+                                           ;@init ClrrRAM                   Allocated to registers ;size:2
+                                           ;@init KeyScan                   Allocated to registers ;size:2
+                                           ;@init NeedSleep                 Allocated to registers ;size:2
+                                           ;@init InitUart                  Allocated to registers ;size:2
+                                           ;@init EndUart                   Allocated to registers ;size:2
+                                           ;@init UartSendByte              Allocated to registers ;size:2
+                                           ;@init UartDelay                 Allocated to registers ;size:2
+                                           ;@init UartSendInt               Allocated to registers ;size:2
+                                           ;@init STATUSbits                Allocated to registers ;size:1
+                                           ;@init P0bits                    Allocated to registers ;size:1
+                                           ;@init P1bits                    Allocated to registers ;size:1
+                                           ;@init MCRbits                   Allocated to registers ;size:1
+                                           ;@init KBIMbits                  Allocated to registers ;size:1
+                                           ;@init PDCONbits                 Allocated to registers ;size:1
+                                           ;@init ODCONbits                 Allocated to registers ;size:1
+                                           ;@init PUCONbits                 Allocated to registers ;size:1
+                                           ;@init INTECONbits               Allocated to registers ;size:1
+                                           ;@init INTFLAGbits               Allocated to registers ;size:1
+                                           ;@init T0CRbits                  Allocated to registers ;size:1
+                                           ;@init DDR0bits                  Allocated to registers ;size:1
+                                           ;@init DDR1bits                  Allocated to registers ;size:1
+                                           ;@init TMCRbits                  Allocated to registers ;size:1
+                                           ;@init T1CRbits                  Allocated to registers ;size:1
+                                           ;@init WorkONInitStep            Allocated to registers ;size:1
+                                           ;@init LEDFlashTimes             Allocated to registers ;size:1
+                                           ;@init LEDFlashSpace             Allocated to registers ;size:1
+                                           ;@init RXDebounce                Allocated to registers ;size:1
+                                           ;@init RXCnt                     Allocated to registers ;size:1
+                                           ;@init DetectSpace               Allocated to registers ;size:1
+                                           ;@init DetectStep                Allocated to registers ;size:1
+                                           ;@init SleepCnt                  Allocated to registers ;size:1
+                                           ;@init MaxRunTimes               Allocated to registers ;size:2
+                                           ;@init MaxMotorTimes             Allocated to registers ;size:2
+                                           ;@init MotorFiveCnt              Allocated to registers ;size:1
+                                           ;@init PositionDelay             Allocated to registers ;size:1
+                                           ;@init Flag1                     Allocated to registers ;size:1
+                                           ;@init Flag2                     Allocated to registers ;size:1
+                                           ;@init UartStep                  Allocated to registers ;size:1
+                                           ;@init UartTemp                  Allocated to registers ;size:1
+                                           ;@init INDF                      Allocated to registers ;size:1
+                                           ;@init T0CNT                     Allocated to registers ;size:1
+                                           ;@init PCL                       Allocated to registers ;size:1
+                                           ;@init STATUS                    Allocated to registers ;size:1
+                                           ;@init FSR                       Allocated to registers ;size:1
+                                           ;@init P0                        Allocated to registers ;size:1
+                                           ;@init P1                        Allocated to registers ;size:1
+                                           ;@init MCR                       Allocated to registers ;size:1
+                                           ;@init KBIM                      Allocated to registers ;size:1
+                                           ;@init PCLATH                    Allocated to registers ;size:1
+                                           ;@init PDCON                     Allocated to registers ;size:1
+                                           ;@init ODCON                     Allocated to registers ;size:1
+                                           ;@init PUCON                     Allocated to registers ;size:1
+                                           ;@init INTECON                   Allocated to registers ;size:1
+                                           ;@init INTFLAG                   Allocated to registers ;size:1
+                                           ;@init T0CR                      Allocated to registers ;size:1
+                                           ;@init DDR0                      Allocated to registers ;size:1
+                                           ;@init DDR1                      Allocated to registers ;size:1
+                                           ;@init TMCR                      Allocated to registers ;size:1
+                                           ;@init T1CR                      Allocated to registers ;size:1
+                                           ;@init T1CNT                     Allocated to registers ;size:1
+                                           ;@init T1LOAD                    Allocated to registers ;size:1
+                                           ;@init T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'init';
+                                           ;@Allocation info for local variables in function 'ClrrRAM'
+                                           ;@end Allocation info for local variables in function 'ClrrRAM';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_init	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _ClrrRAM	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _ClrrRAM	;Function start
+                                           ; 2 exit points
+                                           ;	.line	52; "init.c"	__endasm;
+00023f   3683     jbclr   0x3, 0x5         	jbclr STATUS,05h
+000240   1620     movar   0x20             	movar 0x20
+000241   1584     movra   0x4              	movra FSR
+000242   1d80     clrr    0                	clrr INDF
+000243   1984     incr    0x4              	incr FSR
+000244   1580     movra   0                	movra 0x80
+000245   1004     xorar   0x4              	xorar FSR
+000246   3103     jbset   0x3, 0x2         	jbset STATUS,02h
+000247   2a42     goto    0x242            	goto $-5
+000248   3683     jbclr   0x3, 0x5         	jbclr STATUS,05h
+000249   1620     movar   0x20             	movar 0xa0
+00024a   1584     movra   0x4              	movra FSR
+00024b   1d80     clrr    0                	clrr INDF
+00024c   1984     incr    0x4              	incr FSR
+00024d   0bc0     movai   0xc0             	movai 0xc0
+00024e   1004     xorar   0x4              	xorar FSR
+00024f   3103     jbset   0x3, 0x2         	jbset STATUS,02h
+000250   2a4b     goto    0x24b            	goto $-5
+000251   3683     jbclr   0x3, 0x5         	jbclr STATUS,05h
+000252   000c     return                   	RETURN	
+                                           ; exit point of _ClrrRAM
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _init	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _init	;Function start
+                                           ; 2 exit points
+                                           ;	.line	6; "init.c"	INDF = BIN(0,0,0,0,1,1,0,0);		//  wdt 18*16    Fcpu 4/4
+000253   0b0c     movai   0xc              	MOVAI	0x0c
+000254   1580     movra   0                	MOVRA	_INDF
+                                           ;	.line	7; "init.c"	T0CNT = BIN(1,0,0,0,0,0,0,0);		//设置模拟、数字口
+000255   0b80     movai   0x80             	MOVAI	0x80
+000256   1581     movra   0x1              	MOVRA	_T0CNT
+                                           ;	.line	8; "init.c"	PDCON = BIN(1,1,1,0,1,0,0,1);		//设置输入输出
+000257   0be9     movai   0xe9             	MOVAI	0xe9
+000258   158b     movra   0xb              	MOVRA	_PDCON
+                                           ;	.line	9; "init.c"	ODCON = BIN(1,1,1,1,1,1,1,1);
+000259   0bff     movai   0xff             	MOVAI	0xff
+00025a   158c     movra   0xc              	MOVRA	_ODCON
+                                           ;	.line	10; "init.c"	PUCON = BIN(0,0,0,0,0,0,0,0);		//设置加强型驱动
+00025b   1d8d     clrr    0xd              	CLRR	_PUCON
+                                           ;	.line	11; "init.c"	INTECON = BIN(0,0,0,0,0,0,0,0);		//设置开漏输出
+00025c   1d8e     clrr    0xe              	CLRR	_INTECON
+                                           ;	.line	12; "init.c"	INTFLAG = BIN(0,0,0,0,0,0,0,0);		//设置下拉电阻
+00025d   1d8f     clrr    0xf              	CLRR	_INTFLAG
+                                           ;	.line	13; "init.c"	T0CR =  BIN(0,0,0,0,1,1,0,1);		//设置上拉电阻
+00025e   0b0d     movai   0xd              	MOVAI	0x0d
+00025f   15c1     movra   0x41             	MOVRA	_T0CR
+                                           ;	.line	15; "init.c"	DDR0 = BIN(0,1,1,0,0,0,0,0);
+000260   0b60     movai   0x60             	MOVAI	0x60
+000261   15c5     movra   0x45             	MOVRA	_DDR0
+                                           ;	.line	16; "init.c"	DDR1 = BIN(0,0,0,0,0,0,0,0);
+000262   1dc6     clrr    0x46             	CLRR	_DDR1
+                                           ;	.line	17; "init.c"	TMCR = BIN(0,0,0,0,0,0,0,0);
+000263   1dcb     clrr    0x4b             	CLRR	_TMCR
+                                           ;	.line	18; "init.c"	T1CR = BIN(0,0,1,0,0,0,0,0);
+000264   0b20     movai   0x20             	MOVAI	0x20
+000265   15cc     movra   0x4c             	MOVRA	_T1CR
+                                           ;	.line	23; "init.c"	T1CNT = BIN(0,0,1,0,0,0,0,1);
+000266   0b21     movai   0x21             	MOVAI	0x21
+000267   15cd     movra   0x4d             	MOVRA	_T1CNT
+                                           ;	.line	24; "init.c"	T1LOAD = BIN(0,0,0,0,0,0,0,1);
+000268   0b01     movai   0x1              	MOVAI	0x01
+000269   15ce     movra   0x4e             	MOVRA	_T1LOAD
+                                           ;	.line	25; "init.c"	T1DATA  = BIN(1,1,0,0,0,0,0,0);
+00026a   0bc0     movai   0xc0             	MOVAI	0xc0
+00026b   15cf     movra   0x4f             	MOVRA	_T1DATA
+00026c   000c     return                   	RETURN	
+                                           ; exit point of _init
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   27+    0 =    27 instructions (   54 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                                           ; This file was generated Fri Oct 13 17:26:50 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"key.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_WorkOnInit
+                                           	extern	_Detection
+                                           	extern	_Actuation
+                                           	extern	_ConsecutiveFive
+                                           	extern	_init
+                                           	extern	_ClrrRAM
+                                           	extern	_NeedSleep
+                                           	extern	_InitUart
+                                           	extern	_EndUart
+                                           	extern	_UartSendByte
+                                           	extern	_UartDelay
+                                           	extern	_UartSendInt
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_WorkONInitStep
+                                           	extern	_LEDFlashTimes
+                                           	extern	_LEDFlashSpace
+                                           	extern	_RXDebounce
+                                           	extern	_RXCnt
+                                           	extern	_DetectSpace
+                                           	extern	_DetectStep
+                                           	extern	_SleepCnt
+                                           	extern	_MaxRunTimes
+                                           	extern	_MaxMotorTimes
+                                           	extern	_MotorFiveCnt
+                                           	extern	_PositionDelay
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_UartStep
+                                           	extern	_UartTemp
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_KeyScan
+                                           	global	_KeyNew
+                                           	global	_KeyOld
+                                           	global	_KeyDebounce
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_key_0	udata
+                                           _KeyNew	res	1
+                                           
+                                           UD_key_1	udata
+                                           _KeyOld	res	1
+                                           
+                                           UD_key_2	udata
+                                           _KeyDebounce	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'KeyScan'
+                                           ;@KeyScan WorkOnInit                Allocated to registers ;size:2
+                                           ;@KeyScan Detection                 Allocated to registers ;size:2
+                                           ;@KeyScan Actuation                 Allocated to registers ;size:2
+                                           ;@KeyScan ConsecutiveFive           Allocated to registers ;size:2
+                                           ;@KeyScan init                      Allocated to registers ;size:2
+                                           ;@KeyScan ClrrRAM                   Allocated to registers ;size:2
+                                           ;@KeyScan NeedSleep                 Allocated to registers ;size:2
+                                           ;@KeyScan InitUart                  Allocated to registers ;size:2
+                                           ;@KeyScan EndUart                   Allocated to registers ;size:2
+                                           ;@KeyScan UartSendByte              Allocated to registers ;size:2
+                                           ;@KeyScan UartDelay                 Allocated to registers ;size:2
+                                           ;@KeyScan UartSendInt               Allocated to registers ;size:2
+                                           ;@KeyScan STATUSbits                Allocated to registers ;size:1
+                                           ;@KeyScan P0bits                    Allocated to registers ;size:1
+                                           ;@KeyScan P1bits                    Allocated to registers ;size:1
+                                           ;@KeyScan MCRbits                   Allocated to registers ;size:1
+                                           ;@KeyScan KBIMbits                  Allocated to registers ;size:1
+                                           ;@KeyScan PDCONbits                 Allocated to registers ;size:1
+                                           ;@KeyScan ODCONbits                 Allocated to registers ;size:1
+                                           ;@KeyScan PUCONbits                 Allocated to registers ;size:1
+                                           ;@KeyScan INTECONbits               Allocated to registers ;size:1
+                                           ;@KeyScan INTFLAGbits               Allocated to registers ;size:1
+                                           ;@KeyScan T0CRbits                  Allocated to registers ;size:1
+                                           ;@KeyScan DDR0bits                  Allocated to registers ;size:1
+                                           ;@KeyScan DDR1bits                  Allocated to registers ;size:1
+                                           ;@KeyScan TMCRbits                  Allocated to registers ;size:1
+                                           ;@KeyScan T1CRbits                  Allocated to registers ;size:1
+                                           ;@KeyScan WorkONInitStep            Allocated to registers ;size:1
+                                           ;@KeyScan LEDFlashTimes             Allocated to registers ;size:1
+                                           ;@KeyScan LEDFlashSpace             Allocated to registers ;size:1
+                                           ;@KeyScan RXDebounce                Allocated to registers ;size:1
+                                           ;@KeyScan RXCnt                     Allocated to registers ;size:1
+                                           ;@KeyScan DetectSpace               Allocated to registers ;size:1
+                                           ;@KeyScan DetectStep                Allocated to registers ;size:1
+                                           ;@KeyScan SleepCnt                  Allocated to registers ;size:1
+                                           ;@KeyScan MaxRunTimes               Allocated to registers ;size:2
+                                           ;@KeyScan MaxMotorTimes             Allocated to registers ;size:2
+                                           ;@KeyScan MotorFiveCnt              Allocated to registers ;size:1
+                                           ;@KeyScan PositionDelay             Allocated to registers ;size:1
+                                           ;@KeyScan Flag1                     Allocated to registers ;size:1
+                                           ;@KeyScan Flag2                     Allocated to registers ;size:1
+                                           ;@KeyScan UartStep                  Allocated to registers ;size:1
+                                           ;@KeyScan UartTemp                  Allocated to registers ;size:1
+                                           ;@KeyScan KeyNew                    Allocated to registers ;size:1
+                                           ;@KeyScan KeyOld                    Allocated to registers ;size:1
+                                           ;@KeyScan KeyDebounce               Allocated to registers ;size:1
+                                           ;@KeyScan INDF                      Allocated to registers ;size:1
+                                           ;@KeyScan T0CNT                     Allocated to registers ;size:1
+                                           ;@KeyScan PCL                       Allocated to registers ;size:1
+                                           ;@KeyScan STATUS                    Allocated to registers ;size:1
+                                           ;@KeyScan FSR                       Allocated to registers ;size:1
+                                           ;@KeyScan P0                        Allocated to registers ;size:1
+                                           ;@KeyScan P1                        Allocated to registers ;size:1
+                                           ;@KeyScan MCR                       Allocated to registers ;size:1
+                                           ;@KeyScan KBIM                      Allocated to registers ;size:1
+                                           ;@KeyScan PCLATH                    Allocated to registers ;size:1
+                                           ;@KeyScan PDCON                     Allocated to registers ;size:1
+                                           ;@KeyScan ODCON                     Allocated to registers ;size:1
+                                           ;@KeyScan PUCON                     Allocated to registers ;size:1
+                                           ;@KeyScan INTECON                   Allocated to registers ;size:1
+                                           ;@KeyScan INTFLAG                   Allocated to registers ;size:1
+                                           ;@KeyScan T0CR                      Allocated to registers ;size:1
+                                           ;@KeyScan DDR0                      Allocated to registers ;size:1
+                                           ;@KeyScan DDR1                      Allocated to registers ;size:1
+                                           ;@KeyScan TMCR                      Allocated to registers ;size:1
+                                           ;@KeyScan T1CR                      Allocated to registers ;size:1
+                                           ;@KeyScan T1CNT                     Allocated to registers ;size:1
+                                           ;@KeyScan T1LOAD                    Allocated to registers ;size:1
+                                           ;@KeyScan T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'KeyScan';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_key	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _KeyScan	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _KeyScan	;Function start
+                                           ; 2 exit points
+                                           ;	.line	11; "key.c"	if(fKeyT)
+00026d   3031     jbset   0x31, 0          	JBSET	_Flag2,0
+00026e   2a94     goto    0x294            	GOTO	_00118_DS_
+                                           ;	.line	13; "key.c"	fKeyT = 0;
+00026f   3c31     bclr    0x31, 0          	BCLR	_Flag2,0
+                                           ;	.line	14; "key.c"	if(ON_OFF)
+000270   3105     jbset   0x5, 0x2         	JBSET	_P0bits,2
+000271   2a74     goto    0x274            	GOTO	_00106_DS_
+                                           ;	.line	16; "key.c"	KeyNew = 0x00;
+000272   1db2     clrr    0x32             	CLRR	_KeyNew
+000273   2a76     goto    0x276            	GOTO	_00107_DS_
+                                           _00106_DS_
+                                           ;	.line	20; "key.c"	KeyNew = 0x01;
+000274   0b01     movai   0x1              	MOVAI	0x01
+000275   15b2     movra   0x32             	MOVRA	_KeyNew
+                                           _00107_DS_
+                                           ;	.line	23; "key.c"	if(KeyNew != KeyOld)
+000276   1633     movar   0x33             	MOVAR	_KeyOld
+000277   1032     xorar   0x32             	XORAR	_KeyNew
+000278   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000279   2a7b     goto    0x27b            	GOTO	_00130_DS_
+00027a   2a93     goto    0x293            	GOTO	_00114_DS_
+                                           _00130_DS_
+                                           ;	.line	25; "key.c"	KeyDebounce++;
+00027b   19b4     incr    0x34             	INCR	_KeyDebounce
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0x15=21), size=1
+                                           ;	.line	26; "key.c"	if(KeyDebounce > 20)
+00027c   0b15     movai   0x15             	MOVAI	0x15
+00027d   1234     rsubar  0x34             	RSUBAR	_KeyDebounce
+00027e   3003     jbset   0x3, 0           	JBSET	STATUS,0
+00027f   2a94     goto    0x294            	GOTO	_00118_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	28; "key.c"	KeyDebounce = 0;
+000280   1db4     clrr    0x34             	CLRR	_KeyDebounce
+                                           ;	.line	29; "key.c"	KeyOld = KeyNew;
+000281   1632     movar   0x32             	MOVAR	_KeyNew
+000282   15b3     movra   0x33             	MOVRA	_KeyOld
+                                           ;	.line	30; "key.c"	if(KeyOld == 0x01)
+000283   1633     movar   0x33             	MOVAR	_KeyOld
+000284   0801     xorai   0x1              	XORAI	0x01
+000285   3103     jbset   0x3, 0x2         	JBSET	STATUS,2
+000286   2a8c     goto    0x28c            	GOTO	_00109_DS_
+                                           ;	.line	32; "key.c"	fWorkON = 1;
+000287   38b1     bset    0x31, 0x1        	BSET	_Flag2,1
+                                           ;	.line	33; "key.c"	fWorkONInit = 1;
+000288   3931     bset    0x31, 0x2        	BSET	_Flag2,2
+                                           ;	.line	34; "key.c"	fDetection = 0;
+000289   3cb0     bclr    0x30, 0x1        	BCLR	_Flag1,1
+                                           ;	.line	35; "key.c"	WorkONInitStep = 0;
+00028a   1d87     clrr    0x7              	CLRR	_WorkONInitStep
+00028b   2a94     goto    0x294            	GOTO	_00118_DS_
+                                           _00109_DS_
+                                           ;	.line	39; "key.c"	fWorkON = 0;
+00028c   3cb1     bclr    0x31, 0x1        	BCLR	_Flag2,1
+                                           ;	.line	40; "key.c"	LEDOFF();
+00028d   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+00028e   3905     bset    0x5, 0x2         	BSET	_P0bits,2
+                                           ;	.line	41; "key.c"	RXDIS();
+00028f   3885     bset    0x5, 0x1         	BSET	_P0bits,1
+                                           ;	.line	42; "key.c"	TXDIS();
+000290   3a06     bset    0x6, 0x4         	BSET	_P1bits,4
+000291   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+000292   2a94     goto    0x294            	GOTO	_00118_DS_
+                                           _00114_DS_
+                                           ;	.line	48; "key.c"	KeyDebounce = 0;
+000293   1db4     clrr    0x34             	CLRR	_KeyDebounce
+                                           _00118_DS_
+000294   000c     return                   	RETURN	
+                                           ; exit point of _KeyScan
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   40+    0 =    40 instructions (   80 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                                           ; This file was generated Fri Oct 13 17:26:50 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"sleep.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_WorkOnInit
+                                           	extern	_Detection
+                                           	extern	_Actuation
+                                           	extern	_ConsecutiveFive
+                                           	extern	_init
+                                           	extern	_ClrrRAM
+                                           	extern	_KeyScan
+                                           	extern	_InitUart
+                                           	extern	_EndUart
+                                           	extern	_UartSendByte
+                                           	extern	_UartDelay
+                                           	extern	_UartSendInt
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_WorkONInitStep
+                                           	extern	_LEDFlashTimes
+                                           	extern	_LEDFlashSpace
+                                           	extern	_RXDebounce
+                                           	extern	_RXCnt
+                                           	extern	_DetectSpace
+                                           	extern	_DetectStep
+                                           	extern	_SleepCnt
+                                           	extern	_MaxRunTimes
+                                           	extern	_MaxMotorTimes
+                                           	extern	_MotorFiveCnt
+                                           	extern	_PositionDelay
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_UartStep
+                                           	extern	_UartTemp
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_NeedSleep
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'NeedSleep'
+                                           ;@NeedSleep WorkOnInit                Allocated to registers ;size:2
+                                           ;@NeedSleep Detection                 Allocated to registers ;size:2
+                                           ;@NeedSleep Actuation                 Allocated to registers ;size:2
+                                           ;@NeedSleep ConsecutiveFive           Allocated to registers ;size:2
+                                           ;@NeedSleep init                      Allocated to registers ;size:2
+                                           ;@NeedSleep ClrrRAM                   Allocated to registers ;size:2
+                                           ;@NeedSleep KeyScan                   Allocated to registers ;size:2
+                                           ;@NeedSleep InitUart                  Allocated to registers ;size:2
+                                           ;@NeedSleep EndUart                   Allocated to registers ;size:2
+                                           ;@NeedSleep UartSendByte              Allocated to registers ;size:2
+                                           ;@NeedSleep UartDelay                 Allocated to registers ;size:2
+                                           ;@NeedSleep UartSendInt               Allocated to registers ;size:2
+                                           ;@NeedSleep STATUSbits                Allocated to registers ;size:1
+                                           ;@NeedSleep P0bits                    Allocated to registers ;size:1
+                                           ;@NeedSleep P1bits                    Allocated to registers ;size:1
+                                           ;@NeedSleep MCRbits                   Allocated to registers ;size:1
+                                           ;@NeedSleep KBIMbits                  Allocated to registers ;size:1
+                                           ;@NeedSleep PDCONbits                 Allocated to registers ;size:1
+                                           ;@NeedSleep ODCONbits                 Allocated to registers ;size:1
+                                           ;@NeedSleep PUCONbits                 Allocated to registers ;size:1
+                                           ;@NeedSleep INTECONbits               Allocated to registers ;size:1
+                                           ;@NeedSleep INTFLAGbits               Allocated to registers ;size:1
+                                           ;@NeedSleep T0CRbits                  Allocated to registers ;size:1
+                                           ;@NeedSleep DDR0bits                  Allocated to registers ;size:1
+                                           ;@NeedSleep DDR1bits                  Allocated to registers ;size:1
+                                           ;@NeedSleep TMCRbits                  Allocated to registers ;size:1
+                                           ;@NeedSleep T1CRbits                  Allocated to registers ;size:1
+                                           ;@NeedSleep WorkONInitStep            Allocated to registers ;size:1
+                                           ;@NeedSleep LEDFlashTimes             Allocated to registers ;size:1
+                                           ;@NeedSleep LEDFlashSpace             Allocated to registers ;size:1
+                                           ;@NeedSleep RXDebounce                Allocated to registers ;size:1
+                                           ;@NeedSleep RXCnt                     Allocated to registers ;size:1
+                                           ;@NeedSleep DetectSpace               Allocated to registers ;size:1
+                                           ;@NeedSleep DetectStep                Allocated to registers ;size:1
+                                           ;@NeedSleep SleepCnt                  Allocated to registers ;size:1
+                                           ;@NeedSleep MaxRunTimes               Allocated to registers ;size:2
+                                           ;@NeedSleep MaxMotorTimes             Allocated to registers ;size:2
+                                           ;@NeedSleep MotorFiveCnt              Allocated to registers ;size:1
+                                           ;@NeedSleep PositionDelay             Allocated to registers ;size:1
+                                           ;@NeedSleep Flag1                     Allocated to registers ;size:1
+                                           ;@NeedSleep Flag2                     Allocated to registers ;size:1
+                                           ;@NeedSleep UartStep                  Allocated to registers ;size:1
+                                           ;@NeedSleep UartTemp                  Allocated to registers ;size:1
+                                           ;@NeedSleep INDF                      Allocated to registers ;size:1
+                                           ;@NeedSleep T0CNT                     Allocated to registers ;size:1
+                                           ;@NeedSleep PCL                       Allocated to registers ;size:1
+                                           ;@NeedSleep STATUS                    Allocated to registers ;size:1
+                                           ;@NeedSleep FSR                       Allocated to registers ;size:1
+                                           ;@NeedSleep P0                        Allocated to registers ;size:1
+                                           ;@NeedSleep P1                        Allocated to registers ;size:1
+                                           ;@NeedSleep MCR                       Allocated to registers ;size:1
+                                           ;@NeedSleep KBIM                      Allocated to registers ;size:1
+                                           ;@NeedSleep PCLATH                    Allocated to registers ;size:1
+                                           ;@NeedSleep PDCON                     Allocated to registers ;size:1
+                                           ;@NeedSleep ODCON                     Allocated to registers ;size:1
+                                           ;@NeedSleep PUCON                     Allocated to registers ;size:1
+                                           ;@NeedSleep INTECON                   Allocated to registers ;size:1
+                                           ;@NeedSleep INTFLAG                   Allocated to registers ;size:1
+                                           ;@NeedSleep T0CR                      Allocated to registers ;size:1
+                                           ;@NeedSleep DDR0                      Allocated to registers ;size:1
+                                           ;@NeedSleep DDR1                      Allocated to registers ;size:1
+                                           ;@NeedSleep TMCR                      Allocated to registers ;size:1
+                                           ;@NeedSleep T1CR                      Allocated to registers ;size:1
+                                           ;@NeedSleep T1CNT                     Allocated to registers ;size:1
+                                           ;@NeedSleep T1LOAD                    Allocated to registers ;size:1
+                                           ;@NeedSleep T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'NeedSleep';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_sleep	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _NeedSleep	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _NeedSleep	;Function start
+                                           ; 2 exit points
+                                           ;	.line	10; "sleep.c"	}
+000001   000c     return                   	RETURN	
+                                           ; exit point of _NeedSleep
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	    1+    0 =     1 instructions (    2 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                                           ; This file was generated Fri Oct 13 17:26:50 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"Uart.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_WorkOnInit
+                                           	extern	_Detection
+                                           	extern	_Actuation
+                                           	extern	_ConsecutiveFive
+                                           	extern	_init
+                                           	extern	_ClrrRAM
+                                           	extern	_KeyScan
+                                           	extern	_NeedSleep
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_WorkONInitStep
+                                           	extern	_LEDFlashTimes
+                                           	extern	_LEDFlashSpace
+                                           	extern	_RXDebounce
+                                           	extern	_RXCnt
+                                           	extern	_DetectSpace
+                                           	extern	_DetectStep
+                                           	extern	_SleepCnt
+                                           	extern	_MaxRunTimes
+                                           	extern	_MaxMotorTimes
+                                           	extern	_MotorFiveCnt
+                                           	extern	_PositionDelay
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	__gptrget1
+                                           
+                                           	extern STK06
+                                           	extern STK05
+                                           	extern STK04
+                                           	extern STK03
+                                           	extern STK02
+                                           	extern STK01
+                                           	extern STK00
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_UartSendInt
+                                           	global	_UartSendByte
+                                           	global	_UartDelay
+                                           	global	_EndUart
+                                           	global	_InitUart
+                                           	global	_UartStep
+                                           	global	_UartTemp
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_Uart_0	udata
+                                           _UartStep	res	1
+                                           
+                                           UD_Uart_1	udata
+                                           _UartTemp	res	1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_Uart_0	udata
+                                           r0x1000	res	1
+                                           r0x1001	res	1
+                                           r0x1002	res	1
+                                           r0x1005	res	1
+                                           r0x1004	res	1
+                                           r0x1003	res	1
+                                           r0x1006	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'InitUart'
+                                           ;@InitUart WorkOnInit                Allocated to registers ;size:2
+                                           ;@InitUart Detection                 Allocated to registers ;size:2
+                                           ;@InitUart Actuation                 Allocated to registers ;size:2
+                                           ;@InitUart ConsecutiveFive           Allocated to registers ;size:2
+                                           ;@InitUart init                      Allocated to registers ;size:2
+                                           ;@InitUart ClrrRAM                   Allocated to registers ;size:2
+                                           ;@InitUart KeyScan                   Allocated to registers ;size:2
+                                           ;@InitUart NeedSleep                 Allocated to registers ;size:2
+                                           ;@InitUart EndUart                   Allocated to registers ;size:2
+                                           ;@InitUart UartSendByte              Allocated to registers ;size:2
+                                           ;@InitUart UartDelay                 Allocated to registers ;size:2
+                                           ;@InitUart UartSendInt               Allocated to registers ;size:2
+                                           ;@InitUart STATUSbits                Allocated to registers ;size:1
+                                           ;@InitUart P0bits                    Allocated to registers ;size:1
+                                           ;@InitUart P1bits                    Allocated to registers ;size:1
+                                           ;@InitUart MCRbits                   Allocated to registers ;size:1
+                                           ;@InitUart KBIMbits                  Allocated to registers ;size:1
+                                           ;@InitUart PDCONbits                 Allocated to registers ;size:1
+                                           ;@InitUart ODCONbits                 Allocated to registers ;size:1
+                                           ;@InitUart PUCONbits                 Allocated to registers ;size:1
+                                           ;@InitUart INTECONbits               Allocated to registers ;size:1
+                                           ;@InitUart INTFLAGbits               Allocated to registers ;size:1
+                                           ;@InitUart T0CRbits                  Allocated to registers ;size:1
+                                           ;@InitUart DDR0bits                  Allocated to registers ;size:1
+                                           ;@InitUart DDR1bits                  Allocated to registers ;size:1
+                                           ;@InitUart TMCRbits                  Allocated to registers ;size:1
+                                           ;@InitUart T1CRbits                  Allocated to registers ;size:1
+                                           ;@InitUart WorkONInitStep            Allocated to registers ;size:1
+                                           ;@InitUart LEDFlashTimes             Allocated to registers ;size:1
+                                           ;@InitUart LEDFlashSpace             Allocated to registers ;size:1
+                                           ;@InitUart RXDebounce                Allocated to registers ;size:1
+                                           ;@InitUart RXCnt                     Allocated to registers ;size:1
+                                           ;@InitUart DetectSpace               Allocated to registers ;size:1
+                                           ;@InitUart DetectStep                Allocated to registers ;size:1
+                                           ;@InitUart SleepCnt                  Allocated to registers ;size:1
+                                           ;@InitUart MaxRunTimes               Allocated to registers ;size:2
+                                           ;@InitUart MaxMotorTimes             Allocated to registers ;size:2
+                                           ;@InitUart MotorFiveCnt              Allocated to registers ;size:1
+                                           ;@InitUart PositionDelay             Allocated to registers ;size:1
+                                           ;@InitUart Flag1                     Allocated to registers ;size:1
+                                           ;@InitUart Flag2                     Allocated to registers ;size:1
+                                           ;@InitUart UartStep                  Allocated to registers ;size:1
+                                           ;@InitUart UartTemp                  Allocated to registers ;size:1
+                                           ;@InitUart INDF                      Allocated to registers ;size:1
+                                           ;@InitUart T0CNT                     Allocated to registers ;size:1
+                                           ;@InitUart PCL                       Allocated to registers ;size:1
+                                           ;@InitUart STATUS                    Allocated to registers ;size:1
+                                           ;@InitUart FSR                       Allocated to registers ;size:1
+                                           ;@InitUart P0                        Allocated to registers ;size:1
+                                           ;@InitUart P1                        Allocated to registers ;size:1
+                                           ;@InitUart MCR                       Allocated to registers ;size:1
+                                           ;@InitUart KBIM                      Allocated to registers ;size:1
+                                           ;@InitUart PCLATH                    Allocated to registers ;size:1
+                                           ;@InitUart PDCON                     Allocated to registers ;size:1
+                                           ;@InitUart ODCON                     Allocated to registers ;size:1
+                                           ;@InitUart PUCON                     Allocated to registers ;size:1
+                                           ;@InitUart INTECON                   Allocated to registers ;size:1
+                                           ;@InitUart INTFLAG                   Allocated to registers ;size:1
+                                           ;@InitUart T0CR                      Allocated to registers ;size:1
+                                           ;@InitUart DDR0                      Allocated to registers ;size:1
+                                           ;@InitUart DDR1                      Allocated to registers ;size:1
+                                           ;@InitUart TMCR                      Allocated to registers ;size:1
+                                           ;@InitUart T1CR                      Allocated to registers ;size:1
+                                           ;@InitUart T1CNT                     Allocated to registers ;size:1
+                                           ;@InitUart T1LOAD                    Allocated to registers ;size:1
+                                           ;@InitUart T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'InitUart';
+                                           ;@Allocation info for local variables in function 'EndUart'
+                                           ;@end Allocation info for local variables in function 'EndUart';
+                                           ;@Allocation info for local variables in function 'UartDelay'
+                                           ;@UartDelay SetBaud                   Allocated to registers r0x1000 ;size:1
+                                           ;@end Allocation info for local variables in function 'UartDelay';
+                                           ;@Allocation info for local variables in function 'UartSendByte'
+                                           ;@UartSendByte Data                      Allocated to registers ;size:1
+                                           ;@UartSendByte i                         Allocated to registers r0x1002 ;size:1
+                                           ;@UartSendByte temp                      Allocated to registers r0x1001 ;size:1
+                                           ;@end Allocation info for local variables in function 'UartSendByte';
+                                           ;@Allocation info for local variables in function 'UartSendInt'
+                                           ;@UartSendInt String                    Allocated to registers ;size:3
+                                           ;@UartSendInt temp                      Allocated to registers r0x1006 ;size:1
+                                           ;@end Allocation info for local variables in function 'UartSendInt';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_Uart	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _UartSendInt	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __gptrget1
+                                           ;   _UartSendByte
+                                           ;   __gptrget1
+                                           ;   _UartSendByte
+                                           ;6 compiler assigned registers:
+                                           ;   r0x1003
+                                           ;   STK00
+                                           ;   r0x1004
+                                           ;   STK01
+                                           ;   r0x1005
+                                           ;   r0x1006
+                                           ;; Starting pCode block
+                                           _UartSendInt	;Function start
+                                           ; 2 exit points
+                                           ;	.line	58; "Uart.c"	void UartSendInt(const unsigned char *String)
+0001f2   159c     movra   0x1c             	MOVRA	r0x1003
+0001f3   1616     movar   0x16             	MOVAR	STK00
+0001f4   159b     movra   0x1b             	MOVRA	r0x1004
+0001f5   1615     movar   0x15             	MOVAR	STK01
+0001f6   159a     movra   0x1a             	MOVRA	r0x1005
+                                           _00132_DS_
+                                           ;	.line	61; "Uart.c"	while(*String != '\0')
+0001f7   161a     movar   0x1a             	MOVAR	r0x1005
+0001f8   1595     movra   0x15             	MOVRA	STK01
+0001f9   161b     movar   0x1b             	MOVAR	r0x1004
+0001fa   1596     movra   0x16             	MOVRA	STK00
+0001fb   161c     movar   0x1c             	MOVAR	r0x1003
+0001fc   2295     call    0x295            	CALL	__gptrget1
+0001fd   159d     movra   0x1d             	MOVRA	r0x1006
+0001fe   0b00     movai   0                	MOVAI	0x00
+0001ff   171d     orar    0x1d             	ORAR	r0x1006
+000200   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000201   2a0a     goto    0x20a            	GOTO	_00135_DS_
+                                           ;	.line	64; "Uart.c"	UartSendByte(temp);
+000202   161d     movar   0x1d             	MOVAR	r0x1006
+000203   220b     call    0x20b            	CALL	_UartSendByte
+                                           ;	.line	65; "Uart.c"	String++;
+000204   199a     incr    0x1a             	INCR	r0x1005
+000205   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000206   199b     incr    0x1b             	INCR	r0x1004
+000207   3503     jbclr   0x3, 0x2         	JBCLR	STATUS,2
+000208   199c     incr    0x1c             	INCR	r0x1003
+000209   29f7     goto    0x1f7            	GOTO	_00132_DS_
+                                           _00135_DS_
+00020a   000c     return                   	RETURN	
+                                           ; exit point of _UartSendInt
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _UartSendByte	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;2 compiler assigned registers:
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;; Starting pCode block
+                                           _UartSendByte	;Function start
+                                           ; 2 exit points
+                                           ;	.line	31; "Uart.c"	void UartSendByte(unsigned char Data)
+00020b   1598     movra   0x18             	MOVRA	r0x1001
+                                           ;	.line	35; "Uart.c"	UartTx = 0;
+00020c   3f86     bclr    0x6, 0x7         	BCLR	_P1bits,7
+                                           ;	.line	36; "Uart.c"	UartDelay(88);
+00020d   0b58     movai   0x58             	MOVAI	0x58
+00020e   2227     call    0x227            	CALL	_UartDelay
+                                           ;	.line	37; "Uart.c"	for(i=0;i<8;i++)
+00020f   1d99     clrr    0x19             	CLRR	r0x1002
+                                           ;;unsigned compare: left < lit(0x8=8), size=1
+                                           _00124_DS_
+000210   0b08     movai   0x8              	MOVAI	0x08
+000211   1219     rsubar  0x19             	RSUBAR	r0x1002
+000212   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+000213   2a1f     goto    0x21f            	GOTO	_00127_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	39; "Uart.c"	if(temp & 0x01)
+000214   3018     jbset   0x18, 0          	JBSET	r0x1001,0
+000215   2a18     goto    0x218            	GOTO	_00122_DS_
+                                           ;	.line	41; "Uart.c"	UartTx = 1;
+000216   3b86     bset    0x6, 0x7         	BSET	_P1bits,7
+000217   2a19     goto    0x219            	GOTO	_00123_DS_
+                                           _00122_DS_
+                                           ;	.line	45; "Uart.c"	UartTx = 0;
+000218   3f86     bclr    0x6, 0x7         	BCLR	_P1bits,7
+                                           ;;shiftRight_Left2ResultLit:5214: shCount=1, size=1, sign=0, same=1, offr=0
+                                           _00123_DS_
+                                           ;	.line	47; "Uart.c"	temp >>= 1;
+000219   3c03     bclr    0x3, 0           	BCLR	STATUS,0
+00021a   1398     rrr     0x18             	RRR	r0x1001
+                                           ;	.line	48; "Uart.c"	UartDelay(88);
+00021b   0b58     movai   0x58             	MOVAI	0x58
+00021c   2227     call    0x227            	CALL	_UartDelay
+                                           ;	.line	37; "Uart.c"	for(i=0;i<8;i++)
+00021d   1999     incr    0x19             	INCR	r0x1002
+00021e   2a10     goto    0x210            	GOTO	_00124_DS_
+                                           _00127_DS_
+                                           ;	.line	50; "Uart.c"	UartTx = 1;
+00021f   3b86     bset    0x6, 0x7         	BSET	_P1bits,7
+                                           ;	.line	51; "Uart.c"	UartDelay(88);
+000220   0b58     movai   0x58             	MOVAI	0x58
+000221   2227     call    0x227            	CALL	_UartDelay
+                                           ;	.line	52; "Uart.c"	UartDelay(88);
+000222   0b58     movai   0x58             	MOVAI	0x58
+000223   2227     call    0x227            	CALL	_UartDelay
+                                           ;	.line	53; "Uart.c"	UartDelay(88);
+000224   0b58     movai   0x58             	MOVAI	0x58
+000225   2227     call    0x227            	CALL	_UartDelay
+000226   000c     return                   	RETURN	
+                                           ; exit point of _UartSendByte
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _UartDelay	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;1 compiler assigned register :
+                                           ;   r0x1000
+                                           ;; Starting pCode block
+                                           _UartDelay	;Function start
+                                           ; 2 exit points
+                                           ;	.line	20; "Uart.c"	void UartDelay(unsigned char SetBaud)	// 
+000227   1597     movra   0x17             	MOVRA	r0x1000
+                                           ;	.line	23; "Uart.c"	T0CR = 0;
+000228   1dc1     clrr    0x41             	CLRR	_T0CR
+                                           _00113_DS_
+                                           ;	.line	24; "Uart.c"	while(T0CR < SetBaud)
+000229   1617     movar   0x17             	MOVAR	r0x1000
+00022a   1241     rsubar  0x41             	RSUBAR	_T0CR
+00022b   3403     jbclr   0x3, 0           	JBCLR	STATUS,0
+00022c   2a2f     goto    0x22f            	GOTO	_00116_DS_
+                                           ;;genSkipc:3193: created from rifx:00CC608C
+                                           ;	.line	26; "Uart.c"	ClrWdt();	
+00022d   000e     clrwdt                   	clrwdt
+00022e   2a29     goto    0x229            	GOTO	_00113_DS_
+                                           _00116_DS_
+00022f   000c     return                   	RETURN	
+                                           ; exit point of _UartDelay
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _EndUart	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;; Starting pCode block
+                                           _EndUart	;Function start
+                                           ; 2 exit points
+                                           ;	.line	16; "Uart.c"	T1DATA = 0x00;
+000230   1dcf     clrr    0x4f             	CLRR	_T1DATA
+                                           ;	.line	17; "Uart.c"	P12PD = 1;
+000231   3b0b     bset    0xb, 0x6         	BSET	_PDCONbits,6
+                                           ;	.line	18; "Uart.c"	GIE = 1;
+000232   3b8e     bset    0xe, 0x7         	BSET	_INTECONbits,7
+000233   000c     return                   	RETURN	
+                                           ; exit point of _EndUart
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _InitUart	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;   _UartDelay
+                                           ;; Starting pCode block
+                                           _InitUart	;Function start
+                                           ; 2 exit points
+                                           ;	.line	6; "Uart.c"	T0SE = 1;		//
+000234   3a41     bset    0x41, 0x4        	BSET	_T0CRbits,4
+                                           ;	.line	7; "Uart.c"	DDR12 = 0;		// 256 级
+000235   3d46     bclr    0x46, 0x2        	BCLR	_DDR1bits,2
+                                           ;	.line	8; "Uart.c"	T1DATA = BIN(1,1,1,0,0,0,0,0);	// 16/2 最小间隔 0.125us
+000236   0be0     movai   0xe0             	MOVAI	0xe0
+000237   15cf     movra   0x4f             	MOVRA	_T1DATA
+                                           ;	.line	9; "Uart.c"	UartTx = 1;
+000238   3b86     bset    0x6, 0x7         	BSET	_P1bits,7
+                                           ;	.line	10; "Uart.c"	UartDelay(108);
+000239   0b6c     movai   0x6c             	MOVAI	0x6c
+00023a   2227     call    0x227            	CALL	_UartDelay
+                                           ;	.line	11; "Uart.c"	UartDelay(108);
+00023b   0b6c     movai   0x6c             	MOVAI	0x6c
+00023c   2227     call    0x227            	CALL	_UartDelay
+                                           ;	.line	12; "Uart.c"	GIE = 0;
+00023d   3f8e     bclr    0xe, 0x7         	BCLR	_INTECONbits,7
+00023e   000c     return                   	RETURN	
+                                           ; exit point of _InitUart
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   76+    0 =    76 instructions (  152 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : ANSI-C Compiler
+                                           ; Version 0.0.4 (Sep 11 2017) (MINGW32)
+                                           ; This file was generated Fri Oct 13 17:26:50 2017
+                                           ;--------------------------------------------------------
+                                           ; MC3X port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"main.c"
+                                           	list	p=0311
+                                           	radix dec
+                                           	include "0311.inc"
+                                           		LIST
+                                           ;mc30p011.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_WorkOnInit
+                                           	extern	_Detection
+                                           	extern	_Actuation
+                                           	extern	_ConsecutiveFive
+                                           	extern	_init
+                                           	extern	_ClrrRAM
+                                           	extern	_KeyScan
+                                           	extern	_NeedSleep
+                                           	extern	_InitUart
+                                           	extern	_EndUart
+                                           	extern	_UartSendByte
+                                           	extern	_UartDelay
+                                           	extern	_UartSendInt
+                                           	extern	_STATUSbits
+                                           	extern	_P0bits
+                                           	extern	_P1bits
+                                           	extern	_MCRbits
+                                           	extern	_KBIMbits
+                                           	extern	_PDCONbits
+                                           	extern	_ODCONbits
+                                           	extern	_PUCONbits
+                                           	extern	_INTECONbits
+                                           	extern	_INTFLAGbits
+                                           	extern	_T0CRbits
+                                           	extern	_DDR0bits
+                                           	extern	_DDR1bits
+                                           	extern	_TMCRbits
+                                           	extern	_T1CRbits
+                                           	extern	_WorkONInitStep
+                                           	extern	_LEDFlashTimes
+                                           	extern	_LEDFlashSpace
+                                           	extern	_RXDebounce
+                                           	extern	_RXCnt
+                                           	extern	_DetectSpace
+                                           	extern	_DetectStep
+                                           	extern	_SleepCnt
+                                           	extern	_MaxRunTimes
+                                           	extern	_MaxMotorTimes
+                                           	extern	_MotorFiveCnt
+                                           	extern	_PositionDelay
+                                           	extern	_Flag1
+                                           	extern	_Flag2
+                                           	extern	_UartStep
+                                           	extern	_UartTemp
+                                           	extern	_INDF
+                                           	extern	_T0CNT
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_FSR
+                                           	extern	_P0
+                                           	extern	_P1
+                                           	extern	_MCR
+                                           	extern	_KBIM
+                                           	extern	_PCLATH
+                                           	extern	_PDCON
+                                           	extern	_ODCON
+                                           	extern	_PUCON
+                                           	extern	_INTECON
+                                           	extern	_INTFLAG
+                                           	extern	_T0CR
+                                           	extern	_DDR0
+                                           	extern	_DDR1
+                                           	extern	_TMCR
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_int_isr
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0010
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@main WorkOnInit                Allocated to registers ;size:2
+                                           ;@main Detection                 Allocated to registers ;size:2
+                                           ;@main Actuation                 Allocated to registers ;size:2
+                                           ;@main ConsecutiveFive           Allocated to registers ;size:2
+                                           ;@main init                      Allocated to registers ;size:2
+                                           ;@main ClrrRAM                   Allocated to registers ;size:2
+                                           ;@main KeyScan                   Allocated to registers ;size:2
+                                           ;@main NeedSleep                 Allocated to registers ;size:2
+                                           ;@main InitUart                  Allocated to registers ;size:2
+                                           ;@main EndUart                   Allocated to registers ;size:2
+                                           ;@main UartSendByte              Allocated to registers ;size:2
+                                           ;@main UartDelay                 Allocated to registers ;size:2
+                                           ;@main UartSendInt               Allocated to registers ;size:2
+                                           ;@main main                      Allocated to registers ;size:2
+                                           ;@main STATUSbits                Allocated to registers ;size:1
+                                           ;@main P0bits                    Allocated to registers ;size:1
+                                           ;@main P1bits                    Allocated to registers ;size:1
+                                           ;@main MCRbits                   Allocated to registers ;size:1
+                                           ;@main KBIMbits                  Allocated to registers ;size:1
+                                           ;@main PDCONbits                 Allocated to registers ;size:1
+                                           ;@main ODCONbits                 Allocated to registers ;size:1
+                                           ;@main PUCONbits                 Allocated to registers ;size:1
+                                           ;@main INTECONbits               Allocated to registers ;size:1
+                                           ;@main INTFLAGbits               Allocated to registers ;size:1
+                                           ;@main T0CRbits                  Allocated to registers ;size:1
+                                           ;@main DDR0bits                  Allocated to registers ;size:1
+                                           ;@main DDR1bits                  Allocated to registers ;size:1
+                                           ;@main TMCRbits                  Allocated to registers ;size:1
+                                           ;@main T1CRbits                  Allocated to registers ;size:1
+                                           ;@main WorkONInitStep            Allocated to registers ;size:1
+                                           ;@main LEDFlashTimes             Allocated to registers ;size:1
+                                           ;@main LEDFlashSpace             Allocated to registers ;size:1
+                                           ;@main RXDebounce                Allocated to registers ;size:1
+                                           ;@main RXCnt                     Allocated to registers ;size:1
+                                           ;@main DetectSpace               Allocated to registers ;size:1
+                                           ;@main DetectStep                Allocated to registers ;size:1
+                                           ;@main SleepCnt                  Allocated to registers ;size:1
+                                           ;@main MaxRunTimes               Allocated to registers ;size:2
+                                           ;@main MaxMotorTimes             Allocated to registers ;size:2
+                                           ;@main MotorFiveCnt              Allocated to registers ;size:1
+                                           ;@main PositionDelay             Allocated to registers ;size:1
+                                           ;@main Flag1                     Allocated to registers ;size:1
+                                           ;@main Flag2                     Allocated to registers ;size:1
+                                           ;@main UartStep                  Allocated to registers ;size:1
+                                           ;@main UartTemp                  Allocated to registers ;size:1
+                                           ;@main INDF                      Allocated to registers ;size:1
+                                           ;@main T0CNT                     Allocated to registers ;size:1
+                                           ;@main PCL                       Allocated to registers ;size:1
+                                           ;@main STATUS                    Allocated to registers ;size:1
+                                           ;@main FSR                       Allocated to registers ;size:1
+                                           ;@main P0                        Allocated to registers ;size:1
+                                           ;@main P1                        Allocated to registers ;size:1
+                                           ;@main MCR                       Allocated to registers ;size:1
+                                           ;@main KBIM                      Allocated to registers ;size:1
+                                           ;@main PCLATH                    Allocated to registers ;size:1
+                                           ;@main PDCON                     Allocated to registers ;size:1
+                                           ;@main ODCON                     Allocated to registers ;size:1
+                                           ;@main PUCON                     Allocated to registers ;size:1
+                                           ;@main INTECON                   Allocated to registers ;size:1
+                                           ;@main INTFLAG                   Allocated to registers ;size:1
+                                           ;@main T0CR                      Allocated to registers ;size:1
+                                           ;@main DDR0                      Allocated to registers ;size:1
+                                           ;@main DDR1                      Allocated to registers ;size:1
+                                           ;@main TMCR                      Allocated to registers ;size:1
+                                           ;@main T1CR                      Allocated to registers ;size:1
+                                           ;@main T1CNT                     Allocated to registers ;size:1
+                                           ;@main T1LOAD                    Allocated to registers ;size:1
+                                           ;@main T1DATA                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'main';
+                                           ;@Allocation info for local variables in function 'int_isr'
+                                           ;@end Allocation info for local variables in function 'int_isr';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   2aa5     goto    0x2a5            	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; interrupt and initialization code
+                                           ;--------------------------------------------------------
+                                           c_interrupt	code	0x8
+                                           __sdcc_interrupt
+                                           ;***
+                                           ;  pBlock Stats: dbName = I
+                                           ;***
+                                           ;entry:  _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;; Starting pCode block
+                                           _int_isr	;Function start
+                                           ; 0 exit points
+                                           ;	.line	37; "main.c"	if(T0SE)			// 定时1ms
+000008   3241     jbset   0x41, 0x4        	JBSET	_T0CRbits,4
+000009   2812     goto    0x12             	GOTO	END_OF_INTERRUPT
+                                           ;	.line	39; "main.c"	T0SE = 0;
+00000a   3e41     bclr    0x41, 0x4        	BCLR	_T0CRbits,4
+                                           ;	.line	40; "main.c"	T1CR = 0X05;
+00000b   0b05     movai   0x5              	MOVAI	0x05
+00000c   15cc     movra   0x4c             	MOVRA	_T1CR
+                                           ;	.line	41; "main.c"	fKeyT = 1;
+00000d   3831     bset    0x31, 0          	BSET	_Flag2,0
+                                           ;	.line	42; "main.c"	fWorkONInitT = 1;
+00000e   3830     bset    0x30, 0          	BSET	_Flag1,0
+                                           ;	.line	43; "main.c"	fDetectionT = 1;
+00000f   3930     bset    0x30, 0x2        	BSET	_Flag1,2
+                                           ;	.line	44; "main.c"	fMotorT = 1;
+000010   3a30     bset    0x30, 0x4        	BSET	_Flag1,4
+                                           ;	.line	45; "main.c"	fSleepT = 1;
+000011   3bb0     bset    0x30, 0x7        	BSET	_Flag1,7
+                                           END_OF_INTERRUPT
+000012   000d     retie                    	RETIE	
+                                           
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_main	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _init
+                                           ;   _KeyScan
+                                           ;   _WorkOnInit
+                                           ;   _Detection
+                                           ;   _Actuation
+                                           ;   _init
+                                           ;   _KeyScan
+                                           ;   _WorkOnInit
+                                           ;   _Detection
+                                           ;   _Actuation
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	6; "main.c"	init();
+0002a5   2253     call    0x253            	CALL	_init
+                                           ;	.line	7; "main.c"	P00 = 1;
+0002a6   3805     bset    0x5, 0           	BSET	_P0bits,0
+                                           ;	.line	8; "main.c"	P13 = 1;
+0002a7   3986     bset    0x6, 0x3         	BSET	_P1bits,3
+                                           _00106_DS_
+                                           ;	.line	24; "main.c"	ClrWdt();
+0002a8   000e     clrwdt                   	clrwdt
+                                           ;	.line	25; "main.c"	KeyScan();
+0002a9   226d     call    0x26d            	CALL	_KeyScan
+                                           ;	.line	26; "main.c"	WorkOnInit();
+0002aa   2164     call    0x164            	CALL	_WorkOnInit
+                                           ;	.line	27; "main.c"	Detection();
+0002ab   2055     call    0x55             	CALL	_Detection
+                                           ;	.line	28; "main.c"	Actuation();
+0002ac   2018     call    0x18             	CALL	_Actuation
+0002ad   2aa8     goto    0x2a8            	GOTO	_00106_DS_
+0002ae   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   20+    0 =    20 instructions (   40 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXX------------ XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0380 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+03C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0400 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0440 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0480 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+04C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0500 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0540 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   681
+

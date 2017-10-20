@@ -5,9 +5,11 @@ PATH=%SDCC_HOME%;%SDCC_HOME%\bin;%GPUTILS_HOME%\gpasm;%GPUTILS_HOME%\gplink
 
 
 set GPASM_ARG=-p p16f87 -I"%GPUTILS_HOME%\header"
-set GPLINK_ARG=-I"%GPUTILS_HOME%\lkr" -s 16f87.lkr
+set GPLINK_ARG=-s %SDCC_HOME%\share\lkr\mc32p21.lkr ^
+%SDCC_HOME%\share\lib\mc32p21.lib ^
+-w -m -c
 
-set SDCC_ARG=-V -S --verbose --use-non-free -mmc3x -p3221 ^
+set SDCC_ARG=-V --verbose --use-non-free -mmc3x -p3221 ^
 -I"%SDCC_HOME%\share\include" ^
 -Wa"-I%SDCC_HOME%\share\header" ^
 -Wl"-s%SDCC_HOME%\share\lkr\mc32p21.lkr" ^
@@ -16,7 +18,10 @@ set SDCC_ARG=-V -S --verbose --use-non-free -mmc3x -p3221 ^
 @echo on
 
 ::note
-sdcc %SDCC_ARG% %1
+sdcc %SDCC_ARG% -c %1.c
+gplink %GPLINK_ARG% -o %1 %1.o 
 
 
 
+::sdcc -V --verbose --use-non-free -mmc3x -p3221  -Wa -IE:\temp\WinScopeIDE_v1.02bt_20160606\tools\share\header -IE:\temp\WinScopeIDE_v1.02bt_20160606\tools\share\include -Wl -sE:\temp\WinScopeIDE_v1.02bt_20160606\tools\share\lkr\3221.lkr -c aaa.c
+::gplink -I E:\temp\WinScopeIDE_v1.02bt_20160606\tools\share\lib -s E:\temp\WinScopeIDE_v1.02bt_20160606\tools\share\lkr\3221.lkr -w -m -c -o Output\aaa E:\temp\aaa\aaa.o  3221.lib
