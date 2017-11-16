@@ -1,26 +1,21 @@
-#include <mc32p21.h>
+#include <mc35p7041.h>
 
-char c_a;
-const char c_b = 100;
+volatile __at (0x21) char ram1;
+volatile __at (0x20) char ram0;
 
 void main(void)
 {
-	c_a = MCR;
-	//c_b = KBIM;
 
-	IOP0 = c_a + c_b;
-	IOP1 = c_a - c_b;
 
-	__asm
-		movai 100
-		movra IOP1
-	__endasm;
+   	__asm
+   	   	movai 100
+   	   	movra 0x33
+   	__endasm;
 
-	__asm__("stop");
+   	__asm__("nop");
 
-	Nop();
-	ClrWdt();
-	Stop();
+   	Nop();
 
-	while(1);
+
+   	while(1);
 }
