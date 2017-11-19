@@ -1,11 +1,12 @@
-#include <mc35p7041.h>
+#include <mc32p21.h>
 
-char c_a = 5;
+//unsigned char c_a;
+char c_a;
 const char c_b = 100;
 
 void main(void)
 {
-	//c_a = MCR;
+	c_a = MCR;
 	//c_b = KBIM;
 
 	IOP0 = c_a + c_b;

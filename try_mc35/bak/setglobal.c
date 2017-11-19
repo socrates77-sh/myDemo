@@ -1,4 +1,4 @@
-#include <mc35p7041.h>
+#include <mc32p21.h>
 
 char c_a = 5;
 const char c_b = 100;

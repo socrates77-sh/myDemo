@@ -1,20 +1,24 @@
-#include <mc32p21.h>
+#include <mc35p7041.h>
 
 //unsigned char c_a;
-char c_a;
-const char c_b = 100;
+
+volatile __at (0x21) char ram1;
+volatile __at (0x20) char ram0;
 
 void main(void)
 {
-	c_a = MCR;
-	//c_b = KBIM;
+   	char c_a;
+   	const unsigned char c_b = 100;
 
-	IOP0 = c_a + c_b;
-	IOP1 = c_a - c_b;
+   	c_a = 55;
+   	//c_b = KBIM;
 
-	if (c_a > 0) IOP0 = c_b;
-	
-	if (c_a > -3) IOP0 = c_b;
+   	ram0 = c_a + c_b;  	// 9b
+   	ram1 = c_a - c_b;  	// d3
 
-	while(1);
+   	if (c_a > 0) ram0 = c_b;   	   	// true
+   	   	
+   	if (c_a > -3) ram0 = c_b+1;	   	// true
+
+   	while(1);
 }
