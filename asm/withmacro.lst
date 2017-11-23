@@ -1,10 +1,10 @@
-gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-21  09:40:10          PAGE  1
+gpasm-2.0.0_beta2 (Nov  6 2017)withmacro.asm      2017-11-21  09:02:54         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001         org 0h
+0000                  00001         org 0h
                       00002 Read macro device, buffer
                       00003         movar buffer
                       00004         movra device
@@ -15,12 +15,12 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009         Read 0x01, 0x03
 0001   1603               M         movar buffer
 0002   1581               M         movra device
-0003   2000               M         call delay
+0003   200D               M         call delay
 0004   0B01           00010         movai 01h
                       00011         Read 0x05, 0x07
 0005   1607               M         movar buffer
 0006   1585               M         movra device
-0007   2000               M         call delay
+0007   200D               M         call delay
 0008   0000           00012         nop
 0009   0B01           00013         movai 01h
 000A   15F8           00014         movra 78h
@@ -34,7 +34,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00022 
                       00023 
                       00024         end
-gpasm-2.0.0_beta (Jun 19 2017)withmacro.asm      2017-6-21  09:40:10          PAGE  2
+gpasm-2.0.0_beta2 (Nov  6 2017)withmacro.asm      2017-11-21  09:02:54         PAGE  2
 
 
 SYMBOL TABLE
@@ -42,6 +42,15 @@ SYMBOL TABLE
 
 __30P011                          00000001
 delay                             0000000D
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    16
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

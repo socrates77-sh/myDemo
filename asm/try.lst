@@ -1,4 +1,4 @@
-gpasm-1.9.3_beta (Apr  5 2017)try.asm            2017-5-4  18:23:00           PAGE  1
+gpasm-2.0.0_beta2 (Nov  6 2017)try.asm            2017-11-21  09:10:39         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -7,31 +7,37 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00001         
 0000                  00002         org 0h
                       00003         
-0000   0000           00004         nop
-                      00005         
-0001   0B01           00006         movai 01h
-0002   15F8           00007         movra 78h
-0003   0B80           00008         movai 80h
-0004   15FB           00009         movra 7bh
-                      00010 
-                      00011 
-                      00012         end
-gpasm-1.9.3_beta (Apr  5 2017)try.asm            2017-5-4  18:23:00           PAGE  2
+0000   0102 0304      00004         db 1, 2, 3, 4
+0002   0001 0002 0003 00005         dw 1, 2, 3, 4
+       0004           
+0006   3B01 3B02 3B03 00006         dt 1, 2, 3, 4
+       3B04           
+                      00007         
+000A   0000           00008         nop
+                      00009         
+000B   3C01           00010         movai 01h
+000C   5678           00011         movra 78h
+000D   3C80           00012         movai 80h
+000E   567B           00013         movra 7bh
+                      00014 
+                      00015 
+                      00016         end
+gpasm-2.0.0_beta2 (Nov  6 2017)try.asm            2017-11-21  09:10:39         PAGE  2
 
 
 SYMBOL TABLE
   LABEL                             VALUE
 
-__30P011                          00000001
+__32P21                           00000001
 
 
 MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
 
-0000 : XXXXXXXX-------- ---------------- ---------------- ----------------
+0000 : XXXXXXXXXXXXXXX- ---------------- ---------------- ----------------
 
 All other memory blocks unused.
 
-Program Memory Words Used:     8
+Program Memory Words Used:    15
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

@@ -1,5 +1,5 @@
 ; -------------------------------------------------------------------------
-;  _gptrget1.S - read one byte pointed to by a generic pointer
+;  _gptrget3.S - read three bytes pointed to by a generic pointer
 ;
 ;  Copyright (C) 2005, Raphael Neider <rneider AT web.de>
 ;
@@ -29,41 +29,64 @@
 ; calling conventions:
 ;   3 byte generic pointer is passed in via (WREG STK00 STK01).
 ;   The result is returned in (WREG (STK00 (STK01 (STK02)))).
-;
+
+; 	param:
+;		ACC: data/code flag
+;		(STK00:STK01) 16bit address
+;	return:
+;		(ACC[:STK00[:STK01[:STK02]]]): data (MSB left)
+
 ;   unsigned char _gptrget  (void *gptr);
 ;   unsigned char _gptrget1 (void *gptr);
 ;   unsigned int  _gptrget2 (void *gptr);
 ;   void *        _gptrget3 (void *gptr);
 ;   unsigned long _gptrget4 (void *gptr);
-;
+
+
+; 	param:
+;		ACC: data/code flag
+;		(STK00:STK01) 16bit address
+;		(STK02[:STK03[:STK04[:STK05]]]): data (MSB left)
+
 ;   void _gptrput  (void *ptr, unsigned char val);
 ;   void _gptrput1 (void *ptr, unsigned char val);
 ;   void _gptrput2 (void *ptr, unsigned int  val);
 ;   void _gptrput3 (void *ptr, unsigned int  val);
 ;   void _gptrput4 (void *ptr, unsigned long val);
 
+
 include macros.inc
 include mc30f_common.inc
 
-	global	__gptrget
-	global	__gptrget1
-	global	__codeptrget1
+	global	__gptrget3
 	
 	CODE
 
-__gptrget:
-__gptrget1:
-	select_routine __dataptrget1, __codeptrget1
+__gptrget3:
+	select_routine __dataptrget3, __codeptrget3
 
 
-__dataptrget1:
+__dataptrget3:
 	setup_fsr
-	movar _INDF		; data in ACC
+	movar _INDF
+	movra STK01		; LSB in STK01
+	inc_fsr
+	movar _INDF
+	movra STK00		; 2nd byte in STK00
+	inc_fsr
+	movar _INDF		; MSB in ACC
 	return
+	
 
-__codeptrget1:
+__codeptrget3:
 	setup_fsr
-	movc			; data in ACC
+	movc
+	movra STK01		; LSB in STK01
+	inc_fsr
+	movc
+	movra STK00		; 2nd byte in STK00
+	inc_fsr
+	movc			; MSB in ACC
 	return
 
 	END

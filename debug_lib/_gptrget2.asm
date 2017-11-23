@@ -29,24 +29,36 @@
 ; calling conventions:
 ;   3 byte generic pointer is passed in via (WREG STK00 STK01).
 ;   The result is returned in (WREG (STK00 (STK01 (STK02)))).
-;
+
+; 	param:
+;		ACC: data/code flag
+;		(STK00:STK01) 16bit address
+;	return:
+;		(ACC[:STK00[:STK01[:STK02]]]): data (MSB left)
+
 ;   unsigned char _gptrget  (void *gptr);
 ;   unsigned char _gptrget1 (void *gptr);
 ;   unsigned int  _gptrget2 (void *gptr);
 ;   void *        _gptrget3 (void *gptr);
 ;   unsigned long _gptrget4 (void *gptr);
-;
+
+
+; 	param:
+;		ACC: data/code flag
+;		(STK00:STK01) 16bit address
+;		(STK02[:STK03[:STK04[:STK05]]]): data (MSB left)
+
 ;   void _gptrput  (void *ptr, unsigned char val);
 ;   void _gptrput1 (void *ptr, unsigned char val);
 ;   void _gptrput2 (void *ptr, unsigned int  val);
 ;   void _gptrput3 (void *ptr, unsigned int  val);
 ;   void _gptrput4 (void *ptr, unsigned long val);
 
+
 include macros.inc
 include mc30f_common.inc
 
 	global	__gptrget2
-	extern	__codeptrget1
 	
 	CODE
 
@@ -56,31 +68,18 @@ __gptrget2:
 __dataptrget2:
 	setup_fsr
 	movar _INDF
-	movra STK00
+	movra STK00		; LSB in STK00
 	inc_fsr
-	movar _INDF
+	movar _INDF		; MSB in ACC
 	return
 
 
 __codeptrget2:
-;	pagesel	__codeptrget1	; might reside in different page
-;	call	__codeptrget1
-;	movwf	STK02		; temporarily store LSB
-;	incfsz	STK01,F	; increment low address byte
-;	decf	STK00,F	; undo increment of high address byte if low byte did not overflow
-;	incf	STK00,F	; increment high address byte
-;	pagesel	__codeptrget1	; might reside in different page
-;	call	__codeptrget1
-;	movwf	STK03		; temporarily store MSB
-;	movf	STK02, W
-;	movwf	STK00		; LSB in STK00
-;	movf	STK03, W	; MSB in WREG
 	setup_fsr
 	movc
-	movra STK00
+	movra STK00		; LSB in STK00
 	inc_fsr
-	movc
+	movc			; MSB in ACC
 	return
-
 	
 	END

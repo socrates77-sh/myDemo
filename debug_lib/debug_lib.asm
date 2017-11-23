@@ -7,8 +7,7 @@ STK01  	res 1
 STK02  	res 1
 STK03  	res 1
 STK04  	res 1
-STK05  	res 1
-STK06  	res 1  
+STK05  	res 1 
    	   	
    	global 	STK00
    	global 	STK01
@@ -16,11 +15,15 @@ STK06  	res 1
    	global 	STK03
    	global 	STK04
    	global 	STK05
-   	global 	STK06
    	   	
    	extern __gptrget
    	extern __gptrput
    	extern __gptrget2
+   	extern __gptrput2
+   	extern __gptrget3
+   	extern __gptrput3
+   	extern __gptrget4
+   	extern __gptrput4
 
 
 ID_aaa_0   	code 0x2ff
@@ -51,8 +54,18 @@ start:
    	call t_gptrget_d   	; (ram0) <= 0x11
    	call t_getrget_c   	; (ram0) <= 0x55
    	call t_gptrput 	   	; (ram0) <= 0x12
+   	
    	call t_gptrget2_d  	; (ram1:ram0) <= 0x2211
    	call t_gptrget2_c  	; (ram1:ram0) <= 0x6655
+   	call t_gptrput2		; (ram1:ram0) <= 0x2312
+   	
+   	call t_gptrget3_d  	; (ram2:ram1:ram0) <= 0x332211
+   	call t_gptrget3_c  	; (ram2:ram1:ram0) <= 0x776655
+   	call t_gptrput3		; (ram2:ram1:ram0) <= 0x342312
+   	
+   	call t_gptrget4_d  	; (ram3:ram2:ram1:ram0) <= 0x44332211
+   	call t_gptrget4_c  	; (ram3:ram2:ram1:ram0) <= 0x88776655
+   	call t_gptrput4		; (ram3:ram2:ram1:ram0) <= 0x45342312
    	
    	goto $
    	
@@ -120,6 +133,111 @@ t_gptrget2_c:
    	movra ram1
    	movar STK00
    	movra ram0
+   	return
+   	
+t_gptrput2:
+   	movai 0x12
+   	movra STK03
+   	movai 0x23
+   	movra STK02
+   	movai (ram0)
+   	movra STK01
+   	movai high(ram0)
+   	movra STK00
+   	movai 0x00
+   	call __gptrput2
+   	return
+   	
+t_gptrget3_d:
+   	movai (td0)
+   	movra STK01
+   	movai high(td0)
+   	movra STK00
+   	movai 0x00
+   	call __gptrget3
+   	movra ram2
+   	movar STK00
+   	movra ram1
+   	movar STK01
+   	movra ram0
+   	return
+
+t_gptrget3_c:
+   	movai (_rom)
+   	movra STK01
+   	movai high(_rom)
+   	movra STK00
+   	movai 0x80
+   	call __gptrget3
+   	movra ram2
+   	movar STK00
+   	movra ram1
+   	movar STK01
+   	movra ram0
+   	return
+   	
+t_gptrput3:
+   	movai 0x12
+   	movra STK04
+   	movai 0x23
+   	movra STK03
+   	movai 0x34
+   	movra STK02
+   	movai (ram0)
+   	movra STK01
+   	movai high(ram0)
+   	movra STK00
+   	movai 0x00
+   	call __gptrput3
+   	return
+   	
+t_gptrget4_d:
+   	movai (td0)
+   	movra STK01
+   	movai high(td0)
+   	movra STK00
+   	movai 0x00
+   	call __gptrget4
+   	movra ram3
+   	movar STK00
+   	movra ram2
+   	movar STK01
+   	movra ram1
+   	movar STK02
+   	movra ram0
+   	return
+
+t_gptrget4_c:
+   	movai (_rom)
+   	movra STK01
+   	movai high(_rom)
+   	movra STK00
+   	movai 0x80
+   	call __gptrget4
+   	movra ram3
+   	movar STK00
+   	movra ram2
+   	movar STK01
+   	movra ram1
+   	movar STK02
+   	movra ram0
+   	return
+   	
+t_gptrput4:
+   	movai 0x12
+   	movra STK05
+   	movai 0x23
+   	movra STK04
+   	movai 0x34
+   	movra STK03
+   	movai 0x45
+   	movra STK02
+   	movai (ram0)
+   	movra STK01
+   	movai high(ram0)
+   	movra STK00
+   	movai 0x00
+   	call __gptrput4
    	return
 
    	end

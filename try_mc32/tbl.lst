@@ -1,0 +1,1105 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Listing File Generated: 2017-11-21  09:14:37
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                                           ; Version 1.0.0 (Sep 28 2017) (MINGW32)
+                                           ; This file was generated Tue Nov 21 09:14:37 2017
+                                           ;--------------------------------------------------------
+                                           ; MC30/MC32 port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"tbl.c"
+                                           	list	p=3221
+                                           	radix dec
+                                           	include "3221.inc"
+                                           
+                                           ;==========================================================================
+                                           ;
+                                           ;       Revision History
+                                           ;
+                                           ;==========================================================================
+                                           
+                                           ;Rev:   Date:    Reason:
+                                           
+                                           ;1.00   12/06/21 Initial Release
+                                           
+                                           ;==========================================================================
+                                           ;
+                                           ;       Register Definitions
+                                           ;
+                                           ;==========================================================================
+                                           
+                                           ;W                            EQU     H'0000'
+                                           ;F                            EQU     H'0001'
+                                           
+                                           ;----- Register Files------------------------------------------------------
+                                           INDF0		   EQU	   0x180
+                                           INDF1			 EQU	   0x181
+                                           INDF2			 EQU	   0x182
+                                           HIBYTE		 EQU	   0x183	
+                                           FSR0			 EQU	   0x184
+                                           FSR1			 EQU	   0x185
+                                           PCL			   EQU	   0x186
+                                           PFLAG			 EQU	   0x187
+                                           ;----0x188
+                                           MCR			   EQU	   0x188
+                                           INDF3			 EQU	   0x189
+                                           INTE			 EQU	   0x18a
+                                           INTF			 EQU	   0x18b		
+                                           ;----0x190
+                                           IOP0			 EQU     0x190
+                                           OEP0       EQU     0x191
+                                           PUP0       EQU     0x192    
+                                           ANSEL      EQU     0x193
+                                           IOP1       EQU     0x194               
+                                           OEP1       EQU     0x195             
+                                           PUP1       EQU     0x196
+                                           KBCR       EQU     0x197              
+                                           ;-----0x1a0
+                                           T0CR			 EQU     0x1a0
+                                           T0CNT      EQU     0x1a1             
+                                           T0LOAD     EQU     0x1a2             
+                                           T0DATA     EQU     0x1a3             
+                                           T1CR       EQU     0x1a4             
+                                           T1CNT      EQU     0x1a5             
+                                           T1LOAD     EQU     0x1a6             
+                                           T1DATA     EQU     0x1a7             
+                                           ;-----0x1a8
+                                           OSCM       EQU     0x1ae
+                                           LVDCR      EQU     0x1af                           
+                                           ;-----0x1b0
+                                           ADCR0			 EQU     0x1b0
+                                           ADCR1      EQU     0x1b1             
+                                           ADRH       EQU     0x1b4                               
+                                           ADRL       EQU     0x1b5          
+                                           ;----0x1f8                 
+                                           OSCCAL		 EQU	   0x1fb
+                                           
+                                           #define		STATUS		PFLAG
+                                           #define		INDF		  INDF0
+                                           #define		FSR		    FSR0
+                                           #define		P0HCON		PUP0
+                                           #define		P1HCON		PUP1
+                                           #define		INTECON		INTE
+                                           #define		INTFLAG	  INTF
+                                           
+                                           ;INDF0 
+                                           #define         INDF07          INDF0,7
+                                           #define         INDF06          INDF0,6
+                                           #define         INDF05          INDF0,5
+                                           #define         INDF04          INDF0,4
+                                           #define         INDF03          INDF0,3
+                                           #define         INDF02          INDF0,2
+                                           #define         INDF01          INDF0,1
+                                           #define         INDF00          INDF0,0 
+                                           
+                                           ;INDF1 
+                                           #define         INDF17          INDF1,7
+                                           #define         INDF16          INDF1,6
+                                           #define         INDF15          INDF1,5
+                                           #define         INDF14          INDF1,4
+                                           #define         INDF13          INDF1,3
+                                           #define         INDF12          INDF1,2
+                                           #define         INDF11          INDF1,1
+                                           #define         INDF10          INDF1,0
+                                           
+                                           ;INDF2 
+                                           #define         INDF27          INDF2,7
+                                           #define         INDF26          INDF2,6
+                                           #define         INDF25          INDF2,5
+                                           #define         INDF24          INDF2,4
+                                           #define         INDF23          INDF2,3
+                                           #define         INDF22          INDF2,2
+                                           #define         INDF21          INDF2,1
+                                           #define         INDF20          INDF2,0 
+                                           
+                                           ;HIBYTE
+                                           #define         HIBYTE7         HIBYTE,7
+                                           #define         HIBYTE6         HIBYTE,6
+                                           #define         HIBYTE5         HIBYTE,5
+                                           #define         HIBYTE4         HIBYTE,4
+                                           #define         HIBYTE3         HIBYTE,3
+                                           #define         HIBYTE2         HIBYTE,2
+                                           #define         HIBYTE1         HIBYTE,1
+                                           #define         HIBYTE0         HIBYTE,0
+                                           
+                                           ;FSR0 
+                                           #define         FSR07           FSR0,7
+                                           #define         FSR06           FSR0,6
+                                           #define         FSR05           FSR0,5
+                                           #define         FSR04           FSR0,4
+                                           #define         FSR03           FSR0,3
+                                           #define         FSR02           FSR0,2
+                                           #define         FSR01           FSR0,1
+                                           #define         FSR00           FSR0,0 
+                                           
+                                           ;FSR1
+                                           #define         FSR17           FSR1,7
+                                           #define         FSR16           FSR1,6
+                                           #define         FSR15           FSR1,5
+                                           #define         FSR14           FSR1,4
+                                           #define         FSR13           FSR1,3
+                                           #define         FSR12           FSR1,2
+                                           #define         FSR11           FSR1,1
+                                           #define         FSR10           FSR1,0
+                                           
+                                           ;PCL 
+                                           #define         PC7             PCL,7
+                                           #define         PC6             PCL,6
+                                           #define         PC5             PCL,5
+                                           #define         PC4             PCL,4
+                                           #define         PC3             PCL,3
+                                           #define         PC2             PCL,2
+                                           #define         PC1             PCL,1
+                                           #define         PC0             PCL,0	
+                                           
+                                           ;----- STATUS Bits --------------------------
+                                           #define	Z	  STATUS,2
+                                           #define	DC	STATUS,1
+                                           #define	C	  STATUS,0
+                                           
+                                           ;----- MCR Bits --------------------------
+                                           #define	GIE	    MCR,7
+                                           #define	TO	    MCR,5
+                                           #define	PD	    MCR,4
+                                           #define	MINT11	MCR,3
+                                           #define	MINT10	MCR,2
+                                           #define	MINT01	MCR,1
+                                           #define	MINT00	MCR,0
+                                           
+                                           ;INDF3 
+                                           #define         INDF37          INDF3,7
+                                           #define         INDF36          INDF3,6
+                                           #define         INDF35          INDF3,5
+                                           #define         INDF34          INDF3,4
+                                           #define         INDF33          INDF3,3
+                                           #define         INDF32          INDF3,2
+                                           #define         INDF31          INDF3,1
+                                           #define         INDF30          INDF3,0 
+                                           
+                                           ;----- INTE Bits --------------------------
+                                           #define	ADIE	  INTE,6
+                                           #define	KBIE	  INTE,4
+                                           #define	INT1IE	INTE,3
+                                           #define	INT0IE	INTE,2
+                                           #define	T1IE	  INTE,1
+                                           #define	T0IE	  INTE,0
+                                           
+                                           ;----- INTF Bits --------------------------
+                                           #define	ADIF	  INTF,6
+                                           #define	KBIF	  INTF,4
+                                           #define	INT1IF	INTF,3
+                                           #define	INT0IF	INTF,2
+                                           #define	T1IF	  INTF,1
+                                           #define	T0IF	  INTF,0
+                                           
+                                           ;IOP0
+                                           #define         P04D  	        IOP0,4
+                                           #define         P03D  	        IOP0,3
+                                           #define         P02D  	        IOP0,2
+                                           #define         P01D  	        IOP0,1
+                                           #define         P00D	          IOP0,0
+                                           
+                                           ;OEP0
+                                           #define         P04OE           OEP0,4
+                                           #define         P03OE           OEP0,3
+                                           #define         P02OE           OEP0,2
+                                           #define         P01OE           OEP0,1
+                                           #define         P00OE           OEP0,0
+                                           
+                                           ;PUP0
+                                           #define         P04PU           PUP0,4
+                                           #define         P03PU           PUP0,3
+                                           #define         P02PU           PUP0,2
+                                           #define         P01PU           PUP0,1
+                                           #define         P00PU           PUP0,0
+                                           
+                                           ;ANSEL
+                                           #define         P13ANS          ANSEL,6
+                                           #define         P12ANS          ANSEL,5
+                                           #define         P04ANS          ANSEL,4
+                                           #define         P03ANS          ANSEL,3
+                                           #define         P02ANS          ANSEL,2
+                                           #define         P01ANS          ANSEL,1
+                                           #define         P00ANS          ANSEL,0
+                                           
+                                           ;IOP1
+                                           #define         P16D  	        IOP1,6
+                                           #define         P15D  	        IOP1,5
+                                           #define         P14D	          IOP1,4
+                                           #define         P13D  	        IOP1,3
+                                           #define         P12D  	        IOP1,2
+                                           #define         P11D  	        IOP1,1
+                                           #define         P10D	          IOP1,0
+                                           
+                                           ;OEP1
+                                           #define         P16OE           OEP1,6
+                                           #define         P15OE           OEP1,5
+                                           #define         P14OE           OEP1,4
+                                           #define         P13OE           OEP1,3
+                                           #define         P12OE           OEP1,2
+                                           #define         P11OE           OEP1,1
+                                           #define         P10OE           OEP1,0
+                                           
+                                           ;PUP1
+                                           #define         P16PU           PUP1,6
+                                           #define         P15PU           PUP1,5
+                                           #define         P14PU           PUP1,4
+                                           #define         P13PU           PUP1,3
+                                           #define         P12PU           PUP1,2
+                                           #define         P11PU           PUP1,1
+                                           #define         P10PU           PUP1,0
+                                           
+                                           ;KBCR
+                                           #define         KBCR6           KBCR,6
+                                           #define         KBCR5           KBCR,5
+                                           #define         KBCR4           KBCR,4
+                                           #define         KBCR3           KBCR,3
+                                           #define         KBCR2           KBCR,2
+                                           #define         KBCR1           KBCR,1
+                                           #define         KBCR0           KBCR,0
+                                           
+                                           ;----- T0CR  Bits ----------------
+                                           #define	TC0EN	  T0CR,7
+                                           #define	PWM0OE	T0CR,6
+                                           #define	BUZ0OE	T0CR,5
+                                           #define	T0PTS1	T0CR,4
+                                           #define	T0PTS0	T0CR,3
+                                           #define	T0PR2	  T0CR,2
+                                           #define	T0PR1	  T0CR,1
+                                           #define	T0PR0	  T0CR,0
+                                           
+                                           ;T0CNT
+                                           #define         T0C7            T0CNT,7
+                                           #define         T0C6            T0CNT,6
+                                           #define         T0C5            T0CNT,5
+                                           #define         T0C4            T0CNT,4
+                                           #define         T0C3            T0CNT,3
+                                           #define         T0C2            T0CNT,2
+                                           #define         T0C1            T0CNT,1
+                                           #define         T0C0            T0CNT,0
+                                           
+                                           ;T0LOAD
+                                           #define         T0LOAD7         T0LOAD,7
+                                           #define         T0LOAD6         T0LOAD,6
+                                           #define         T0LOAD5         T0LOAD,5
+                                           #define         T0LOAD4         T0LOAD,4
+                                           #define         T0LOAD3         T0LOAD,3
+                                           #define         T0LOAD2         T0LOAD,2
+                                           #define         T0LOAD1         T0LOAD,1
+                                           #define         T0LOAD0         T0LOAD,0
+                                           
+                                           ;T0DATA
+                                           #define         T0DATA7         T0DATA,7
+                                           #define         T0DATA6         T0DATA,6
+                                           #define         T0DATA5         T0DATA,5
+                                           #define         T0DATA4         T0DATA,4
+                                           #define         T0DATA3         T0DATA,3
+                                           #define         T0DATA2         T0DATA,2
+                                           #define         T0DATA1         T0DATA,1
+                                           #define         T0DATA0         T0DATA,0
+                                           
+                                           ;----- T1CR  Bits ----------------
+                                           #define	TC1EN	  T1CR,7
+                                           #define	PWM1OE	T1CR,6
+                                           #define	BUZ1OE	T1CR,5
+                                           #define	T1PTS1  T1CR,4
+                                           #define	T1PTS0	T1CR,3
+                                           #define	T1PR2 	T1CR,2
+                                           #define	T1PR1 	T1CR,1
+                                           #define	T1PR0 	T1CR,0
+                                           
+                                           ;T1CNT
+                                           #define         T1C7            T1CNT,7
+                                           #define         T1C6            T1CNT,6
+                                           #define         T1C5            T1CNT,5
+                                           #define         T1C4            T1CNT,4
+                                           #define         T1C3            T1CNT,3
+                                           #define         T1C2            T1CNT,2
+                                           #define         T1C1            T1CNT,1
+                                           #define         T1C0            T1CNT,0
+                                           
+                                           ;T1LOAD
+                                           #define         T1LOAD7         T1LOAD,7
+                                           #define         T1LOAD6         T1LOAD,6
+                                           #define         T1LOAD5         T1LOAD,5
+                                           #define         T1LOAD4         T1LOAD,4
+                                           #define         T1LOAD3         T1LOAD,3
+                                           #define         T1LOAD2         T1LOAD,2
+                                           #define         T1LOAD1         T1LOAD,1
+                                           #define         T1LOAD0         T1LOAD,0
+                                           
+                                           ;T1DATA
+                                           #define         T1DATA7         T1DATA,7
+                                           #define         T1DATA6         T1DATA,6
+                                           #define         T1DATA5         T1DATA,5
+                                           #define         T1DATA4         T1DATA,4
+                                           #define         T1DATA3         T1DATA,3
+                                           #define         T1DATA2         T1DATA,2
+                                           #define         T1DATA1         T1DATA,1
+                                           #define         T1DATA0         T1DATA,0
+                                           
+                                           ;----- OSCM  Bits ----------------
+                                           #define	STBL	OSCM,5
+                                           #define	STBH	OSCM,4
+                                           #define	CLKS	OSCM,2
+                                           #define	LFEN	OSCM,1
+                                           #define	HFEN	OSCM,0
+                                           
+                                           ;-----  LVDCR Bits -------
+                                           #define LVDEN	PLVDCR,7
+                                           #define	LVDS2	PLVDCR,6
+                                           #define	LVDS1	PLVDCR,5
+                                           #define	LVDS0	PLVDCR,4
+                                           #define	LVDF	PLVDCR,0
+                                           
+                                           ;---- ADCR0 Bits -----------------
+                                           #define ADCHS3	ADCR0,7
+                                           #define	ADCHS2	ADCR0,6
+                                           #define ADCHS1	ADCR0,5
+                                           #define	ADCHS0	ADCR0,4
+                                           #define ADCKS1	ADCR0,3
+                                           #define	ADCKS0	ADCR0,2
+                                           #define ADEOC	  ADCR0,1
+                                           #define	ADON	  ADCR0,0
+                                           
+                                           ;---- ADCR1 Bits -----------------
+                                           #define	VRS2    ADCR1,2
+                                           #define VRS1	  ADCR1,1
+                                           #define	VRS0	  ADCR1,0
+                                           
+                                           ;ADRH
+                                           #define         ADR11           ADRH,7
+                                           #define         ADR10           ADRH,6
+                                           #define         ADR9            ADRH,5
+                                           #define         ADR8            ADRH,4
+                                           #define         ADR7            ADRH,3
+                                           #define         ADR6            ADRH,2
+                                           #define         ADR5            ADRH,1
+                                           #define         ADR4            ADRH,0
+                                           
+                                           ;ADRL
+                                           #define         ADR3            ADRL,3
+                                           #define         ADR2            ADRL,2
+                                           #define         ADR1            ADRL,1
+                                           #define         ADR0            ADRL,0
+                                           
+                                           ;OSCCAL
+                                           #define         OSCCAL7         OSCCAL,7
+                                           #define         OSCCAL6         OSCCAL,6
+                                           #define         OSCCAL5         OSCCAL,5
+                                           #define         OSCCAL4         OSCCAL,4
+                                           #define         OSCCAL3         OSCCAL,3
+                                           #define         OSCCAL2         OSCCAL,2
+                                           #define         OSCCAL1         OSCCAL,1
+                                           #define         OSCCAL0         OSCCAL,0
+                                           
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_STATUSbits
+                                           	extern	_MCRbits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBIMbits
+                                           	extern	_T0CRbits
+                                           	extern	_T1CRbits
+                                           	extern	_LVDCRbits
+                                           	extern	_OSCMbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_INDF
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_STATUS
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBIM
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_LVDCR
+                                           	extern	_OSCM
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCAL
+                                           	extern	__gptrget1
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_ram1
+                                           	global	_ram0
+                                           	global	_rom
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           UD_abs_tbl_20	udata_ovr	0x0020
+                                           _ram0
+                                           	res	1
+                                           UD_abs_tbl_21	udata_ovr	0x0021
+                                           _ram1
+                                           	res	1
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_tbl_0	udata
+                                           r0x1000	res	1
+                                           r0x1001	res	1
+                                           r0x1002	res	1
+                                           r0x1003	res	1
+                                           r0x1004	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ID_tbl_0	code
+                                           _rom
+00003c   3b00     retai   0                	retai 0x00
+00003d   3b01     retai   0x1              	retai 0x01
+00003e   3b02     retai   0x2              	retai 0x02
+00003f   3b03     retai   0x3              	retai 0x03
+000040   3b04     retai   0x4              	retai 0x04
+000041   3b05     retai   0x5              	retai 0x05
+000042   3b06     retai   0x6              	retai 0x06
+000043   3b07     retai   0x7              	retai 0x07
+000044   3b08     retai   0x8              	retai 0x08
+000045   3b09     retai   0x9              	retai 0x09
+                                           
+                                           
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@main main                      Allocated to registers ;size:2
+                                           ;@main STATUSbits                Allocated to registers ;size:1
+                                           ;@main MCRbits                   Allocated to registers ;size:1
+                                           ;@main INTEbits                  Allocated to registers ;size:1
+                                           ;@main INTFbits                  Allocated to registers ;size:1
+                                           ;@main IOP0bits                  Allocated to registers ;size:1
+                                           ;@main OEP0bits                  Allocated to registers ;size:1
+                                           ;@main PUP0bits                  Allocated to registers ;size:1
+                                           ;@main ANSELbits                 Allocated to registers ;size:1
+                                           ;@main IOP1bits                  Allocated to registers ;size:1
+                                           ;@main OEP1bits                  Allocated to registers ;size:1
+                                           ;@main PUP1bits                  Allocated to registers ;size:1
+                                           ;@main KBIMbits                  Allocated to registers ;size:1
+                                           ;@main T0CRbits                  Allocated to registers ;size:1
+                                           ;@main T1CRbits                  Allocated to registers ;size:1
+                                           ;@main LVDCRbits                 Allocated to registers ;size:1
+                                           ;@main OSCMbits                  Allocated to registers ;size:1
+                                           ;@main ADCR0bits                 Allocated to registers ;size:1
+                                           ;@main ADCR1bits                 Allocated to registers ;size:1
+                                           ;@main ram1                      Allocated to registers ;size:1
+                                           ;@main ram0                      Allocated to registers ;size:1
+                                           ;@main i                         Allocated to registers r0x1000 r0x1001 ;size:2
+                                           ;@main INDF                      Allocated to registers ;size:1
+                                           ;@main INDF0                     Allocated to registers ;size:1
+                                           ;@main INDF1                     Allocated to registers ;size:1
+                                           ;@main INDF2                     Allocated to registers ;size:1
+                                           ;@main HIBYTE                    Allocated to registers ;size:1
+                                           ;@main FSR                       Allocated to registers ;size:1
+                                           ;@main FSR0                      Allocated to registers ;size:1
+                                           ;@main FSR1                      Allocated to registers ;size:1
+                                           ;@main PCL                       Allocated to registers ;size:1
+                                           ;@main STATUS                    Allocated to registers ;size:1
+                                           ;@main MCR                       Allocated to registers ;size:1
+                                           ;@main INDF3                     Allocated to registers ;size:1
+                                           ;@main INTE                      Allocated to registers ;size:1
+                                           ;@main INTF                      Allocated to registers ;size:1
+                                           ;@main IOP0                      Allocated to registers ;size:1
+                                           ;@main OEP0                      Allocated to registers ;size:1
+                                           ;@main PUP0                      Allocated to registers ;size:1
+                                           ;@main ANSEL                     Allocated to registers ;size:1
+                                           ;@main IOP1                      Allocated to registers ;size:1
+                                           ;@main OEP1                      Allocated to registers ;size:1
+                                           ;@main PUP1                      Allocated to registers ;size:1
+                                           ;@main KBIM                      Allocated to registers ;size:1
+                                           ;@main T0CR                      Allocated to registers ;size:1
+                                           ;@main T0CNT                     Allocated to registers ;size:1
+                                           ;@main T0LOAD                    Allocated to registers ;size:1
+                                           ;@main T0DATA                    Allocated to registers ;size:1
+                                           ;@main T1CR                      Allocated to registers ;size:1
+                                           ;@main T1CNT                     Allocated to registers ;size:1
+                                           ;@main T1LOAD                    Allocated to registers ;size:1
+                                           ;@main T1DATA                    Allocated to registers ;size:1
+                                           ;@main LVDCR                     Allocated to registers ;size:1
+                                           ;@main OSCM                      Allocated to registers ;size:1
+                                           ;@main ADCR0                     Allocated to registers ;size:1
+                                           ;@main ADCR1                     Allocated to registers ;size:1
+                                           ;@main ADRH                      Allocated to registers ;size:1
+                                           ;@main ADRL                      Allocated to registers ;size:1
+                                           ;@main OSCAL                     Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   a001     goto    0x1              	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_tbl	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __gptrget1
+                                           ;   __gptrget1
+                                           ;7 compiler assigned registers:
+                                           ;   r0x1000
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;   r0x1003
+                                           ;   STK01
+                                           ;   STK00
+                                           ;   r0x1004
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	13; "tbl.c"	ram0 = 0xfe;
+000001   3cfe     movai   0xfe             	MOVAI	0xfe
+000002   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	14; "tbl.c"	ram1 = 0;
+000003   7621     clrr    0x21             	CLRR	_ram1
+                                           ;	.line	15; "tbl.c"	for(i=0; i<10; i++)
+000004   7607     clrr    0x7              	CLRR	r0x1000
+000005   7608     clrr    0x8              	CLRR	r0x1001
+                                           ;;signed compare: left < lit(0xA=10), size=2, mask=ffff
+                                           _00108_DS_
+000006   5808     movar   0x8              	MOVAR	r0x1001
+000007   3f80     addai   0x80             	ADDAI	0x80
+000008   3f80     addai   0x80             	ADDAI	0x80
+000009   e587     jbset   0x187, 0x2       	JBSET	STATUS,2
+00000a   a00d     goto    0xd              	GOTO	_00121_DS_
+00000b   3c0a     movai   0xa              	MOVAI	0x0a
+00000c   4807     rsubar  0x7              	RSUBAR	r0x1000
+                                           _00121_DS_
+00000d   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+00000e   a027     goto    0x27             	GOTO	_00106_DS_
+                                           ;;genSkipc:3194: created from rifx:00D5608C
+                                           ;	.line	17; "tbl.c"	ram0 = rom[i];
+00000f   5807     movar   0x7              	MOVAR	r0x1000
+000010   3f3c     addai   0x3c             	ADDAI	(_rom + 0)
+000011   5609     movra   0x9              	MOVRA	r0x1002
+000012   3c00     movai   0                	MOVAI	high (_rom + 0)
+000013   560a     movra   0xa              	MOVRA	r0x1003
+000014   5808     movar   0x8              	MOVAR	r0x1001
+000015   f187     jbclr   0x187, 0         	JBCLR	STATUS,0
+000016   6008     jzar    0x8              	JZAR	r0x1001
+000017   7e0a     addra   0xa              	ADDRA	r0x1003
+000018   5809     movar   0x9              	MOVAR	r0x1002
+000019   5605     movra   0x5              	MOVRA	STK01
+00001a   580a     movar   0xa              	MOVAR	r0x1003
+00001b   5606     movra   0x6              	MOVRA	STK00
+00001c   3c80     movai   0x80             	MOVAI	0x80
+00001d   8029     call    0x29             	CALL	__gptrget1
+00001e   560b     movra   0xb              	MOVRA	r0x1004
+00001f   580b     movar   0xb              	MOVAR	r0x1004
+000020   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	18; "tbl.c"	ram1 += rom[i];	   	// ram1 = 0x2d
+000021   580b     movar   0xb              	MOVAR	r0x1004
+000022   7e21     addra   0x21             	ADDRA	_ram1
+                                           ;	.line	15; "tbl.c"	for(i=0; i<10; i++)
+000023   6607     incr    0x7              	INCR	r0x1000
+000024   f587     jbclr   0x187, 0x2       	JBCLR	STATUS,2
+000025   6608     incr    0x8              	INCR	r0x1001
+000026   a006     goto    0x6              	GOTO	_00108_DS_
+                                           _00106_DS_
+                                           ;	.line	22; "tbl.c"	while(1);
+000027   a027     goto    0x27             	GOTO	_00106_DS_
+000028   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   40+    0 =    40 instructions (   80 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------------------------
+                                           ;  p16f_common.inc - definitions common to all 14 bit PIC devices
+                                           ;
+                                           ;  Copyright (C) 2005, Vangelis Rokas <vrokas AT otenet.gr>
+                                           ;
+                                           ;  This library is free software; you can redistribute it and/or modify it
+                                           ;  under the terms of the GNU General Public License as published by the
+                                           ;  Free Software Foundation; either version 2, or (at your option) any
+                                           ;  later version.
+                                           ;
+                                           ;  This library is distributed in the hope that it will be useful,
+                                           ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                           ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                                           ;  GNU General Public License for more details.
+                                           ;
+                                           ;  You should have received a copy of the GNU General Public License 
+                                           ;  along with this library; see the file COPYING. If not, write to the
+                                           ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                                           ;   MA 02110-1301, USA.
+                                           ;
+                                           ;  As a special exception, if you link this library with other files,
+                                           ;  some of which are compiled with SDCC, to produce an executable,
+                                           ;  this library does not by itself cause the resulting executable to
+                                           ;  be covered by the GNU General Public License. This exception does
+                                           ;  not however invalidate any other reasons why the executable file
+                                           ;  might be covered by the GNU General Public License.
+                                           ;--------------------------------------------------------------------------
+                                           
+                                           		extern	STK00
+                                           		extern	STK01
+                                           		extern	STK02
+                                           		extern	STK03
+                                           		extern	STK04
+                                           		extern	STK05
+                                           
+                                           
+                                           ;==========================================================================
+                                           ;
+                                           ;       Revision History
+                                           ;
+                                           ;==========================================================================
+                                           
+                                           ;Rev:   Date:    Reason:
+                                           
+                                           ;1.00   12/06/21 Initial Release
+                                           
+                                           ;==========================================================================
+                                           ;
+                                           ;       Register Definitions
+                                           ;
+                                           ;==========================================================================
+                                           
+                                           ;W                            EQU     H'0000'
+                                           ;F                            EQU     H'0001'
+                                           
+                                           ;----- Register Files------------------------------------------------------
+                                           INDF0		   EQU	   0x180
+                                           INDF1			 EQU	   0x181
+                                           INDF2			 EQU	   0x182
+                                           HIBYTE		 EQU	   0x183	
+                                           FSR0			 EQU	   0x184
+                                           FSR1			 EQU	   0x185
+                                           PCL			   EQU	   0x186
+                                           PFLAG			 EQU	   0x187
+                                           ;----0x188
+                                           MCR			   EQU	   0x188
+                                           INDF3			 EQU	   0x189
+                                           INTE			 EQU	   0x18a
+                                           INTF			 EQU	   0x18b		
+                                           ;----0x190
+                                           IOP0			 EQU     0x190
+                                           OEP0       EQU     0x191
+                                           PUP0       EQU     0x192    
+                                           ANSEL      EQU     0x193
+                                           IOP1       EQU     0x194               
+                                           OEP1       EQU     0x195             
+                                           PUP1       EQU     0x196
+                                           KBCR       EQU     0x197              
+                                           ;-----0x1a0
+                                           T0CR			 EQU     0x1a0
+                                           T0CNT      EQU     0x1a1             
+                                           T0LOAD     EQU     0x1a2             
+                                           T0DATA     EQU     0x1a3             
+                                           T1CR       EQU     0x1a4             
+                                           T1CNT      EQU     0x1a5             
+                                           T1LOAD     EQU     0x1a6             
+                                           T1DATA     EQU     0x1a7             
+                                           ;-----0x1a8
+                                           OSCM       EQU     0x1ae
+                                           LVDCR      EQU     0x1af                           
+                                           ;-----0x1b0
+                                           ADCR0			 EQU     0x1b0
+                                           ADCR1      EQU     0x1b1             
+                                           ADRH       EQU     0x1b4                               
+                                           ADRL       EQU     0x1b5          
+                                           ;----0x1f8                 
+                                           OSCCAL		 EQU	   0x1fb
+                                           
+                                           #define		STATUS		PFLAG
+                                           #define		INDF		  INDF0
+                                           #define		FSR		    FSR0
+                                           #define		P0HCON		PUP0
+                                           #define		P1HCON		PUP1
+                                           #define		INTECON		INTE
+                                           #define		INTFLAG	  INTF
+                                           
+                                           ;INDF0 
+                                           #define         INDF07          INDF0,7
+                                           #define         INDF06          INDF0,6
+                                           #define         INDF05          INDF0,5
+                                           #define         INDF04          INDF0,4
+                                           #define         INDF03          INDF0,3
+                                           #define         INDF02          INDF0,2
+                                           #define         INDF01          INDF0,1
+                                           #define         INDF00          INDF0,0 
+                                           
+                                           ;INDF1 
+                                           #define         INDF17          INDF1,7
+                                           #define         INDF16          INDF1,6
+                                           #define         INDF15          INDF1,5
+                                           #define         INDF14          INDF1,4
+                                           #define         INDF13          INDF1,3
+                                           #define         INDF12          INDF1,2
+                                           #define         INDF11          INDF1,1
+                                           #define         INDF10          INDF1,0
+                                           
+                                           ;INDF2 
+                                           #define         INDF27          INDF2,7
+                                           #define         INDF26          INDF2,6
+                                           #define         INDF25          INDF2,5
+                                           #define         INDF24          INDF2,4
+                                           #define         INDF23          INDF2,3
+                                           #define         INDF22          INDF2,2
+                                           #define         INDF21          INDF2,1
+                                           #define         INDF20          INDF2,0 
+                                           
+                                           ;HIBYTE
+                                           #define         HIBYTE7         HIBYTE,7
+                                           #define         HIBYTE6         HIBYTE,6
+                                           #define         HIBYTE5         HIBYTE,5
+                                           #define         HIBYTE4         HIBYTE,4
+                                           #define         HIBYTE3         HIBYTE,3
+                                           #define         HIBYTE2         HIBYTE,2
+                                           #define         HIBYTE1         HIBYTE,1
+                                           #define         HIBYTE0         HIBYTE,0
+                                           
+                                           ;FSR0 
+                                           #define         FSR07           FSR0,7
+                                           #define         FSR06           FSR0,6
+                                           #define         FSR05           FSR0,5
+                                           #define         FSR04           FSR0,4
+                                           #define         FSR03           FSR0,3
+                                           #define         FSR02           FSR0,2
+                                           #define         FSR01           FSR0,1
+                                           #define         FSR00           FSR0,0 
+                                           
+                                           ;FSR1
+                                           #define         FSR17           FSR1,7
+                                           #define         FSR16           FSR1,6
+                                           #define         FSR15           FSR1,5
+                                           #define         FSR14           FSR1,4
+                                           #define         FSR13           FSR1,3
+                                           #define         FSR12           FSR1,2
+                                           #define         FSR11           FSR1,1
+                                           #define         FSR10           FSR1,0
+                                           
+                                           ;PCL 
+                                           #define         PC7             PCL,7
+                                           #define         PC6             PCL,6
+                                           #define         PC5             PCL,5
+                                           #define         PC4             PCL,4
+                                           #define         PC3             PCL,3
+                                           #define         PC2             PCL,2
+                                           #define         PC1             PCL,1
+                                           #define         PC0             PCL,0	
+                                           
+                                           ;----- STATUS Bits --------------------------
+                                           #define	Z	  STATUS,2
+                                           #define	DC	STATUS,1
+                                           #define	C	  STATUS,0
+                                           
+                                           ;----- MCR Bits --------------------------
+                                           #define	GIE	    MCR,7
+                                           #define	TO	    MCR,5
+                                           #define	PD	    MCR,4
+                                           #define	MINT11	MCR,3
+                                           #define	MINT10	MCR,2
+                                           #define	MINT01	MCR,1
+                                           #define	MINT00	MCR,0
+                                           
+                                           ;INDF3 
+                                           #define         INDF37          INDF3,7
+                                           #define         INDF36          INDF3,6
+                                           #define         INDF35          INDF3,5
+                                           #define         INDF34          INDF3,4
+                                           #define         INDF33          INDF3,3
+                                           #define         INDF32          INDF3,2
+                                           #define         INDF31          INDF3,1
+                                           #define         INDF30          INDF3,0 
+                                           
+                                           ;----- INTE Bits --------------------------
+                                           #define	ADIE	  INTE,6
+                                           #define	KBIE	  INTE,4
+                                           #define	INT1IE	INTE,3
+                                           #define	INT0IE	INTE,2
+                                           #define	T1IE	  INTE,1
+                                           #define	T0IE	  INTE,0
+                                           
+                                           ;----- INTF Bits --------------------------
+                                           #define	ADIF	  INTF,6
+                                           #define	KBIF	  INTF,4
+                                           #define	INT1IF	INTF,3
+                                           #define	INT0IF	INTF,2
+                                           #define	T1IF	  INTF,1
+                                           #define	T0IF	  INTF,0
+                                           
+                                           ;IOP0
+                                           #define         P04D  	        IOP0,4
+                                           #define         P03D  	        IOP0,3
+                                           #define         P02D  	        IOP0,2
+                                           #define         P01D  	        IOP0,1
+                                           #define         P00D	          IOP0,0
+                                           
+                                           ;OEP0
+                                           #define         P04OE           OEP0,4
+                                           #define         P03OE           OEP0,3
+                                           #define         P02OE           OEP0,2
+                                           #define         P01OE           OEP0,1
+                                           #define         P00OE           OEP0,0
+                                           
+                                           ;PUP0
+                                           #define         P04PU           PUP0,4
+                                           #define         P03PU           PUP0,3
+                                           #define         P02PU           PUP0,2
+                                           #define         P01PU           PUP0,1
+                                           #define         P00PU           PUP0,0
+                                           
+                                           ;ANSEL
+                                           #define         P13ANS          ANSEL,6
+                                           #define         P12ANS          ANSEL,5
+                                           #define         P04ANS          ANSEL,4
+                                           #define         P03ANS          ANSEL,3
+                                           #define         P02ANS          ANSEL,2
+                                           #define         P01ANS          ANSEL,1
+                                           #define         P00ANS          ANSEL,0
+                                           
+                                           ;IOP1
+                                           #define         P16D  	        IOP1,6
+                                           #define         P15D  	        IOP1,5
+                                           #define         P14D	          IOP1,4
+                                           #define         P13D  	        IOP1,3
+                                           #define         P12D  	        IOP1,2
+                                           #define         P11D  	        IOP1,1
+                                           #define         P10D	          IOP1,0
+                                           
+                                           ;OEP1
+                                           #define         P16OE           OEP1,6
+                                           #define         P15OE           OEP1,5
+                                           #define         P14OE           OEP1,4
+                                           #define         P13OE           OEP1,3
+                                           #define         P12OE           OEP1,2
+                                           #define         P11OE           OEP1,1
+                                           #define         P10OE           OEP1,0
+                                           
+                                           ;PUP1
+                                           #define         P16PU           PUP1,6
+                                           #define         P15PU           PUP1,5
+                                           #define         P14PU           PUP1,4
+                                           #define         P13PU           PUP1,3
+                                           #define         P12PU           PUP1,2
+                                           #define         P11PU           PUP1,1
+                                           #define         P10PU           PUP1,0
+                                           
+                                           ;KBCR
+                                           #define         KBCR6           KBCR,6
+                                           #define         KBCR5           KBCR,5
+                                           #define         KBCR4           KBCR,4
+                                           #define         KBCR3           KBCR,3
+                                           #define         KBCR2           KBCR,2
+                                           #define         KBCR1           KBCR,1
+                                           #define         KBCR0           KBCR,0
+                                           
+                                           ;----- T0CR  Bits ----------------
+                                           #define	TC0EN	  T0CR,7
+                                           #define	PWM0OE	T0CR,6
+                                           #define	BUZ0OE	T0CR,5
+                                           #define	T0PTS1	T0CR,4
+                                           #define	T0PTS0	T0CR,3
+                                           #define	T0PR2	  T0CR,2
+                                           #define	T0PR1	  T0CR,1
+                                           #define	T0PR0	  T0CR,0
+                                           
+                                           ;T0CNT
+                                           #define         T0C7            T0CNT,7
+                                           #define         T0C6            T0CNT,6
+                                           #define         T0C5            T0CNT,5
+                                           #define         T0C4            T0CNT,4
+                                           #define         T0C3            T0CNT,3
+                                           #define         T0C2            T0CNT,2
+                                           #define         T0C1            T0CNT,1
+                                           #define         T0C0            T0CNT,0
+                                           
+                                           ;T0LOAD
+                                           #define         T0LOAD7         T0LOAD,7
+                                           #define         T0LOAD6         T0LOAD,6
+                                           #define         T0LOAD5         T0LOAD,5
+                                           #define         T0LOAD4         T0LOAD,4
+                                           #define         T0LOAD3         T0LOAD,3
+                                           #define         T0LOAD2         T0LOAD,2
+                                           #define         T0LOAD1         T0LOAD,1
+                                           #define         T0LOAD0         T0LOAD,0
+                                           
+                                           ;T0DATA
+                                           #define         T0DATA7         T0DATA,7
+                                           #define         T0DATA6         T0DATA,6
+                                           #define         T0DATA5         T0DATA,5
+                                           #define         T0DATA4         T0DATA,4
+                                           #define         T0DATA3         T0DATA,3
+                                           #define         T0DATA2         T0DATA,2
+                                           #define         T0DATA1         T0DATA,1
+                                           #define         T0DATA0         T0DATA,0
+                                           
+                                           ;----- T1CR  Bits ----------------
+                                           #define	TC1EN	  T1CR,7
+                                           #define	PWM1OE	T1CR,6
+                                           #define	BUZ1OE	T1CR,5
+                                           #define	T1PTS1  T1CR,4
+                                           #define	T1PTS0	T1CR,3
+                                           #define	T1PR2 	T1CR,2
+                                           #define	T1PR1 	T1CR,1
+                                           #define	T1PR0 	T1CR,0
+                                           
+                                           ;T1CNT
+                                           #define         T1C7            T1CNT,7
+                                           #define         T1C6            T1CNT,6
+                                           #define         T1C5            T1CNT,5
+                                           #define         T1C4            T1CNT,4
+                                           #define         T1C3            T1CNT,3
+                                           #define         T1C2            T1CNT,2
+                                           #define         T1C1            T1CNT,1
+                                           #define         T1C0            T1CNT,0
+                                           
+                                           ;T1LOAD
+                                           #define         T1LOAD7         T1LOAD,7
+                                           #define         T1LOAD6         T1LOAD,6
+                                           #define         T1LOAD5         T1LOAD,5
+                                           #define         T1LOAD4         T1LOAD,4
+                                           #define         T1LOAD3         T1LOAD,3
+                                           #define         T1LOAD2         T1LOAD,2
+                                           #define         T1LOAD1         T1LOAD,1
+                                           #define         T1LOAD0         T1LOAD,0
+                                           
+                                           ;T1DATA
+                                           #define         T1DATA7         T1DATA,7
+                                           #define         T1DATA6         T1DATA,6
+                                           #define         T1DATA5         T1DATA,5
+                                           #define         T1DATA4         T1DATA,4
+                                           #define         T1DATA3         T1DATA,3
+                                           #define         T1DATA2         T1DATA,2
+                                           #define         T1DATA1         T1DATA,1
+                                           #define         T1DATA0         T1DATA,0
+                                           
+                                           ;----- OSCM  Bits ----------------
+                                           #define	STBL	OSCM,5
+                                           #define	STBH	OSCM,4
+                                           #define	CLKS	OSCM,2
+                                           #define	LFEN	OSCM,1
+                                           #define	HFEN	OSCM,0
+                                           
+                                           ;-----  LVDCR Bits -------
+                                           #define LVDEN	PLVDCR,7
+                                           #define	LVDS2	PLVDCR,6
+                                           #define	LVDS1	PLVDCR,5
+                                           #define	LVDS0	PLVDCR,4
+                                           #define	LVDF	PLVDCR,0
+                                           
+                                           ;---- ADCR0 Bits -----------------
+                                           #define ADCHS3	ADCR0,7
+                                           #define	ADCHS2	ADCR0,6
+                                           #define ADCHS1	ADCR0,5
+                                           #define	ADCHS0	ADCR0,4
+                                           #define ADCKS1	ADCR0,3
+                                           #define	ADCKS0	ADCR0,2
+                                           #define ADEOC	  ADCR0,1
+                                           #define	ADON	  ADCR0,0
+                                           
+                                           ;---- ADCR1 Bits -----------------
+                                           #define	VRS2    ADCR1,2
+                                           #define VRS1	  ADCR1,1
+                                           #define	VRS0	  ADCR1,0
+                                           
+                                           ;ADRH
+                                           #define         ADR11           ADRH,7
+                                           #define         ADR10           ADRH,6
+                                           #define         ADR9            ADRH,5
+                                           #define         ADR8            ADRH,4
+                                           #define         ADR7            ADRH,3
+                                           #define         ADR6            ADRH,2
+                                           #define         ADR5            ADRH,1
+                                           #define         ADR4            ADRH,0
+                                           
+                                           ;ADRL
+                                           #define         ADR3            ADRL,3
+                                           #define         ADR2            ADRL,2
+                                           #define         ADR1            ADRL,1
+                                           #define         ADR0            ADRL,0
+                                           
+                                           ;OSCCAL
+                                           #define         OSCCAL7         OSCCAL,7
+                                           #define         OSCCAL6         OSCCAL,6
+                                           #define         OSCCAL5         OSCCAL,5
+                                           #define         OSCCAL4         OSCCAL,4
+                                           #define         OSCCAL3         OSCCAL,3
+                                           #define         OSCCAL2         OSCCAL,2
+                                           #define         OSCCAL1         OSCCAL,1
+                                           #define         OSCCAL0         OSCCAL,0
+                                           
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXX---- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    70
+

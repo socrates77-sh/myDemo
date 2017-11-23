@@ -1,4 +1,4 @@
-gpasm-2.0.0_beta2 (Aug 27 2017)switch.asm         2017-9-25  14:29:50          PAGE  1
+gpasm-2.0.0_beta2 (Nov  6 2017)switch.asm         2017-11-21  09:02:19         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -449,7 +449,7 @@ Warning[215]: Processor superseded by command line.
                       00439 ;          25+    0 =    25 instructions (   50 byte)
                       00440 
                       00441         end
-gpasm-2.0.0_beta2 (Aug 27 2017)switch.asm         2017-9-25  14:29:50          PAGE  2
+gpasm-2.0.0_beta2 (Nov  6 2017)switch.asm         2017-11-21  09:02:19         PAGE  2
 
 
 SYMBOL TABLE
