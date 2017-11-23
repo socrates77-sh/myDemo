@@ -1,4 +1,4 @@
-gpasm-2.1.1 (Sep 26 2017)    debug_lib.asm      2017-11-22  20:00:24         PAGE  1
+gpasm-2.1.1 (Sep 26 2017)    debug_lib.asm      2017-11-23  11:59:19         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -13,123 +13,241 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0001                  00007 STK02   res 1
 0001                  00008 STK03   res 1
 0002                  00009 STK04   res 1
-0002                  00010 STK05   res 1
-0003                  00011 STK06   res 1  
-                      00012                 
-                      00013         global  STK00
-                      00014         global  STK01
-                      00015         global  STK02
-                      00016         global  STK03
-                      00017         global  STK04
-                      00018         global  STK05
-                      00019         global  STK06
-                      00020                 
-                      00021         extern __gptrget
-                      00022         extern __gptrput
-                      00023         extern __gptrget2
-                      00024 
-                      00025 
-                      00026 ID_aaa_0        code 0x2ff
-02FF                  00027 _rom
-02FF   0055           00028         dw 0x55
-0300   0066           00029         dw 0x66
-0301   0077           00030         dw 0x77
-0302   0088           00031         dw 0x88
-                      00032 
-                      00033 UD_abs_aaa_20   udata_ovr       0x0020
-0010                  00034 ram0 res 1
-0010                  00035 ram1 res 1
-0011                  00036 ram2 res 1
-0011                  00037 ram3 res 1
-                      00038 
-                      00039 data_try udata_ovr 0x30
-0018                  00040 td0 res 1
-0018                  00041 td1 res 1
-0019                  00042 td2 res 1
-0019                  00043 td3 res 1
-                      00044 
-                      00045 STARTUP code 0x0000
-0000   8000           00046         goto start
+0002                  00010 STK05   res 1 
+                      00011                 
+                      00012         global  STK00
+                      00013         global  STK01
+                      00014         global  STK02
+                      00015         global  STK03
+                      00016         global  STK04
+                      00017         global  STK05
+                      00018                 
+                      00019         extern __gptrget
+                      00020         extern __gptrput
+                      00021         extern __gptrget2
+                      00022         extern __gptrput2
+                      00023         extern __gptrget3
+                      00024         extern __gptrput3
+                      00025         extern __gptrget4
+                      00026         extern __gptrput4
+                      00027 
+                      00028 
+                      00029 ID_aaa_0        code 0x2ff
+02FF                  00030 _rom
+02FF   0055           00031         dw 0x55
+0300   0066           00032         dw 0x66
+0301   0077           00033         dw 0x77
+0302   0088           00034         dw 0x88
+                      00035 
+                      00036 UD_abs_aaa_20   udata_ovr       0x0020
+0010                  00037 ram0 res 1
+0010                  00038 ram1 res 1
+0011                  00039 ram2 res 1
+0011                  00040 ram3 res 1
+                      00041 
+                      00042 data_try udata_ovr 0x30
+0018                  00043 td0 res 1
+0018                  00044 td1 res 1
+0019                  00045 td2 res 1
+0019                  00046 td3 res 1
                       00047 
-0001                  00048 start:
-0001   C000           00049         call td_init
-                      00050         
-0002   C000           00051         call t_gptrget_d        ; (ram0) <= 0x11
-0003   C000           00052         call t_getrget_c        ; (ram0) <= 0x55
-0004   C000           00053         call t_gptrput          ; (ram0) <= 0x12
-0005   C000           00054         call t_gptrget2_d       ; (ram1:ram0) <= 0x2211
-0006   C000           00055         call t_gptrget2_c       ; (ram1:ram0) <= 0x6655
-                      00056         
-0007   8000           00057         goto $
-                      00058         
-0008                  00059 td_init:
-0008   2D11           00060         movai 0x11
-0009   1F00           00061         movra td0
-000A   2D22           00062         movai 0x22
-000B   1F00           00063         movra td1
-000C   2D33           00064         movai 0x33
-000D   1F00           00065         movra td2
-000E   2D44           00066         movai 0x44
-000F   1F00           00067         movra td3
-0010   0E00           00068         return
-                      00069 
-0011                  00070 t_gptrget_d:
-0011   2D00           00071         movai (td0)
-0012   1F00           00072         movra STK01
-0013   2D00           00073         movai high(td0)
-0014   1F00           00074         movra STK00
-0015   2D00           00075         movai 0x00
-0016   C000           00076         call __gptrget
-0017   1F00           00077         movra ram0
-0018   0E00           00078         return
-                      00079 
-0019                  00080 t_getrget_c:
-0019   2D00           00081         movai (_rom)
-001A   1F00           00082         movra STK01
-001B   2D00           00083         movai high(_rom)
-001C   1F00           00084         movra STK00
-001D   2D80           00085         movai 0x80
-001E   C000           00086         call __gptrget
-001F   1F00           00087         movra ram0
-0020   0E00           00088         return
-                      00089         
-0021                  00090 t_gptrput:
-0021   2D12           00091         movai 0x12
-0022   1F00           00092         movra STK02
-0023   2D00           00093         movai (ram0)
-0024   1F00           00094         movra STK01
-0025   2D00           00095         movai high(ram0)
-0026   1F00           00096         movra STK00
-0027   2D00           00097         movai 0x00
-0028   C000           00098         call __gptrput
-0029   0E00           00099         return
-                      00100 
-002A                  00101 t_gptrget2_d:
-002A   2D00           00102         movai (td0)
-002B   1F00           00103         movra STK01
-002C   2D00           00104         movai high(td0)
-002D   1F00           00105         movra STK00
-002E   2D00           00106         movai 0x00
-002F   C000           00107         call __gptrget2
-0030   1F00           00108         movra ram1
-0031   1E00           00109         movar STK00
-0032   1F00           00110         movra ram0
-0033   0E00           00111         return
-                      00112 
-0034                  00113 t_gptrget2_c:
-0034   2D00           00114         movai (_rom)
-0035   1F00           00115         movra STK01
-0036   2D00           00116         movai high(_rom)
-0037   1F00           00117         movra STK00
-0038   2D80           00118         movai 0x80
-0039   C000           00119         call __gptrget2
-003A   1F00           00120         movra ram1
-003B   1E00           00121         movar STK00
-003C   1F00           00122         movra ram0
-003D   0E00           00123         return
-                      00124 
-                      00125         en
-gpasm-2.1.1 (Sep 26 2017)    debug_lib.asm      2017-11-22  20:00:24         PAGE  2
+                      00048 STARTUP code 0x0000
+0000   8000           00049         goto start
+                      00050 
+0001                  00051 start:
+0001   C000           00052         call td_init
+                      00053         
+0002   C000           00054         call t_gptrget_d        ; (ram0) <= 0x11
+0003   C000           00055         call t_getrget_c        ; (ram0) <= 0x55
+0004   C000           00056         call t_gptrput          ; (ram0) <= 0x12
+                      00057         
+0005   C000           00058         call t_gptrget2_d       ; (ram1:ram0) <= 0x2211
+0006   C000           00059         call t_gptrget2_c       ; (ram1:ram0) <= 0x6655
+0007   C000           00060         call t_gptrput2         ; (ram1:ram0) <= 0x2312
+                      00061         
+0008   C000           00062         call t_gptrget3_d       ; (ram2:ram1:ram0) <= 0x332211
+0009   C000           00063         call t_gptrget3_c       ; (ram2:ram1:ram0) <= 0x776655
+000A   C000           00064         call t_gptrput3         ; (ram2:ram1:ram0) <= 0x342312
+                      00065         
+000B   C000           00066         call t_gptrget4_d       ; (ram3:ram2:ram1:ram0) <= 0x44332211
+000C   C000           00067         call t_gptrget4_c       ; (ram3:ram2:ram1:ram0) <= 0x88776655
+000D   C000           00068         call t_gptrput4         ; (ram3:ram2:ram1:ram0) <= 0x45342312
+                      00069         
+000E   8000           00070         goto $
+                      00071         
+000F                  00072 td_init:
+000F   2D11           00073         movai 0x11
+0010   1F00           00074         movra td0
+0011   2D22           00075         movai 0x22
+0012   1F00           00076         movra td1
+0013   2D33           00077         movai 0x33
+0014   1F00           00078         movra td2
+0015   2D44           00079         movai 0x44
+0016   1F00           00080         movra td3
+0017   0E00           00081         return
+                      00082 
+0018                  00083 t_gptrget_d:
+0018   2D00           00084         movai (td0)
+0019   1F00           00085         movra STK01
+001A   2D00           00086         movai high(td0)
+001B   1F00           00087         movra STK00
+001C   2D00           00088         movai 0x00
+001D   C000           00089         call __gptrget
+001E   1F00           00090         movra ram0
+001F   0E00           00091         return
+                      00092 
+0020                  00093 t_getrget_c:
+0020   2D00           00094         movai (_rom)
+0021   1F00           00095         movra STK01
+0022   2D00           00096         movai high(_rom)
+0023   1F00           00097         movra STK00
+0024   2D80           00098         movai 0x80
+0025   C000           00099         call __gptrget
+0026   1F00           00100         movra ram0
+0027   0E00           00101         return
+                      00102         
+0028                  00103 t_gptrput:
+0028   2D12           00104         movai 0x12
+0029   1F00           00105         movra STK02
+002A   2D00           00106         movai (ram0)
+002B   1F00           00107         movra STK01
+002C   2D00           00108         movai high(ram0)
+002D   1F00           00109         movra STK00
+002E   2D00           00110         movai 0x00
+002F   C000           00111         call __gptrput
+0030   0E00           00112         return
+                      00113 
+0031                  00114 t_gptrget2_d:
+0031   2D00           00115         movai (td0)
+0032   1F00           00116         movra STK01
+0033   2D00           00117         movai high(td0)
+0034   1F00           00118         movra STK00
+0035   2D00           00119         movai 0x00
+0036   C000           00120         call __gptrget2
+0037   1F00           00121         movra ram1
+0038   1E00           00122         movar STK00
+0039   1F00           00123         movra ram0
+003A   0E00           00124         return
+                      00125 
+003B                  00126 t_gptrget2_c:
+003B   2D00           00127         movai (_rom)
+003C   1F00           00128         movra STK01
+003D   2D00           00129         movai high(_rom)
+003E   1F00           00130         movra STK00
+003F   2D80           00131         movai 0x80
+0040   C000           00132         call __gptrget2
+0041   1F00           00133         movra ram1
+0042   1E00           00134         movar STK00
+0043   1F00           00135         movra ram0
+0044   0E00           00136         return
+                      00137         
+0045                  00138 t_gptrput2:
+0045   2D12           00139         movai 0x12
+0046   1F00           00140         movra STK03
+0047   2D23           00141         movai 0x23
+0048   1F00           00142         movra STK02
+0049   2D00           00143         movai (ram0)
+004A   1F00           00144         movra STK01
+004B   2D00           00145         movai high(ram0)
+004C   1F00           00146         movra STK00
+004D   2D00           00147         movai 0x00
+004E   C000           00148         call __gptrput2
+004F   0E00           00149         return
+                      00150         
+0050                  00151 t_gptrget3_d:
+0050   2D00           00152         movai (td0)
+0051   1F00           00153         movra STK01
+0052   2D00           00154         movai high(td0)
+0053   1F00           00155         movra STK00
+0054   2D00           00156         movai 0x00
+0055   C000           00157         call __gptrget3
+0056   1F00           00158         movra ram2
+0057   1E00           00159         movar STK00
+0058   1F00           00160         movra ram1
+0059   1E00           00161         movar STK01
+005A   1F00           00162         movra ram0
+005B   0E00           00163         return
+                      00164 
+005C                  00165 t_gptrget3_c:
+005C   2D00           00166         movai (_rom)
+005D   1F00           00167         movra STK01
+005E   2D00           00168         movai high(_rom)
+005F   1F00           00169         movra STK00
+0060   2D80           00170         movai 0x80
+0061   C000           00171         call __gptrget3
+0062   1F00           00172         movra ram2
+0063   1E00           00173         movar STK00
+0064   1F00           00174         movra ram1
+0065   1E00           00175         movar STK01
+0066   1F00           00176         movra ram0
+0067   0E00           00177         return
+                      00178         
+0068                  00179 t_gptrput3:
+0068   2D12           00180         movai 0x12
+0069   1F00           00181         movra STK04
+006A   2D23           00182         movai 0x23
+006B   1F00           00183         movra STK03
+006C   2D34           00184         movai 0x34
+006D   1F00           00185         movra STK02
+006E   2D00           00186         movai (ram0)
+006F   1F00           00187         movra STK01
+0070   2D00           00188         movai high(ram0)
+0071   1F00           00189         movra STK00
+0072   2D00           00190         movai 0x00
+0073   C000           00191         call __gptrput3
+0074   0E00           00192         return
+                      00193         
+0075                  00194 t_gptrget4_d:
+0075   2D00           00195         movai (td0)
+0076   1F00           00196         movra STK01
+0077   2D00           00197         movai high(td0)
+0078   1F00           00198         movra STK00
+0079   2D00           00199         movai 0x00
+007A   C000           00200         call __gptrget4
+007B   1F00           00201         movra ram3
+007C   1E00           00202         movar STK00
+007D   1F00           00203         movra ram2
+007E   1E00           00204         movar STK01
+007F   1F00           00205         movra ram1
+0080   1E00           00206         movar STK02
+0081   1F00           00207         movra ram0
+0082   0E00           00208         return
+                      00209 
+0083                  00210 t_gptrget4_c:
+0083   2D00           00211         movai (_rom)
+0084   1F00           00212         movra STK01
+0085   2D00           00213         movai high(_rom)
+0086   1F00           00214         movra STK00
+0087   2D80           00215         movai 0x80
+0088   C000           00216         call __gptrget4
+0089   1F00           00217         movra ram3
+008A   1E00           00218         movar STK00
+008B   1F00           00219         movra ram2
+008C   1E00           00220         movar STK01
+008D   1F00           00221         movra ram1
+008E   1E00           00222         movar STK02
+008F   1F00           00223         movra ram0
+0090   0E00           00224         return
+                      00225         
+0091                  00226 t_gptrput4:
+0091   2D12           00227         movai 0x12
+0092   1F00           00228         movra STK05
+0093   2D23           00229         movai 0x23
+0094   1F00           00230         movra STK04
+0095   2D34           00231         movai 0x34
+0096   1F00           00232         movra STK03
+0097   2D45           00233         movai 0x45
+0098   1F00           00234         movra STK02
+0099   2D00           00235         movai (ram0)
+009A   1F00           00236         movra STK01
+009B   2D00           00237         movai high(ram0)
+009C   1F00           00238         movra STK00
+009D   2D00           00239         movai 0x00
+009E   C000           00240         call __gptrput4
+009F   0E00           00241         return
+                      00242 
+                      00243         en
+gpasm-2.1.1 (Sep 26 2017)    debug_lib.asm      2017-11-23  11:59:19         PAGE  2
 
 
 SYMBOL TABLE
@@ -141,28 +259,39 @@ STK02                             00000002
 STK03                             00000003
 STK04                             00000004
 STK05                             00000005
-STK06                             00000006
-_STARTUP_0007                     00000007
+_STARTUP_000E                     0000000E
 __2K7041                          00000001
 __gptrget                         00000000
 __gptrget2                        00000000
+__gptrget3                        00000000
+__gptrget4                        00000000
 __gptrput                         00000000
+__gptrput2                        00000000
+__gptrput3                        00000000
+__gptrput4                        00000000
 _rom                              000002FF
 ram0                              00000020
 ram1                              00000021
 ram2                              00000022
 ram3                              00000023
 start                             00000001
-t_getrget_c                       00000019
-t_gptrget2_c                      00000034
-t_gptrget2_d                      0000002A
-t_gptrget_d                       00000011
-t_gptrput                         00000021
+t_getrget_c                       00000020
+t_gptrget2_c                      0000003B
+t_gptrget2_d                      00000031
+t_gptrget3_c                      0000005C
+t_gptrget3_d                      00000050
+t_gptrget4_c                      00000083
+t_gptrget4_d                      00000075
+t_gptrget_d                       00000018
+t_gptrput                         00000028
+t_gptrput2                        00000045
+t_gptrput3                        00000068
+t_gptrput4                        00000091
 td0                               00000030
 td1                               00000031
 td2                               00000032
 td3                               00000033
-td_init                           00000008
+td_init                           0000000F
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

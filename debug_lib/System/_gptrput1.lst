@@ -1,4 +1,4 @@
-gpasm-2.1.1 (Sep 26 2017)    _gptrput1.asm      2017-11-22  20:00:24         PAGE  1
+gpasm-2.1.1 (Sep 26 2017)    _gptrput1.asm      2017-11-23  11:59:19         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -35,20 +35,33 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00029 ; calling conventions:
                       00030 ;   3 byte generic pointer is passed in via (WREG STK00 STK01).
                       00031 ;   The result is returned in (WREG (STK00 (STK01 (STK02)))).
-                      00032 ;
-                      00033 ;   unsigned char _gptrget  (void *gptr);
-                      00034 ;   unsigned char _gptrget1 (void *gptr);
-                      00035 ;   unsigned int  _gptrget2 (void *gptr);
-                      00036 ;   void *        _gptrget3 (void *gptr);
-                      00037 ;   unsigned long _gptrget4 (void *gptr);
-                      00038 ;
-                      00039 ;   void _gptrput  (void *ptr, unsigned char val);
-                      00040 ;   void _gptrput1 (void *ptr, unsigned char val);
-                      00041 ;   void _gptrput2 (void *ptr, unsigned int  val);
-                      00042 ;   void _gptrput3 (void *ptr, unsigned int  val);
-                      00043 ;   void _gptrput4 (void *ptr, unsigned long val);
+                      00032 
+                      00033 ;       param:
+                      00034 ;               ACC: data/code flag
+                      00035 ;               (STK00:STK01) 16bit address
+                      00036 ;       return:
+                      00037 ;               (ACC[:STK00[:STK01[:STK02]]]): data (MSB left)
+                      00038 
+                      00039 ;   unsigned char _gptrget  (void *gptr);
+                      00040 ;   unsigned char _gptrget1 (void *gptr);
+                      00041 ;   unsigned int  _gptrget2 (void *gptr);
+                      00042 ;   void *        _gptrget3 (void *gptr);
+                      00043 ;   unsigned long _gptrget4 (void *gptr);
                       00044 
-                      00045 include macros.inc
+                      00045 
+                      00046 ;       param:
+                      00047 ;               ACC: data/code flag
+                      00048 ;               (STK00:STK01) 16bit address
+                      00049 ;               (STK02[:STK03[:STK04[:STK05]]]): data (MSB left)
+                      00050 
+                      00051 ;   void _gptrput  (void *ptr, unsigned char val);
+                      00052 ;   void _gptrput1 (void *ptr, unsigned char val);
+                      00053 ;   void _gptrput2 (void *ptr, unsigned int  val);
+                      00054 ;   void _gptrput3 (void *ptr, unsigned int  val);
+                      00055 ;   void _gptrput4 (void *ptr, unsigned long val);
+                      00056 
+                      00057 
+                      00058 include macros.inc
                       00001 UD_abs_mc35p7041_82     udata_ovr       0x0082
 0041                  00002 _HIBYTE
 0041                  00003         res     1
@@ -137,7 +150,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00086         goto    dataptr
                       00087         endm
                       00088 
-                      00046 include mc30f_common.inc
+                      00059 include mc30f_common.inc
                       00001 ;--------------------------------------------------------------------------
                       00002 ;  p16f_common.inc - definitions common to all 14 bit PIC devices
                       00003 ;
@@ -174,34 +187,33 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00034         extern  STK05
                       00035         extern  STK06
                       00036 
-                      00047 
-                      00048         global  __gptrput
-                      00049         global  __gptrput1
-                      00050         
-                      00051         CODE
-                      00052 
-0000                  00053 __gptrput:
-0000                  00054 __gptrput1:
-                      00055         check_data      __dataptrput1
+                      00060 
+                      00061         global  __gptrput
+                      00062         global  __gptrput1
+                      00063         
+                      00064         CODE
+                      00065 
+0000                  00066 __gptrput:
+0000                  00067 __gptrput1:
+                      00068         check_data      __dataptrput1
                           M         ; __data pointer tag: 0x00
 0000   1D00               M         xorai   GPTRTAG_DATA
 0001   5000               M         jbclr   _STATUS, Z
 0002   8000               M         goto    dataptr
-                      00056         ; cannot write to __code space
-0003   0E00           00057         return
-                      00058 
-0004                  00059 __dataptrput1:
-                      00060         setup_fsr
-0004   1E00               M         movar   STK00
-0005   1F00               M         movra   _FSR1
-0006   1E00               M         movar   STK01
-0007   1F00               M         movra   _FSR0
-0008   1E00           00061         movar STK02             ; get LSB(val)
-0009   1F00           00062         movra _INDF
-000A   0E00           00063         return
-                      00064 
-                      00065         END
-gpasm-2.1.1 (Sep 26 2017)    _gptrput1.asm      2017-11-22  20:00:24         PAGE  2
+                      00069 
+                      00070 
+0003                  00071 __dataptrput1:
+                      00072         setup_fsr
+0003   1E00               M         movar   STK00
+0004   1F00               M         movra   _FSR1
+0005   1E00               M         movar   STK01
+0006   1F00               M         movra   _FSR0
+0007   1E00           00073         movar   STK02           ; get LSB(val) from STK02
+0008   1F00           00074         movra   _INDF
+0009   0E00           00075         return
+                      00076 
+                      00077         END
+gpasm-2.1.1 (Sep 26 2017)    _gptrput1.asm      2017-11-23  11:59:19         PAGE  2
 
 
 SYMBOL TABLE
@@ -228,7 +240,7 @@ _PCH                              000000CF
 _PCL                              000000CE
 _STATUS                           00000086
 __2K7041                          00000001
-__dataptrput1                     00000004
+__dataptrput1                     00000003
 __gptrput                         00000000
 __gptrput1                        00000000
 

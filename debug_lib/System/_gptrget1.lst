@@ -1,4 +1,4 @@
-gpasm-2.1.1 (Sep 26 2017)    _gptrget1.asm      2017-11-22  20:00:24         PAGE  1
+gpasm-2.1.1 (Sep 26 2017)    _gptrget1.asm      2017-11-23  11:59:19         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -200,7 +200,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0007   1F00               M         movra   _FSR1
 0008   1E00               M         movar   STK01
 0009   1F00               M         movra   _FSR0
-000A   1E00           00061         movar _INDF
+000A   1E00           00061         movar _INDF             ; data in ACC
 000B   0E00           00062         return
                       00063 
 000C                  00064 __codeptrget1:
@@ -209,11 +209,11 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000D   1F00               M         movra   _FSR1
 000E   1E00               M         movar   STK01
 000F   1F00               M         movra   _FSR0
-0010   0D00           00066         movc
+0010   0D00           00066         movc                    ; data in ACC
 0011   0E00           00067         return
                       00068 
                       00069         END
-gpasm-2.1.1 (Sep 26 2017)    _gptrget1.asm      2017-11-22  20:00:24         PAGE  2
+gpasm-2.1.1 (Sep 26 2017)    _gptrget1.asm      2017-11-23  11:59:19         PAGE  2
 
 
 SYMBOL TABLE

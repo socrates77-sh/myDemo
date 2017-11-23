@@ -1,11 +1,11 @@
-gpasm-2.1.1 (Sep 26 2017)    _gptrget2.asm      2017-11-23  11:59:19         PAGE  1
+gpasm-2.1.1 (Sep 26 2017)    _gptrget3.asm      2017-11-23  11:59:19         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
                       00001 ; -------------------------------------------------------------------------
-                      00002 ;  _gptrget2.S - read two bytes pointed to by a generic pointer
+                      00002 ;  _gptrget3.S - read three bytes pointed to by a generic pointer
                       00003 ;
                       00004 ;  Copyright (C) 2005, Raphael Neider <rneider AT web.de>
                       00005 ;
@@ -188,12 +188,12 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00035         extern  STK06
                       00036 
                       00060 
-                      00061         global  __gptrget2
+                      00061         global  __gptrget3
                       00062         
                       00063         CODE
                       00064 
-0000                  00065 __gptrget2:
-                      00066         select_routine __dataptrget2, __codeptrget2
+0000                  00065 __gptrget3:
+                      00066         select_routine __dataptrget3, __codeptrget3
                           M         ; __data pointer tag: 0x00
 0000   1D00               M         xorai   GPTRTAG_DATA
 0001   5000               M         jbclr   _STATUS, Z
@@ -203,43 +203,60 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0004   5000               M         jbclr   _STATUS, Z
 0005   8000               M         goto    codeptr
                       00067 
-0006                  00068 __dataptrget2:
-                      00069         setup_fsr
+                      00068 
+0006                  00069 __dataptrget3:
+                      00070         setup_fsr
 0006   1E00               M         movar   STK00
 0007   1F00               M         movra   _FSR1
 0008   1E00               M         movar   STK01
 0009   1F00               M         movra   _FSR0
-000A   1E00           00070         movar _INDF
-000B   1F00           00071         movra STK00             ; LSB in STK00
-                      00072         inc_fsr
+000A   1E00           00071         movar _INDF
+000B   1F00           00072         movra STK01             ; LSB in STK01
+                      00073         inc_fsr
                           M         ;;incr  _FSR
 000C   2D01               M         movai   1
 000D   1300               M         addra   _FSR0
 000E   5000               M         jbclr   _STATUS, Z
 000F   1300               M         addra   _FSR1
-0010   1E00           00073         movar _INDF             ; MSB in ACC
-0011   0E00           00074         return
-                      00075 
-                      00076 
-0012                  00077 __codeptrget2:
-                      00078         setup_fsr
-0012   1E00               M         movar   STK00
-0013   1F00               M         movra   _FSR1
-0014   1E00               M         movar   STK01
-0015   1F00               M         movra   _FSR0
-0016   0D00           00079         movc
-0017   1F00           00080         movra STK00             ; LSB in STK00
-                      00081         inc_fsr
+0010   1E00           00074         movar _INDF
+0011   1F00           00075         movra STK00             ; 2nd byte in STK00
+                      00076         inc_fsr
                           M         ;;incr  _FSR
-0018   2D01               M         movai   1
-0019   1300               M         addra   _FSR0
-001A   5000               M         jbclr   _STATUS, Z
-001B   1300               M         addra   _FSR1
-001C   0D00           00082         movc                    ; MSB in ACC
-001D   0E00           00083         return
-                      00084         
-                      00085         END
-gpasm-2.1.1 (Sep 26 2017)    _gptrget2.asm      2017-11-23  11:59:19         PAGE  2
+0012   2D01               M         movai   1
+0013   1300               M         addra   _FSR0
+0014   5000               M         jbclr   _STATUS, Z
+0015   1300               M         addra   _FSR1
+0016   1E00           00077         movar _INDF             ; MSB in ACC
+0017   0E00           00078         return
+                      00079         
+                      00080 
+0018                  00081 __codeptrget3:
+                      00082         setup_fsr
+0018   1E00               M         movar   STK00
+0019   1F00               M         movra   _FSR1
+001A   1E00               M         movar   STK01
+001B   1F00               M         movra   _FSR0
+001C   0D00           00083         movc
+001D   1F00           00084         movra STK01             ; LSB in STK01
+                      00085         inc_fsr
+                          M         ;;incr  _FSR
+001E   2D01               M         movai   1
+001F   1300               M         addra   _FSR0
+0020   5000               M         jbclr   _STATUS, Z
+0021   1300               M         addra   _FSR1
+0022   0D00           00086         movc
+0023   1F00           00087         movra STK00             ; 2nd byte in STK00
+                      00088         inc_fsr
+                          M         ;;incr  _FSR
+0024   2D01               M         movai   1
+0025   1300               M         addra   _FSR0
+0026   5000               M         jbclr   _STATUS, Z
+0027   1300               M         addra   _FSR1
+0028   0D00           00089         movc                    ; MSB in ACC
+0029   0E00           00090         return
+                      00091 
+                      00092         END
+gpasm-2.1.1 (Sep 26 2017)    _gptrget3.asm      2017-11-23  11:59:19         PAGE  2
 
 
 SYMBOL TABLE
@@ -266,9 +283,9 @@ _PCH                              000000CF
 _PCL                              000000CE
 _STATUS                           00000086
 __2K7041                          00000001
-__codeptrget2                     00000012
-__dataptrget2                     00000006
-__gptrget2                        00000000
+__codeptrget3                     00000018
+__dataptrget3                     00000006
+__gptrget3                        00000000
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
