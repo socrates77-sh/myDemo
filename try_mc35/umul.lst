@@ -1,0 +1,552 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Listing File Generated: 2017-12-19  11:53:59
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                                           ; Version 1.1.0 (Dec 19 2017) (MINGW32)
+                                           ; This file was generated Tue Dec 19 11:53:59 2017
+                                           ;--------------------------------------------------------
+                                           ; MC35 port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"umul.c"
+                                           	list	p=2K7041
+                                           	radix dec
+                                           	include "2K7041.inc"
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	__mulint
+                                           	extern	__mullong
+                                           	extern	_HIBYTEbits
+                                           	extern	_FSR0bits
+                                           	extern	_FSR1bits
+                                           	extern	_PFLAGbits
+                                           	extern	_ZEROTRbits
+                                           	extern	_OSCCALbits
+                                           	extern	_WKCR0bits
+                                           	extern	_WKCR5bits
+                                           	extern	_ADIOS0bits
+                                           	extern	_ADIOS1bits
+                                           	extern	_ADIOS2bits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ADCR2bits
+                                           	extern	_OEP0bits
+                                           	extern	_EINTCRbits
+                                           	extern	_OEP4bits
+                                           	extern	_OEP5bits
+                                           	extern	_INTFbits
+                                           	extern	_INTEbits
+                                           	extern	_OSCMbits
+                                           	extern	_WDTCRbits
+                                           	extern	_T1LDRbits
+                                           	extern	_PCLbits
+                                           	extern	_PCHbits
+                                           	extern	_IOP0bits
+                                           	extern	_IOP4bits
+                                           	extern	_IOP5bits
+                                           	extern	_T0CRbits
+                                           	extern	_T0CNTbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_BUZCRbits
+                                           	extern	_MCRbits
+                                           	extern	_PUP0bits
+                                           	extern	_PUP4bits
+                                           	extern	_PUP5bits
+                                           	extern	_INDFbits
+                                           	extern	_PWMCR0bits
+                                           	extern	_PWMCR1bits
+                                           	extern	_PWMCNTbits
+                                           	extern	_PWMADTbits
+                                           	extern	_PWMBDTbits
+                                           	extern	_PWMCDTbits
+                                           	extern	_PWMPDbits
+                                           	extern	_HIBYTE
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PFLAG
+                                           	extern	_ZEROTR
+                                           	extern	_OSCCAL
+                                           	extern	_WKCR0
+                                           	extern	_WKCR5
+                                           	extern	_ADIOS0
+                                           	extern	_ADIOS1
+                                           	extern	_ADIOS2
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_ADCR2
+                                           	extern	_OEP0
+                                           	extern	_EINTCR
+                                           	extern	_OEP4
+                                           	extern	_OEP5
+                                           	extern	_INTF
+                                           	extern	_INTE
+                                           	extern	_OSCM
+                                           	extern	_WDTCR
+                                           	extern	_T1LDR
+                                           	extern	_PCL
+                                           	extern	_PCH
+                                           	extern	_IOP0
+                                           	extern	_IOP4
+                                           	extern	_IOP5
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_BUZCR
+                                           	extern	_MCR
+                                           	extern	_PUP0
+                                           	extern	_PUP4
+                                           	extern	_PUP5
+                                           	extern	_INDF
+                                           	extern	_PWMCR0
+                                           	extern	_PWMCR1
+                                           	extern	_PWMCNT
+                                           	extern	_PWMADT
+                                           	extern	_PWMBDT
+                                           	extern	_PWMCDT
+                                           	extern	_PWMPD
+                                           	extern	_STKR0L
+                                           	extern	_STKR0H
+                                           	extern	_STKR1L
+                                           	extern	_STKR1H
+                                           	extern	_STKR2L
+                                           	extern	_STKR2H
+                                           	extern	_STKR3L
+                                           	extern	_STKR3H
+                                           	extern	_STKR4L
+                                           	extern	_STKR4H
+                                           	extern	_STKR5L
+                                           	extern	_STKR5H
+                                           	extern	_STKR6L
+                                           	extern	_STKR6H
+                                           	extern	_STKR7L
+                                           	extern	_STKR7H
+                                           	extern	__mulchar
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_uc_a
+                                           	global	_uc_b
+                                           	global	_ui_a
+                                           	global	_ui_b
+                                           	global	_uram1
+                                           	global	_uram0
+                                           	global	_uiram0
+                                           	global	_uiram1
+                                           	global	_ulram0
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_umul_0	udata
+                                           _uc_a	res	1
+                                           
+                                           UD_umul_1	udata
+                                           _uc_b	res	1
+                                           
+                                           UD_umul_2	udata
+                                           _ui_a	res	2
+                                           
+                                           UD_umul_3	udata
+                                           _ui_b	res	2
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           UD_abs_umul_28	udata_ovr	0x0028
+                                           _uram0
+                                           	res	1
+                                           UD_abs_umul_29	udata_ovr	0x0029
+                                           _uram1
+                                           	res	1
+                                           UD_abs_umul_38	udata_ovr	0x0038
+                                           _uiram0
+                                           	res	2
+                                           UD_abs_umul_3a	udata_ovr	0x003a
+                                           _uiram1
+                                           	res	2
+                                           UD_abs_umul_48	udata_ovr	0x0048
+                                           _ulram0
+                                           	res	4
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_umul_0	udata
+                                           r0x1006	res	1
+                                           r0x1007	res	1
+                                           r0x1008	res	1
+                                           r0x1009	res	1
+                                           r0x100A	res	1
+                                           r0x100B	res	1
+                                           r0x100D	res	1
+                                           r0x100C	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@main main                      Allocated to registers ;size:2
+                                           ;@main _mulint                   Allocated to registers ;size:2
+                                           ;@main _mullong                  Allocated to registers ;size:2
+                                           ;@main HIBYTEbits                Allocated to registers ;size:1
+                                           ;@main FSR0bits                  Allocated to registers ;size:1
+                                           ;@main FSR1bits                  Allocated to registers ;size:1
+                                           ;@main PFLAGbits                 Allocated to registers ;size:1
+                                           ;@main ZEROTRbits                Allocated to registers ;size:1
+                                           ;@main OSCCALbits                Allocated to registers ;size:1
+                                           ;@main WKCR0bits                 Allocated to registers ;size:1
+                                           ;@main WKCR5bits                 Allocated to registers ;size:1
+                                           ;@main ADIOS0bits                Allocated to registers ;size:1
+                                           ;@main ADIOS1bits                Allocated to registers ;size:1
+                                           ;@main ADIOS2bits                Allocated to registers ;size:1
+                                           ;@main ADCR0bits                 Allocated to registers ;size:1
+                                           ;@main ADCR1bits                 Allocated to registers ;size:1
+                                           ;@main ADCR2bits                 Allocated to registers ;size:1
+                                           ;@main OEP0bits                  Allocated to registers ;size:1
+                                           ;@main EINTCRbits                Allocated to registers ;size:1
+                                           ;@main OEP4bits                  Allocated to registers ;size:1
+                                           ;@main OEP5bits                  Allocated to registers ;size:1
+                                           ;@main INTFbits                  Allocated to registers ;size:1
+                                           ;@main INTEbits                  Allocated to registers ;size:1
+                                           ;@main OSCMbits                  Allocated to registers ;size:1
+                                           ;@main WDTCRbits                 Allocated to registers ;size:1
+                                           ;@main T1LDRbits                 Allocated to registers ;size:1
+                                           ;@main PCLbits                   Allocated to registers ;size:1
+                                           ;@main PCHbits                   Allocated to registers ;size:1
+                                           ;@main IOP0bits                  Allocated to registers ;size:1
+                                           ;@main IOP4bits                  Allocated to registers ;size:1
+                                           ;@main IOP5bits                  Allocated to registers ;size:1
+                                           ;@main T0CRbits                  Allocated to registers ;size:1
+                                           ;@main T0CNTbits                 Allocated to registers ;size:1
+                                           ;@main T1CRbits                  Allocated to registers ;size:1
+                                           ;@main T1CNTbits                 Allocated to registers ;size:1
+                                           ;@main BUZCRbits                 Allocated to registers ;size:1
+                                           ;@main MCRbits                   Allocated to registers ;size:1
+                                           ;@main PUP0bits                  Allocated to registers ;size:1
+                                           ;@main PUP4bits                  Allocated to registers ;size:1
+                                           ;@main PUP5bits                  Allocated to registers ;size:1
+                                           ;@main INDFbits                  Allocated to registers ;size:1
+                                           ;@main PWMCR0bits                Allocated to registers ;size:1
+                                           ;@main PWMCR1bits                Allocated to registers ;size:1
+                                           ;@main PWMCNTbits                Allocated to registers ;size:1
+                                           ;@main PWMADTbits                Allocated to registers ;size:1
+                                           ;@main PWMBDTbits                Allocated to registers ;size:1
+                                           ;@main PWMCDTbits                Allocated to registers ;size:1
+                                           ;@main PWMPDbits                 Allocated to registers ;size:1
+                                           ;@main uc_a                      Allocated to registers ;size:1
+                                           ;@main uc_b                      Allocated to registers ;size:1
+                                           ;@main ui_a                      Allocated to registers ;size:2
+                                           ;@main ui_b                      Allocated to registers ;size:2
+                                           ;@main uram1                     Allocated to registers ;size:1
+                                           ;@main uram0                     Allocated to registers ;size:1
+                                           ;@main uiram0                    Allocated to registers ;size:2
+                                           ;@main uiram1                    Allocated to registers ;size:2
+                                           ;@main ulram0                    Allocated to registers ;size:4
+                                           ;@main HIBYTE                    Allocated to registers ;size:1
+                                           ;@main FSR0                      Allocated to registers ;size:1
+                                           ;@main FSR1                      Allocated to registers ;size:1
+                                           ;@main PFLAG                     Allocated to registers ;size:1
+                                           ;@main ZEROTR                    Allocated to registers ;size:1
+                                           ;@main OSCCAL                    Allocated to registers ;size:1
+                                           ;@main WKCR0                     Allocated to registers ;size:1
+                                           ;@main WKCR5                     Allocated to registers ;size:1
+                                           ;@main ADIOS0                    Allocated to registers ;size:1
+                                           ;@main ADIOS1                    Allocated to registers ;size:1
+                                           ;@main ADIOS2                    Allocated to registers ;size:1
+                                           ;@main ADCR0                     Allocated to registers ;size:1
+                                           ;@main ADCR1                     Allocated to registers ;size:1
+                                           ;@main ADRH                      Allocated to registers ;size:1
+                                           ;@main ADRL                      Allocated to registers ;size:1
+                                           ;@main ADCR2                     Allocated to registers ;size:1
+                                           ;@main OEP0                      Allocated to registers ;size:1
+                                           ;@main EINTCR                    Allocated to registers ;size:1
+                                           ;@main OEP4                      Allocated to registers ;size:1
+                                           ;@main OEP5                      Allocated to registers ;size:1
+                                           ;@main INTF                      Allocated to registers ;size:1
+                                           ;@main INTE                      Allocated to registers ;size:1
+                                           ;@main OSCM                      Allocated to registers ;size:1
+                                           ;@main WDTCR                     Allocated to registers ;size:1
+                                           ;@main T1LDR                     Allocated to registers ;size:1
+                                           ;@main PCL                       Allocated to registers ;size:1
+                                           ;@main PCH                       Allocated to registers ;size:1
+                                           ;@main IOP0                      Allocated to registers ;size:1
+                                           ;@main IOP4                      Allocated to registers ;size:1
+                                           ;@main IOP5                      Allocated to registers ;size:1
+                                           ;@main T0CR                      Allocated to registers ;size:1
+                                           ;@main T0CNT                     Allocated to registers ;size:1
+                                           ;@main T1CR                      Allocated to registers ;size:1
+                                           ;@main T1CNT                     Allocated to registers ;size:1
+                                           ;@main BUZCR                     Allocated to registers ;size:1
+                                           ;@main MCR                       Allocated to registers ;size:1
+                                           ;@main PUP0                      Allocated to registers ;size:1
+                                           ;@main PUP4                      Allocated to registers ;size:1
+                                           ;@main PUP5                      Allocated to registers ;size:1
+                                           ;@main INDF                      Allocated to registers ;size:1
+                                           ;@main PWMCR0                    Allocated to registers ;size:1
+                                           ;@main PWMCR1                    Allocated to registers ;size:1
+                                           ;@main PWMCNT                    Allocated to registers ;size:1
+                                           ;@main PWMADT                    Allocated to registers ;size:1
+                                           ;@main PWMBDT                    Allocated to registers ;size:1
+                                           ;@main PWMCDT                    Allocated to registers ;size:1
+                                           ;@main PWMPD                     Allocated to registers ;size:1
+                                           ;@main STKR0L                    Allocated to registers ;size:1
+                                           ;@main STKR0H                    Allocated to registers ;size:1
+                                           ;@main STKR1L                    Allocated to registers ;size:1
+                                           ;@main STKR1H                    Allocated to registers ;size:1
+                                           ;@main STKR2L                    Allocated to registers ;size:1
+                                           ;@main STKR2H                    Allocated to registers ;size:1
+                                           ;@main STKR3L                    Allocated to registers ;size:1
+                                           ;@main STKR3H                    Allocated to registers ;size:1
+                                           ;@main STKR4L                    Allocated to registers ;size:1
+                                           ;@main STKR4H                    Allocated to registers ;size:1
+                                           ;@main STKR5L                    Allocated to registers ;size:1
+                                           ;@main STKR5H                    Allocated to registers ;size:1
+                                           ;@main STKR6L                    Allocated to registers ;size:1
+                                           ;@main STKR6H                    Allocated to registers ;size:1
+                                           ;@main STKR7L                    Allocated to registers ;size:1
+                                           ;@main STKR7H                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   80a6     goto    0xa6             	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_umul	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __mulint
+                                           ;   __mulchar
+                                           ;   __mullong
+                                           ;   __mulint
+                                           ;   __mulint
+                                           ;   __mulchar
+                                           ;   __mullong
+                                           ;   __mulint
+                                           ;15 compiler assigned registers:
+                                           ;   r0x1006
+                                           ;   r0x1007
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   STK02
+                                           ;   STK01
+                                           ;   STK00
+                                           ;   r0x100A
+                                           ;   r0x100B
+                                           ;   r0x100C
+                                           ;   r0x100D
+                                           ;   STK06
+                                           ;   STK05
+                                           ;   STK04
+                                           ;   STK03
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	17; "umul.c"	uram0 = 0xad; 	// 0xad
+0000a6   2dad     movai   0xad             	MOVAI	0xad
+0000a7   1f28     movra   0x28             	MOVRA	_uram0
+                                           ;	.line	18; "umul.c"	uram1 = 0x88; 	// 0x88
+0000a8   2d88     movai   0x88             	MOVAI	0x88
+0000a9   1f29     movra   0x29             	MOVRA	_uram1
+                                           ;	.line	20; "umul.c"	uc_a = uram0;
+0000aa   1e28     movar   0x28             	MOVAR	_uram0
+0000ab   1f37     movra   0x37             	MOVRA	_uc_a
+                                           ;	.line	21; "umul.c"	uc_b = uram1;
+0000ac   1e29     movar   0x29             	MOVAR	_uram1
+0000ad   1f47     movra   0x47             	MOVRA	_uc_b
+                                           ;	.line	23; "umul.c"	uiram0 = (uint)uc_a * (uint)uc_b;      	// 0x26e8? (0x5b18)
+0000ae   1e37     movar   0x37             	MOVAR	_uc_a
+0000af   1f2a     movra   0x2a             	MOVRA	r0x1006
+0000b0   2b2b     clrr    0x2b             	CLRR	r0x1007
+0000b1   572a     jbclr   0x2a, 0x7        	JBCLR	r0x1006,7
+0000b2   262b     djzr    0x2b             	DJZR	r0x1007
+0000b3   0000     nop                      	NOP	
+0000b4   1e47     movar   0x47             	MOVAR	_uc_b
+0000b5   1f2c     movra   0x2c             	MOVRA	r0x1008
+0000b6   2b2d     clrr    0x2d             	CLRR	r0x1009
+0000b7   572c     jbclr   0x2c, 0x7        	JBCLR	r0x1008,7
+0000b8   262d     djzr    0x2d             	DJZR	r0x1009
+0000b9   0000     nop                      	NOP	
+0000ba   1e2c     movar   0x2c             	MOVAR	r0x1008
+0000bb   1f04     movra   0x4              	MOVRA	STK02
+0000bc   1e2d     movar   0x2d             	MOVAR	r0x1009
+0000bd   1f05     movra   0x5              	MOVRA	STK01
+0000be   1e2a     movar   0x2a             	MOVAR	r0x1006
+0000bf   1f06     movra   0x6              	MOVRA	STK00
+0000c0   1e2b     movar   0x2b             	MOVAR	r0x1007
+0000c1   c11a     call    0x11a            	CALL	__mulint
+0000c2   1f39     movra   0x39             	MOVRA	(_uiram0 + 1)
+0000c3   1e06     movar   0x6              	MOVAR	STK00
+0000c4   1f38     movra   0x38             	MOVRA	_uiram0
+                                           ;	.line	24; "umul.c"	uiram0 = uc_a * uc_b;      	   	   	   	// 0x00e8
+0000c5   1e47     movar   0x47             	MOVAR	_uc_b
+0000c6   1f06     movra   0x6              	MOVRA	STK00
+0000c7   1e37     movar   0x37             	MOVAR	_uc_a
+0000c8   c163     call    0x163            	CALL	__mulchar
+0000c9   1f38     movra   0x38             	MOVRA	_uiram0
+0000ca   2b39     clrr    0x39             	CLRR	(_uiram0 + 1)
+                                           ;	.line	26; "umul.c"	uiram0 = 0xfe53;
+0000cb   2d53     movai   0x53             	MOVAI	0x53
+0000cc   1f38     movra   0x38             	MOVRA	_uiram0
+0000cd   2dfe     movai   0xfe             	MOVAI	0xfe
+0000ce   1f39     movra   0x39             	MOVRA	(_uiram0 + 1)
+                                           ;	.line	27; "umul.c"	uiram1 = 0x2b78;
+0000cf   2d78     movai   0x78             	MOVAI	0x78
+0000d0   1f3a     movra   0x3a             	MOVRA	_uiram1
+0000d1   2d2b     movai   0x2b             	MOVAI	0x2b
+0000d2   1f3b     movra   0x3b             	MOVRA	(_uiram1 + 1)
+                                           ;	.line	29; "umul.c"	ui_a = uiram0;
+0000d3   1e38     movar   0x38             	MOVAR	_uiram0
+0000d4   1f18     movra   0x18             	MOVRA	_ui_a
+0000d5   1e39     movar   0x39             	MOVAR	(_uiram0 + 1)
+0000d6   1f19     movra   0x19             	MOVRA	(_ui_a + 1)
+                                           ;	.line	30; "umul.c"	ui_b = uiram1;
+0000d7   1e3a     movar   0x3a             	MOVAR	_uiram1
+0000d8   1f1a     movra   0x1a             	MOVRA	_ui_b
+0000d9   1e3b     movar   0x3b             	MOVAR	(_uiram1 + 1)
+0000da   1f1b     movra   0x1b             	MOVRA	(_ui_b + 1)
+                                           ;	.line	32; "umul.c"	ulram0 = (ulong)ui_a * (ulong)ui_b;     	   	// 0xffb727e8? (0x2b2f27e8)
+0000db   1e18     movar   0x18             	MOVAR	_ui_a
+0000dc   1f2a     movra   0x2a             	MOVRA	r0x1006
+0000dd   1e19     movar   0x19             	MOVAR	(_ui_a + 1)
+0000de   1f2b     movra   0x2b             	MOVRA	r0x1007
+0000df   2d00     movai   0                	MOVAI	0x00
+0000e0   572b     jbclr   0x2b, 0x7        	JBCLR	r0x1007,7
+0000e1   2dff     movai   0xff             	MOVAI	0xff
+0000e2   1f2d     movra   0x2d             	MOVRA	r0x1009
+0000e3   1f2c     movra   0x2c             	MOVRA	r0x1008
+0000e4   1e1a     movar   0x1a             	MOVAR	_ui_b
+0000e5   1f2e     movra   0x2e             	MOVRA	r0x100A
+0000e6   1e1b     movar   0x1b             	MOVAR	(_ui_b + 1)
+0000e7   1f2f     movra   0x2f             	MOVRA	r0x100B
+0000e8   2d00     movai   0                	MOVAI	0x00
+0000e9   572f     jbclr   0x2f, 0x7        	JBCLR	r0x100B,7
+0000ea   2dff     movai   0xff             	MOVAI	0xff
+0000eb   1f31     movra   0x31             	MOVRA	r0x100C
+0000ec   1f30     movra   0x30             	MOVRA	r0x100D
+0000ed   1e2e     movar   0x2e             	MOVAR	r0x100A
+0000ee   1f00     movra   0                	MOVRA	STK06
+0000ef   1e2f     movar   0x2f             	MOVAR	r0x100B
+0000f0   1f01     movra   0x1              	MOVRA	STK05
+0000f1   1e30     movar   0x30             	MOVAR	r0x100D
+0000f2   1f02     movra   0x2              	MOVRA	STK04
+0000f3   1e31     movar   0x31             	MOVAR	r0x100C
+0000f4   1f03     movra   0x3              	MOVRA	STK03
+0000f5   1e2a     movar   0x2a             	MOVAR	r0x1006
+0000f6   1f04     movra   0x4              	MOVRA	STK02
+0000f7   1e2b     movar   0x2b             	MOVAR	r0x1007
+0000f8   1f05     movra   0x5              	MOVRA	STK01
+0000f9   1e2c     movar   0x2c             	MOVAR	r0x1008
+0000fa   1f06     movra   0x6              	MOVRA	STK00
+0000fb   1e2d     movar   0x2d             	MOVAR	r0x1009
+0000fc   c001     call    0x1              	CALL	__mullong
+0000fd   1f4b     movra   0x4b             	MOVRA	(_ulram0 + 3)
+0000fe   1e06     movar   0x6              	MOVAR	STK00
+0000ff   1f4a     movra   0x4a             	MOVRA	(_ulram0 + 2)
+000100   1e05     movar   0x5              	MOVAR	STK01
+000101   1f49     movra   0x49             	MOVRA	(_ulram0 + 1)
+000102   1e04     movar   0x4              	MOVAR	STK02
+000103   1f48     movra   0x48             	MOVRA	_ulram0
+                                           ;	.line	33; "umul.c"	ulram0 = ui_a * ui_b;     	   	   	   		   	// 0x000027e8
+000104   1e1a     movar   0x1a             	MOVAR	_ui_b
+000105   1f04     movra   0x4              	MOVRA	STK02
+000106   1e1b     movar   0x1b             	MOVAR	(_ui_b + 1)
+000107   1f05     movra   0x5              	MOVRA	STK01
+000108   1e18     movar   0x18             	MOVAR	_ui_a
+000109   1f06     movra   0x6              	MOVRA	STK00
+00010a   1e19     movar   0x19             	MOVAR	(_ui_a + 1)
+00010b   c11a     call    0x11a            	CALL	__mulint
+00010c   1f2b     movra   0x2b             	MOVRA	r0x1007
+00010d   1e06     movar   0x6              	MOVAR	STK00
+00010e   1f2a     movra   0x2a             	MOVRA	r0x1006
+00010f   1e2a     movar   0x2a             	MOVAR	r0x1006
+000110   1f48     movra   0x48             	MOVRA	_ulram0
+000111   1e2b     movar   0x2b             	MOVAR	r0x1007
+000112   1f49     movra   0x49             	MOVRA	(_ulram0 + 1)
+000113   2d00     movai   0                	MOVAI	0x00
+000114   5749     jbclr   0x49, 0x7        	JBCLR	(_ulram0 + 1),7
+000115   2dff     movai   0xff             	MOVAI	0xff
+000116   1f4b     movra   0x4b             	MOVRA	(_ulram0 + 3)
+000117   1f4a     movra   0x4a             	MOVRA	(_ulram0 + 2)
+                                           _00106_DS_
+                                           ;	.line	35; "umul.c"	while(1);
+000118   8118     goto    0x118            	GOTO	_00106_DS_
+000119   0e00     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  116+    0 =   116 instructions (  232 byte)
+                                           
+                                           	end
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XX-------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   385
+

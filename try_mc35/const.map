@@ -1,0 +1,35 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Map File - Created 2017-12-19  11:52:48
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                  STARTUP       code   00000000    program   0x000002
+               code_const       code   0x000001    program   0x000014
+                sharebank      udata   00000000       data   0x000007
+          UD_abs_const_20      udata   0x000020       data   0x000001
+          UD_abs_const_21      udata   0x000021       data   0x000001
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            00000000    00000000
+                            0x000001    0x00000a
+ 
+                            11 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+                    STK06   00000000       data     extern const.asm
+                    STK05   0x000001       data     extern const.asm
+                    STK04   0x000002       data     extern const.asm
+                    STK03   0x000003       data     extern const.asm
+                    STK02   0x000004       data     extern const.asm
+                    STK01   0x000005       data     extern const.asm
+                    STK00   0x000006       data     extern const.asm
+                    _ram0   0x000020       data     extern const.asm
+                    _ram1   0x000021       data     extern const.asm
+                    _main   0x000001    program     extern const.asm
+               _00110_DS_   0x000009    program     static const.asm
+ 

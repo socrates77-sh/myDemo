@@ -13,7 +13,9 @@ set SDCC_ARG=-V --verbose --use-non-free -mmc35 -p2K7041 ^
 -I"%SDCC_HOME%\share\include" ^
 -Wa"-I%SDCC_HOME%\share\header" ^
 -Wl"-s%SDCC_HOME%\share\lkr\mc35p7041.lkr" ^
--Wl"-IE:\tools\bak\share\lib"
+-Wl"-I%SDCC_HOME%\share\lib"
+
+::-Wl"-IE:\tools\bak\share\lib"
 
 @echo on
 

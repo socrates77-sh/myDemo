@@ -1,4 +1,4 @@
-#include <mc32p21.h>
+#include <mc35p7041.h>
 
 long c_a, c_b;
 ulong uc_a, uc_b;

@@ -1,0 +1,805 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Listing File Generated: 2017-12-19  11:53:39
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                                           ; Version 1.1.0 (Dec 19 2017) (MINGW32)
+                                           ; This file was generated Tue Dec 19 11:53:39 2017
+                                           ;--------------------------------------------------------
+                                           ; MC35 port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"type_short.c"
+                                           	list	p=2K7041
+                                           	radix dec
+                                           	include "2K7041.inc"
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_HIBYTEbits
+                                           	extern	_FSR0bits
+                                           	extern	_FSR1bits
+                                           	extern	_PFLAGbits
+                                           	extern	_ZEROTRbits
+                                           	extern	_OSCCALbits
+                                           	extern	_WKCR0bits
+                                           	extern	_WKCR5bits
+                                           	extern	_ADIOS0bits
+                                           	extern	_ADIOS1bits
+                                           	extern	_ADIOS2bits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ADCR2bits
+                                           	extern	_OEP0bits
+                                           	extern	_EINTCRbits
+                                           	extern	_OEP4bits
+                                           	extern	_OEP5bits
+                                           	extern	_INTFbits
+                                           	extern	_INTEbits
+                                           	extern	_OSCMbits
+                                           	extern	_WDTCRbits
+                                           	extern	_T1LDRbits
+                                           	extern	_PCLbits
+                                           	extern	_PCHbits
+                                           	extern	_IOP0bits
+                                           	extern	_IOP4bits
+                                           	extern	_IOP5bits
+                                           	extern	_T0CRbits
+                                           	extern	_T0CNTbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_BUZCRbits
+                                           	extern	_MCRbits
+                                           	extern	_PUP0bits
+                                           	extern	_PUP4bits
+                                           	extern	_PUP5bits
+                                           	extern	_INDFbits
+                                           	extern	_PWMCR0bits
+                                           	extern	_PWMCR1bits
+                                           	extern	_PWMCNTbits
+                                           	extern	_PWMADTbits
+                                           	extern	_PWMBDTbits
+                                           	extern	_PWMCDTbits
+                                           	extern	_PWMPDbits
+                                           	extern	_HIBYTE
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PFLAG
+                                           	extern	_ZEROTR
+                                           	extern	_OSCCAL
+                                           	extern	_WKCR0
+                                           	extern	_WKCR5
+                                           	extern	_ADIOS0
+                                           	extern	_ADIOS1
+                                           	extern	_ADIOS2
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_ADCR2
+                                           	extern	_OEP0
+                                           	extern	_EINTCR
+                                           	extern	_OEP4
+                                           	extern	_OEP5
+                                           	extern	_INTF
+                                           	extern	_INTE
+                                           	extern	_OSCM
+                                           	extern	_WDTCR
+                                           	extern	_T1LDR
+                                           	extern	_PCL
+                                           	extern	_PCH
+                                           	extern	_IOP0
+                                           	extern	_IOP4
+                                           	extern	_IOP5
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_BUZCR
+                                           	extern	_MCR
+                                           	extern	_PUP0
+                                           	extern	_PUP4
+                                           	extern	_PUP5
+                                           	extern	_INDF
+                                           	extern	_PWMCR0
+                                           	extern	_PWMCR1
+                                           	extern	_PWMCNT
+                                           	extern	_PWMADT
+                                           	extern	_PWMBDT
+                                           	extern	_PWMCDT
+                                           	extern	_PWMPD
+                                           	extern	_STKR0L
+                                           	extern	_STKR0H
+                                           	extern	_STKR1L
+                                           	extern	_STKR1H
+                                           	extern	_STKR2L
+                                           	extern	_STKR2H
+                                           	extern	_STKR3L
+                                           	extern	_STKR3H
+                                           	extern	_STKR4L
+                                           	extern	_STKR4H
+                                           	extern	_STKR5L
+                                           	extern	_STKR5H
+                                           	extern	_STKR6L
+                                           	extern	_STKR6H
+                                           	extern	_STKR7L
+                                           	extern	_STKR7H
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_c_a
+                                           	global	_c_b
+                                           	global	_uc_a
+                                           	global	_uc_b
+                                           	global	_ram1
+                                           	global	_ram0
+                                           	global	_iram
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           UD_type_short_0	udata
+                                           _c_a	res	2
+                                           
+                                           UD_type_short_1	udata
+                                           _c_b	res	2
+                                           
+                                           UD_type_short_2	udata
+                                           _uc_a	res	2
+                                           
+                                           UD_type_short_3	udata
+                                           _uc_b	res	2
+                                           
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           UD_abs_type_short_20	udata_ovr	0x0020
+                                           _ram0
+                                           	res	1
+                                           UD_abs_type_short_21	udata_ovr	0x0021
+                                           _ram1
+                                           	res	1
+                                           UD_abs_type_short_30	udata_ovr	0x0030
+                                           _iram
+                                           	res	2
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_type_short_0	udata
+                                           r0x1008	res	1
+                                           r0x1009	res	1
+                                           r0x100B	res	1
+                                           r0x100A	res	1
+                                           r0x100C	res	1
+                                           r0x100E	res	1
+                                           r0x100F	res	1
+                                           r0x1010	res	1
+                                           r0x1011	res	1
+                                           r0x1013	res	1
+                                           r0x1014	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@main main                      Allocated to registers ;size:2
+                                           ;@main HIBYTEbits                Allocated to registers ;size:1
+                                           ;@main FSR0bits                  Allocated to registers ;size:1
+                                           ;@main FSR1bits                  Allocated to registers ;size:1
+                                           ;@main PFLAGbits                 Allocated to registers ;size:1
+                                           ;@main ZEROTRbits                Allocated to registers ;size:1
+                                           ;@main OSCCALbits                Allocated to registers ;size:1
+                                           ;@main WKCR0bits                 Allocated to registers ;size:1
+                                           ;@main WKCR5bits                 Allocated to registers ;size:1
+                                           ;@main ADIOS0bits                Allocated to registers ;size:1
+                                           ;@main ADIOS1bits                Allocated to registers ;size:1
+                                           ;@main ADIOS2bits                Allocated to registers ;size:1
+                                           ;@main ADCR0bits                 Allocated to registers ;size:1
+                                           ;@main ADCR1bits                 Allocated to registers ;size:1
+                                           ;@main ADCR2bits                 Allocated to registers ;size:1
+                                           ;@main OEP0bits                  Allocated to registers ;size:1
+                                           ;@main EINTCRbits                Allocated to registers ;size:1
+                                           ;@main OEP4bits                  Allocated to registers ;size:1
+                                           ;@main OEP5bits                  Allocated to registers ;size:1
+                                           ;@main INTFbits                  Allocated to registers ;size:1
+                                           ;@main INTEbits                  Allocated to registers ;size:1
+                                           ;@main OSCMbits                  Allocated to registers ;size:1
+                                           ;@main WDTCRbits                 Allocated to registers ;size:1
+                                           ;@main T1LDRbits                 Allocated to registers ;size:1
+                                           ;@main PCLbits                   Allocated to registers ;size:1
+                                           ;@main PCHbits                   Allocated to registers ;size:1
+                                           ;@main IOP0bits                  Allocated to registers ;size:1
+                                           ;@main IOP4bits                  Allocated to registers ;size:1
+                                           ;@main IOP5bits                  Allocated to registers ;size:1
+                                           ;@main T0CRbits                  Allocated to registers ;size:1
+                                           ;@main T0CNTbits                 Allocated to registers ;size:1
+                                           ;@main T1CRbits                  Allocated to registers ;size:1
+                                           ;@main T1CNTbits                 Allocated to registers ;size:1
+                                           ;@main BUZCRbits                 Allocated to registers ;size:1
+                                           ;@main MCRbits                   Allocated to registers ;size:1
+                                           ;@main PUP0bits                  Allocated to registers ;size:1
+                                           ;@main PUP4bits                  Allocated to registers ;size:1
+                                           ;@main PUP5bits                  Allocated to registers ;size:1
+                                           ;@main INDFbits                  Allocated to registers ;size:1
+                                           ;@main PWMCR0bits                Allocated to registers ;size:1
+                                           ;@main PWMCR1bits                Allocated to registers ;size:1
+                                           ;@main PWMCNTbits                Allocated to registers ;size:1
+                                           ;@main PWMADTbits                Allocated to registers ;size:1
+                                           ;@main PWMBDTbits                Allocated to registers ;size:1
+                                           ;@main PWMCDTbits                Allocated to registers ;size:1
+                                           ;@main PWMPDbits                 Allocated to registers ;size:1
+                                           ;@main c_a                       Allocated to registers ;size:2
+                                           ;@main c_b                       Allocated to registers ;size:2
+                                           ;@main uc_a                      Allocated to registers ;size:2
+                                           ;@main uc_b                      Allocated to registers ;size:2
+                                           ;@main ram1                      Allocated to registers ;size:1
+                                           ;@main ram0                      Allocated to registers ;size:1
+                                           ;@main iram                      Allocated to registers ;size:2
+                                           ;@main HIBYTE                    Allocated to registers ;size:1
+                                           ;@main FSR0                      Allocated to registers ;size:1
+                                           ;@main FSR1                      Allocated to registers ;size:1
+                                           ;@main PFLAG                     Allocated to registers ;size:1
+                                           ;@main ZEROTR                    Allocated to registers ;size:1
+                                           ;@main OSCCAL                    Allocated to registers ;size:1
+                                           ;@main WKCR0                     Allocated to registers ;size:1
+                                           ;@main WKCR5                     Allocated to registers ;size:1
+                                           ;@main ADIOS0                    Allocated to registers ;size:1
+                                           ;@main ADIOS1                    Allocated to registers ;size:1
+                                           ;@main ADIOS2                    Allocated to registers ;size:1
+                                           ;@main ADCR0                     Allocated to registers ;size:1
+                                           ;@main ADCR1                     Allocated to registers ;size:1
+                                           ;@main ADRH                      Allocated to registers ;size:1
+                                           ;@main ADRL                      Allocated to registers ;size:1
+                                           ;@main ADCR2                     Allocated to registers ;size:1
+                                           ;@main OEP0                      Allocated to registers ;size:1
+                                           ;@main EINTCR                    Allocated to registers ;size:1
+                                           ;@main OEP4                      Allocated to registers ;size:1
+                                           ;@main OEP5                      Allocated to registers ;size:1
+                                           ;@main INTF                      Allocated to registers ;size:1
+                                           ;@main INTE                      Allocated to registers ;size:1
+                                           ;@main OSCM                      Allocated to registers ;size:1
+                                           ;@main WDTCR                     Allocated to registers ;size:1
+                                           ;@main T1LDR                     Allocated to registers ;size:1
+                                           ;@main PCL                       Allocated to registers ;size:1
+                                           ;@main PCH                       Allocated to registers ;size:1
+                                           ;@main IOP0                      Allocated to registers ;size:1
+                                           ;@main IOP4                      Allocated to registers ;size:1
+                                           ;@main IOP5                      Allocated to registers ;size:1
+                                           ;@main T0CR                      Allocated to registers ;size:1
+                                           ;@main T0CNT                     Allocated to registers ;size:1
+                                           ;@main T1CR                      Allocated to registers ;size:1
+                                           ;@main T1CNT                     Allocated to registers ;size:1
+                                           ;@main BUZCR                     Allocated to registers ;size:1
+                                           ;@main MCR                       Allocated to registers ;size:1
+                                           ;@main PUP0                      Allocated to registers ;size:1
+                                           ;@main PUP4                      Allocated to registers ;size:1
+                                           ;@main PUP5                      Allocated to registers ;size:1
+                                           ;@main INDF                      Allocated to registers ;size:1
+                                           ;@main PWMCR0                    Allocated to registers ;size:1
+                                           ;@main PWMCR1                    Allocated to registers ;size:1
+                                           ;@main PWMCNT                    Allocated to registers ;size:1
+                                           ;@main PWMADT                    Allocated to registers ;size:1
+                                           ;@main PWMBDT                    Allocated to registers ;size:1
+                                           ;@main PWMCDT                    Allocated to registers ;size:1
+                                           ;@main PWMPD                     Allocated to registers ;size:1
+                                           ;@main STKR0L                    Allocated to registers ;size:1
+                                           ;@main STKR0H                    Allocated to registers ;size:1
+                                           ;@main STKR1L                    Allocated to registers ;size:1
+                                           ;@main STKR1H                    Allocated to registers ;size:1
+                                           ;@main STKR2L                    Allocated to registers ;size:1
+                                           ;@main STKR2H                    Allocated to registers ;size:1
+                                           ;@main STKR3L                    Allocated to registers ;size:1
+                                           ;@main STKR3H                    Allocated to registers ;size:1
+                                           ;@main STKR4L                    Allocated to registers ;size:1
+                                           ;@main STKR4H                    Allocated to registers ;size:1
+                                           ;@main STKR5L                    Allocated to registers ;size:1
+                                           ;@main STKR5H                    Allocated to registers ;size:1
+                                           ;@main STKR6L                    Allocated to registers ;size:1
+                                           ;@main STKR6H                    Allocated to registers ;size:1
+                                           ;@main STKR7L                    Allocated to registers ;size:1
+                                           ;@main STKR7H                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   8001     goto    0x1              	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_type_short	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;14 compiler assigned registers:
+                                           ;   r0x1008
+                                           ;   r0x1009
+                                           ;   r0x100A
+                                           ;   r0x100B
+                                           ;   r0x100C
+                                           ;   r0x100D
+                                           ;   r0x100E
+                                           ;   r0x100F
+                                           ;   r0x1010
+                                           ;   r0x1011
+                                           ;   r0x1012
+                                           ;   r0x1013
+                                           ;   r0x1014
+                                           ;   r0x1015
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	15; "type_short.c"	ram1 = 0x20;
+000001   2d20     movai   0x20             	MOVAI	0x20
+000002   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	16; "type_short.c"	ram0 = 0x28;
+000003   2d28     movai   0x28             	MOVAI	0x28
+000004   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	17; "type_short.c"	c_a = (ram1<<8) + ram0;
+000005   1e21     movar   0x21             	MOVAR	_ram1
+000006   1f25     movra   0x25             	MOVRA	r0x100A
+000007   1f22     movra   0x22             	MOVRA	r0x1008
+000008   2b23     clrr    0x23             	CLRR	r0x1009
+                                           ;;116	MOVAR	r0x1008
+000009   2b24     clrr    0x24             	CLRR	r0x100B
+00000a   1e20     movar   0x20             	MOVAR	_ram0
+00000b   1f22     movra   0x22             	MOVRA	r0x1008
+00000c   2b23     clrr    0x23             	CLRR	r0x1009
+00000d   1e22     movar   0x22             	MOVAR	r0x1008
+00000e   1224     addar   0x24             	ADDAR	r0x100B
+00000f   1f2d     movra   0x2d             	MOVRA	_c_a
+000010   1e25     movar   0x25             	MOVAR	r0x100A
+000011   1f2e     movra   0x2e             	MOVRA	(_c_a + 1)
+000012   2d00     movai   0                	MOVAI	0x00
+000013   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000014   1523     jzar    0x23             	JZAR	r0x1009
+000015   132e     addra   0x2e             	ADDRA	(_c_a + 1)
+                                           ;	.line	19; "type_short.c"	ram1 = 0xa4;
+000016   2da4     movai   0xa4             	MOVAI	0xa4
+000017   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	20; "type_short.c"	ram0 = 0xd0;
+000018   2dd0     movai   0xd0             	MOVAI	0xd0
+000019   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	21; "type_short.c"	c_b = (ram1<<8) + ram0;
+00001a   1e21     movar   0x21             	MOVAR	_ram1
+00001b   1f25     movra   0x25             	MOVRA	r0x100A
+00001c   1f22     movra   0x22             	MOVRA	r0x1008
+00001d   2b23     clrr    0x23             	CLRR	r0x1009
+                                           ;;115	MOVAR	r0x1008
+00001e   2b24     clrr    0x24             	CLRR	r0x100B
+00001f   1e20     movar   0x20             	MOVAR	_ram0
+000020   1f22     movra   0x22             	MOVRA	r0x1008
+000021   2b23     clrr    0x23             	CLRR	r0x1009
+000022   1e22     movar   0x22             	MOVAR	r0x1008
+000023   1224     addar   0x24             	ADDAR	r0x100B
+000024   1f07     movra   0x7              	MOVRA	_c_b
+000025   1e25     movar   0x25             	MOVAR	r0x100A
+000026   1f08     movra   0x8              	MOVRA	(_c_b + 1)
+000027   2d00     movai   0                	MOVAI	0x00
+000028   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000029   1523     jzar    0x23             	JZAR	r0x1009
+00002a   1308     addra   0x8              	ADDRA	(_c_b + 1)
+                                           ;	.line	23; "type_short.c"	ram1 = 0x20;
+00002b   2d20     movai   0x20             	MOVAI	0x20
+00002c   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	24; "type_short.c"	ram0 = 0x28;
+00002d   2d28     movai   0x28             	MOVAI	0x28
+00002e   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	25; "type_short.c"	uc_a = (ram1<<8) + ram0;
+00002f   1e21     movar   0x21             	MOVAR	_ram1
+000030   1f25     movra   0x25             	MOVRA	r0x100A
+000031   1f22     movra   0x22             	MOVRA	r0x1008
+000032   2b23     clrr    0x23             	CLRR	r0x1009
+                                           ;;113	MOVAR	r0x1008
+000033   2b24     clrr    0x24             	CLRR	r0x100B
+000034   1e20     movar   0x20             	MOVAR	_ram0
+000035   1f22     movra   0x22             	MOVRA	r0x1008
+000036   2b23     clrr    0x23             	CLRR	r0x1009
+000037   1e22     movar   0x22             	MOVAR	r0x1008
+000038   1224     addar   0x24             	ADDAR	r0x100B
+000039   1f09     movra   0x9              	MOVRA	_uc_a
+00003a   1e25     movar   0x25             	MOVAR	r0x100A
+00003b   1f0a     movra   0xa              	MOVRA	(_uc_a + 1)
+00003c   2d00     movai   0                	MOVAI	0x00
+00003d   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00003e   1523     jzar    0x23             	JZAR	r0x1009
+00003f   130a     addra   0xa              	ADDRA	(_uc_a + 1)
+                                           ;	.line	27; "type_short.c"	ram1 = 0xe3;
+000040   2de3     movai   0xe3             	MOVAI	0xe3
+000041   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	28; "type_short.c"	ram0 = 0x80;
+000042   2d80     movai   0x80             	MOVAI	0x80
+000043   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	29; "type_short.c"	uc_b = (ram1<<8) + ram0;
+000044   1e21     movar   0x21             	MOVAR	_ram1
+000045   1f25     movra   0x25             	MOVRA	r0x100A
+000046   1f22     movra   0x22             	MOVRA	r0x1008
+000047   2b23     clrr    0x23             	CLRR	r0x1009
+                                           ;;109	MOVAR	r0x1008
+000048   2b24     clrr    0x24             	CLRR	r0x100B
+000049   1e20     movar   0x20             	MOVAR	_ram0
+00004a   1f22     movra   0x22             	MOVRA	r0x1008
+00004b   2b23     clrr    0x23             	CLRR	r0x1009
+00004c   1e22     movar   0x22             	MOVAR	r0x1008
+00004d   1224     addar   0x24             	ADDAR	r0x100B
+00004e   1f0b     movra   0xb              	MOVRA	_uc_b
+00004f   1e25     movar   0x25             	MOVAR	r0x100A
+000050   1f0c     movra   0xc              	MOVRA	(_uc_b + 1)
+000051   2d00     movai   0                	MOVAI	0x00
+000052   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000053   1523     jzar    0x23             	JZAR	r0x1009
+000054   130c     addra   0xc              	ADDRA	(_uc_b + 1)
+                                           ;	.line	32; "type_short.c"	ram1 = (c_a + c_b)>>8;   	   	   	// 0xc4f8
+000055   1e07     movar   0x7              	MOVAR	_c_b
+000056   122d     addar   0x2d             	ADDAR	_c_a
+000057   1f22     movra   0x22             	MOVRA	r0x1008
+000058   1e2e     movar   0x2e             	MOVAR	(_c_a + 1)
+000059   1f23     movra   0x23             	MOVRA	r0x1009
+00005a   1e08     movar   0x8              	MOVAR	(_c_b + 1)
+00005b   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00005c   1508     jzar    0x8              	JZAR	(_c_b + 1)
+00005d   1323     addra   0x23             	ADDRA	r0x1009
+00005e   1e23     movar   0x23             	MOVAR	r0x1009
+00005f   1f24     movra   0x24             	MOVRA	r0x100B
+000060   2b25     clrr    0x25             	CLRR	r0x100A
+000061   5724     jbclr   0x24, 0x7        	JBCLR	r0x100B,7
+000062   2625     djzr    0x25             	DJZR	r0x100A
+000063   0000     nop                      	NOP	
+000064   1e24     movar   0x24             	MOVAR	r0x100B
+000065   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	33; "type_short.c"	ram0 = (c_a + c_b) & 0xff;
+000066   1e2d     movar   0x2d             	MOVAR	_c_a
+000067   1f24     movra   0x24             	MOVRA	r0x100B
+000068   1e07     movar   0x7              	MOVAR	_c_b
+000069   1f25     movra   0x25             	MOVRA	r0x100A
+00006a   1e25     movar   0x25             	MOVAR	r0x100A
+00006b   1224     addar   0x24             	ADDAR	r0x100B
+00006c   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	34; "type_short.c"	iram = (c_a + c_b);
+00006d   1e22     movar   0x22             	MOVAR	r0x1008
+00006e   1f30     movra   0x30             	MOVRA	_iram
+00006f   1e23     movar   0x23             	MOVAR	r0x1009
+000070   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	36; "type_short.c"	ram1 = (uc_a + uc_b)>>8;     	   	   	// 0x03a8
+000071   1e0b     movar   0xb              	MOVAR	_uc_b
+000072   1209     addar   0x9              	ADDAR	_uc_a
+000073   1f22     movra   0x22             	MOVRA	r0x1008
+000074   1e0a     movar   0xa              	MOVAR	(_uc_a + 1)
+000075   1f23     movra   0x23             	MOVRA	r0x1009
+000076   1e0c     movar   0xc              	MOVAR	(_uc_b + 1)
+000077   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000078   150c     jzar    0xc              	JZAR	(_uc_b + 1)
+000079   1323     addra   0x23             	ADDRA	r0x1009
+                                           ;;103	MOVAR	r0x1009
+                                           ;;1	CLRR	r0x100D
+                                           ;;102	MOVAR	r0x100C
+00007a   1e23     movar   0x23             	MOVAR	r0x1009
+00007b   1f26     movra   0x26             	MOVRA	r0x100C
+00007c   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	37; "type_short.c"	ram0 = (uc_a + uc_b) & 0xff;
+00007d   1e09     movar   0x9              	MOVAR	_uc_a
+00007e   1f26     movra   0x26             	MOVRA	r0x100C
+00007f   1e0b     movar   0xb              	MOVAR	_uc_b
+000080   1f27     movra   0x27             	MOVRA	r0x100E
+000081   1e27     movar   0x27             	MOVAR	r0x100E
+000082   1226     addar   0x26             	ADDAR	r0x100C
+000083   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	38; "type_short.c"	iram = (uc_a + uc_b);
+000084   1e22     movar   0x22             	MOVAR	r0x1008
+000085   1f30     movra   0x30             	MOVRA	_iram
+000086   1e23     movar   0x23             	MOVAR	r0x1009
+000087   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	40; "type_short.c"	ram1 = (c_a - c_b)>>8;   	   	   	// 0x7b58
+000088   1e07     movar   0x7              	MOVAR	_c_b
+000089   2c2d     xch     0x2d             	XCH	_c_a
+00008a   232d     asubra  0x2d             	ASUBRA	_c_a
+00008b   2c2d     xch     0x2d             	XCH	_c_a
+00008c   1f22     movra   0x22             	MOVRA	r0x1008
+00008d   1e08     movar   0x8              	MOVAR	(_c_b + 1)
+00008e   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+00008f   1508     jzar    0x8              	JZAR	(_c_b + 1)
+000090   0000     nop                      	NOP	
+000091   2c2e     xch     0x2e             	XCH	(_c_a + 1)
+000092   232e     asubra  0x2e             	ASUBRA	(_c_a + 1)
+000093   2c2e     xch     0x2e             	XCH	(_c_a + 1)
+000094   1f28     movra   0x28             	MOVRA	r0x100F
+000095   1f23     movra   0x23             	MOVRA	r0x1009
+                                           ;;114	MOVAR	r0x1009
+000096   2b29     clrr    0x29             	CLRR	r0x1010
+000097   5728     jbclr   0x28, 0x7        	JBCLR	r0x100F,7
+000098   2629     djzr    0x29             	DJZR	r0x1010
+000099   0000     nop                      	NOP	
+00009a   1e28     movar   0x28             	MOVAR	r0x100F
+00009b   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	41; "type_short.c"	ram0 = (c_a - c_b) & 0xff;
+00009c   1e25     movar   0x25             	MOVAR	r0x100A
+00009d   2c24     xch     0x24             	XCH	r0x100B
+00009e   2324     asubra  0x24             	ASUBRA	r0x100B
+00009f   2c24     xch     0x24             	XCH	r0x100B
+0000a0   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	42; "type_short.c"	iram = (c_a - c_b);
+0000a1   1e22     movar   0x22             	MOVAR	r0x1008
+0000a2   1f30     movra   0x30             	MOVRA	_iram
+0000a3   1e23     movar   0x23             	MOVAR	r0x1009
+0000a4   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	44; "type_short.c"	ram1 = (uc_a - uc_b)>>8;     	   	   	// 0x3ca8
+0000a5   1e0b     movar   0xb              	MOVAR	_uc_b
+0000a6   2c09     xch     0x9              	XCH	_uc_a
+0000a7   2309     asubra  0x9              	ASUBRA	_uc_a
+0000a8   2c09     xch     0x9              	XCH	_uc_a
+0000a9   1f22     movra   0x22             	MOVRA	r0x1008
+0000aa   1e0c     movar   0xc              	MOVAR	(_uc_b + 1)
+0000ab   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000ac   150c     jzar    0xc              	JZAR	(_uc_b + 1)
+0000ad   0000     nop                      	NOP	
+0000ae   2c0a     xch     0xa              	XCH	(_uc_a + 1)
+0000af   230a     asubra  0xa              	ASUBRA	(_uc_a + 1)
+0000b0   2c0a     xch     0xa              	XCH	(_uc_a + 1)
+0000b1   1f28     movra   0x28             	MOVRA	r0x100F
+0000b2   1f23     movra   0x23             	MOVRA	r0x1009
+                                           ;;110	MOVAR	r0x1009
+0000b3   2b29     clrr    0x29             	CLRR	r0x1010
+0000b4   1e28     movar   0x28             	MOVAR	r0x100F
+0000b5   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	45; "type_short.c"	ram0 = (uc_a - uc_b) & 0xff;
+0000b6   1e27     movar   0x27             	MOVAR	r0x100E
+0000b7   2c26     xch     0x26             	XCH	r0x100C
+0000b8   2326     asubra  0x26             	ASUBRA	r0x100C
+0000b9   2c26     xch     0x26             	XCH	r0x100C
+0000ba   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	46; "type_short.c"	iram = (uc_a - uc_b);
+0000bb   1e22     movar   0x22             	MOVAR	r0x1008
+0000bc   1f30     movra   0x30             	MOVRA	_iram
+0000bd   1e23     movar   0x23             	MOVAR	r0x1009
+0000be   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	49; "type_short.c"	ram1 = (uc_a + c_b)>>8;      	   	   	// 0xc4f8
+0000bf   1e07     movar   0x7              	MOVAR	_c_b
+0000c0   1f22     movra   0x22             	MOVRA	r0x1008
+0000c1   1e08     movar   0x8              	MOVAR	(_c_b + 1)
+0000c2   1f23     movra   0x23             	MOVRA	r0x1009
+0000c3   1e22     movar   0x22             	MOVAR	r0x1008
+0000c4   1209     addar   0x9              	ADDAR	_uc_a
+0000c5   1f28     movra   0x28             	MOVRA	r0x100F
+0000c6   1e0a     movar   0xa              	MOVAR	(_uc_a + 1)
+0000c7   1f29     movra   0x29             	MOVRA	r0x1010
+0000c8   1e23     movar   0x23             	MOVAR	r0x1009
+0000c9   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+0000ca   1523     jzar    0x23             	JZAR	r0x1009
+0000cb   1329     addra   0x29             	ADDRA	r0x1010
+                                           ;;106	MOVAR	r0x1010
+                                           ;;1	CLRR	r0x1012
+                                           ;;105	MOVAR	r0x1011
+0000cc   1e29     movar   0x29             	MOVAR	r0x1010
+0000cd   1f2a     movra   0x2a             	MOVRA	r0x1011
+0000ce   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	50; "type_short.c"	ram0 = (uc_a + c_b) & 0xff;
+0000cf   1e26     movar   0x26             	MOVAR	r0x100C
+0000d0   1f2a     movra   0x2a             	MOVRA	r0x1011
+0000d1   1e25     movar   0x25             	MOVAR	r0x100A
+0000d2   122a     addar   0x2a             	ADDAR	r0x1011
+0000d3   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	51; "type_short.c"	iram = (uc_a + c_b);
+0000d4   1e28     movar   0x28             	MOVAR	r0x100F
+0000d5   1f30     movra   0x30             	MOVRA	_iram
+0000d6   1e29     movar   0x29             	MOVAR	r0x1010
+0000d7   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	53; "type_short.c"	ram1 = (c_a + uc_b)>>8;      	   	   	// 0x03a8
+0000d8   1e2d     movar   0x2d             	MOVAR	_c_a
+0000d9   1f26     movra   0x26             	MOVRA	r0x100C
+0000da   1e2e     movar   0x2e             	MOVAR	(_c_a + 1)
+0000db   1f2b     movra   0x2b             	MOVRA	r0x1013
+0000dc   1f28     movra   0x28             	MOVRA	r0x100F
+0000dd   1e0b     movar   0xb              	MOVAR	_uc_b
+0000de   1226     addar   0x26             	ADDAR	r0x100C
+0000df   1f29     movra   0x29             	MOVRA	r0x1010
+                                           ;;104	MOVAR	r0x100F
+0000e0   1e0c     movar   0xc              	MOVAR	(_uc_b + 1)
+0000e1   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+0000e2   150c     jzar    0xc              	JZAR	(_uc_b + 1)
+0000e3   132b     addra   0x2b             	ADDRA	r0x1013
+                                           ;;112	MOVAR	r0x1013
+                                           ;;1	CLRR	r0x1015
+                                           ;;111	MOVAR	r0x1014
+0000e4   1e2b     movar   0x2b             	MOVAR	r0x1013
+0000e5   1f2c     movra   0x2c             	MOVRA	r0x1014
+0000e6   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;;108	MOVAR	r0x100E
+                                           ;;107	MOVAR	r0x1014
+                                           ;	.line	54; "type_short.c"	ram0 = (c_a + uc_b) & 0xff;
+0000e7   1e27     movar   0x27             	MOVAR	r0x100E
+0000e8   1f2c     movra   0x2c             	MOVRA	r0x1014
+0000e9   1224     addar   0x24             	ADDAR	r0x100B
+0000ea   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	55; "type_short.c"	iram = (c_a + uc_b);
+0000eb   1e29     movar   0x29             	MOVAR	r0x1010
+0000ec   1f30     movra   0x30             	MOVRA	_iram
+0000ed   1e2b     movar   0x2b             	MOVAR	r0x1013
+0000ee   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	57; "type_short.c"	ram1 = (uc_a - c_b)>>8;      	   	   	// 0x7b58
+0000ef   1e22     movar   0x22             	MOVAR	r0x1008
+0000f0   2c09     xch     0x9              	XCH	_uc_a
+0000f1   2309     asubra  0x9              	ASUBRA	_uc_a
+0000f2   2c09     xch     0x9              	XCH	_uc_a
+0000f3   1f22     movra   0x22             	MOVRA	r0x1008
+0000f4   1e23     movar   0x23             	MOVAR	r0x1009
+0000f5   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+0000f6   1523     jzar    0x23             	JZAR	r0x1009
+0000f7   0000     nop                      	NOP	
+0000f8   2c0a     xch     0xa              	XCH	(_uc_a + 1)
+0000f9   230a     asubra  0xa              	ASUBRA	(_uc_a + 1)
+0000fa   2c0a     xch     0xa              	XCH	(_uc_a + 1)
+0000fb   1f27     movra   0x27             	MOVRA	r0x100E
+0000fc   1f23     movra   0x23             	MOVRA	r0x1009
+                                           ;;101	MOVAR	r0x1009
+0000fd   2b29     clrr    0x29             	CLRR	r0x1010
+0000fe   1e27     movar   0x27             	MOVAR	r0x100E
+0000ff   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	58; "type_short.c"	ram0 = (uc_a - c_b) & 0xff;
+000100   1e25     movar   0x25             	MOVAR	r0x100A
+000101   2c2a     xch     0x2a             	XCH	r0x1011
+000102   232a     asubra  0x2a             	ASUBRA	r0x1011
+000103   2c2a     xch     0x2a             	XCH	r0x1011
+000104   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	59; "type_short.c"	iram = (uc_a - c_b);
+000105   1e22     movar   0x22             	MOVAR	r0x1008
+000106   1f30     movra   0x30             	MOVRA	_iram
+000107   1e23     movar   0x23             	MOVAR	r0x1009
+000108   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;	.line	61; "type_short.c"	ram1 = (c_a - uc_b)>>8;      	   	   	// 0x3ca8
+000109   1e0b     movar   0xb              	MOVAR	_uc_b
+00010a   2c26     xch     0x26             	XCH	r0x100C
+00010b   2226     asubar  0x26             	ASUBAR	r0x100C
+00010c   2c26     xch     0x26             	XCH	r0x100C
+00010d   1e0c     movar   0xc              	MOVAR	(_uc_b + 1)
+00010e   2c28     xch     0x28             	XCH	r0x100F
+00010f   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+000110   1628     jzr     0x28             	JZR	r0x100F
+000111   2228     asubar  0x28             	ASUBAR	r0x100F
+000112   2c28     xch     0x28             	XCH	r0x100F
+                                           ;;100	MOVAR	r0x100F
+000113   2b23     clrr    0x23             	CLRR	r0x1009
+                                           ;;99	MOVAR	r0x1008
+000114   1e28     movar   0x28             	MOVAR	r0x100F
+000115   1f22     movra   0x22             	MOVRA	r0x1008
+000116   1f21     movra   0x21             	MOVRA	_ram1
+                                           ;	.line	62; "type_short.c"	ram0 = (c_a - uc_b) & 0xff;
+000117   1e2c     movar   0x2c             	MOVAR	r0x1014
+000118   2c24     xch     0x24             	XCH	r0x100B
+000119   2324     asubra  0x24             	ASUBRA	r0x100B
+00011a   2c24     xch     0x24             	XCH	r0x100B
+00011b   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	63; "type_short.c"	iram = (c_a - uc_b);
+00011c   1e26     movar   0x26             	MOVAR	r0x100C
+00011d   1f30     movra   0x30             	MOVRA	_iram
+00011e   1e28     movar   0x28             	MOVAR	r0x100F
+00011f   1f31     movra   0x31             	MOVRA	(_iram + 1)
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;signed compare: left >= lit(0x1=1), size=2, mask=ffff
+                                           ;	.line	66; "type_short.c"	if (c_a > 0) ram0 = c_a; 	   	   	// true
+000120   1e2e     movar   0x2e             	MOVAR	(_c_a + 1)
+000121   1480     addai   0x80             	ADDAI	0x80
+000122   1480     addai   0x80             	ADDAI	0x80
+000123   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000124   8129     goto    0x129            	GOTO	_00128_DS_
+000125   2d01     movai   0x1              	MOVAI	0x01
+000126   2c2d     xch     0x2d             	XCH	_c_a
+000127   232d     asubra  0x2d             	ASUBRA	_c_a
+000128   2c2d     xch     0x2d             	XCH	_c_a
+                                           _00128_DS_
+000129   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+00012a   812d     goto    0x12d            	GOTO	_00106_DS_
+                                           ;;genSkipc:3223: created from rifx:00DD608C
+00012b   1e2d     movar   0x2d             	MOVAR	_c_a
+00012c   1f20     movra   0x20             	MOVRA	_ram0
+                                           _00106_DS_
+                                           ;	.line	67; "type_short.c"	if (uc_a > 0) ram0 = c_a + 1;    	// true
+00012d   1e09     movar   0x9              	MOVAR	_uc_a
+00012e   180a     orar    0xa              	ORAR	(_uc_a + 1)
+00012f   5086     jbclr   0x86, 0          	JBCLR	PFLAG,0
+000130   8134     goto    0x134            	GOTO	_00108_DS_
+000131   1524     jzar    0x24             	JZAR	r0x100B
+000132   0000     nop                      	NOP	
+000133   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;signed compare: left >= lit(0xFFFFFFFE=-2), size=2, mask=ffff
+                                           _00108_DS_
+                                           ;	.line	69; "type_short.c"	if (c_b > -3) ram0 = c_a + 2;	   	// false
+000134   1e08     movar   0x8              	MOVAR	(_c_b + 1)
+000135   1480     addai   0x80             	ADDAI	0x80
+000136   1481     addai   0x81             	ADDAI	0x81
+000137   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000138   813d     goto    0x13d            	GOTO	_00129_DS_
+000139   2dfe     movai   0xfe             	MOVAI	0xfe
+00013a   2c07     xch     0x7              	XCH	_c_b
+00013b   2307     asubra  0x7              	ASUBRA	_c_b
+00013c   2c07     xch     0x7              	XCH	_c_b
+                                           _00129_DS_
+00013d   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+00013e   8142     goto    0x142            	GOTO	_00110_DS_
+                                           ;;genSkipc:3223: created from rifx:00DD608C
+00013f   2d02     movai   0x2              	MOVAI	0x02
+000140   1224     addar   0x24             	ADDAR	r0x100B
+000141   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;;swapping arguments (AOP_TYPEs 1/3)
+                                           ;;unsigned compare: left >= lit(0xFFFE=65534), size=2
+                                           _00110_DS_
+                                           ;	.line	70; "type_short.c"	if (uc_b > -3) ram0 = c_a + 3;   	// false
+000142   2dff     movai   0xff             	MOVAI	0xff
+000143   2c0c     xch     0xc              	XCH	(_uc_b + 1)
+000144   230c     asubra  0xc              	ASUBRA	(_uc_b + 1)
+000145   2c0c     xch     0xc              	XCH	(_uc_b + 1)
+000146   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000147   814c     goto    0x14c            	GOTO	_00130_DS_
+000148   2dfe     movai   0xfe             	MOVAI	0xfe
+000149   2c0b     xch     0xb              	XCH	_uc_b
+00014a   230b     asubra  0xb              	ASUBRA	_uc_b
+00014b   2c0b     xch     0xb              	XCH	_uc_b
+                                           _00130_DS_
+00014c   5a86     jbset   0x86, 0x2        	JBSET	PFLAG,2
+00014d   8151     goto    0x151            	GOTO	_00114_DS_
+                                           ;;genSkipc:3223: created from rifx:00DD608C
+00014e   2d03     movai   0x3              	MOVAI	0x03
+00014f   1224     addar   0x24             	ADDAR	r0x100B
+000150   1f20     movra   0x20             	MOVRA	_ram0
+                                           _00114_DS_
+                                           ;	.line	72; "type_short.c"	while(1);
+000151   8151     goto    0x151            	GOTO	_00114_DS_
+000152   0e00     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  338+    0 =   338 instructions (  676 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXX---------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   339
+

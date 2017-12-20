@@ -9,7 +9,7 @@ void main(void)
 	//c_b = KBIM;
 
 	IOP0 = c_a + c_b;
-	IOP1 = c_a - c_b;
+	IOP4 = c_a - c_b;
 
 	if (c_a > 0) IOP0 = c_b;
 	

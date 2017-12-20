@@ -1,0 +1,745 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Listing File Generated: 2017-12-19  16:03:21
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                                           ; Version 1.1.0 (Dec 19 2017) (MINGW32)
+                                           ; This file was generated Tue Dec 19 16:03:20 2017
+                                           ;--------------------------------------------------------
+                                           ; MC35 port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"tbl.c"
+                                           	list	p=2K7041
+                                           	radix dec
+                                           	include "2K7041.inc"
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_HIBYTEbits
+                                           	extern	_FSR0bits
+                                           	extern	_FSR1bits
+                                           	extern	_PFLAGbits
+                                           	extern	_ZEROTRbits
+                                           	extern	_OSCCALbits
+                                           	extern	_WKCR0bits
+                                           	extern	_WKCR5bits
+                                           	extern	_ADIOS0bits
+                                           	extern	_ADIOS1bits
+                                           	extern	_ADIOS2bits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ADCR2bits
+                                           	extern	_OEP0bits
+                                           	extern	_EINTCRbits
+                                           	extern	_OEP4bits
+                                           	extern	_OEP5bits
+                                           	extern	_INTFbits
+                                           	extern	_INTEbits
+                                           	extern	_OSCMbits
+                                           	extern	_WDTCRbits
+                                           	extern	_T1LDRbits
+                                           	extern	_PCLbits
+                                           	extern	_PCHbits
+                                           	extern	_IOP0bits
+                                           	extern	_IOP4bits
+                                           	extern	_IOP5bits
+                                           	extern	_T0CRbits
+                                           	extern	_T0CNTbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_BUZCRbits
+                                           	extern	_MCRbits
+                                           	extern	_PUP0bits
+                                           	extern	_PUP4bits
+                                           	extern	_PUP5bits
+                                           	extern	_INDFbits
+                                           	extern	_PWMCR0bits
+                                           	extern	_PWMCR1bits
+                                           	extern	_PWMCNTbits
+                                           	extern	_PWMADTbits
+                                           	extern	_PWMBDTbits
+                                           	extern	_PWMCDTbits
+                                           	extern	_PWMPDbits
+                                           	extern	_HIBYTE
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PFLAG
+                                           	extern	_ZEROTR
+                                           	extern	_OSCCAL
+                                           	extern	_WKCR0
+                                           	extern	_WKCR5
+                                           	extern	_ADIOS0
+                                           	extern	_ADIOS1
+                                           	extern	_ADIOS2
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_ADCR2
+                                           	extern	_OEP0
+                                           	extern	_EINTCR
+                                           	extern	_OEP4
+                                           	extern	_OEP5
+                                           	extern	_INTF
+                                           	extern	_INTE
+                                           	extern	_OSCM
+                                           	extern	_WDTCR
+                                           	extern	_T1LDR
+                                           	extern	_PCL
+                                           	extern	_PCH
+                                           	extern	_IOP0
+                                           	extern	_IOP4
+                                           	extern	_IOP5
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_BUZCR
+                                           	extern	_MCR
+                                           	extern	_PUP0
+                                           	extern	_PUP4
+                                           	extern	_PUP5
+                                           	extern	_INDF
+                                           	extern	_PWMCR0
+                                           	extern	_PWMCR1
+                                           	extern	_PWMCNT
+                                           	extern	_PWMADT
+                                           	extern	_PWMBDT
+                                           	extern	_PWMCDT
+                                           	extern	_PWMPD
+                                           	extern	_STKR0L
+                                           	extern	_STKR0H
+                                           	extern	_STKR1L
+                                           	extern	_STKR1H
+                                           	extern	_STKR2L
+                                           	extern	_STKR2H
+                                           	extern	_STKR3L
+                                           	extern	_STKR3H
+                                           	extern	_STKR4L
+                                           	extern	_STKR4H
+                                           	extern	_STKR5L
+                                           	extern	_STKR5H
+                                           	extern	_STKR6L
+                                           	extern	_STKR6H
+                                           	extern	_STKR7L
+                                           	extern	_STKR7H
+                                           	extern	__gptrget1
+                                           	extern	__gptrget2
+                                           	extern	__gptrget4
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_main
+                                           	global	_ram0
+                                           	global	_ram1
+                                           	global	_iram0
+                                           	global	_iram1
+                                           	global	_lram0
+                                           	global	_lram1
+                                           	global	_rom
+                                           	global	_irom
+                                           	global	_lrom
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           UD_abs_tbl_20	udata_ovr	0x0020
+                                           _ram0
+                                           	res	1
+                                           UD_abs_tbl_21	udata_ovr	0x0021
+                                           _ram1
+                                           	res	1
+                                           UD_abs_tbl_22	udata_ovr	0x0022
+                                           _iram0
+                                           	res	2
+                                           UD_abs_tbl_24	udata_ovr	0x0024
+                                           _iram1
+                                           	res	2
+                                           UD_abs_tbl_26	udata_ovr	0x0026
+                                           _lram0
+                                           	res	4
+                                           UD_abs_tbl_2a	udata_ovr	0x002a
+                                           _lram1
+                                           	res	4
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_tbl_0	udata
+                                           r0x1000	res	1
+                                           r0x1001	res	1
+                                           r0x1002	res	1
+                                           r0x1003	res	1
+                                           r0x1004	res	1
+                                           r0x1005	res	1
+                                           r0x1007	res	1
+                                           r0x1006	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ID_tbl_0	code
+                                           _rom
+00011f   0000     nop                      	dw 0x00
+000120   0001     dw      0x1              	dw 0x01
+000121   0002     dw      0x2              	dw 0x02
+000122   0003     dw      0x3              	dw 0x03
+000123   0004     dw      0x4              	dw 0x04
+000124   0005     dw      0x5              	dw 0x05
+000125   0006     dw      0x6              	dw 0x06
+000126   0007     dw      0x7              	dw 0x07
+000127   0008     dw      0x8              	dw 0x08
+000128   0009     dw      0x9              	dw 0x09
+                                           
+                                           
+                                           ID_tbl_1	code
+                                           _irom
+000129   0001     dw      0x1              	dw 0x01
+00012a   0001     dw      0x1              	dw 0x01
+00012b   0002     dw      0x2              	dw 0x02
+00012c   0002     dw      0x2              	dw 0x02
+00012d   0003     dw      0x3              	dw 0x03
+00012e   0003     dw      0x3              	dw 0x03
+00012f   0004     dw      0x4              	dw 0x04
+000130   0004     dw      0x4              	dw 0x04
+                                           
+                                           
+                                           ID_tbl_2	code
+                                           _lrom
+00010f   0001     dw      0x1              	dw 0x01
+000110   0001     dw      0x1              	dw 0x01
+000111   0001     dw      0x1              	dw 0x01
+000112   0001     dw      0x1              	dw 0x01
+000113   0002     dw      0x2              	dw 0x02
+000114   0002     dw      0x2              	dw 0x02
+000115   0002     dw      0x2              	dw 0x02
+000116   0002     dw      0x2              	dw 0x02
+000117   0003     dw      0x3              	dw 0x03
+000118   0003     dw      0x3              	dw 0x03
+000119   0003     dw      0x3              	dw 0x03
+00011a   0003     dw      0x3              	dw 0x03
+00011b   0004     dw      0x4              	dw 0x04
+00011c   0004     dw      0x4              	dw 0x04
+00011d   0004     dw      0x4              	dw 0x04
+00011e   0004     dw      0x4              	dw 0x04
+                                           
+                                           
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@main main                      Allocated to registers ;size:2
+                                           ;@main HIBYTEbits                Allocated to registers ;size:1
+                                           ;@main FSR0bits                  Allocated to registers ;size:1
+                                           ;@main FSR1bits                  Allocated to registers ;size:1
+                                           ;@main PFLAGbits                 Allocated to registers ;size:1
+                                           ;@main ZEROTRbits                Allocated to registers ;size:1
+                                           ;@main OSCCALbits                Allocated to registers ;size:1
+                                           ;@main WKCR0bits                 Allocated to registers ;size:1
+                                           ;@main WKCR5bits                 Allocated to registers ;size:1
+                                           ;@main ADIOS0bits                Allocated to registers ;size:1
+                                           ;@main ADIOS1bits                Allocated to registers ;size:1
+                                           ;@main ADIOS2bits                Allocated to registers ;size:1
+                                           ;@main ADCR0bits                 Allocated to registers ;size:1
+                                           ;@main ADCR1bits                 Allocated to registers ;size:1
+                                           ;@main ADCR2bits                 Allocated to registers ;size:1
+                                           ;@main OEP0bits                  Allocated to registers ;size:1
+                                           ;@main EINTCRbits                Allocated to registers ;size:1
+                                           ;@main OEP4bits                  Allocated to registers ;size:1
+                                           ;@main OEP5bits                  Allocated to registers ;size:1
+                                           ;@main INTFbits                  Allocated to registers ;size:1
+                                           ;@main INTEbits                  Allocated to registers ;size:1
+                                           ;@main OSCMbits                  Allocated to registers ;size:1
+                                           ;@main WDTCRbits                 Allocated to registers ;size:1
+                                           ;@main T1LDRbits                 Allocated to registers ;size:1
+                                           ;@main PCLbits                   Allocated to registers ;size:1
+                                           ;@main PCHbits                   Allocated to registers ;size:1
+                                           ;@main IOP0bits                  Allocated to registers ;size:1
+                                           ;@main IOP4bits                  Allocated to registers ;size:1
+                                           ;@main IOP5bits                  Allocated to registers ;size:1
+                                           ;@main T0CRbits                  Allocated to registers ;size:1
+                                           ;@main T0CNTbits                 Allocated to registers ;size:1
+                                           ;@main T1CRbits                  Allocated to registers ;size:1
+                                           ;@main T1CNTbits                 Allocated to registers ;size:1
+                                           ;@main BUZCRbits                 Allocated to registers ;size:1
+                                           ;@main MCRbits                   Allocated to registers ;size:1
+                                           ;@main PUP0bits                  Allocated to registers ;size:1
+                                           ;@main PUP4bits                  Allocated to registers ;size:1
+                                           ;@main PUP5bits                  Allocated to registers ;size:1
+                                           ;@main INDFbits                  Allocated to registers ;size:1
+                                           ;@main PWMCR0bits                Allocated to registers ;size:1
+                                           ;@main PWMCR1bits                Allocated to registers ;size:1
+                                           ;@main PWMCNTbits                Allocated to registers ;size:1
+                                           ;@main PWMADTbits                Allocated to registers ;size:1
+                                           ;@main PWMBDTbits                Allocated to registers ;size:1
+                                           ;@main PWMCDTbits                Allocated to registers ;size:1
+                                           ;@main PWMPDbits                 Allocated to registers ;size:1
+                                           ;@main ram0                      Allocated to registers ;size:1
+                                           ;@main ram1                      Allocated to registers ;size:1
+                                           ;@main iram0                     Allocated to registers ;size:2
+                                           ;@main iram1                     Allocated to registers ;size:2
+                                           ;@main lram0                     Allocated to registers ;size:4
+                                           ;@main lram1                     Allocated to registers ;size:4
+                                           ;@main i                         Allocated to registers r0x1000 r0x1001 ;size:2
+                                           ;@main HIBYTE                    Allocated to registers ;size:1
+                                           ;@main FSR0                      Allocated to registers ;size:1
+                                           ;@main FSR1                      Allocated to registers ;size:1
+                                           ;@main PFLAG                     Allocated to registers ;size:1
+                                           ;@main ZEROTR                    Allocated to registers ;size:1
+                                           ;@main OSCCAL                    Allocated to registers ;size:1
+                                           ;@main WKCR0                     Allocated to registers ;size:1
+                                           ;@main WKCR5                     Allocated to registers ;size:1
+                                           ;@main ADIOS0                    Allocated to registers ;size:1
+                                           ;@main ADIOS1                    Allocated to registers ;size:1
+                                           ;@main ADIOS2                    Allocated to registers ;size:1
+                                           ;@main ADCR0                     Allocated to registers ;size:1
+                                           ;@main ADCR1                     Allocated to registers ;size:1
+                                           ;@main ADRH                      Allocated to registers ;size:1
+                                           ;@main ADRL                      Allocated to registers ;size:1
+                                           ;@main ADCR2                     Allocated to registers ;size:1
+                                           ;@main OEP0                      Allocated to registers ;size:1
+                                           ;@main EINTCR                    Allocated to registers ;size:1
+                                           ;@main OEP4                      Allocated to registers ;size:1
+                                           ;@main OEP5                      Allocated to registers ;size:1
+                                           ;@main INTF                      Allocated to registers ;size:1
+                                           ;@main INTE                      Allocated to registers ;size:1
+                                           ;@main OSCM                      Allocated to registers ;size:1
+                                           ;@main WDTCR                     Allocated to registers ;size:1
+                                           ;@main T1LDR                     Allocated to registers ;size:1
+                                           ;@main PCL                       Allocated to registers ;size:1
+                                           ;@main PCH                       Allocated to registers ;size:1
+                                           ;@main IOP0                      Allocated to registers ;size:1
+                                           ;@main IOP4                      Allocated to registers ;size:1
+                                           ;@main IOP5                      Allocated to registers ;size:1
+                                           ;@main T0CR                      Allocated to registers ;size:1
+                                           ;@main T0CNT                     Allocated to registers ;size:1
+                                           ;@main T1CR                      Allocated to registers ;size:1
+                                           ;@main T1CNT                     Allocated to registers ;size:1
+                                           ;@main BUZCR                     Allocated to registers ;size:1
+                                           ;@main MCR                       Allocated to registers ;size:1
+                                           ;@main PUP0                      Allocated to registers ;size:1
+                                           ;@main PUP4                      Allocated to registers ;size:1
+                                           ;@main PUP5                      Allocated to registers ;size:1
+                                           ;@main INDF                      Allocated to registers ;size:1
+                                           ;@main PWMCR0                    Allocated to registers ;size:1
+                                           ;@main PWMCR1                    Allocated to registers ;size:1
+                                           ;@main PWMCNT                    Allocated to registers ;size:1
+                                           ;@main PWMADT                    Allocated to registers ;size:1
+                                           ;@main PWMBDT                    Allocated to registers ;size:1
+                                           ;@main PWMCDT                    Allocated to registers ;size:1
+                                           ;@main PWMPD                     Allocated to registers ;size:1
+                                           ;@main STKR0L                    Allocated to registers ;size:1
+                                           ;@main STKR0H                    Allocated to registers ;size:1
+                                           ;@main STKR1L                    Allocated to registers ;size:1
+                                           ;@main STKR1H                    Allocated to registers ;size:1
+                                           ;@main STKR2L                    Allocated to registers ;size:1
+                                           ;@main STKR2H                    Allocated to registers ;size:1
+                                           ;@main STKR3L                    Allocated to registers ;size:1
+                                           ;@main STKR3H                    Allocated to registers ;size:1
+                                           ;@main STKR4L                    Allocated to registers ;size:1
+                                           ;@main STKR4H                    Allocated to registers ;size:1
+                                           ;@main STKR5L                    Allocated to registers ;size:1
+                                           ;@main STKR5H                    Allocated to registers ;size:1
+                                           ;@main STKR6L                    Allocated to registers ;size:1
+                                           ;@main STKR6H                    Allocated to registers ;size:1
+                                           ;@main STKR7L                    Allocated to registers ;size:1
+                                           ;@main STKR7H                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   8001     goto    0x1              	goto	_main
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_tbl	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   __gptrget1
+                                           ;   __gptrget2
+                                           ;   __gptrget4
+                                           ;   __gptrget1
+                                           ;   __gptrget2
+                                           ;   __gptrget4
+                                           ;11 compiler assigned registers:
+                                           ;   r0x1000
+                                           ;   r0x1001
+                                           ;   r0x1002
+                                           ;   r0x1003
+                                           ;   STK01
+                                           ;   STK00
+                                           ;   r0x1004
+                                           ;   r0x1005
+                                           ;   r0x1006
+                                           ;   r0x1007
+                                           ;   STK02
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	19; "tbl.c"	ram0 = 0xfe;
+000001   2dfe     movai   0xfe             	MOVAI	0xfe
+000002   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	20; "tbl.c"	ram1 = 0;
+000003   2b21     clrr    0x21             	CLRR	_ram1
+                                           ;	.line	21; "tbl.c"	iram1 = 0;
+000004   2b24     clrr    0x24             	CLRR	_iram1
+000005   2b25     clrr    0x25             	CLRR	(_iram1 + 1)
+                                           ;	.line	22; "tbl.c"	lram1 = 0;
+000006   2b2a     clrr    0x2a             	CLRR	_lram1
+000007   2b2b     clrr    0x2b             	CLRR	(_lram1 + 1)
+000008   2b2c     clrr    0x2c             	CLRR	(_lram1 + 2)
+000009   2b2d     clrr    0x2d             	CLRR	(_lram1 + 3)
+                                           ;	.line	24; "tbl.c"	for(i=0; i<10; i++)
+00000a   2b07     clrr    0x7              	CLRR	r0x1000
+00000b   2b08     clrr    0x8              	CLRR	r0x1001
+                                           ;;signed compare: left < lit(0xA=10), size=2, mask=ffff
+                                           _00108_DS_
+00000c   1e08     movar   0x8              	MOVAR	r0x1001
+00000d   1480     addai   0x80             	ADDAI	0x80
+00000e   1480     addai   0x80             	ADDAI	0x80
+00000f   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000010   8015     goto    0x15             	GOTO	_00139_DS_
+000011   2d0a     movai   0xa              	MOVAI	0x0a
+000012   2c07     xch     0x7              	XCH	r0x1000
+000013   2307     asubra  0x7              	ASUBRA	r0x1000
+000014   2c07     xch     0x7              	XCH	r0x1000
+                                           _00139_DS_
+000015   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000016   8030     goto    0x30             	GOTO	_00111_DS_
+                                           ;;genSkipc:3223: created from rifx:00DD608C
+                                           ;	.line	26; "tbl.c"	ram0 = rom[i];
+000017   1e07     movar   0x7              	MOVAR	r0x1000
+000018   141f     addai   0x1f             	ADDAI	(_rom + 0)
+000019   1f09     movra   0x9              	MOVRA	r0x1002
+00001a   2d01     movai   0x1              	MOVAI	high (_rom + 0)
+00001b   1f0a     movra   0xa              	MOVRA	r0x1003
+00001c   1e08     movar   0x8              	MOVAR	r0x1001
+00001d   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00001e   1508     jzar    0x8              	JZAR	r0x1001
+00001f   130a     addra   0xa              	ADDRA	r0x1003
+000020   1e09     movar   0x9              	MOVAR	r0x1002
+000021   1f05     movra   0x5              	MOVRA	STK01
+000022   1e0a     movar   0xa              	MOVAR	r0x1003
+000023   1f06     movra   0x6              	MOVRA	STK00
+000024   2d80     movai   0x80             	MOVAI	0x80
+000025   c0a9     call    0xa9             	CALL	__gptrget1
+000026   1f0b     movra   0xb              	MOVRA	r0x1004
+000027   1e0b     movar   0xb              	MOVAR	r0x1004
+000028   1f20     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	27; "tbl.c"	ram1 += rom[i];	   	// ram1 = 0x2d
+000029   1e0b     movar   0xb              	MOVAR	r0x1004
+00002a   1321     addra   0x21             	ADDRA	_ram1
+                                           ;	.line	24; "tbl.c"	for(i=0; i<10; i++)
+00002b   2d01     movai   0x1              	MOVAI	0x01
+00002c   1307     addra   0x7              	ADDRA	r0x1000
+00002d   5086     jbclr   0x86, 0          	JBCLR	PFLAG,0
+00002e   1308     addra   0x8              	ADDRA	r0x1001
+00002f   800c     goto    0xc              	GOTO	_00108_DS_
+                                           _00111_DS_
+                                           ;	.line	30; "tbl.c"	for(i=0; i<4; i++)
+000030   2b07     clrr    0x7              	CLRR	r0x1000
+000031   2b08     clrr    0x8              	CLRR	r0x1001
+                                           ;;signed compare: left < lit(0x4=4), size=2, mask=ffff
+                                           _00112_DS_
+000032   1e08     movar   0x8              	MOVAR	r0x1001
+000033   1480     addai   0x80             	ADDAI	0x80
+000034   1480     addai   0x80             	ADDAI	0x80
+000035   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000036   803b     goto    0x3b             	GOTO	_00140_DS_
+000037   2d04     movai   0x4              	MOVAI	0x04
+000038   2c07     xch     0x7              	XCH	r0x1000
+000039   2307     asubra  0x7              	ASUBRA	r0x1000
+00003a   2c07     xch     0x7              	XCH	r0x1000
+                                           _00140_DS_
+00003b   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00003c   8062     goto    0x62             	GOTO	_00115_DS_
+                                           ;;genSkipc:3223: created from rifx:00DD608C
+                                           ;	.line	32; "tbl.c"	iram0 = irom[i];
+00003d   4286     bclr    0x86, 0x2        	BCLR	PFLAG,2
+00003e   0a07     rlar    0x7              	RLAR	r0x1000
+00003f   1f09     movra   0x9              	MOVRA	r0x1002
+000040   0a08     rlar    0x8              	RLAR	r0x1001
+000041   1f0a     movra   0xa              	MOVRA	r0x1003
+000042   1e09     movar   0x9              	MOVAR	r0x1002
+000043   1429     addai   0x29             	ADDAI	(_irom + 0)
+000044   1f09     movra   0x9              	MOVRA	r0x1002
+000045   1e0a     movar   0xa              	MOVAR	r0x1003
+000046   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000047   150a     jzar    0xa              	JZAR	r0x1003
+000048   1401     addai   0x1              	ADDAI	high (_irom + 0)
+000049   1f0a     movra   0xa              	MOVRA	r0x1003
+00004a   1e09     movar   0x9              	MOVAR	r0x1002
+00004b   1f05     movra   0x5              	MOVRA	STK01
+00004c   1e0a     movar   0xa              	MOVAR	r0x1003
+00004d   1f06     movra   0x6              	MOVRA	STK00
+00004e   2d80     movai   0x80             	MOVAI	0x80
+00004f   c0bb     call    0xbb             	CALL	__gptrget2
+000050   1f0c     movra   0xc              	MOVRA	r0x1005
+000051   1e06     movar   0x6              	MOVAR	STK00
+000052   1f0b     movra   0xb              	MOVRA	r0x1004
+000053   1e0b     movar   0xb              	MOVAR	r0x1004
+000054   1f22     movra   0x22             	MOVRA	_iram0
+000055   1e0c     movar   0xc              	MOVAR	r0x1005
+000056   1f23     movra   0x23             	MOVRA	(_iram0 + 1)
+                                           ;	.line	33; "tbl.c"	iram1 += irom[i];	   	// iram1 = 0x0a0a
+000057   1e0b     movar   0xb              	MOVAR	r0x1004
+000058   1324     addra   0x24             	ADDRA	_iram1
+000059   1e0c     movar   0xc              	MOVAR	r0x1005
+00005a   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00005b   150c     jzar    0xc              	JZAR	r0x1005
+00005c   1325     addra   0x25             	ADDRA	(_iram1 + 1)
+                                           ;	.line	30; "tbl.c"	for(i=0; i<4; i++)
+00005d   2d01     movai   0x1              	MOVAI	0x01
+00005e   1307     addra   0x7              	ADDRA	r0x1000
+00005f   5086     jbclr   0x86, 0          	JBCLR	PFLAG,0
+000060   1308     addra   0x8              	ADDRA	r0x1001
+000061   8032     goto    0x32             	GOTO	_00112_DS_
+                                           _00115_DS_
+                                           ;	.line	36; "tbl.c"	for(i=0; i<4; i++)
+000062   2b07     clrr    0x7              	CLRR	r0x1000
+000063   2b08     clrr    0x8              	CLRR	r0x1001
+                                           ;;signed compare: left < lit(0x4=4), size=2, mask=ffff
+                                           _00116_DS_
+000064   1e08     movar   0x8              	MOVAR	r0x1001
+000065   1480     addai   0x80             	ADDAI	0x80
+000066   1480     addai   0x80             	ADDAI	0x80
+000067   5886     jbset   0x86, 0          	JBSET	PFLAG,0
+000068   806d     goto    0x6d             	GOTO	_00141_DS_
+000069   2d04     movai   0x4              	MOVAI	0x04
+00006a   2c07     xch     0x7              	XCH	r0x1000
+00006b   2307     asubra  0x7              	ASUBRA	r0x1000
+00006c   2c07     xch     0x7              	XCH	r0x1000
+                                           _00141_DS_
+00006d   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00006e   80a7     goto    0xa7             	GOTO	_00106_DS_
+                                           ;;genSkipc:3223: created from rifx:00DD608C
+                                           ;	.line	38; "tbl.c"	lram0 = lrom[i];
+00006f   4286     bclr    0x86, 0x2        	BCLR	PFLAG,2
+000070   0a07     rlar    0x7              	RLAR	r0x1000
+000071   1f09     movra   0x9              	MOVRA	r0x1002
+000072   0a08     rlar    0x8              	RLAR	r0x1001
+000073   1f0a     movra   0xa              	MOVRA	r0x1003
+000074   4286     bclr    0x86, 0x2        	BCLR	PFLAG,2
+000075   0b09     rlr     0x9              	RLR	r0x1002
+000076   0b0a     rlr     0xa              	RLR	r0x1003
+000077   1e09     movar   0x9              	MOVAR	r0x1002
+000078   140f     addai   0xf              	ADDAI	(_lrom + 0)
+000079   1f09     movra   0x9              	MOVRA	r0x1002
+00007a   1e0a     movar   0xa              	MOVAR	r0x1003
+00007b   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00007c   150a     jzar    0xa              	JZAR	r0x1003
+00007d   1401     addai   0x1              	ADDAI	high (_lrom + 0)
+00007e   1f0a     movra   0xa              	MOVRA	r0x1003
+00007f   1e09     movar   0x9              	MOVAR	r0x1002
+000080   1f05     movra   0x5              	MOVRA	STK01
+000081   1e0a     movar   0xa              	MOVAR	r0x1003
+000082   1f06     movra   0x6              	MOVRA	STK00
+000083   2d80     movai   0x80             	MOVAI	0x80
+000084   c0d9     call    0xd9             	CALL	__gptrget4
+000085   1f0e     movra   0xe              	MOVRA	r0x1006
+000086   1e06     movar   0x6              	MOVAR	STK00
+000087   1f0d     movra   0xd              	MOVRA	r0x1007
+000088   1e05     movar   0x5              	MOVAR	STK01
+000089   1f0c     movra   0xc              	MOVRA	r0x1005
+00008a   1e04     movar   0x4              	MOVAR	STK02
+00008b   1f0b     movra   0xb              	MOVRA	r0x1004
+00008c   1e0b     movar   0xb              	MOVAR	r0x1004
+00008d   1f26     movra   0x26             	MOVRA	_lram0
+00008e   1e0c     movar   0xc              	MOVAR	r0x1005
+00008f   1f27     movra   0x27             	MOVRA	(_lram0 + 1)
+000090   1e0d     movar   0xd              	MOVAR	r0x1007
+000091   1f28     movra   0x28             	MOVRA	(_lram0 + 2)
+000092   1e0e     movar   0xe              	MOVAR	r0x1006
+000093   1f29     movra   0x29             	MOVRA	(_lram0 + 3)
+                                           ;	.line	39; "tbl.c"	lram1 += lrom[i];  	   	// lram1 = 0x0a0a0a0a0a
+000094   1e0b     movar   0xb              	MOVAR	r0x1004
+000095   132a     addra   0x2a             	ADDRA	_lram1
+000096   1e0c     movar   0xc              	MOVAR	r0x1005
+000097   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+000098   150c     jzar    0xc              	JZAR	r0x1005
+000099   132b     addra   0x2b             	ADDRA	(_lram1 + 1)
+00009a   1e0d     movar   0xd              	MOVAR	r0x1007
+00009b   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+00009c   150d     jzar    0xd              	JZAR	r0x1007
+00009d   132c     addra   0x2c             	ADDRA	(_lram1 + 2)
+00009e   1e0e     movar   0xe              	MOVAR	r0x1006
+00009f   5286     jbclr   0x86, 0x2        	JBCLR	PFLAG,2
+0000a0   150e     jzar    0xe              	JZAR	r0x1006
+0000a1   132d     addra   0x2d             	ADDRA	(_lram1 + 3)
+                                           ;	.line	36; "tbl.c"	for(i=0; i<4; i++)
+0000a2   2d01     movai   0x1              	MOVAI	0x01
+0000a3   1307     addra   0x7              	ADDRA	r0x1000
+0000a4   5086     jbclr   0x86, 0          	JBCLR	PFLAG,0
+0000a5   1308     addra   0x8              	ADDRA	r0x1001
+0000a6   8064     goto    0x64             	GOTO	_00116_DS_
+                                           _00106_DS_
+                                           ;	.line	43; "tbl.c"	while(1);
+0000a7   80a7     goto    0xa7             	GOTO	_00106_DS_
+0000a8   0e00     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	  168+    0 =   168 instructions (  336 byte)
+                                           
+                                           	end
+                                           ;--------------------------------------------------------------------------
+                                           ;  p16f_common.inc - definitions common to all 14 bit PIC devices
+                                           ;
+                                           ;  Copyright (C) 2005, Vangelis Rokas <vrokas AT otenet.gr>
+                                           ;
+                                           ;  This library is free software; you can redistribute it and/or modify it
+                                           ;  under the terms of the GNU General Public License as published by the
+                                           ;  Free Software Foundation; either version 2, or (at your option) any
+                                           ;  later version.
+                                           ;
+                                           ;  This library is distributed in the hope that it will be useful,
+                                           ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                           ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                                           ;  GNU General Public License for more details.
+                                           ;
+                                           ;  You should have received a copy of the GNU General Public License 
+                                           ;  along with this library; see the file COPYING. If not, write to the
+                                           ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                                           ;   MA 02110-1301, USA.
+                                           ;
+                                           ;  As a special exception, if you link this library with other files,
+                                           ;  some of which are compiled with SDCC, to produce an executable,
+                                           ;  this library does not by itself cause the resulting executable to
+                                           ;  be covered by the GNU General Public License. This exception does
+                                           ;  not however invalidate any other reasons why the executable file
+                                           ;  might be covered by the GNU General Public License.
+                                           ;--------------------------------------------------------------------------
+                                           
+                                           		extern	STK00
+                                           		extern	STK01
+                                           		extern	STK02
+                                           		extern	STK03
+                                           		extern	STK04
+                                           		extern	STK05
+                                           
+                                           ;--------------------------------------------------------------------------
+                                           ;  p16f_common.inc - definitions common to all 14 bit PIC devices
+                                           ;
+                                           ;  Copyright (C) 2005, Vangelis Rokas <vrokas AT otenet.gr>
+                                           ;
+                                           ;  This library is free software; you can redistribute it and/or modify it
+                                           ;  under the terms of the GNU General Public License as published by the
+                                           ;  Free Software Foundation; either version 2, or (at your option) any
+                                           ;  later version.
+                                           ;
+                                           ;  This library is distributed in the hope that it will be useful,
+                                           ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                           ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                                           ;  GNU General Public License for more details.
+                                           ;
+                                           ;  You should have received a copy of the GNU General Public License 
+                                           ;  along with this library; see the file COPYING. If not, write to the
+                                           ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                                           ;   MA 02110-1301, USA.
+                                           ;
+                                           ;  As a special exception, if you link this library with other files,
+                                           ;  some of which are compiled with SDCC, to produce an executable,
+                                           ;  this library does not by itself cause the resulting executable to
+                                           ;  be covered by the GNU General Public License. This exception does
+                                           ;  not however invalidate any other reasons why the executable file
+                                           ;  might be covered by the GNU General Public License.
+                                           ;--------------------------------------------------------------------------
+                                           
+                                           		extern	STK00
+                                           		extern	STK01
+                                           		extern	STK02
+                                           		extern	STK03
+                                           		extern	STK04
+                                           		extern	STK05
+                                           
+                                           		LIST
+                                           ;mc35p7041.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------------------------
+                                           ;  p16f_common.inc - definitions common to all 14 bit PIC devices
+                                           ;
+                                           ;  Copyright (C) 2005, Vangelis Rokas <vrokas AT otenet.gr>
+                                           ;
+                                           ;  This library is free software; you can redistribute it and/or modify it
+                                           ;  under the terms of the GNU General Public License as published by the
+                                           ;  Free Software Foundation; either version 2, or (at your option) any
+                                           ;  later version.
+                                           ;
+                                           ;  This library is distributed in the hope that it will be useful,
+                                           ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                           ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                                           ;  GNU General Public License for more details.
+                                           ;
+                                           ;  You should have received a copy of the GNU General Public License 
+                                           ;  along with this library; see the file COPYING. If not, write to the
+                                           ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                                           ;   MA 02110-1301, USA.
+                                           ;
+                                           ;  As a special exception, if you link this library with other files,
+                                           ;  some of which are compiled with SDCC, to produce an executable,
+                                           ;  this library does not by itself cause the resulting executable to
+                                           ;  be covered by the GNU General Public License. This exception does
+                                           ;  not however invalidate any other reasons why the executable file
+                                           ;  might be covered by the GNU General Public License.
+                                           ;--------------------------------------------------------------------------
+                                           
+                                           		extern	STK00
+                                           		extern	STK01
+                                           		extern	STK02
+                                           		extern	STK03
+                                           		extern	STK04
+                                           		extern	STK05
+                                           
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XX-------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   305
+

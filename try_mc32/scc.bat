@@ -5,15 +5,15 @@ PATH=%SDCC_HOME%;%SDCC_HOME%\bin;%GPUTILS_HOME%\gpasm;%GPUTILS_HOME%\gplink
 
 
 set GPASM_ARG=-p p16f87 -I"%GPUTILS_HOME%\header"
-set GPLINK_ARG=-s %SDCC_HOME%\share\lkr\mc32p21.lkr ^
-%SDCC_HOME%\share\lib\mc32p21.lib ^
+set GPLINK_ARG=-s %SDCC_HOME%\share\lkr\mc32p7010.lkr ^
+%SDCC_HOME%\share\lib\mc32p7010.lib ^
 -w -m -c
 
-set SDCC_ARG=-V --verbose --use-non-free -mmc3x -p3221 ^
+set SDCC_ARG=-V --verbose --use-non-free -mmc32 -p3221 ^
 -I"%SDCC_HOME%\share\include" ^
 -Wa"-I%SDCC_HOME%\share\header" ^
--Wl"-s%SDCC_HOME%\share\lkr\mc32p21.lkr" ^
--Wl"-IE:\tools\bak\share\lib"
+-Wl"-s%SDCC_HOME%\share\lkr\mc32p7010.lkr" ^
+-Wl"-I%SDCC_HOME%\share\lib"
 
 @echo on
 

@@ -1,4 +1,4 @@
-#include <mc32p21.h>
+#include <mc32p7010.h>
 
 char c_a, c_b;
 uchar uc_a, uc_b;
@@ -6,8 +6,6 @@ uchar uc_a, uc_b;
 volatile __at (0x21) uchar ram2;
 volatile __at (0x20) uchar ram1;
 volatile __at (0x30) uchar cram;
-
-#include <mc32p21.h>
 
 
 void main(void)

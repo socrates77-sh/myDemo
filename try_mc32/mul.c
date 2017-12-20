@@ -1,4 +1,4 @@
-#include <mc32p21.h>
+#include <mc32p7010.h>
 
 char c_a, c_b;
 int i_a, i_b;

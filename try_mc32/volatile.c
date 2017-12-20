@@ -1,4 +1,4 @@
-#include <mc32p21.h>
+#include <mc35p7041.h>
 
 volatile __at (0x2f) char ram1;
 volatile __at (0x20) char ram0;
