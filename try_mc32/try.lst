@@ -1,0 +1,632 @@
+gpasm-2.0.0_beta2 (Nov  6 2017)try.asm            2018-1-19  15:24:55          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.1.0 (Dec 19 2017) (MINGW32)
+                      00004 ; This file was generated Fri Jan 19 15:24:55 2018
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC32 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "try.c"
+                      00009         list    p=3221
+                      00010         radix dec
+                      00011         include "3221.inc"
+                      00001                 LIST
+                      00002 ;mc32p7010.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00435                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _INDF0bits
+                      00016         extern  _INDF1bits
+                      00017         extern  _INDF2bits
+                      00018         extern  _HIBYTEbits
+                      00019         extern  _FSR0bits
+                      00020         extern  _FSR1bits
+                      00021         extern  _PCLbits
+                      00022         extern  _PFLAGbits
+                      00023         extern  _MCRbits
+                      00024         extern  _INDF3bits
+                      00025         extern  _INTEbits
+                      00026         extern  _INTFbits
+                      00027         extern  _IOP0bits
+                      00028         extern  _OEP0bits
+                      00029         extern  _PUP0bits
+                      00030         extern  _ANSELbits
+                      00031         extern  _IOP1bits
+                      00032         extern  _OEP1bits
+                      00033         extern  _PUP1bits
+                      00034         extern  _KBCRbits
+                      00035         extern  _T0CRbits
+                      00036         extern  _T0CNTbits
+                      00037         extern  _T0LOADbits
+                      00038         extern  _T0DATAbits
+                      00039         extern  _T1CRbits
+                      00040         extern  _T1CNTbits
+                      00041         extern  _T1LOADbits
+                      00042         extern  _T1DATAbits
+                      00043         extern  _OSCMbits
+                      00044         extern  _LVDCRbits
+                      00045         extern  _ADCR0bits
+                      00046         extern  _ADCR1bits
+                      00047         extern  _ADRHbits
+                      00048         extern  _ADRLbits
+                      00049         extern  _OSCCALbits
+                      00050         extern  _INDF0
+                      00051         extern  _INDF1
+                      00052         extern  _INDF2
+                      00053         extern  _HIBYTE
+                      00054         extern  _FSR0
+                      00055         extern  _FSR1
+                      00056         extern  _PCL
+                      00057         extern  _PFLAG
+                      00058         extern  _MCR
+                      00059         extern  _INDF3
+                      00060         extern  _INTE
+                      00061         extern  _INTF
+                      00062         extern  _IOP0
+                      00063         extern  _OEP0
+                      00064         extern  _PUP0
+                      00065         extern  _ANSEL
+                      00066         extern  _IOP1
+                      00067         extern  _OEP1
+                      00068         extern  _PUP1
+                      00069         extern  _KBCR
+                      00070         extern  _T0CR
+                      00071         extern  _T0CNT
+                      00072         extern  _T0LOAD
+                      00073         extern  _T0DATA
+                      00074         extern  _T1CR
+                      00075         extern  _T1CNT
+                      00076         extern  _T1LOAD
+                      00077         extern  _T1DATA
+                      00078         extern  _OSCM
+                      00079         extern  _LVDCR
+                      00080         extern  _ADCR0
+                      00081         extern  _ADCR1
+                      00082         extern  _ADRH
+                      00083         extern  _ADRL
+                      00084         extern  _OSCCAL
+                      00085 ;--------------------------------------------------------
+                      00086 ; global declarations
+                      00087 ;--------------------------------------------------------
+                      00088         global  _main
+                      00089         global  _ram1
+                      00090         global  _ram0
+                      00091 
+                      00092         global STK06
+                      00093         global STK05
+                      00094         global STK04
+                      00095         global STK03
+                      00096         global STK02
+                      00097         global STK01
+                      00098         global STK00
+                      00099 
+                      00100 sharebank udata_ovr 0x0000
+0000                  00101 STK06   res 1
+0000                  00102 STK05   res 1
+0001                  00103 STK04   res 1
+0001                  00104 STK03   res 1
+0002                  00105 STK02   res 1
+0002                  00106 STK01   res 1
+0003                  00107 STK00   res 1
+                      00108 
+                      00109 ;--------------------------------------------------------
+                      00110 ; global definitions
+                      00111 ;--------------------------------------------------------
+                      00112 ;--------------------------------------------------------
+                      00113 ; absolute symbol definitions
+                      00114 ;--------------------------------------------------------
+                      00115 UD_abs_try_20   udata_ovr       0x0020
+0010                  00116 _ram0
+0010                  00117         res     1
+                      00118 UD_abs_try_2f   udata_ovr       0x002f
+0017                  00119 _ram1
+0017                  00120         res     1
+                      00121 ;--------------------------------------------------------
+                      00122 ; compiler-defined variables
+                      00123 ;--------------------------------------------------------
+                      00124 ;--------------------------------------------------------
+                      00125 ; initialized data
+                      00126 ;--------------------------------------------------------
+                      00127 
+                      00128 ;@Allocation info for local variables in function 'main'
+                      00129 ;@main main                      Allocated to registers ;size:2
+                      00130 ;@main INDF0bits                 Allocated to registers ;size:1
+                      00131 ;@main INDF1bits                 Allocated to registers ;size:1
+                      00132 ;@main INDF2bits                 Allocated to registers ;size:1
+                      00133 ;@main HIBYTEbits                Allocated to registers ;size:1
+                      00134 ;@main FSR0bits                  Allocated to registers ;size:1
+                      00135 ;@main FSR1bits                  Allocated to registers ;size:1
+                      00136 ;@main PCLbits                   Allocated to registers ;size:1
+                      00137 ;@main PFLAGbits                 Allocated to registers ;size:1
+                      00138 ;@main MCRbits                   Allocated to registers ;size:1
+                      00139 ;@main INDF3bits                 Allocated to registers ;size:1
+                      00140 ;@main INTEbits                  Allocated to registers ;size:1
+                      00141 ;@main INTFbits                  Allocated to registers ;size:1
+                      00142 ;@main IOP0bits                  Allocated to registers ;size:1
+                      00143 ;@main OEP0bits                  Allocated to registers ;size:1
+                      00144 ;@main PUP0bits                  Allocated to registers ;size:1
+                      00145 ;@main ANSELbits                 Allocated to registers ;size:1
+                      00146 ;@main IOP1bits                  Allocated to registers ;size:1
+                      00147 ;@main OEP1bits                  Allocated to registers ;size:1
+                      00148 ;@main PUP1bits                  Allocated to registers ;size:1
+                      00149 ;@main KBCRbits                  Allocated to registers ;size:1
+                      00150 ;@main T0CRbits                  Allocated to registers ;size:1
+                      00151 ;@main T0CNTbits                 Allocated to registers ;size:1
+                      00152 ;@main T0LOADbits                Allocated to registers ;size:1
+                      00153 ;@main T0DATAbits                Allocated to registers ;size:1
+                      00154 ;@main T1CRbits                  Allocated to registers ;size:1
+                      00155 ;@main T1CNTbits                 Allocated to registers ;size:1
+                      00156 ;@main T1LOADbits                Allocated to registers ;size:1
+                      00157 ;@main T1DATAbits                Allocated to registers ;size:1
+                      00158 ;@main OSCMbits                  Allocated to registers ;size:1
+                      00159 ;@main LVDCRbits                 Allocated to registers ;size:1
+                      00160 ;@main ADCR0bits                 Allocated to registers ;size:1
+                      00161 ;@main ADCR1bits                 Allocated to registers ;size:1
+                      00162 ;@main ADRHbits                  Allocated to registers ;size:1
+                      00163 ;@main ADRLbits                  Allocated to registers ;size:1
+                      00164 ;@main OSCCALbits                Allocated to registers ;size:1
+                      00165 ;@main ram1                      Allocated to registers ;size:1
+                      00166 ;@main ram0                      Allocated to registers ;size:1
+                      00167 ;@main INDF0                     Allocated to registers ;size:1
+                      00168 ;@main INDF1                     Allocated to registers ;size:1
+                      00169 ;@main INDF2                     Allocated to registers ;size:1
+                      00170 ;@main HIBYTE                    Allocated to registers ;size:1
+                      00171 ;@main FSR0                      Allocated to registers ;size:1
+                      00172 ;@main FSR1                      Allocated to registers ;size:1
+                      00173 ;@main PCL                       Allocated to registers ;size:1
+                      00174 ;@main PFLAG                     Allocated to registers ;size:1
+                      00175 ;@main MCR                       Allocated to registers ;size:1
+                      00176 ;@main INDF3                     Allocated to registers ;size:1
+                      00177 ;@main INTE                      Allocated to registers ;size:1
+                      00178 ;@main INTF                      Allocated to registers ;size:1
+                      00179 ;@main IOP0                      Allocated to registers ;size:1
+                      00180 ;@main OEP0                      Allocated to registers ;size:1
+                      00181 ;@main PUP0                      Allocated to registers ;size:1
+                      00182 ;@main ANSEL                     Allocated to registers ;size:1
+                      00183 ;@main IOP1                      Allocated to registers ;size:1
+                      00184 ;@main OEP1                      Allocated to registers ;size:1
+                      00185 ;@main PUP1                      Allocated to registers ;size:1
+                      00186 ;@main KBCR                      Allocated to registers ;size:1
+                      00187 ;@main T0CR                      Allocated to registers ;size:1
+                      00188 ;@main T0CNT                     Allocated to registers ;size:1
+                      00189 ;@main T0LOAD                    Allocated to registers ;size:1
+                      00190 ;@main T0DATA                    Allocated to registers ;size:1
+                      00191 ;@main T1CR                      Allocated to registers ;size:1
+                      00192 ;@main T1CNT                     Allocated to registers ;size:1
+                      00193 ;@main T1LOAD                    Allocated to registers ;size:1
+                      00194 ;@main T1DATA                    Allocated to registers ;size:1
+                      00195 ;@main OSCM                      Allocated to registers ;size:1
+                      00196 ;@main LVDCR                     Allocated to registers ;size:1
+                      00197 ;@main ADCR0                     Allocated to registers ;size:1
+                      00198 ;@main ADCR1                     Allocated to registers ;size:1
+                      00199 ;@main ADRH                      Allocated to registers ;size:1
+                      00200 ;@main ADRL                      Allocated to registers ;size:1
+                      00201 ;@main OSCCAL                    Allocated to registers ;size:1
+                      00202 ;@end Allocation info for local variables in function 'main';
+                      00203 
+                      00204 ;--------------------------------------------------------
+                      00205 ; overlayable items in internal ram 
+                      00206 ;--------------------------------------------------------
+                      00207 ;       udata_ovr
+                      00208 ;--------------------------------------------------------
+                      00209 ; reset vector 
+                      00210 ;--------------------------------------------------------
+                      00211 STARTUP code 0x0000
+0000   A000           00212         goto    _main
+                      00213 ;--------------------------------------------------------
+                      00214 ; code
+                      00215 ;--------------------------------------------------------
+                      00216 code_try        code
+                      00217 ;***
+                      00218 ;  pBlock Stats: dbName = M
+                      00219 ;***
+                      00220 ;entry:  _main  ;Function start
+                      00221 ; 2 exit points
+                      00222 ;has an exit
+                      00223 ;; Starting pCode block
+0000                  00224 _main   ;Function start
+                      00225 ; 2 exit points
+                      00226 ;       .line   8; "try.c"      LVDEN=1;
+0000   CE00           00227         BSET    _LVDCRbits,7
+                      00228 ;       .line   10; "try.c"     LVDEN==1;
+0001   3C00           00229         MOVAI   (_LVDCRbits + 0)
+Error[113]  : Symbol not previously defined (FSR).
+0002   5600           00230         MOVRA   FSR
+0003   DF87           00231         BCLR    PFLAG,7
+0004   F000           00232         JBCLR   (_LVDCRbits+1),0
+0005   CF87           00233         BSET    PFLAG,7
+Error[113]  : Symbol not previously defined (INDF).
+0006   5800           00234         MOVAR   INDF
+0007   3E80           00235         ANDAI   0x80
+0008   E587           00236         JBSET   PFLAG,2
+                      00237 ;       .line   11; "try.c"     GIE=1;
+0009   CE00           00238         BSET    _MCRbits,7
+000A                  00239 _00106_DS_
+                      00240 ;       .line   13; "try.c"     while(1);
+000A   A000           00241         GOTO    _00106_DS_
+000B   000C           00242         RETURN  
+                      00243 ; exit point of _main
+                      00244 
+                      00245 
+                      00246 ;       code size estimation:
+                      00247 ;          12+    0 =    12 instructions (   24 byte)
+                      00248 
+                      00249         end
+gpasm-2.0.0_beta2 (Nov  6 2017)try.asm            2018-1-19  15:24:55          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCHS0                            00000004
+ADCHS1                            00000005
+ADCHS2                            00000006
+ADCHS3                            00000007
+ADCKS0                            00000002
+ADCKS1                            00000003
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADEOC                             00000001
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADR0                              00000000
+ADR1                              00000001
+ADR10                             00000006
+ADR11                             00000007
+ADR2                              00000002
+ADR3                              00000003
+ADR4                              00000000
+ADR5                              00000001
+ADR6                              00000002
+ADR7                              00000003
+ADR8                              00000004
+ADR9                              00000005
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL                             00000193
+BUZ0OE                            00000005
+BUZ1OE                            00000005
+C                                 00000000
+CLKS                              00000002
+DC                                00000001
+FSR0                              00000184
+FSR00                             00000000
+FSR01                             00000001
+FSR02                             00000002
+FSR03                             00000003
+FSR04                             00000004
+FSR05                             00000005
+FSR06                             00000006
+FSR07                             00000007
+FSR1                              00000185
+FSR10                             00000000
+FSR11                             00000001
+FSR12                             00000002
+FSR13                             00000003
+FSR14                             00000004
+FSR15                             00000005
+FSR16                             00000006
+FSR17                             00000007
+GIE                               00000007
+HFEN                              00000000
+HIBYTE                            00000183
+HIBYTE0                           00000000
+HIBYTE1                           00000001
+HIBYTE2                           00000002
+HIBYTE3                           00000003
+HIBYTE4                           00000004
+HIBYTE5                           00000005
+HIBYTE6                           00000006
+HIBYTE7                           00000007
+INDF0                             00000180
+INDF00                            00000000
+INDF01                            00000001
+INDF02                            00000002
+INDF03                            00000003
+INDF04                            00000004
+INDF05                            00000005
+INDF06                            00000006
+INDF07                            00000007
+INDF1                             00000181
+INDF10                            00000000
+INDF11                            00000001
+INDF12                            00000002
+INDF13                            00000003
+INDF14                            00000004
+INDF15                            00000005
+INDF16                            00000006
+INDF17                            00000007
+INDF2                             00000182
+INDF20                            00000000
+INDF21                            00000001
+INDF22                            00000002
+INDF23                            00000003
+INDF24                            00000004
+INDF25                            00000005
+INDF26                            00000006
+INDF27                            00000007
+INDF3                             00000189
+INDF30                            00000000
+INDF31                            00000001
+INDF32                            00000002
+INDF33                            00000003
+INDF34                            00000004
+INDF35                            00000005
+INDF36                            00000006
+INDF37                            00000007
+INT0IE                            00000002
+INT0IF                            00000002
+INT1IE                            00000003
+INT1IF                            00000003
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBCR                              00000197
+KBCR0                             00000000
+KBCR1                             00000001
+KBCR2                             00000002
+KBCR3                             00000003
+KBCR4                             00000004
+KBCR5                             00000005
+KBCR6                             00000006
+KBIE                              00000004
+KBIF                              00000004
+LFEN                              00000001
+LVDCR                             000001AF
+LVDEN                             00000007
+LVDF                              00000000
+LVDS0                             00000004
+LVDS1                             00000005
+LVDS2                             00000006
+MCR                               00000188
+MINT00                            00000000
+MINT01                            00000001
+MINT10                            00000002
+MINT11                            00000003
+OEP0                              00000191
+OEP1                              00000195
+OSCCAL                            000001FB
+OSCCAL0                           00000000
+OSCCAL1                           00000001
+OSCCAL2                           00000002
+OSCCAL3                           00000003
+OSCCAL4                           00000004
+OSCCAL5                           00000005
+OSCCAL6                           00000006
+OSCCAL7                           00000007
+OSCM                              000001AE
+P00ANS                            00000000
+P00D                              00000000
+P00OE                             00000000
+P00PU                             00000000
+P01ANS                            00000001
+P01D                              00000001
+P01OE                             00000001
+P01PU                             00000001
+P02ANS                            00000002
+P02D                              00000002
+P02OE                             00000002
+P02PU                             00000002
+P03ANS                            00000003
+P03D                              00000003
+P03OE                             00000003
+P03PU                             00000003
+P04ANS                            00000004
+P04D                              00000004
+P04OE                             00000004
+P04PU                             00000004
+P10D                              00000000
+P10OE                             00000000
+P10PU                             00000000
+P11D                              00000001
+P11OE                             00000001
+P11PU                             00000001
+P12ANS                            00000005
+P12D                              00000002
+P12OE                             00000002
+P12PU                             00000002
+P13ANS                            00000006
+P13D                              00000003
+P13OE                             00000003
+P13PU                             00000003
+P14D                              00000004
+P14OE                             00000004
+P14PU                             00000004
+P15D                              00000005
+P15OE                             00000005
+P15PU                             00000005
+P16D                              00000006
+P16OE                             00000006
+P16PU                             00000006
+PC0                               00000000
+PC1                               00000001
+PC2                               00000002
+PC3                               00000003
+PC4                               00000004
+PC5                               00000005
+PC6                               00000006
+PC7                               00000007
+PCL                               00000186
+PD                                00000004
+PFLAG                             00000187
+PUP0                              00000192
+PUP1                              00000196
+PWM0OE                            00000006
+PWM1OE                            00000006
+STBH                              00000004
+STBL                              00000005
+STK00                             00000006
+STK01                             00000005
+STK02                             00000004
+STK03                             00000003
+STK04                             00000002
+STK05                             00000001
+STK06                             00000000
+T0C0                              00000000
+T0C1                              00000001
+T0C2                              00000002
+T0C3                              00000003
+T0C4                              00000004
+T0C5                              00000005
+T0C6                              00000006
+T0C7                              00000007
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0DATA0                           00000000
+T0DATA1                           00000001
+T0DATA2                           00000002
+T0DATA3                           00000003
+T0DATA4                           00000004
+T0DATA5                           00000005
+T0DATA6                           00000006
+T0DATA7                           00000007
+T0IE                              00000000
+T0IF                              00000000
+T0LOAD                            000001A2
+T0LOAD0                           00000000
+T0LOAD1                           00000001
+T0LOAD2                           00000002
+T0LOAD3                           00000003
+T0LOAD4                           00000004
+T0LOAD5                           00000005
+T0LOAD6                           00000006
+T0LOAD7                           00000007
+T0PR0                             00000000
+T0PR1                             00000001
+T0PR2                             00000002
+T0PTS0                            00000003
+T0PTS1                            00000004
+T1C0                              00000000
+T1C1                              00000001
+T1C2                              00000002
+T1C3                              00000003
+T1C4                              00000004
+T1C5                              00000005
+T1C6                              00000006
+T1C7                              00000007
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1DATA0                           00000000
+T1DATA1                           00000001
+T1DATA2                           00000002
+T1DATA3                           00000003
+T1DATA4                           00000004
+T1DATA5                           00000005
+T1DATA6                           00000006
+T1DATA7                           00000007
+T1IE                              00000001
+T1IF                              00000001
+T1LOAD                            000001A6
+T1LOAD0                           00000000
+T1LOAD1                           00000001
+T1LOAD2                           00000002
+T1LOAD3                           00000003
+T1LOAD4                           00000004
+T1LOAD5                           00000005
+T1LOAD6                           00000006
+T1LOAD7                           00000007
+T1PR0                             00000000
+T1PR1                             00000001
+T1PR2                             00000002
+T1PTS0                            00000003
+T1PTS1                            00000004
+TC0EN                             00000007
+TC1EN                             00000007
+TO                                00000005
+VRS0                              00000000
+VRS1                              00000001
+VRS2                              00000002
+Z                                 00000002
+_00106_DS_                        0000000A
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADRH                             00000000
+_ADRHbits                         00000000
+_ADRL                             00000000
+_ADRLbits                         00000000
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_FSR0                             00000000
+_FSR0bits                         00000000
+_FSR1                             00000000
+_FSR1bits                         00000000
+_HIBYTE                           00000000
+_HIBYTEbits                       00000000
+_INDF0                            00000000
+_INDF0bits                        00000000
+_INDF1                            00000000
+_INDF1bits                        00000000
+_INDF2                            00000000
+_INDF2bits                        00000000
+_INDF3                            00000000
+_INDF3bits                        00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_KBCR                             00000000
+_KBCRbits                         00000000
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCCAL                           00000000
+_OSCCALbits                       00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PCLbits                          00000000
+_PFLAG                            00000000
+_PFLAGbits                        00000000
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_T0CNT                            00000000
+_T0CNTbits                        00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0DATAbits                       00000000
+_T0LOAD                           00000000
+_T0LOADbits                       00000000
+_T1CNT                            00000000
+_T1CNTbits                        00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1DATAbits                       00000000
+_T1LOAD                           00000000
+_T1LOADbits                       00000000
+__32P21                           00000001
+_main                             00000000
+_ram0                             00000020
+_ram1                             0000002F
+
+Errors   :     2
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

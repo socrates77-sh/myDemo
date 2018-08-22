@@ -21,7 +21,7 @@ void main(void)
    	uc_b = uram1;
 
    	uiram0 = (uint)uc_a * (uint)uc_b;      	// 0x26e8? (0x5b18)
-   	uiram0 = uc_a * uc_b;      	   	   	   	// 0x00e8
+   	uiram0 = uc_a * uc_b;      	   	   	   	// 0x26e8
    	
    	uiram0 = 0xfe53;
    	uiram1 = 0x2b78;

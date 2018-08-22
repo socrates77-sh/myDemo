@@ -1,0 +1,1191 @@
+gpasm-2.0.0_beta2 (Nov  6 2017)FSR_test.asm       2018-7-4  11:52:51           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.1.5 (Jul  4 2018) (MINGW32)
+                      00004 ; This file was generated Wed Jul 04 11:52:51 2018
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC32 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "FSR_test.c"
+                      00009         list    p=7333
+                      00010         radix dec
+                      00011         include "7333.inc"
+                      00001                 LIST
+                      00002 ;mc32f7343.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00783                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _INDF0bits
+                      00016         extern  _INDF1bits
+                      00017         extern  _INDF2bits
+                      00018         extern  _HIBYTEbits
+                      00019         extern  _FSR0bits
+                      00020         extern  _FSR1bits
+                      00021         extern  _PCLbits
+                      00022         extern  _PFLAGbits
+                      00023         extern  _MCRbits
+                      00024         extern  _INDF3bits
+                      00025         extern  _INTEbits
+                      00026         extern  _INTFbits
+                      00027         extern  _OSCMbits
+                      00028         extern  _INTE1bits
+                      00029         extern  _INTF1bits
+                      00030         extern  _KBCRbits
+                      00031         extern  _IOP0bits
+                      00032         extern  _OEP0bits
+                      00033         extern  _PUP0bits
+                      00034         extern  _PDP0bits
+                      00035         extern  _IOP1bits
+                      00036         extern  _OEP1bits
+                      00037         extern  _PUP1bits
+                      00038         extern  _PDP1bits
+                      00039         extern  _IOP2bits
+                      00040         extern  _OEP2bits
+                      00041         extern  _PUP2bits
+                      00042         extern  _PDP2bits
+                      00043         extern  _T0CRbits
+                      00044         extern  _T0CNTbits
+                      00045         extern  _T0LOADbits
+                      00046         extern  _T0DATAbits
+                      00047         extern  _T1CRbits
+                      00048         extern  _T1CNTHbits
+                      00049         extern  _T1CNTLbits
+                      00050         extern  _T1LOADHbits
+                      00051         extern  _T1LOADLbits
+                      00052         extern  _T1DATAHbits
+                      00053         extern  _T1DATALbits
+                      00054         extern  _IICCRbits
+                      00055         extern  _IICSRbits
+                      00056         extern  _IICDRbits
+                      00057         extern  _ADCR0bits
+                      00058         extern  _ADCR1bits
+                      00059         extern  _ADRHbits
+                      00060         extern  _ADRLbits
+                      00061         extern  _ADIOS0bits
+                      00062         extern  _ADIOS1bits
+                      00063         extern  _OSADJCRbits
+                      00064         extern  _T2CRbits
+                      00065         extern  _T2CNTHbits
+                      00066         extern  _T2CNTLbits
+                      00067         extern  _T2LOADHbits
+                      00068         extern  _T2LOADLbits
+                      00069         extern  _T3CRbits
+                      00070         extern  _T3CNTbits
+                      00071         extern  _T3LOADbits
+                      00072         extern  _SCONbits
+                      00073         extern  _SBUFbits
+                      00074         extern  _SADDRbits
+                      00075         extern  _SADENbits
+                      00076         extern  _INDF0
+                      00077         extern  _INDF1
+                      00078         extern  _INDF2
+                      00079         extern  _HIBYTE
+                      00080         extern  _FSR0
+                      00081         extern  _FSR1
+                      00082         extern  _PCL
+                      00083         extern  _PFLAG
+                      00084         extern  _MCR
+                      00085         extern  _INDF3
+                      00086         extern  _INTE
+                      00087         extern  _INTF
+                      00088         extern  _OSCM
+                      00089         extern  _INTE1
+                      00090         extern  _INTF1
+                      00091         extern  _KBCR
+                      00092         extern  _IOP0
+                      00093         extern  _OEP0
+                      00094         extern  _PUP0
+                      00095         extern  _PDP0
+                      00096         extern  _IOP1
+                      00097         extern  _OEP1
+                      00098         extern  _PUP1
+                      00099         extern  _PDP1
+                      00100         extern  _IOP2
+                      00101         extern  _OEP2
+                      00102         extern  _PUP2
+                      00103         extern  _PDP2
+                      00104         extern  _T0CR
+                      00105         extern  _T0CNT
+                      00106         extern  _T0LOAD
+                      00107         extern  _T0DATA
+                      00108         extern  _T1CR
+                      00109         extern  _T1CNTH
+                      00110         extern  _T1CNTL
+                      00111         extern  _T1LOADH
+                      00112         extern  _T1LOADL
+                      00113         extern  _T1DATAH
+                      00114         extern  _T1DATAL
+                      00115         extern  _IICCR
+                      00116         extern  _IICSR
+                      00117         extern  _IICDR
+                      00118         extern  _ADCR0
+                      00119         extern  _ADCR1
+                      00120         extern  _ADRH
+                      00121         extern  _ADRL
+                      00122         extern  _ADIOS0
+                      00123         extern  _ADIOS1
+                      00124         extern  _OSADJCR
+                      00125         extern  _T2CR
+                      00126         extern  _T2CNTH
+                      00127         extern  _T2CNTL
+                      00128         extern  _T2LOADH
+                      00129         extern  _T2LOADL
+                      00130         extern  _T3CR
+                      00131         extern  _T3CNT
+                      00132         extern  _T3LOAD
+                      00133         extern  _SCON
+                      00134         extern  _SBUF
+                      00135         extern  _SADDR
+                      00136         extern  _SADEN
+                      00137         extern  __gptrget1
+                      00138 ;--------------------------------------------------------
+                      00139 ; global declarations
+                      00140 ;--------------------------------------------------------
+                      00141         global  _adc_initial
+                      00142         global  _main
+                      00143         global  __ad_ch
+                      00144         global  __adc
+                      00145 
+                      00146         global STK06
+                      00147         global STK05
+                      00148         global STK04
+                      00149         global STK03
+                      00150         global STK02
+                      00151         global STK01
+                      00152         global STK00
+                      00153 
+                      00154 sharebank udata_ovr 0x0000
+0000                  00155 STK06   res 1
+0000                  00156 STK05   res 1
+0001                  00157 STK04   res 1
+0001                  00158 STK03   res 1
+0002                  00159 STK02   res 1
+0002                  00160 STK01   res 1
+0003                  00161 STK00   res 1
+                      00162 
+                      00163 ;--------------------------------------------------------
+                      00164 ; global definitions
+                      00165 ;--------------------------------------------------------
+                      00166 UD_FSR_test_0   udata
+0000                  00167 __ad_ch res     10
+                      00168 
+                      00169 UD_FSR_test_1   udata
+0000                  00170 __adc   res     22
+                      00171 
+                      00172 ;--------------------------------------------------------
+                      00173 ; absolute symbol definitions
+                      00174 ;--------------------------------------------------------
+                      00175 ;--------------------------------------------------------
+                      00176 ; compiler-defined variables
+                      00177 ;--------------------------------------------------------
+                      00178 UDL_FSR_test_0  udata
+0000                  00179 r0x1022 res     1
+0000                  00180 r0x1023 res     1
+0001                  00181 r0x1024 res     1
+0001                  00182 r0x1025 res     1
+0002                  00183 r0x1026 res     1
+0002                  00184 r0x1027 res     1
+0003                  00185 _adc_initial_ad_value_1_1       res     2
+                      00186 ;--------------------------------------------------------
+                      00187 ; initialized data
+                      00188 ;--------------------------------------------------------
+                      00189 
+                      00190 ID_FSR_test_0   code
+0000                  00191 __ad_ch_code
+0000   0000           00192         dw 0x00
+0001   0001           00193         dw 0x01
+0002   0002           00194         dw 0x02
+0003   0003           00195         dw 0x03
+0004   0004           00196         dw 0x04
+0005   0005           00197         dw 0x05
+0006   0006           00198         dw 0x06
+0007   0007           00199         dw 0x07
+0008   0008           00200         dw 0x08
+0009   0009           00201         dw 0x09
+                      00202 
+                      00203 
+                      00204 ;@Allocation info for local variables in function 'adc_initial'
+                      00205 ;@adc_initial adc_initial               Allocated to registers ;size:2
+                      00206 ;@adc_initial INDF0bits                 Allocated to registers ;size:1
+                      00207 ;@adc_initial INDF1bits                 Allocated to registers ;size:1
+                      00208 ;@adc_initial INDF2bits                 Allocated to registers ;size:1
+                      00209 ;@adc_initial HIBYTEbits                Allocated to registers ;size:1
+                      00210 ;@adc_initial FSR0bits                  Allocated to registers ;size:1
+                      00211 ;@adc_initial FSR1bits                  Allocated to registers ;size:1
+                      00212 ;@adc_initial PCLbits                   Allocated to registers ;size:1
+                      00213 ;@adc_initial PFLAGbits                 Allocated to registers ;size:1
+                      00214 ;@adc_initial MCRbits                   Allocated to registers ;size:1
+                      00215 ;@adc_initial INDF3bits                 Allocated to registers ;size:1
+                      00216 ;@adc_initial INTEbits                  Allocated to registers ;size:1
+                      00217 ;@adc_initial INTFbits                  Allocated to registers ;size:1
+                      00218 ;@adc_initial OSCMbits                  Allocated to registers ;size:1
+                      00219 ;@adc_initial INTE1bits                 Allocated to registers ;size:1
+                      00220 ;@adc_initial INTF1bits                 Allocated to registers ;size:1
+                      00221 ;@adc_initial KBCRbits                  Allocated to registers ;size:1
+                      00222 ;@adc_initial IOP0bits                  Allocated to registers ;size:1
+                      00223 ;@adc_initial OEP0bits                  Allocated to registers ;size:1
+                      00224 ;@adc_initial PUP0bits                  Allocated to registers ;size:1
+                      00225 ;@adc_initial PDP0bits                  Allocated to registers ;size:1
+                      00226 ;@adc_initial IOP1bits                  Allocated to registers ;size:1
+                      00227 ;@adc_initial OEP1bits                  Allocated to registers ;size:1
+                      00228 ;@adc_initial PUP1bits                  Allocated to registers ;size:1
+                      00229 ;@adc_initial PDP1bits                  Allocated to registers ;size:1
+                      00230 ;@adc_initial IOP2bits                  Allocated to registers ;size:1
+                      00231 ;@adc_initial OEP2bits                  Allocated to registers ;size:1
+                      00232 ;@adc_initial PUP2bits                  Allocated to registers ;size:1
+                      00233 ;@adc_initial PDP2bits                  Allocated to registers ;size:1
+                      00234 ;@adc_initial T0CRbits                  Allocated to registers ;size:1
+                      00235 ;@adc_initial T0CNTbits                 Allocated to registers ;size:1
+                      00236 ;@adc_initial T0LOADbits                Allocated to registers ;size:1
+                      00237 ;@adc_initial T0DATAbits                Allocated to registers ;size:1
+                      00238 ;@adc_initial T1CRbits                  Allocated to registers ;size:1
+                      00239 ;@adc_initial T1CNTHbits                Allocated to registers ;size:1
+                      00240 ;@adc_initial T1CNTLbits                Allocated to registers ;size:1
+                      00241 ;@adc_initial T1LOADHbits               Allocated to registers ;size:1
+                      00242 ;@adc_initial T1LOADLbits               Allocated to registers ;size:1
+                      00243 ;@adc_initial T1DATAHbits               Allocated to registers ;size:1
+                      00244 ;@adc_initial T1DATALbits               Allocated to registers ;size:1
+                      00245 ;@adc_initial IICCRbits                 Allocated to registers ;size:1
+                      00246 ;@adc_initial IICSRbits                 Allocated to registers ;size:1
+                      00247 ;@adc_initial IICDRbits                 Allocated to registers ;size:1
+                      00248 ;@adc_initial ADCR0bits                 Allocated to registers ;size:1
+                      00249 ;@adc_initial ADCR1bits                 Allocated to registers ;size:1
+                      00250 ;@adc_initial ADRHbits                  Allocated to registers ;size:1
+                      00251 ;@adc_initial ADRLbits                  Allocated to registers ;size:1
+                      00252 ;@adc_initial ADIOS0bits                Allocated to registers ;size:1
+                      00253 ;@adc_initial ADIOS1bits                Allocated to registers ;size:1
+                      00254 ;@adc_initial OSADJCRbits               Allocated to registers ;size:1
+                      00255 ;@adc_initial T2CRbits                  Allocated to registers ;size:1
+                      00256 ;@adc_initial T2CNTHbits                Allocated to registers ;size:1
+                      00257 ;@adc_initial T2CNTLbits                Allocated to registers ;size:1
+                      00258 ;@adc_initial T2LOADHbits               Allocated to registers ;size:1
+                      00259 ;@adc_initial T2LOADLbits               Allocated to registers ;size:1
+                      00260 ;@adc_initial T3CRbits                  Allocated to registers ;size:1
+                      00261 ;@adc_initial T3CNTbits                 Allocated to registers ;size:1
+                      00262 ;@adc_initial T3LOADbits                Allocated to registers ;size:1
+                      00263 ;@adc_initial SCONbits                  Allocated to registers ;size:1
+                      00264 ;@adc_initial SBUFbits                  Allocated to registers ;size:1
+                      00265 ;@adc_initial SADDRbits                 Allocated to registers ;size:1
+                      00266 ;@adc_initial SADENbits                 Allocated to registers ;size:1
+                      00267 ;@adc_initial _ad_ch                    Allocated to registers ;size:10
+                      00268 ;@adc_initial _adc                      Allocated to registers ;size:22
+                      00269 ;@adc_initial i                         Allocated to registers r0x1022 ;size:1
+                      00270 ;@adc_initial ad_value                  Allocated to registers ;size:2
+                      00271 ;@adc_initial INDF0                     Allocated to registers ;size:1
+                      00272 ;@adc_initial INDF1                     Allocated to registers ;size:1
+                      00273 ;@adc_initial INDF2                     Allocated to registers ;size:1
+                      00274 ;@adc_initial HIBYTE                    Allocated to registers ;size:1
+                      00275 ;@adc_initial FSR0                      Allocated to registers ;size:1
+                      00276 ;@adc_initial FSR1                      Allocated to registers ;size:1
+                      00277 ;@adc_initial PCL                       Allocated to registers ;size:1
+                      00278 ;@adc_initial PFLAG                     Allocated to registers ;size:1
+                      00279 ;@adc_initial MCR                       Allocated to registers ;size:1
+                      00280 ;@adc_initial INDF3                     Allocated to registers ;size:1
+                      00281 ;@adc_initial INTE                      Allocated to registers ;size:1
+                      00282 ;@adc_initial INTF                      Allocated to registers ;size:1
+                      00283 ;@adc_initial OSCM                      Allocated to registers ;size:1
+                      00284 ;@adc_initial INTE1                     Allocated to registers ;size:1
+                      00285 ;@adc_initial INTF1                     Allocated to registers ;size:1
+                      00286 ;@adc_initial KBCR                      Allocated to registers ;size:1
+                      00287 ;@adc_initial IOP0                      Allocated to registers ;size:1
+                      00288 ;@adc_initial OEP0                      Allocated to registers ;size:1
+                      00289 ;@adc_initial PUP0                      Allocated to registers ;size:1
+                      00290 ;@adc_initial PDP0                      Allocated to registers ;size:1
+                      00291 ;@adc_initial IOP1                      Allocated to registers ;size:1
+                      00292 ;@adc_initial OEP1                      Allocated to registers ;size:1
+                      00293 ;@adc_initial PUP1                      Allocated to registers ;size:1
+                      00294 ;@adc_initial PDP1                      Allocated to registers ;size:1
+                      00295 ;@adc_initial IOP2                      Allocated to registers ;size:1
+                      00296 ;@adc_initial OEP2                      Allocated to registers ;size:1
+                      00297 ;@adc_initial PUP2                      Allocated to registers ;size:1
+                      00298 ;@adc_initial PDP2                      Allocated to registers ;size:1
+                      00299 ;@adc_initial T0CR                      Allocated to registers ;size:1
+                      00300 ;@adc_initial T0CNT                     Allocated to registers ;size:1
+                      00301 ;@adc_initial T0LOAD                    Allocated to registers ;size:1
+                      00302 ;@adc_initial T0DATA                    Allocated to registers ;size:1
+                      00303 ;@adc_initial T1CR                      Allocated to registers ;size:1
+                      00304 ;@adc_initial T1CNTH                    Allocated to registers ;size:1
+                      00305 ;@adc_initial T1CNTL                    Allocated to registers ;size:1
+                      00306 ;@adc_initial T1LOADH                   Allocated to registers ;size:1
+                      00307 ;@adc_initial T1LOADL                   Allocated to registers ;size:1
+                      00308 ;@adc_initial T1DATAH                   Allocated to registers ;size:1
+                      00309 ;@adc_initial T1DATAL                   Allocated to registers ;size:1
+                      00310 ;@adc_initial IICCR                     Allocated to registers ;size:1
+                      00311 ;@adc_initial IICSR                     Allocated to registers ;size:1
+                      00312 ;@adc_initial IICDR                     Allocated to registers ;size:1
+                      00313 ;@adc_initial ADCR0                     Allocated to registers ;size:1
+                      00314 ;@adc_initial ADCR1                     Allocated to registers ;size:1
+                      00315 ;@adc_initial ADRH                      Allocated to registers ;size:1
+                      00316 ;@adc_initial ADRL                      Allocated to registers ;size:1
+                      00317 ;@adc_initial ADIOS0                    Allocated to registers ;size:1
+                      00318 ;@adc_initial ADIOS1                    Allocated to registers ;size:1
+                      00319 ;@adc_initial OSADJCR                   Allocated to registers ;size:1
+                      00320 ;@adc_initial T2CR                      Allocated to registers ;size:1
+                      00321 ;@adc_initial T2CNTH                    Allocated to registers ;size:1
+                      00322 ;@adc_initial T2CNTL                    Allocated to registers ;size:1
+                      00323 ;@adc_initial T2LOADH                   Allocated to registers ;size:1
+                      00324 ;@adc_initial T2LOADL                   Allocated to registers ;size:1
+                      00325 ;@adc_initial T3CR                      Allocated to registers ;size:1
+                      00326 ;@adc_initial T3CNT                     Allocated to registers ;size:1
+                      00327 ;@adc_initial T3LOAD                    Allocated to registers ;size:1
+                      00328 ;@adc_initial SCON                      Allocated to registers ;size:1
+                      00329 ;@adc_initial SBUF                      Allocated to registers ;size:1
+                      00330 ;@adc_initial SADDR                     Allocated to registers ;size:1
+                      00331 ;@adc_initial SADEN                     Allocated to registers ;size:1
+                      00332 ;@end Allocation info for local variables in function 'adc_initial';
+                      00333 ;@Allocation info for local variables in function 'adc_initial'
+                      00334 ;@adc_initial i                         Allocated to registers r0x1022 ;size:1
+                      00335 ;@adc_initial ad_value                  Allocated to registers ;size:2
+                      00336 ;@end Allocation info for local variables in function 'adc_initial';
+                      00337 ;@Allocation info for local variables in function 'main'
+                      00338 ;@end Allocation info for local variables in function 'main';
+                      00339 
+                      00340 ;--------------------------------------------------------
+                      00341 ; overlayable items in internal ram 
+                      00342 ;--------------------------------------------------------
+                      00343 ;       udata_ovr
+                      00344 ;--------------------------------------------------------
+                      00345 ; reset vector 
+                      00346 ;--------------------------------------------------------
+                      00347 STARTUP code 0x0000
+0000   A000           00348         goto    _main
+                      00349 ;--------------------------------------------------------
+                      00350 ; code
+                      00351 ;--------------------------------------------------------
+                      00352 code_FSR_test   code
+                      00353 ;***
+                      00354 ;  pBlock Stats: dbName = M
+                      00355 ;***
+                      00356 ;entry:  _main  ;Function start
+                      00357 ; 2 exit points
+                      00358 ;has an exit
+                      00359 ;functions called:
+                      00360 ;   _adc_initial
+                      00361 ;   _adc_initial
+                      00362 ;; Starting pCode block
+0000                  00363 _main   ;Function start
+                      00364 ; 2 exit points
+                      00365 ;       .line   57; "FSR_test.c"        adc_initial();
+0000   8000           00366         CALL    _adc_initial
+0001                  00367 _00114_DS_
+                      00368 ;       .line   58; "FSR_test.c"        while(1);
+0001   A000           00369         GOTO    _00114_DS_
+0002   000C           00370         RETURN  
+                      00371 ; exit point of _main
+                      00372 
+                      00373 ;***
+                      00374 ;  pBlock Stats: dbName = C
+                      00375 ;***
+                      00376 ;entry:  _adc_initial   ;Function start
+                      00377 ; 2 exit points
+                      00378 ;has an exit
+                      00379 ;functions called:
+                      00380 ;   __gptrget1
+                      00381 ;   __gptrget1
+                      00382 ;8 compiler assigned registers:
+                      00383 ;   r0x1022
+                      00384 ;   r0x1023
+                      00385 ;   r0x1024
+                      00386 ;   r0x1025
+                      00387 ;   r0x1026
+                      00388 ;   STK01
+                      00389 ;   STK00
+                      00390 ;   r0x1027
+                      00391 ;; Starting pCode block
+0003                  00392 _adc_initial    ;Function start
+                      00393 ; 2 exit points
+                      00394 ;       .line   39; "FSR_test.c"        ADIOS0=0X38;
+0003   3C38           00395         MOVAI   0x38
+0004   5600           00396         MOVRA   _ADIOS0
+                      00397 ;       .line   40; "FSR_test.c"        ADIOS1=0X38;
+0005   3C38           00398         MOVAI   0x38
+0006   5600           00399         MOVRA   _ADIOS1
+                      00400 ;       .line   41; "FSR_test.c"        ADCR1=0X23;
+0007   3C23           00401         MOVAI   0x23
+0008   5600           00402         MOVRA   _ADCR1
+                      00403 ;       .line   42; "FSR_test.c"        for(i=0;i<LENGTH;i++)
+0009   7600           00404         CLRR    r0x1022
+                      00405 ;;unsigned compare: left < lit(0xA=10), size=1
+000A                  00406 _00105_DS_
+000A   3C0A           00407         MOVAI   0x0a
+000B   4800           00408         RSUBAR  r0x1022
+000C   F187           00409         JBCLR   PFLAG,0
+000D   A000           00410         GOTO    _00108_DS_
+                      00411 ;;genSkipc:3195: created from rifx:00DE608C
+                      00412 ;       .line   44; "FSR_test.c"        _ad_ch[i]=_ad_ch_code[i];
+000E   5800           00413         MOVAR   r0x1022
+000F   3F00           00414         ADDAI   (__ad_ch + 0)
+0010   5600           00415         MOVRA   r0x1023
+0011   3C00           00416         MOVAI   high (__ad_ch + 0)
+0012   F187           00417         JBCLR   PFLAG,0
+0013   3F01           00418         ADDAI   0x01
+0014   5600           00419         MOVRA   r0x1024
+0015   5800           00420         MOVAR   r0x1022
+0016   3F00           00421         ADDAI   (__ad_ch_code + 0)
+0017   5600           00422         MOVRA   r0x1025
+0018   3C00           00423         MOVAI   high (__ad_ch_code + 0)
+0019   F187           00424         JBCLR   PFLAG,0
+001A   3F01           00425         ADDAI   0x01
+001B   5600           00426         MOVRA   r0x1026
+001C   5800           00427         MOVAR   r0x1025
+001D   5600           00428         MOVRA   STK01
+001E   5800           00429         MOVAR   r0x1026
+001F   5600           00430         MOVRA   STK00
+0020   3C80           00431         MOVAI   0x80
+0021   8000           00432         CALL    __gptrget1
+0022   5600           00433         MOVRA   r0x1027
+0023   5800           00434         MOVAR   r0x1023
+0024   5784           00435         MOVRA   FSR0
+0025   5800           00436         MOVAR   r0x1024
+0026   5785           00437         MOVRA   FSR1
+0027   5800           00438         MOVAR   r0x1027
+0028   5782           00439         MOVRA   INDF2
+                      00440 ;       .line   42; "FSR_test.c"        for(i=0;i<LENGTH;i++)
+0029   6600           00441         INCR    r0x1022
+002A   A000           00442         GOTO    _00105_DS_
+                      00443 ;;gen.c:6388: size=0/1, offset=0, AOP_TYPE(res)=8
+002B                  00444 _00108_DS_
+                      00445 ;       .line   46; "FSR_test.c"        _adc.ch=0;
+002B   7600           00446         CLRR    (__adc + 0)
+                      00447 ;       .line   48; "FSR_test.c"        _adc.ad_data.ad_array[_adc.ch]=ad_value & 0xffc0;
+002C   5800           00448         MOVAR   (__adc + 0)
+002D   5600           00449         MOVRA   r0x1022
+002E   D187           00450         BCLR    PFLAG,0
+002F   5000           00451         RLAR    r0x1022
+0030   5600           00452         MOVRA   r0x1023
+0031   5800           00453         MOVAR   r0x1023
+0032   3F00           00454         ADDAI   (__adc + 2)
+0033   5600           00455         MOVRA   r0x1022
+0034   3C00           00456         MOVAI   high (__adc + 2)
+0035   F187           00457         JBCLR   PFLAG,0
+0036   3F01           00458         ADDAI   0x01
+0037   5600           00459         MOVRA   r0x1024
+0038   3CC0           00460         MOVAI   0xc0
+0039   7800           00461         ANDAR   _adc_initial_ad_value_1_1
+003A   5600           00462         MOVRA   r0x1023
+003B   5800           00463         MOVAR   (_adc_initial_ad_value_1_1 + 1)
+003C   5600           00464         MOVRA   r0x1025
+003D   5800           00465         MOVAR   r0x1022
+003E   5784           00466         MOVRA   FSR0
+003F   5800           00467         MOVAR   r0x1024
+0040   5785           00468         MOVRA   FSR1
+0041   5800           00469         MOVAR   r0x1023
+0042   5782           00470         MOVRA   INDF2
+0043   6784           00471         INCR    FSR0
+0044   F587           00472         JBCLR   PFLAG,2
+0045   6785           00473         INCR    FSR1
+0046   5800           00474         MOVAR   r0x1025
+0047   5782           00475         MOVRA   INDF2
+0048   000C           00476         RETURN  
+                      00477 ; exit point of _adc_initial
+                      00478 
+                      00479 
+                      00480 ;       code size estimation:
+                      00481 ;          73+    0 =    73 instructions (  146 byte)
+                      00482 
+                      00483         end
+gpasm-2.0.0_beta2 (Nov  6 2017)FSR_test.asm       2018-7-4  11:52:51           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B8
+ADCR1                             000001B9
+ADIOS0                            000001BC
+ADIOS1                            000001BD
+ADRH                              000001BA
+ADRL                              000001BB
+EEAR                              000001B6
+EECR                              000001B4
+EEDR                              000001B7
+EEMASK                            000001B5
+FSR0                              00000184
+FSR1                              00000185
+HIBYTE                            00000183
+IICCR                             000001B0
+IICDR                             000001B2
+IICSR                             000001B1
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INTE                              0000018A
+INTE1                             0000018D
+INTF                              0000018B
+INTF1                             0000018E
+IOP0                              00000190
+IOP1                              00000194
+IOP2                              00000198
+KBCR                              0000018F
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OEP2                              00000199
+OSADJCR                           000001BE
+OSCM                              0000018C
+PCL                               00000186
+PDP0                              00000193
+PDP1                              00000197
+PDP2                              0000019B
+PFLAG                             00000187
+PUP0                              00000192
+PUP1                              00000196
+PUP2                              0000019A
+SADDR                             000001CA
+SADEN                             000001CB
+SBUF                              000001C9
+SCON                              000001C8
+STK00                             00000006
+STK01                             00000005
+STK02                             00000004
+STK03                             00000003
+STK04                             00000002
+STK05                             00000001
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0LOAD                            000001A2
+T1CNTH                            000001A9
+T1CNTL                            000001AA
+T1CR                              000001A8
+T1DATAH                           000001AD
+T1DATAL                           000001AE
+T1LOADH                           000001AB
+T1LOADL                           000001AC
+T2CNTH                            000001C1
+T2CNTL                            000001C2
+T2CR                              000001C0
+T2LOADH                           000001C3
+T2LOADL                           000001C4
+T3CNT                             000001C6
+T3CR                              000001C5
+T3LOAD                            000001C7
+_00105_DS_                        0000000A
+_00108_DS_                        0000002B
+_00114_DS_                        00000001
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADIOS0                           00000000
+_ADIOS0bits                       00000000
+_ADIOS1                           00000000
+_ADIOS1bits                       00000000
+_ADRH                             00000000
+_ADRHbits                         00000000
+_ADRL                             00000000
+_ADRLbits                         00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_FSR0                             00000000
+_FSR0bits                         00000000
+_FSR1                             00000000
+_FSR1bits                         00000000
+_HIBYTE                           00000000
+_HIBYTEbits                       00000000
+_IICCR                            00000000
+_IICCRbits                        00000000
+_IICDR                            00000000
+_IICDRbits                        00000000
+_IICSR                            00000000
+_IICSRbits                        00000000
+_INDF0                            00000000
+_INDF0bits                        00000000
+_INDF1                            00000000
+_INDF1bits                        00000000
+_INDF2                            00000000
+_INDF2bits                        00000000
+_INDF3                            00000000
+_INDF3bits                        00000000
+_INTE                             00000000
+_INTE1                            00000000
+_INTE1bits                        00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTF1                            00000000
+_INTF1bits                        00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_IOP2                             00000000
+_IOP2bits                         00000000
+_KBCR                             00000000
+_KBCRbits                         00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OEP2                             00000000
+_OEP2bits                         00000000
+_OSADJCR                          00000000
+_OSADJCRbits                      00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PCLbits                          00000000
+_PDP0                             00000000
+_PDP0bits                         00000000
+_PDP1                             00000000
+_PDP1bits                         00000000
+_PDP2                             00000000
+_PDP2bits                         00000000
+_PFLAG                            00000000
+_PFLAGbits                        00000000
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PUP2                             00000000
+_PUP2bits                         00000000
+_SADDR                            00000000
+_SADDRbits                        00000000
+_SADEN                            00000000
+_SADENbits                        00000000
+_SBUF                             00000000
+_SBUFbits                         00000000
+_SCON                             00000000
+_SCONbits                         00000000
+_T0CNT                            00000000
+_T0CNTbits                        00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0DATAbits                       00000000
+_T0LOAD                           00000000
+_T0LOADbits                       00000000
+_T1CNTH                           00000000
+_T1CNTHbits                       00000000
+_T1CNTL                           00000000
+_T1CNTLbits                       00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATAH                          00000000
+_T1DATAHbits                      00000000
+_T1DATAL                          00000000
+_T1DATALbits                      00000000
+_T1LOADH                          00000000
+_T1LOADHbits                      00000000
+_T1LOADL                          00000000
+_T1LOADLbits                      00000000
+_T2CNTH                           00000000
+_T2CNTHbits                       00000000
+_T2CNTL                           00000000
+_T2CNTLbits                       00000000
+_T2CR                             00000000
+_T2CRbits                         00000000
+_T2LOADH                          00000000
+_T2LOADHbits                      00000000
+_T2LOADL                          00000000
+_T2LOADLbits                      00000000
+_T3CNT                            00000000
+_T3CNTbits                        00000000
+_T3CR                             00000000
+_T3CRbits                         00000000
+_T3LOAD                           00000000
+_T3LOADbits                       00000000
+__7333                            00000001
+__ad_ch                           00000000
+__ad_ch_code                      00000000
+__adc                             00000000
+__gptrget1                        00000000
+_adc_initial                      00000003
+_adc_initial_ad_value_1_1         00000006
+_main                             00000000
+r0x1022                           00000000
+r0x1023                           00000001
+r0x1024                           00000002
+r0x1025                           00000003
+r0x1026                           00000004
+r0x1027                           00000005
+ADCHS0                            ADCR0,4
+ADCHS1                            ADCR0,5
+ADCHS2                            ADCR0,6
+ADCHS3                            ADCR0,7
+ADCKS0                            ADCR1,4
+ADCKS1                            ADCR1,5
+ADEN                              ADCR0,0
+ADEOC                             ADCR0,1
+ADIE                              INTE,6
+ADIF                              INTF,6
+ADR0                              ADRL,0
+ADR1                              ADRL,1
+ADR10                             ADRH,6
+ADR11                             ADRH,7
+ADR2                              ADRL,2
+ADR3                              ADRL,3
+ADR4                              ADRH,0
+ADR5                              ADRH,1
+ADR6                              ADRH,2
+ADR7                              ADRH,3
+ADR8                              ADRH,4
+ADR9                              ADRH,5
+ADRSEL                            ADCR1,7
+ADSPS0                            ADCR1,0
+ADSPS1                            ADCR1,1
+ADVRS0                            ADCR0,2
+ADVRS1                            ADCR0,3
+AN0EN                             ADIOS0,0
+AN10EN                            ADIOS1,2
+AN11EN                            ADIOS1,3
+AN12EN                            ADIOS1,4
+AN13EN                            ADIOS1,5
+AN1EN                             ADIOS0,1
+AN2EN                             ADIOS0,2
+AN3EN                             ADIOS0,3
+AN4EN                             ADIOS0,4
+AN5EN                             ADIOS0,5
+AN6EN                             ADIOS0,6
+AN7EN                             ADIOS0,7
+AN8EN                             ADIOS1,0
+AN9EN                             ADIOS1,1
+BUZ0OE                            T0CR,5
+C                                 PFLAG,0
+CLKS                              OSCM,2
+DC                                PFLAG,1
+EEA0                              EEAR,0
+EEA1                              EEAR,1
+EEA2                              EEAR,2
+EEA3                              EEAR,3
+EEA4                              EEAR,4
+EEA5                              EEAR,5
+EED0                              EEDR,0
+EED1                              EEDR,1
+EED2                              EEDR,2
+EED3                              EEDR,3
+EED4                              EEDR,4
+EED5                              EEDR,5
+EED6                              EEDR,6
+EED7                              EEDR,7
+EEMASK0                           EEMASK,0
+EEMASK1                           EEMASK,1
+EEMASK2                           EEMASK,2
+EEMASK3                           EEMASK,3
+EEMASK4                           EEMASK,4
+EEMASK5                           EEMASK,5
+EEMASK6                           EEMASK,6
+EEMASK7                           EEMASK,7
+EERW                              EECR,6
+EETRIG                            EECR,7
+FSR00                             FSR0,0
+FSR01                             FSR0,1
+FSR02                             FSR0,2
+FSR03                             FSR0,3
+FSR04                             FSR0,4
+FSR05                             FSR0,5
+FSR06                             FSR0,6
+FSR07                             FSR0,7
+FSR10                             FSR1,0
+FSR11                             FSR1,1
+FSR12                             FSR1,2
+FSR13                             FSR1,3
+FSR14                             FSR1,4
+FSR15                             FSR1,5
+FSR16                             FSR1,6
+FSR17                             FSR1,7
+GIE                               MCR,7
+HFEN                              OSCM,0
+HIBYTE0                           HIBYTE,0
+HIBYTE1                           HIBYTE,1
+HIBYTE2                           HIBYTE,2
+HIBYTE3                           HIBYTE,3
+HIBYTE4                           HIBYTE,4
+HIBYTE5                           HIBYTE,5
+HIBYTE6                           HIBYTE,6
+HIBYTE7                           HIBYTE,7
+IICACK                            IICSR,3
+IICCKS0                           IICCR,4
+IICCKS1                           IICCR,5
+IICDR0                            IICDR,0
+IICDR1                            IICDR,1
+IICDR2                            IICDR,2
+IICDR3                            IICDR,3
+IICDR4                            IICDR,4
+IICDR5                            IICDR,5
+IICDR6                            IICDR,6
+IICDR7                            IICDR,7
+IICEN                             IICCR,7
+IICIE                             INTE,5
+IICIF                             INTF,5
+IICIMS                            IICCR,0
+IICRD                             IICSR,5
+IICRDTP                           IICCR,1
+IICRS                             IICCR,6
+IICSTP                            IICSR,6
+IICSTR                            IICSR,7
+IICTYP0                           IICCR,2
+IICTYP1                           IICCR,3
+IICWR                             IICSR,4
+INDF00                            INDF0,0
+INDF01                            INDF0,1
+INDF02                            INDF0,2
+INDF03                            INDF0,3
+INDF04                            INDF0,4
+INDF05                            INDF0,5
+INDF06                            INDF0,6
+INDF07                            INDF0,7
+INDF10                            INDF1,0
+INDF11                            INDF1,1
+INDF12                            INDF1,2
+INDF13                            INDF1,3
+INDF14                            INDF1,4
+INDF15                            INDF1,5
+INDF16                            INDF1,6
+INDF17                            INDF1,7
+INDF20                            INDF2,0
+INDF21                            INDF2,1
+INDF22                            INDF2,2
+INDF23                            INDF2,3
+INDF24                            INDF2,4
+INDF25                            INDF2,5
+INDF26                            INDF2,6
+INDF27                            INDF2,7
+INDF30                            INDF3,0
+INDF31                            INDF3,1
+INDF32                            INDF3,2
+INDF33                            INDF3,3
+INDF34                            INDF3,4
+INDF35                            INDF3,5
+INDF36                            INDF3,6
+INDF37                            INDF3,7
+INT0IE                            INTE,2
+INT0IF                            INTF,2
+INT1IE                            INTE,3
+INT1IF                            INTF,3
+INT2IE                            INTE1,2
+INT2IF                            INTF1,2
+INT3IE                            INTE1,3
+INT3IF                            INTF1,3
+KBCR0                             KBCR,0
+KBCR1                             KBCR,1
+KBCR2                             KBCR,2
+KBCR3                             KBCR,3
+KBCR4                             KBCR,4
+KBCR5                             KBCR,5
+KBCR6                             KBCR,6
+KBCR7                             KBCR,7
+KBIE                              INTE,4
+KBIF                              INTF,4
+LFEN                              OSCM,1
+MINT00                            MCR,0
+MINT01                            MCR,1
+MINT10                            MCR,2
+MINT11                            MCR,3
+OSADJEN                           OSADJCR,7
+OSADJTR0                          OSADJCR,0
+OSADJTR1                          OSADJCR,1
+OSADJTR2                          OSADJCR,2
+OSADJTR3                          OSADJCR,3
+OSADJTR4                          OSADJCR,4
+OSADJTR5                          OSADJCR,5
+P00D                              IOP0,0
+P00OE                             OEP0,0
+P00PD                             PDP0,0
+P00PU                             PUP0,0
+P01D                              IOP0,1
+P01OE                             OEP0,1
+P01PD                             PDP0,1
+P01PU                             PUP0,1
+P02D                              IOP0,2
+P02OE                             OEP0,2
+P02PD                             PDP0,2
+P02PU                             PUP0,2
+P03D                              IOP0,3
+P03OE                             OEP0,3
+P03PD                             PDP0,3
+P03PU                             PUP0,3
+P04D                              IOP0,4
+P04OE                             OEP0,4
+P04PD                             PDP0,4
+P04PU                             PUP0,4
+P05D                              IOP0,5
+P05OE                             OEP0,5
+P05PD                             PDP0,5
+P05PU                             PUP0,5
+P06D                              IOP0,6
+P06OE                             OEP0,6
+P06PD                             PDP0,6
+P06PU                             PUP0,6
+P07D                              IOP0,7
+P07OE                             OEP0,7
+P07PD                             PDP0,7
+P07PU                             PUP0,7
+P10D                              IOP1,0
+P10OE                             OEP1,0
+P10PD                             PDP1,0
+P10PU                             PUP1,0
+P11D                              IOP1,1
+P11OE                             OEP1,1
+P11PD                             PDP1,1
+P11PU                             PUP1,1
+P12D                              IOP1,2
+P12OE                             OEP1,2
+P12PD                             PDP1,2
+P12PU                             PUP1,2
+P13D                              IOP1,3
+P13OE                             OEP1,3
+P13PD                             PDP1,3
+P13PU                             PUP1,3
+P14D                              IOP1,4
+P14OE                             OEP1,4
+P14PD                             PDP1,4
+P14PU                             PUP1,4
+P15D                              IOP1,5
+P15OE                             OEP1,5
+P15PD                             PDP1,5
+P15PU                             PUP1,5
+P16D                              IOP1,6
+P16OE                             OEP1,6
+P16PD                             PDP1,6
+P16PU                             PUP1,6
+P17D                              IOP1,7
+P17OE                             OEP1,7
+P17PD                             PDP1,7
+P17PU                             PUP1,7
+P20D                              IOP2,0
+P20OE                             OEP2,0
+P20PD                             PDP2,0
+P20PU                             PUP2,0
+P21D                              IOP2,1
+P21OE                             OEP2,1
+P21PD                             PDP2,1
+P21PU                             PUP2,1
+P22D                              IOP2,2
+P22OE                             OEP2,2
+P22PD                             PDP2,2
+P22PU                             PUP2,2
+P23D                              IOP2,3
+P23OE                             OEP2,3
+P23PD                             PDP2,3
+P23PU                             PUP2,3
+P24D                              IOP2,4
+P24OE                             OEP2,4
+P24PD                             PDP2,4
+P24PU                             PUP2,4
+P25D                              IOP2,5
+P25OE                             OEP2,5
+P25PD                             PDP2,5
+P25PU                             PUP2,5
+PC0                               PCL,0
+PC1                               PCL,1
+PC2                               PCL,2
+PC3                               PCL,3
+PC4                               PCL,4
+PC5                               PCL,5
+PC6                               PCL,6
+PC7                               PCL,7
+PD                                MCR,4
+PWM0OE                            T0CR,6
+PWM1OE                            T1CR,6
+RACK                              IICSR,1
+RB8                               SCON,2
+REN                               SCON,4
+RI                                SCON,0
+SACK                              IICSR,2
+SADDR0                            SADDR,0
+SADDR1                            SADDR,1
+SADDR2                            SADDR,2
+SADDR3                            SADDR,3
+SADDR4                            SADDR,4
+SADDR5                            SADDR,5
+SADDR6                            SADDR,6
+SADDR7                            SADDR,7
+SADEN0                            SADEN,0
+SADEN1                            SADEN,1
+SADEN2                            SADEN,2
+SADEN3                            SADEN,3
+SADEN4                            SADEN,4
+SADEN5                            SADEN,5
+SADEN6                            SADEN,6
+SADEN7                            SADEN,7
+SBUF0                             SBUF,0
+SBUF1                             SBUF,1
+SBUF2                             SBUF,2
+SBUF3                             SBUF,3
+SBUF4                             SBUF,4
+SBUF5                             SBUF,5
+SBUF6                             SBUF,6
+SBUF7                             SBUF,7
+SM0                               SCON,7
+SM1                               SCON,6
+SM2                               SCON,5
+SMOD                              T2CR,6
+SSTAT                             T2CR,5
+STATUS                            PFLAG
+STBH                              OSCM,4
+STBL                              OSCM,5
+T0CKS0                            T0CR,3
+T0CKS1                            T0CR,4
+T0CNT0                            T0CNT,0
+T0CNT1                            T0CNT,1
+T0CNT2                            T0CNT,2
+T0CNT3                            T0CNT,3
+T0CNT4                            T0CNT,4
+T0CNT5                            T0CNT,5
+T0CNT6                            T0CNT,6
+T0CNT7                            T0CNT,7
+T0DATA0                           T0DATA,0
+T0DATA1                           T0DATA,1
+T0DATA2                           T0DATA,2
+T0DATA3                           T0DATA,3
+T0DATA4                           T0DATA,4
+T0DATA5                           T0DATA,5
+T0DATA6                           T0DATA,6
+T0DATA7                           T0DATA,7
+T0EN                              T0CR,7
+T0IE                              INTE,0
+T0IF                              INTF,0
+T0LOAD0                           T0LOAD,0
+T0LOAD1                           T0LOAD,1
+T0LOAD2                           T0LOAD,2
+T0LOAD3                           T0LOAD,3
+T0LOAD4                           T0LOAD,4
+T0LOAD5                           T0LOAD,5
+T0LOAD6                           T0LOAD,6
+T0LOAD7                           T0LOAD,7
+T0PRS0                            T0CR,0
+T0PRS1                            T0CR,1
+T0PRS2                            T0CR,2
+T1CKS0                            T1CR,3
+T1CKS1                            T1CR,4
+T1CNT0                            T1CNTL,0
+T1CNT1                            T1CNTL,1
+T1CNT10                           T1CNTH,2
+T1CNT11                           T1CNTH,3
+T1CNT12                           T1CNTH,4
+T1CNT13                           T1CNTH,5
+T1CNT14                           T1CNTH,6
+T1CNT15                           T1CNTH,7
+T1CNT2                            T1CNTL,2
+T1CNT3                            T1CNTL,3
+T1CNT4                            T1CNTL,4
+T1CNT5                            T1CNTL,5
+T1CNT6                            T1CNTL,6
+T1CNT7                            T1CNTL,7
+T1CNT8                            T1CNTH,0
+T1CNT9                            T1CNTH,1
+T1DATA0                           T1DATAL,0
+T1DATA1                           T1DATAL,1
+T1DATA10                          T1DATAH,2
+T1DATA11                          T1DATAH,3
+T1DATA12                          T1DATAH,4
+T1DATA13                          T1DATAH,5
+T1DATA14                          T1DATAH,6
+T1DATA15                          T1DATAH,7
+T1DATA2                           T1DATAL,2
+T1DATA3                           T1DATAL,3
+T1DATA4                           T1DATAL,4
+T1DATA5                           T1DATAL,5
+T1DATA6                           T1DATAL,6
+T1DATA7                           T1DATAL,7
+T1DATA8                           T1DATAH,0
+T1DATA9                           T1DATAH,1
+T1EN                              T1CR,7
+T1IE                              INTE,1
+T1IF                              INTF,1
+T1LOAD0                           T1LOADL,0
+T1LOAD1                           T1LOADL,1
+T1LOAD10                          T1LOADH,2
+T1LOAD11                          T1LOADH,3
+T1LOAD12                          T1LOADH,4
+T1LOAD13                          T1LOADH,5
+T1LOAD14                          T1LOADH,6
+T1LOAD15                          T1LOADH,7
+T1LOAD2                           T1LOADL,2
+T1LOAD3                           T1LOADL,3
+T1LOAD4                           T1LOADL,4
+T1LOAD5                           T1LOADL,5
+T1LOAD6                           T1LOADL,6
+T1LOAD7                           T1LOADL,7
+T1LOAD8                           T1LOADH,0
+T1LOAD9                           T1LOADH,1
+T1PRS0                            T1CR,0
+T1PRS1                            T1CR,1
+T1PRS2                            T1CR,2
+T2CKS0                            T2CR,3
+T2CKS1                            T2CR,4
+T2CNT0                            T2CNTL,0
+T2CNT1                            T2CNTL,1
+T2CNT10                           T2CNTH,2
+T2CNT11                           T2CNTH,3
+T2CNT12                           T2CNTH,4
+T2CNT13                           T2CNTH,5
+T2CNT14                           T2CNTH,6
+T2CNT15                           T2CNTH,7
+T2CNT2                            T2CNTL,2
+T2CNT3                            T2CNTL,3
+T2CNT4                            T2CNTL,4
+T2CNT5                            T2CNTL,5
+T2CNT6                            T2CNTL,6
+T2CNT7                            T2CNTL,7
+T2CNT8                            T2CNTH,0
+T2CNT9                            T2CNTH,1
+T2EN                              T2CR,7
+T2IE                              INTE1,0
+T2IF                              INTF1,0
+T2LOAD0                           T2LOADL,0
+T2LOAD1                           T2LOADL,1
+T2LOAD10                          T2LOADH,2
+T2LOAD11                          T2LOADH,3
+T2LOAD12                          T2LOADH,4
+T2LOAD13                          T2LOADH,5
+T2LOAD14                          T2LOADH,6
+T2LOAD15                          T2LOADH,7
+T2LOAD2                           T2LOADL,2
+T2LOAD3                           T2LOADL,3
+T2LOAD4                           T2LOADL,4
+T2LOAD5                           T2LOADL,5
+T2LOAD6                           T2LOADL,6
+T2LOAD7                           T2LOADL,7
+T2LOAD8                           T2LOADH,0
+T2LOAD9                           T2LOADH,1
+T2PRS0                            T2CR,0
+T2PRS1                            T2CR,1
+T2PRS2                            T2CR,2
+T3CKS0                            T3CR,3
+T3CKS1                            T3CR,4
+T3CNT0                            T3CNT,0
+T3CNT1                            T3CNT,1
+T3CNT2                            T3CNT,2
+T3CNT3                            T3CNT,3
+T3CNT4                            T3CNT,4
+T3CNT5                            T3CNT,5
+T3CNT6                            T3CNT,6
+T3CNT7                            T3CNT,7
+T3EN                              T3CR,7
+T3IE                              INTE1,1
+T3IF                              INTF1,1
+T3LOAD0                           T3LOAD,0
+T3LOAD1                           T3LOAD,1
+T3LOAD2                           T3LOAD,2
+T3LOAD3                           T3LOAD,3
+T3LOAD4                           T3LOAD,4
+T3LOAD5                           T3LOAD,5
+T3LOAD6                           T3LOAD,6
+T3LOAD7                           T3LOAD,7
+T3PRS0                            T3CR,0
+T3PRS1                            T3CR,1
+T3PRS2                            T3CR,2
+TB8                               SCON,3
+TI                                SCON,1
+TO                                MCR,5
+UARTIE                            INTE,7
+UARTIF                            INTF,7
+Z                                 PFLAG,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

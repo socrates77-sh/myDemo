@@ -1,4 +1,4 @@
-gpasm-2.0.0_beta2 (Nov  6 2017)fun.asm            2017-12-19  17:43:41         PAGE  1
+gpasm-2.0.0_beta2 (Nov  6 2017)fun.asm            2018-5-23  15:03:46          PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -6,8 +6,8 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 
                       00001 ;--------------------------------------------------------
                       00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
-                      00003 ; Version 1.1.0 (Dec 19 2017) (MINGW32)
-                      00004 ; This file was generated Tue Dec 19 17:43:41 2017
+                      00003 ; Version 1.1.2 (May  8 2018) (MINGW32)
+                      00004 ; This file was generated Wed May 23 15:03:46 2018
                       00005 ;--------------------------------------------------------
                       00006 ; MC32 port for the RISC core
                       00007 ;--------------------------------------------------------
@@ -265,125 +265,121 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00256 ;; Starting pCode block
 0000                  00257 _main   ;Function start
                       00258 ; 2 exit points
-                      00259 ;       .line   34; "fun.c"     ram0 = 3;
-0000   3C03           00260         MOVAI   0x03
+                      00259 ;       .line   33; "fun.c"     ram0 = (1<<1);
+0000   3C02           00260         MOVAI   0x02
 0001   5600           00261         MOVRA   _ram0
-                      00262 ;       .line   35; "fun.c"     ram1 = 0x5f;
-0002   3C5F           00263         MOVAI   0x5f
-0003   5600           00264         MOVRA   _ram1
-                      00265 ;       .line   36; "fun.c"     global_a = ram0;
-0004   5800           00266         MOVAR   _ram0
-0005   5600           00267         MOVRA   _global_a
-                      00268 ;       .line   37; "fun.c"     b = ram1;
-0006   5800           00269         MOVAR   _ram1
-0007   5600           00270         MOVRA   r0x1004
-                      00271 ;       .line   39; "fun.c"     ram0 = fun1(global_a, b);       // 0x68
-0008   5800           00272         MOVAR   r0x1004
-0009   5600           00273         MOVRA   STK00
-000A   5800           00274         MOVAR   _global_a
-Error[182]  : Unknown opcode "LCALL"
-                      00275         LCALL   _fun1
-000B   5600           00276         MOVRA   _ram0
-                      00277 ;       .line   40; "fun.c"     ram1 = fun2(global_a, b);       // 0x56
-000C   5800           00278         MOVAR   r0x1004
-000D   5600           00279         MOVRA   STK00
-000E   5800           00280         MOVAR   _global_a
-Error[182]  : Unknown opcode "LCALL"
-                      00281         LCALL   _fun2
-000F   5600           00282         MOVRA   _ram1
-0010                  00283 _00122_DS_
-                      00284 ;       .line   42; "fun.c"     while(1);
-Error[182]  : Unknown opcode "LGOTO"
-                      00285         LGOTO   _00122_DS_
-0010   000C           00286         RETURN  
-                      00287 ; exit point of _main
-                      00288 
-                      00289 ;***
-                      00290 ;  pBlock Stats: dbName = C
-                      00291 ;***
-                      00292 ;entry:  _fun2  ;Function start
-                      00293 ; 2 exit points
-                      00294 ;has an exit
-                      00295 ;4 compiler assigned registers:
-                      00296 ;   r0x1001
-                      00297 ;   STK00
-                      00298 ;   r0x1002
-                      00299 ;   r0x1003
-                      00300 ;; Starting pCode block
-0011                  00301 _fun2   ;Function start
-                      00302 ; 2 exit points
-                      00303 ;       .line   19; "fun.c"     uchar fun2(uchar a, uchar b)
-0011   5600           00304         MOVRA   r0x1001
-0012   5800           00305         MOVAR   STK00
-0013   5600           00306         MOVRA   r0x1002
-                      00307 ;       .line   24; "fun.c"     for(i=0; i<a; i++)
-0014   7600           00308         CLRR    r0x1003
-0015                  00309 _00113_DS_
-0015   5800           00310         MOVAR   r0x1001
-0016   4800           00311         RSUBAR  r0x1003
-0017   F187           00312         JBCLR   PFLAG,0
-Error[182]  : Unknown opcode "LGOTO"
-                      00313         LGOTO   _00116_DS_
-                      00314 ;;genSkipc:3195: created from rifx:00DD608C
-                      00315 ;       .line   25; "fun.c"     b0 -= a;
-0018   5800           00316         MOVAR   r0x1001
-0019   4A00           00317         RSUBRA  r0x1002
-                      00318 ;       .line   24; "fun.c"     for(i=0; i<a; i++)
-001A   6600           00319         INCR    r0x1003
-Error[182]  : Unknown opcode "LGOTO"
-                      00320         LGOTO   _00113_DS_
-001B                  00321 _00116_DS_
-                      00322 ;       .line   27; "fun.c"     return b0;
-001B   5800           00323         MOVAR   r0x1002
-001C   000C           00324         RETURN  
-                      00325 ; exit point of _fun2
-                      00326 
-                      00327 ;***
-                      00328 ;  pBlock Stats: dbName = C
-                      00329 ;***
-                      00330 ;entry:  _fun1  ;Function start
-                      00331 ; 2 exit points
-                      00332 ;has an exit
-                      00333 ;4 compiler assigned registers:
-                      00334 ;   r0x1001
-                      00335 ;   STK00
-                      00336 ;   r0x1002
-                      00337 ;   r0x1003
-                      00338 ;; Starting pCode block
-001D                  00339 _fun1   ;Function start
-                      00340 ; 2 exit points
-                      00341 ;       .line   8; "fun.c"      uchar fun1(uchar a, uchar b)
-001D   5600           00342         MOVRA   r0x1001
-001E   5800           00343         MOVAR   STK00
-001F   5600           00344         MOVRA   r0x1002
-                      00345 ;       .line   13; "fun.c"     for(i=0; i<a; i++)
-0020   7600           00346         CLRR    r0x1003
-0021                  00347 _00105_DS_
-0021   5800           00348         MOVAR   r0x1001
-0022   4800           00349         RSUBAR  r0x1003
-0023   F187           00350         JBCLR   PFLAG,0
-Error[182]  : Unknown opcode "LGOTO"
-                      00351         LGOTO   _00108_DS_
-                      00352 ;;genSkipc:3195: created from rifx:00DD608C
-                      00353 ;       .line   14; "fun.c"     b0 += a;
-0024   5800           00354         MOVAR   r0x1001
-0025   7E00           00355         ADDRA   r0x1002
-                      00356 ;       .line   13; "fun.c"     for(i=0; i<a; i++)
-0026   6600           00357         INCR    r0x1003
-Error[182]  : Unknown opcode "LGOTO"
-                      00358         LGOTO   _00105_DS_
-0027                  00359 _00108_DS_
-                      00360 ;       .line   16; "fun.c"     return b0;
-0027   5800           00361         MOVAR   r0x1002
-0028   000C           00362         RETURN  
-                      00363 ; exit point of _fun1
-                      00364 
-                      00365 
-                      00366 ;       code size estimation:
-                      00367 ;          48+    0 =    48 instructions (   96 byte)
+                      00262 ;       .line   34; "fun.c"     ram0 = 3;
+0002   3C03           00263         MOVAI   0x03
+0003   5600           00264         MOVRA   _ram0
+                      00265 ;       .line   35; "fun.c"     ram1 = 0x5f;
+0004   3C5F           00266         MOVAI   0x5f
+0005   5600           00267         MOVRA   _ram1
+                      00268 ;       .line   36; "fun.c"     global_a = ram0;
+0006   5800           00269         MOVAR   _ram0
+0007   5600           00270         MOVRA   _global_a
+                      00271 ;       .line   37; "fun.c"     b = ram1;
+0008   5800           00272         MOVAR   _ram1
+0009   5600           00273         MOVRA   r0x1004
+                      00274 ;       .line   39; "fun.c"     ram0 = fun1(global_a, b);       // 0x68
+000A   5800           00275         MOVAR   r0x1004
+000B   5600           00276         MOVRA   STK00
+000C   5800           00277         MOVAR   _global_a
+000D   8000           00278         CALL    _fun1
+000E   5600           00279         MOVRA   _ram0
+                      00280 ;       .line   40; "fun.c"     ram1 = fun2(global_a, b);       // 0x56
+000F   5800           00281         MOVAR   r0x1004
+0010   5600           00282         MOVRA   STK00
+0011   5800           00283         MOVAR   _global_a
+0012   8000           00284         CALL    _fun2
+0013   5600           00285         MOVRA   _ram1
+0014                  00286 _00122_DS_
+                      00287 ;       .line   42; "fun.c"     while(1);
+0014   A000           00288         GOTO    _00122_DS_
+0015   000C           00289         RETURN  
+                      00290 ; exit point of _main
+                      00291 
+                      00292 ;***
+                      00293 ;  pBlock Stats: dbName = C
+                      00294 ;***
+                      00295 ;entry:  _fun2  ;Function start
+                      00296 ; 2 exit points
+                      00297 ;has an exit
+                      00298 ;4 compiler assigned registers:
+                      00299 ;   r0x1001
+                      00300 ;   STK00
+                      00301 ;   r0x1002
+                      00302 ;   r0x1003
+                      00303 ;; Starting pCode block
+0016                  00304 _fun2   ;Function start
+                      00305 ; 2 exit points
+                      00306 ;       .line   19; "fun.c"     uchar fun2(uchar a, uchar b)
+0016   5600           00307         MOVRA   r0x1001
+0017   5800           00308         MOVAR   STK00
+0018   5600           00309         MOVRA   r0x1002
+                      00310 ;       .line   24; "fun.c"     for(i=0; i<a; i++)
+0019   7600           00311         CLRR    r0x1003
+001A                  00312 _00113_DS_
+001A   5800           00313         MOVAR   r0x1001
+001B   4800           00314         RSUBAR  r0x1003
+001C   F187           00315         JBCLR   PFLAG,0
+001D   A000           00316         GOTO    _00116_DS_
+                      00317 ;;genSkipc:3195: created from rifx:00DE608C
+                      00318 ;       .line   25; "fun.c"     b0 -= a;
+001E   5800           00319         MOVAR   r0x1001
+001F   4A00           00320         RSUBRA  r0x1002
+                      00321 ;       .line   24; "fun.c"     for(i=0; i<a; i++)
+0020   6600           00322         INCR    r0x1003
+0021   A000           00323         GOTO    _00113_DS_
+0022                  00324 _00116_DS_
+                      00325 ;       .line   27; "fun.c"     return b0;
+0022   5800           00326         MOVAR   r0x1002
+0023   000C           00327         RETURN  
+                      00328 ; exit point of _fun2
+                      00329 
+                      00330 ;***
+                      00331 ;  pBlock Stats: dbName = C
+                      00332 ;***
+                      00333 ;entry:  _fun1  ;Function start
+                      00334 ; 2 exit points
+                      00335 ;has an exit
+                      00336 ;4 compiler assigned registers:
+                      00337 ;   r0x1001
+                      00338 ;   STK00
+                      00339 ;   r0x1002
+                      00340 ;   r0x1003
+                      00341 ;; Starting pCode block
+0024                  00342 _fun1   ;Function start
+                      00343 ; 2 exit points
+                      00344 ;       .line   8; "fun.c"      uchar fun1(uchar a, uchar b)
+0024   5600           00345         MOVRA   r0x1001
+0025   5800           00346         MOVAR   STK00
+0026   5600           00347         MOVRA   r0x1002
+                      00348 ;       .line   13; "fun.c"     for(i=0; i<a; i++)
+0027   7600           00349         CLRR    r0x1003
+0028                  00350 _00105_DS_
+0028   5800           00351         MOVAR   r0x1001
+0029   4800           00352         RSUBAR  r0x1003
+002A   F187           00353         JBCLR   PFLAG,0
+002B   A000           00354         GOTO    _00108_DS_
+                      00355 ;;genSkipc:3195: created from rifx:00DE608C
+                      00356 ;       .line   14; "fun.c"     b0 += a;
+002C   5800           00357         MOVAR   r0x1001
+002D   7E00           00358         ADDRA   r0x1002
+                      00359 ;       .line   13; "fun.c"     for(i=0; i<a; i++)
+002E   6600           00360         INCR    r0x1003
+002F   A000           00361         GOTO    _00105_DS_
+0030                  00362 _00108_DS_
+                      00363 ;       .line   16; "fun.c"     return b0;
+0030   5800           00364         MOVAR   r0x1002
+0031   000C           00365         RETURN  
+                      00366 ; exit point of _fun1
+                      00367 
                       00368 
-                      00369         end
-gpasm-2.0.0_beta2 (Nov  6 2017)fun.asm            2017-12-19  17:43:41         PAGE  2
+                      00369 ;       code size estimation:
+                      00370 ;          50+    0 =    50 instructions (  100 byte)
+                      00371 
+                      00372         end
+gpasm-2.0.0_beta2 (Nov  6 2017)fun.asm            2018-5-23  15:03:46          PAGE  2
 
 
 SYMBOL TABLE
@@ -672,11 +668,11 @@ VRS0                              00000000
 VRS1                              00000001
 VRS2                              00000002
 Z                                 00000002
-_00105_DS_                        00000021
-_00108_DS_                        00000027
-_00113_DS_                        00000015
-_00116_DS_                        0000001B
-_00122_DS_                        00000010
+_00105_DS_                        00000028
+_00108_DS_                        00000030
+_00113_DS_                        0000001A
+_00116_DS_                        00000022
+_00122_DS_                        00000014
 _ADCR0                            00000000
 _ADCR0bits                        00000000
 _ADCR1                            00000000
@@ -750,8 +746,8 @@ _T1DATAbits                       00000000
 _T1LOAD                           00000000
 _T1LOADbits                       00000000
 __32P21                           00000001
-_fun1                             0000001D
-_fun2                             00000011
+_fun1                             00000024
+_fun2                             00000016
 _global_a                         00000000
 _main                             00000000
 _ram0                             00000020
@@ -761,7 +757,7 @@ r0x1002                           00000001
 r0x1003                           00000002
 r0x1004                           00000003
 
-Errors   :     7
+Errors   :     0
 Warnings :     0 reported,     0 suppressed
 Messages :     0 reported,     0 suppressed
 

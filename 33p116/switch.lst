@@ -1,0 +1,588 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Listing File Generated: 2018-5-3  11:33:18
+ 
+ 
+Address  Value    Disassembly              Source
+-------  -----    -----------              ------
+                                           ;--------------------------------------------------------
+                                           ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                                           ; Version 1.1.0 (May  2 2018) (MINGW32)
+                                           ; This file was generated Thu May 03 11:33:17 2018
+                                           ;--------------------------------------------------------
+                                           ; MC32 port for the RISC core
+                                           ;--------------------------------------------------------
+                                           ;	.file	"switch.c"
+                                           	list	p=3316
+                                           	radix dec
+                                           	include "3316.inc"
+                                           		LIST
+                                           ;mc32p5314.inc    Standard Header File, Version 1.00 by Sinomcu
+                                           		NOLIST
+                                           ;--------------------------------------------------------
+                                           ; external declarations
+                                           ;--------------------------------------------------------
+                                           	extern	_INDF0bits
+                                           	extern	_INDF1bits
+                                           	extern	_INDF2bits
+                                           	extern	_HIBYTEbits
+                                           	extern	_FSR0bits
+                                           	extern	_FSR1bits
+                                           	extern	_PCLbits
+                                           	extern	_PFLAGbits
+                                           	extern	_MCRbits
+                                           	extern	_INDF3bits
+                                           	extern	_INTEbits
+                                           	extern	_INTFbits
+                                           	extern	_IOP0bits
+                                           	extern	_OEP0bits
+                                           	extern	_PUP0bits
+                                           	extern	_ANSELbits
+                                           	extern	_IOP1bits
+                                           	extern	_OEP1bits
+                                           	extern	_PUP1bits
+                                           	extern	_KBCRbits
+                                           	extern	_T0CRbits
+                                           	extern	_T0CNTbits
+                                           	extern	_T0LOADbits
+                                           	extern	_T0DATAbits
+                                           	extern	_T1CRbits
+                                           	extern	_T1CNTbits
+                                           	extern	_T1LOADbits
+                                           	extern	_T1DATAbits
+                                           	extern	_OSCMbits
+                                           	extern	_LVDCRbits
+                                           	extern	_ADCR0bits
+                                           	extern	_ADCR1bits
+                                           	extern	_ADRHbits
+                                           	extern	_ADRLbits
+                                           	extern	_OSCCALbits
+                                           	extern	_INDF0
+                                           	extern	_INDF1
+                                           	extern	_INDF2
+                                           	extern	_HIBYTE
+                                           	extern	_FSR0
+                                           	extern	_FSR1
+                                           	extern	_PCL
+                                           	extern	_PFLAG
+                                           	extern	_MCR
+                                           	extern	_INDF3
+                                           	extern	_INTE
+                                           	extern	_INTF
+                                           	extern	_IOP0
+                                           	extern	_OEP0
+                                           	extern	_PUP0
+                                           	extern	_ANSEL
+                                           	extern	_IOP1
+                                           	extern	_OEP1
+                                           	extern	_PUP1
+                                           	extern	_KBCR
+                                           	extern	_T0CR
+                                           	extern	_T0CNT
+                                           	extern	_T0LOAD
+                                           	extern	_T0DATA
+                                           	extern	_T1CR
+                                           	extern	_T1CNT
+                                           	extern	_T1LOAD
+                                           	extern	_T1DATA
+                                           	extern	_OSCM
+                                           	extern	_LVDCR
+                                           	extern	_ADCR0
+                                           	extern	_ADCR1
+                                           	extern	_ADRH
+                                           	extern	_ADRL
+                                           	extern	_OSCCAL
+                                           ;--------------------------------------------------------
+                                           ; global declarations
+                                           ;--------------------------------------------------------
+                                           	global	_fun1
+                                           	global	_main
+                                           	global	_ram1
+                                           	global	_ram0
+                                           	global	_rom
+                                           
+                                           	global STK06
+                                           	global STK05
+                                           	global STK04
+                                           	global STK03
+                                           	global STK02
+                                           	global STK01
+                                           	global STK00
+                                           
+                                           sharebank udata_ovr 0x0000
+                                           STK06	res 1
+                                           STK05	res 1
+                                           STK04	res 1
+                                           STK03	res 1
+                                           STK02	res 1
+                                           STK01	res 1
+                                           STK00	res 1
+                                           
+                                           ;--------------------------------------------------------
+                                           ; global definitions
+                                           ;--------------------------------------------------------
+                                           ;--------------------------------------------------------
+                                           ; absolute symbol definitions
+                                           ;--------------------------------------------------------
+                                           UD_abs_switch_20	udata_ovr	0x0020
+                                           _ram0
+                                           	res	1
+                                           UD_abs_switch_21	udata_ovr	0x0021
+                                           _ram1
+                                           	res	1
+                                           ;--------------------------------------------------------
+                                           ; compiler-defined variables
+                                           ;--------------------------------------------------------
+                                           UDL_switch_0	udata
+                                           r0x1000	res	1
+                                           ;--------------------------------------------------------
+                                           ; initialized data
+                                           ;--------------------------------------------------------
+                                           
+                                           ID_switch_0	code
+                                           _rom
+000002   0001     dw      0x1              	dw 0x01
+000003   0002     dw      0x2              	dw 0x02
+000004   0000     nop                      	dw 0x00
+000005   0000     nop                      	dw 0x00
+000006   0000     nop                      	dw 0x00
+000007   0000     nop                      	dw 0x00
+000008   0000     nop                      	dw 0x00
+000009   0000     nop                      	dw 0x00
+00000a   0000     nop                      	dw 0x00
+00000b   0000     nop                      	dw 0x00
+00000c   0000     nop                      	dw 0x00
+00000d   0000     nop                      	dw 0x00
+00000e   0000     nop                      	dw 0x00
+00000f   0000     nop                      	dw 0x00
+000010   0000     nop                      	dw 0x00
+000011   0000     nop                      	dw 0x00
+000012   0000     nop                      	dw 0x00
+000013   0000     nop                      	dw 0x00
+000014   0000     nop                      	dw 0x00
+000015   0000     nop                      	dw 0x00
+000016   0000     nop                      	dw 0x00
+000017   0000     nop                      	dw 0x00
+000018   0000     nop                      	dw 0x00
+000019   0000     nop                      	dw 0x00
+00001a   0000     nop                      	dw 0x00
+00001b   0000     nop                      	dw 0x00
+00001c   0000     nop                      	dw 0x00
+00001d   0000     nop                      	dw 0x00
+00001e   0000     nop                      	dw 0x00
+00001f   0000     nop                      	dw 0x00
+000020   0000     nop                      	dw 0x00
+000021   0000     nop                      	dw 0x00
+000022   0000     nop                      	dw 0x00
+000023   0000     nop                      	dw 0x00
+000024   0000     nop                      	dw 0x00
+000025   0000     nop                      	dw 0x00
+000026   0000     nop                      	dw 0x00
+000027   0000     nop                      	dw 0x00
+000028   0000     nop                      	dw 0x00
+000029   0000     nop                      	dw 0x00
+00002a   0000     nop                      	dw 0x00
+00002b   0000     nop                      	dw 0x00
+00002c   0000     nop                      	dw 0x00
+00002d   0000     nop                      	dw 0x00
+00002e   0000     nop                      	dw 0x00
+00002f   0000     nop                      	dw 0x00
+000030   0000     nop                      	dw 0x00
+000031   0000     nop                      	dw 0x00
+000032   0000     nop                      	dw 0x00
+000033   0000     nop                      	dw 0x00
+000034   0000     nop                      	dw 0x00
+000035   0000     nop                      	dw 0x00
+000036   0000     nop                      	dw 0x00
+000037   0000     nop                      	dw 0x00
+000038   0000     nop                      	dw 0x00
+000039   0000     nop                      	dw 0x00
+00003a   0000     nop                      	dw 0x00
+00003b   0000     nop                      	dw 0x00
+00003c   0000     nop                      	dw 0x00
+00003d   0000     nop                      	dw 0x00
+00003e   0000     nop                      	dw 0x00
+00003f   0000     nop                      	dw 0x00
+000040   0000     nop                      	dw 0x00
+000041   0000     nop                      	dw 0x00
+000042   0000     nop                      	dw 0x00
+000043   0000     nop                      	dw 0x00
+000044   0000     nop                      	dw 0x00
+000045   0000     nop                      	dw 0x00
+000046   0000     nop                      	dw 0x00
+000047   0000     nop                      	dw 0x00
+000048   0000     nop                      	dw 0x00
+000049   0000     nop                      	dw 0x00
+00004a   0000     nop                      	dw 0x00
+00004b   0000     nop                      	dw 0x00
+00004c   0000     nop                      	dw 0x00
+00004d   0000     nop                      	dw 0x00
+00004e   0000     nop                      	dw 0x00
+00004f   0000     nop                      	dw 0x00
+000050   0000     nop                      	dw 0x00
+000051   0000     nop                      	dw 0x00
+000052   0000     nop                      	dw 0x00
+000053   0000     nop                      	dw 0x00
+000054   0000     nop                      	dw 0x00
+000055   0000     nop                      	dw 0x00
+000056   0000     nop                      	dw 0x00
+000057   0000     nop                      	dw 0x00
+000058   0000     nop                      	dw 0x00
+000059   0000     nop                      	dw 0x00
+00005a   0000     nop                      	dw 0x00
+00005b   0000     nop                      	dw 0x00
+00005c   0000     nop                      	dw 0x00
+00005d   0000     nop                      	dw 0x00
+00005e   0000     nop                      	dw 0x00
+00005f   0000     nop                      	dw 0x00
+000060   0000     nop                      	dw 0x00
+000061   0000     nop                      	dw 0x00
+000062   0000     nop                      	dw 0x00
+000063   0000     nop                      	dw 0x00
+000064   0000     nop                      	dw 0x00
+000065   0000     nop                      	dw 0x00
+000066   0000     nop                      	dw 0x00
+000067   0000     nop                      	dw 0x00
+000068   0000     nop                      	dw 0x00
+000069   0000     nop                      	dw 0x00
+00006a   0000     nop                      	dw 0x00
+00006b   0000     nop                      	dw 0x00
+00006c   0000     nop                      	dw 0x00
+00006d   0000     nop                      	dw 0x00
+00006e   0000     nop                      	dw 0x00
+00006f   0000     nop                      	dw 0x00
+000070   0000     nop                      	dw 0x00
+000071   0000     nop                      	dw 0x00
+000072   0000     nop                      	dw 0x00
+000073   0000     nop                      	dw 0x00
+000074   0000     nop                      	dw 0x00
+000075   0000     nop                      	dw 0x00
+000076   0000     nop                      	dw 0x00
+000077   0000     nop                      	dw 0x00
+000078   0000     nop                      	dw 0x00
+000079   0000     nop                      	dw 0x00
+00007a   0000     nop                      	dw 0x00
+00007b   0000     nop                      	dw 0x00
+00007c   0000     nop                      	dw 0x00
+00007d   0000     nop                      	dw 0x00
+00007e   0000     nop                      	dw 0x00
+00007f   0000     nop                      	dw 0x00
+000080   0000     nop                      	dw 0x00
+000081   0000     nop                      	dw 0x00
+000082   0000     nop                      	dw 0x00
+000083   0000     nop                      	dw 0x00
+000084   0000     nop                      	dw 0x00
+000085   0000     nop                      	dw 0x00
+000086   0000     nop                      	dw 0x00
+000087   0000     nop                      	dw 0x00
+000088   0000     nop                      	dw 0x00
+000089   0000     nop                      	dw 0x00
+00008a   0000     nop                      	dw 0x00
+00008b   0000     nop                      	dw 0x00
+00008c   0000     nop                      	dw 0x00
+00008d   0000     nop                      	dw 0x00
+00008e   0000     nop                      	dw 0x00
+00008f   0000     nop                      	dw 0x00
+000090   0000     nop                      	dw 0x00
+000091   0000     nop                      	dw 0x00
+000092   0000     nop                      	dw 0x00
+000093   0000     nop                      	dw 0x00
+000094   0000     nop                      	dw 0x00
+000095   0000     nop                      	dw 0x00
+000096   0000     nop                      	dw 0x00
+000097   0000     nop                      	dw 0x00
+000098   0000     nop                      	dw 0x00
+000099   0000     nop                      	dw 0x00
+00009a   0000     nop                      	dw 0x00
+00009b   0000     nop                      	dw 0x00
+00009c   0000     nop                      	dw 0x00
+00009d   0000     nop                      	dw 0x00
+00009e   0000     nop                      	dw 0x00
+00009f   0000     nop                      	dw 0x00
+0000a0   0000     nop                      	dw 0x00
+0000a1   0000     nop                      	dw 0x00
+0000a2   0000     nop                      	dw 0x00
+0000a3   0000     nop                      	dw 0x00
+0000a4   0000     nop                      	dw 0x00
+0000a5   0000     nop                      	dw 0x00
+0000a6   0000     nop                      	dw 0x00
+0000a7   0000     nop                      	dw 0x00
+0000a8   0000     nop                      	dw 0x00
+0000a9   0000     nop                      	dw 0x00
+0000aa   0000     nop                      	dw 0x00
+0000ab   0000     nop                      	dw 0x00
+0000ac   0000     nop                      	dw 0x00
+0000ad   0000     nop                      	dw 0x00
+0000ae   0000     nop                      	dw 0x00
+0000af   0000     nop                      	dw 0x00
+0000b0   0000     nop                      	dw 0x00
+0000b1   0000     nop                      	dw 0x00
+0000b2   0000     nop                      	dw 0x00
+0000b3   0000     nop                      	dw 0x00
+0000b4   0000     nop                      	dw 0x00
+0000b5   0000     nop                      	dw 0x00
+0000b6   0000     nop                      	dw 0x00
+0000b7   0000     nop                      	dw 0x00
+0000b8   0000     nop                      	dw 0x00
+0000b9   0000     nop                      	dw 0x00
+0000ba   0000     nop                      	dw 0x00
+0000bb   0000     nop                      	dw 0x00
+0000bc   0000     nop                      	dw 0x00
+0000bd   0000     nop                      	dw 0x00
+0000be   0000     nop                      	dw 0x00
+0000bf   0000     nop                      	dw 0x00
+0000c0   0000     nop                      	dw 0x00
+0000c1   0000     nop                      	dw 0x00
+0000c2   0000     nop                      	dw 0x00
+0000c3   0000     nop                      	dw 0x00
+0000c4   0000     nop                      	dw 0x00
+0000c5   0000     nop                      	dw 0x00
+0000c6   0000     nop                      	dw 0x00
+0000c7   0000     nop                      	dw 0x00
+0000c8   0000     nop                      	dw 0x00
+0000c9   0000     nop                      	dw 0x00
+0000ca   0000     nop                      	dw 0x00
+0000cb   0000     nop                      	dw 0x00
+0000cc   0000     nop                      	dw 0x00
+0000cd   0000     nop                      	dw 0x00
+0000ce   0000     nop                      	dw 0x00
+0000cf   0000     nop                      	dw 0x00
+0000d0   0000     nop                      	dw 0x00
+0000d1   0000     nop                      	dw 0x00
+0000d2   0000     nop                      	dw 0x00
+                                           
+                                           
+                                           ;@Allocation info for local variables in function 'fun1'
+                                           ;@fun1 fun1                      Allocated to registers ;size:2
+                                           ;@fun1 INDF0bits                 Allocated to registers ;size:1
+                                           ;@fun1 INDF1bits                 Allocated to registers ;size:1
+                                           ;@fun1 INDF2bits                 Allocated to registers ;size:1
+                                           ;@fun1 HIBYTEbits                Allocated to registers ;size:1
+                                           ;@fun1 FSR0bits                  Allocated to registers ;size:1
+                                           ;@fun1 FSR1bits                  Allocated to registers ;size:1
+                                           ;@fun1 PCLbits                   Allocated to registers ;size:1
+                                           ;@fun1 PFLAGbits                 Allocated to registers ;size:1
+                                           ;@fun1 MCRbits                   Allocated to registers ;size:1
+                                           ;@fun1 INDF3bits                 Allocated to registers ;size:1
+                                           ;@fun1 INTEbits                  Allocated to registers ;size:1
+                                           ;@fun1 INTFbits                  Allocated to registers ;size:1
+                                           ;@fun1 IOP0bits                  Allocated to registers ;size:1
+                                           ;@fun1 OEP0bits                  Allocated to registers ;size:1
+                                           ;@fun1 PUP0bits                  Allocated to registers ;size:1
+                                           ;@fun1 ANSELbits                 Allocated to registers ;size:1
+                                           ;@fun1 IOP1bits                  Allocated to registers ;size:1
+                                           ;@fun1 OEP1bits                  Allocated to registers ;size:1
+                                           ;@fun1 PUP1bits                  Allocated to registers ;size:1
+                                           ;@fun1 KBCRbits                  Allocated to registers ;size:1
+                                           ;@fun1 T0CRbits                  Allocated to registers ;size:1
+                                           ;@fun1 T0CNTbits                 Allocated to registers ;size:1
+                                           ;@fun1 T0LOADbits                Allocated to registers ;size:1
+                                           ;@fun1 T0DATAbits                Allocated to registers ;size:1
+                                           ;@fun1 T1CRbits                  Allocated to registers ;size:1
+                                           ;@fun1 T1CNTbits                 Allocated to registers ;size:1
+                                           ;@fun1 T1LOADbits                Allocated to registers ;size:1
+                                           ;@fun1 T1DATAbits                Allocated to registers ;size:1
+                                           ;@fun1 OSCMbits                  Allocated to registers ;size:1
+                                           ;@fun1 LVDCRbits                 Allocated to registers ;size:1
+                                           ;@fun1 ADCR0bits                 Allocated to registers ;size:1
+                                           ;@fun1 ADCR1bits                 Allocated to registers ;size:1
+                                           ;@fun1 ADRHbits                  Allocated to registers ;size:1
+                                           ;@fun1 ADRLbits                  Allocated to registers ;size:1
+                                           ;@fun1 OSCCALbits                Allocated to registers ;size:1
+                                           ;@fun1 ram1                      Allocated to registers ;size:1
+                                           ;@fun1 ram0                      Allocated to registers ;size:1
+                                           ;@fun1 n                         Allocated to registers r0x1000 ;size:1
+                                           ;@fun1 INDF0                     Allocated to registers ;size:1
+                                           ;@fun1 INDF1                     Allocated to registers ;size:1
+                                           ;@fun1 INDF2                     Allocated to registers ;size:1
+                                           ;@fun1 HIBYTE                    Allocated to registers ;size:1
+                                           ;@fun1 FSR0                      Allocated to registers ;size:1
+                                           ;@fun1 FSR1                      Allocated to registers ;size:1
+                                           ;@fun1 PCL                       Allocated to registers ;size:1
+                                           ;@fun1 PFLAG                     Allocated to registers ;size:1
+                                           ;@fun1 MCR                       Allocated to registers ;size:1
+                                           ;@fun1 INDF3                     Allocated to registers ;size:1
+                                           ;@fun1 INTE                      Allocated to registers ;size:1
+                                           ;@fun1 INTF                      Allocated to registers ;size:1
+                                           ;@fun1 IOP0                      Allocated to registers ;size:1
+                                           ;@fun1 OEP0                      Allocated to registers ;size:1
+                                           ;@fun1 PUP0                      Allocated to registers ;size:1
+                                           ;@fun1 ANSEL                     Allocated to registers ;size:1
+                                           ;@fun1 IOP1                      Allocated to registers ;size:1
+                                           ;@fun1 OEP1                      Allocated to registers ;size:1
+                                           ;@fun1 PUP1                      Allocated to registers ;size:1
+                                           ;@fun1 KBCR                      Allocated to registers ;size:1
+                                           ;@fun1 T0CR                      Allocated to registers ;size:1
+                                           ;@fun1 T0CNT                     Allocated to registers ;size:1
+                                           ;@fun1 T0LOAD                    Allocated to registers ;size:1
+                                           ;@fun1 T0DATA                    Allocated to registers ;size:1
+                                           ;@fun1 T1CR                      Allocated to registers ;size:1
+                                           ;@fun1 T1CNT                     Allocated to registers ;size:1
+                                           ;@fun1 T1LOAD                    Allocated to registers ;size:1
+                                           ;@fun1 T1DATA                    Allocated to registers ;size:1
+                                           ;@fun1 OSCM                      Allocated to registers ;size:1
+                                           ;@fun1 LVDCR                     Allocated to registers ;size:1
+                                           ;@fun1 ADCR0                     Allocated to registers ;size:1
+                                           ;@fun1 ADCR1                     Allocated to registers ;size:1
+                                           ;@fun1 ADRH                      Allocated to registers ;size:1
+                                           ;@fun1 ADRL                      Allocated to registers ;size:1
+                                           ;@fun1 OSCCAL                    Allocated to registers ;size:1
+                                           ;@end Allocation info for local variables in function 'fun1';
+                                           ;@Allocation info for local variables in function 'main'
+                                           ;@end Allocation info for local variables in function 'main';
+                                           
+                                           ;--------------------------------------------------------
+                                           ; overlayable items in internal ram 
+                                           ;--------------------------------------------------------
+                                           ;	udata_ovr
+                                           ;--------------------------------------------------------
+                                           ; reset vector 
+                                           ;--------------------------------------------------------
+                                           STARTUP	code 0x0000
+000000   2000     lgoto   0xd3             	lgoto	_main
+000001   23d3
+                                           ;--------------------------------------------------------
+                                           ; code
+                                           ;--------------------------------------------------------
+                                           code_switch	code
+                                           ;***
+                                           ;  pBlock Stats: dbName = M
+                                           ;***
+                                           ;entry:  _main	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;functions called:
+                                           ;   _fun1
+                                           ;   _fun1
+                                           ;; Starting pCode block
+                                           _main	;Function start
+                                           ; 2 exit points
+                                           ;	.line	34; "switch.c"	ram0 = 0xfe;
+0000d3   3cfe     movai   0xfe             	MOVAI	0xfe
+0000d4   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	35; "switch.c"	for(ram1=0; ram1<6; ram1++)
+0000d5   7621     clrr    0x21             	CLRR	_ram1
+                                           ;;signed compare: left < lit(0x6=6), size=1, mask=ff
+                                           _00119_DS_
+0000d6   5821     movar   0x21             	MOVAR	_ram1
+0000d7   3f80     addai   0x80             	ADDAI	0x80
+0000d8   3f7a     addai   0x7a             	ADDAI	0x7a
+0000d9   f1b7     jbclr   0x1b7, 0         	JBCLR	PFLAG,0
+0000da   2000     lgoto   0xe2             	LGOTO	_00117_DS_
+0000db   23e2
+                                           ;;genSkipc:3195: created from rifx:00DE608C
+                                           ;	.line	36; "switch.c"	fun1(ram1);
+0000dc   5821     movar   0x21             	MOVAR	_ram1
+0000dd   2100     lcall   0xe5             	LCALL	_fun1
+0000de   23e5
+                                           ;	.line	35; "switch.c"	for(ram1=0; ram1<6; ram1++)
+0000df   6621     incr    0x21             	INCR	_ram1
+0000e0   2000     lgoto   0xd6             	LGOTO	_00119_DS_
+0000e1   23d6
+                                           _00117_DS_
+                                           ;	.line	38; "switch.c"	while(1);
+0000e2   2000     lgoto   0xe2             	LGOTO	_00117_DS_
+0000e3   23e2
+0000e4   000c     return                   	RETURN	
+                                           ; exit point of _main
+                                           
+                                           ;***
+                                           ;  pBlock Stats: dbName = C
+                                           ;***
+                                           ;entry:  _fun1	;Function start
+                                           ; 2 exit points
+                                           ;has an exit
+                                           ;1 compiler assigned register :
+                                           ;   r0x1000
+                                           ;; Starting pCode block
+                                           _fun1	;Function start
+                                           ; 2 exit points
+                                           ;	.line	8; "switch.c"	void fun1(unsigned char n)
+0000e5   5607     movra   0x7              	MOVRA	r0x1000
+                                           ;;unsigned compare: left < lit(0x2=2), size=1
+                                           ;	.line	10; "switch.c"	switch(n)
+0000e6   3c02     movai   0x2              	MOVAI	0x02
+0000e7   4807     rsubar  0x7              	RSUBAR	r0x1000
+0000e8   e1b7     jbset   0x1b7, 0         	JBSET	PFLAG,0
+0000e9   2001     lgoto   0x10c            	LGOTO	_00109_DS_
+0000ea   230c
+                                           ;;genSkipc:3195: created from rifx:00DE608C
+                                           ;;swapping arguments (AOP_TYPEs 1/2)
+                                           ;;unsigned compare: left >= lit(0x6=6), size=1
+0000eb   3c06     movai   0x6              	MOVAI	0x06
+0000ec   4807     rsubar  0x7              	RSUBAR	r0x1000
+0000ed   f1b7     jbclr   0x1b7, 0         	JBCLR	PFLAG,0
+0000ee   2001     lgoto   0x10c            	LGOTO	_00109_DS_
+0000ef   230c
+                                           ;;genSkipc:3195: created from rifx:00DE608C
+0000f0   3cfe     movai   0xfe             	MOVAI	0xfe
+0000f1   7e07     addra   0x7              	ADDRA	r0x1000
+0000f2   5007     rlar    0x7              	RLAR	r0x1000
+0000f3   7fb6     addra   0x1b6            	ADDRA	PCL
+0000f4   2000     lgoto   0xfc             	LGOTO	_00105_DS_
+0000f5   23fc
+0000f6   2001     lgoto   0x100            	LGOTO	_00106_DS_
+0000f7   2300
+0000f8   2001     lgoto   0x104            	LGOTO	_00107_DS_
+0000f9   2304
+0000fa   2001     lgoto   0x108            	LGOTO	_00108_DS_
+0000fb   2308
+                                           _00105_DS_
+                                           ;	.line	13; "switch.c"	ram0 = 1;
+0000fc   3c01     movai   0x1              	MOVAI	0x01
+0000fd   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	14; "switch.c"	break;     	   	
+0000fe   2001     lgoto   0x10e            	LGOTO	_00111_DS_
+0000ff   230e
+                                           _00106_DS_
+                                           ;	.line	16; "switch.c"	ram0 = 2;    	
+000100   3c02     movai   0x2              	MOVAI	0x02
+000101   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	17; "switch.c"	break;     	
+000102   2001     lgoto   0x10e            	LGOTO	_00111_DS_
+000103   230e
+                                           _00107_DS_
+                                           ;	.line	19; "switch.c"	ram0 = 3;
+000104   3c03     movai   0x3              	MOVAI	0x03
+000105   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	20; "switch.c"	break;
+000106   2001     lgoto   0x10e            	LGOTO	_00111_DS_
+000107   230e
+                                           _00108_DS_
+                                           ;	.line	22; "switch.c"	ram0 = 4;
+000108   3c04     movai   0x4              	MOVAI	0x04
+000109   5620     movra   0x20             	MOVRA	_ram0
+                                           ;	.line	23; "switch.c"	break;
+00010a   2001     lgoto   0x10e            	LGOTO	_00111_DS_
+00010b   230e
+                                           _00109_DS_
+                                           ;	.line	25; "switch.c"	ram0 = 100;
+00010c   3c64     movai   0x64             	MOVAI	0x64
+00010d   5620     movra   0x20             	MOVRA	_ram0
+                                           _00111_DS_
+                                           ;	.line	27; "switch.c"	}
+00010e   000c     return                   	RETURN	
+                                           ; exit point of _fun1
+                                           
+                                           
+                                           ;	code size estimation:
+                                           ;	   46+    0 =    46 instructions (   92 byte)
+                                           
+                                           	end
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:   271
+

@@ -1,0 +1,1706 @@
+gpasm-2.0.0_beta2 (Nov  6 2017)ZM6070.asm         2018-6-21  20:03:13          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.1.4 (Jun 11 2018) (MINGW32)
+                      00004 ; This file was generated Thu Jun 21 20:03:13 2018
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC30 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "ZM6070.c"
+                      00009         list    p=6060
+                      00010         radix dec
+                      00011         include "6060.inc"
+                      00001                 LIST
+                      00002 ;mc30p6080.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00326                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _INDFbits
+                      00016         extern  _T0CNTbits
+                      00017         extern  _PCLbits
+                      00018         extern  _STATUSbits
+                      00019         extern  _FSRbits
+                      00020         extern  _P0bits
+                      00021         extern  _P1bits
+                      00022         extern  _MCRbits
+                      00023         extern  _KBIMbits
+                      00024         extern  _PCLATHbits
+                      00025         extern  _PDCONbits
+                      00026         extern  _ODCONbits
+                      00027         extern  _PUCONbits
+                      00028         extern  _INTECONbits
+                      00029         extern  _INTFLAGbits
+                      00030         extern  _T0CRbits
+                      00031         extern  _DDR0bits
+                      00032         extern  _DDR1bits
+                      00033         extern  _PWMCRbits
+                      00034         extern  _T1DAT1bits
+                      00035         extern  _T1DAT2bits
+                      00036         extern  _TM0CRbits
+                      00037         extern  _T1CRbits
+                      00038         extern  _T1CNTbits
+                      00039         extern  _T1LOADbits
+                      00040         extern  _T1DAT0bits
+                      00041         extern  _INDF
+                      00042         extern  _T0CNT
+                      00043         extern  _PCL
+                      00044         extern  _STATUS
+                      00045         extern  _FSR
+                      00046         extern  _P0
+                      00047         extern  _P1
+                      00048         extern  _MCR
+                      00049         extern  _KBIM
+                      00050         extern  _PCLATH
+                      00051         extern  _PDCON
+                      00052         extern  _ODCON
+                      00053         extern  _PUCON
+                      00054         extern  _INTECON
+                      00055         extern  _INTFLAG
+                      00056         extern  _T0CR
+                      00057         extern  _DDR0
+                      00058         extern  _DDR1
+                      00059         extern  _PWMCR
+                      00060         extern  _T1DAT1
+                      00061         extern  _T1DAT2
+                      00062         extern  _TM0CR
+                      00063         extern  _T1CR
+                      00064         extern  _T1CNT
+                      00065         extern  _T1LOAD
+                      00066         extern  _T1DAT0
+                      00067 ;--------------------------------------------------------
+                      00068 ; global declarations
+                      00069 ;--------------------------------------------------------
+                      00070         global  _ResetSysConfig
+                      00071         global  _SysStatusSwitchHandle
+                      00072         global  _SysLoadDetect
+                      00073         global  _SysTotalCloseTime
+                      00074         global  _SysInit
+                      00075         global  _main
+                      00076         global  _isr
+                      00077         global  _StatusBuf
+                      00078         global  _ABuf
+                      00079         global  _gSysLoadStatus
+                      00080         global  _gSysChildStatus
+                      00081         global  _gPreSysLoadStatus
+                      00082         global  _gSysLoadDetectCntA
+                      00083         global  _gSysLoadDetectCntB
+                      00084         global  _overflow
+                      00085         global  _gTotalCloseTimeA
+                      00086         global  _gTotalCloseTimeB
+                      00087         global  _gSleepCnt
+                      00088         global  _gPinStatus
+                      00089         global  _gTempBackupP1
+                      00090         global  _gCntA
+                      00091         global  _gCntB
+                      00092         global  _gCntA_1
+                      00093         global  _gCntB_1
+                      00094         global  _gCurPortStatus
+                      00095         global  _sss_buf
+                      00096 
+                      00097         global STK06
+                      00098         global STK05
+                      00099         global STK04
+                      00100         global STK03
+                      00101         global STK02
+                      00102         global STK01
+                      00103         global STK00
+                      00104 
+                      00105 sharebank udata_ovr 0x0010
+0008                  00106 STK06   res 1
+0008                  00107 STK05   res 1
+0009                  00108 STK04   res 1
+0009                  00109 STK03   res 1
+000A                  00110 STK02   res 1
+000A                  00111 STK01   res 1
+000B                  00112 STK00   res 1
+                      00113 
+                      00114 ;--------------------------------------------------------
+                      00115 ; global definitions
+                      00116 ;--------------------------------------------------------
+                      00117 UD_ZM6070_0     udata
+0000                  00118 _StatusBuf      res     1
+                      00119 
+                      00120 UD_ZM6070_1     udata
+0000                  00121 _ABuf   res     1
+                      00122 
+                      00123 UD_ZM6070_2     udata
+0000                  00124 _gSysLoadStatus res     1
+                      00125 
+                      00126 UD_ZM6070_3     udata
+0000                  00127 _gSysChildStatus        res     1
+                      00128 
+                      00129 UD_ZM6070_4     udata
+0000                  00130 _gPreSysLoadStatus      res     1
+                      00131 
+                      00132 UD_ZM6070_5     udata
+0000                  00133 _overflow       res     1
+                      00134 
+                      00135 UD_ZM6070_6     udata
+0000                  00136 _gTotalCloseTimeA       res     1
+                      00137 
+                      00138 UD_ZM6070_7     udata
+0000                  00139 _gTotalCloseTimeB       res     1
+                      00140 
+                      00141 UD_ZM6070_8     udata
+0000                  00142 _gSleepCnt      res     2
+                      00143 
+                      00144 UD_ZM6070_9     udata
+0000                  00145 _gPinStatus     res     1
+                      00146 
+                      00147 UD_ZM6070_10    udata
+0000                  00148 _gTempBackupP1  res     1
+                      00149 
+                      00150 UD_ZM6070_11    udata
+0000                  00151 _sss_buf        res     1
+                      00152 
+                      00153 ;--------------------------------------------------------
+                      00154 ; absolute symbol definitions
+                      00155 ;--------------------------------------------------------
+                      00156 ;--------------------------------------------------------
+                      00157 ; compiler-defined variables
+                      00158 ;--------------------------------------------------------
+                      00159 UDL_ZM6070_0    udata
+0000                  00160 r0x1012 res     1
+0000                  00161 r0x1013 res     1
+0001                  00162 r0x1014 res     1
+0001                  00163 r0x1015 res     1
+0002                  00164 r0x1016 res     1
+0002                  00165 r0x1018 res     1
+0003                  00166 r0x1019 res     1
+                      00167 ;--------------------------------------------------------
+                      00168 ; initialized data
+                      00169 ;--------------------------------------------------------
+                      00170 
+                      00171 ID_ZM6070_0     idata
+0000                  00172 _gSysLoadDetectCntA
+0000                  00173         db      0x00
+                      00174 
+                      00175 
+                      00176 ID_ZM6070_1     idata
+0000                  00177 _gSysLoadDetectCntB
+0000                  00178         db      0x00
+                      00179 
+                      00180 
+                      00181 ID_ZM6070_2     idata
+0000                  00182 _gCntA
+0000                  00183         db      0x00
+                      00184 
+                      00185 
+                      00186 ID_ZM6070_3     idata
+0000                  00187 _gCntB
+0000                  00188         db      0x00
+                      00189 
+                      00190 
+                      00191 ID_ZM6070_4     idata
+0000                  00192 _gCntA_1
+0000                  00193         db      0x00
+                      00194 
+                      00195 
+                      00196 ID_ZM6070_5     idata
+0000                  00197 _gCntB_1
+0000                  00198         db      0x00
+                      00199 
+                      00200 
+                      00201 ID_ZM6070_6     idata
+0000                  00202 _gCurPortStatus
+0000                  00203         db      0x00
+                      00204 
+                      00205 
+                      00206 ;@Allocation info for local variables in function 'ResetSysConfig'
+                      00207 ;@ResetSysConfig ResetSysConfig            Allocated to registers ;size:2
+                      00208 ;@ResetSysConfig INDFbits                  Allocated to registers ;size:1
+                      00209 ;@ResetSysConfig T0CNTbits                 Allocated to registers ;size:1
+                      00210 ;@ResetSysConfig PCLbits                   Allocated to registers ;size:1
+                      00211 ;@ResetSysConfig STATUSbits                Allocated to registers ;size:1
+                      00212 ;@ResetSysConfig FSRbits                   Allocated to registers ;size:1
+                      00213 ;@ResetSysConfig P0bits                    Allocated to registers ;size:1
+                      00214 ;@ResetSysConfig P1bits                    Allocated to registers ;size:1
+                      00215 ;@ResetSysConfig MCRbits                   Allocated to registers ;size:1
+                      00216 ;@ResetSysConfig KBIMbits                  Allocated to registers ;size:1
+                      00217 ;@ResetSysConfig PCLATHbits                Allocated to registers ;size:1
+                      00218 ;@ResetSysConfig PDCONbits                 Allocated to registers ;size:1
+                      00219 ;@ResetSysConfig ODCONbits                 Allocated to registers ;size:1
+                      00220 ;@ResetSysConfig PUCONbits                 Allocated to registers ;size:1
+                      00221 ;@ResetSysConfig INTECONbits               Allocated to registers ;size:1
+                      00222 ;@ResetSysConfig INTFLAGbits               Allocated to registers ;size:1
+                      00223 ;@ResetSysConfig T0CRbits                  Allocated to registers ;size:1
+                      00224 ;@ResetSysConfig DDR0bits                  Allocated to registers ;size:1
+                      00225 ;@ResetSysConfig DDR1bits                  Allocated to registers ;size:1
+                      00226 ;@ResetSysConfig PWMCRbits                 Allocated to registers ;size:1
+                      00227 ;@ResetSysConfig T1DAT1bits                Allocated to registers ;size:1
+                      00228 ;@ResetSysConfig T1DAT2bits                Allocated to registers ;size:1
+                      00229 ;@ResetSysConfig TM0CRbits                 Allocated to registers ;size:1
+                      00230 ;@ResetSysConfig T1CRbits                  Allocated to registers ;size:1
+                      00231 ;@ResetSysConfig T1CNTbits                 Allocated to registers ;size:1
+                      00232 ;@ResetSysConfig T1LOADbits                Allocated to registers ;size:1
+                      00233 ;@ResetSysConfig T1DAT0bits                Allocated to registers ;size:1
+                      00234 ;@ResetSysConfig StatusBuf                 Allocated to registers ;size:1
+                      00235 ;@ResetSysConfig ABuf                      Allocated to registers ;size:1
+                      00236 ;@ResetSysConfig gSysLoadStatus            Allocated to registers ;size:1
+                      00237 ;@ResetSysConfig gSysChildStatus           Allocated to registers ;size:1
+                      00238 ;@ResetSysConfig gPreSysLoadStatus         Allocated to registers ;size:1
+                      00239 ;@ResetSysConfig gSysLoadDetectCntA        Allocated to registers ;size:1
+                      00240 ;@ResetSysConfig gSysLoadDetectCntB        Allocated to registers ;size:1
+                      00241 ;@ResetSysConfig overflow                  Allocated to registers ;size:1
+                      00242 ;@ResetSysConfig gTotalCloseTimeA          Allocated to registers ;size:1
+                      00243 ;@ResetSysConfig gTotalCloseTimeB          Allocated to registers ;size:1
+                      00244 ;@ResetSysConfig gSleepCnt                 Allocated to registers ;size:2
+                      00245 ;@ResetSysConfig gPinStatus                Allocated to registers ;size:1
+                      00246 ;@ResetSysConfig gTempBackupP1             Allocated to registers ;size:1
+                      00247 ;@ResetSysConfig gCntA                     Allocated to registers ;size:1
+                      00248 ;@ResetSysConfig gCntB                     Allocated to registers ;size:1
+                      00249 ;@ResetSysConfig gCntA_1                   Allocated to registers ;size:1
+                      00250 ;@ResetSysConfig gCntB_1                   Allocated to registers ;size:1
+                      00251 ;@ResetSysConfig gCurPortStatus            Allocated to registers ;size:1
+                      00252 ;@ResetSysConfig sss_buf                   Allocated to registers ;size:1
+                      00253 ;@ResetSysConfig INDF                      Allocated to registers ;size:1
+                      00254 ;@ResetSysConfig T0CNT                     Allocated to registers ;size:1
+                      00255 ;@ResetSysConfig PCL                       Allocated to registers ;size:1
+                      00256 ;@ResetSysConfig STATUS                    Allocated to registers ;size:1
+                      00257 ;@ResetSysConfig FSR                       Allocated to registers ;size:1
+                      00258 ;@ResetSysConfig P0                        Allocated to registers ;size:1
+                      00259 ;@ResetSysConfig P1                        Allocated to registers ;size:1
+                      00260 ;@ResetSysConfig MCR                       Allocated to registers ;size:1
+                      00261 ;@ResetSysConfig KBIM                      Allocated to registers ;size:1
+                      00262 ;@ResetSysConfig PCLATH                    Allocated to registers ;size:1
+                      00263 ;@ResetSysConfig PDCON                     Allocated to registers ;size:1
+                      00264 ;@ResetSysConfig ODCON                     Allocated to registers ;size:1
+                      00265 ;@ResetSysConfig PUCON                     Allocated to registers ;size:1
+                      00266 ;@ResetSysConfig INTECON                   Allocated to registers ;size:1
+                      00267 ;@ResetSysConfig INTFLAG                   Allocated to registers ;size:1
+                      00268 ;@ResetSysConfig T0CR                      Allocated to registers ;size:1
+                      00269 ;@ResetSysConfig DDR0                      Allocated to registers ;size:1
+                      00270 ;@ResetSysConfig DDR1                      Allocated to registers ;size:1
+                      00271 ;@ResetSysConfig PWMCR                     Allocated to registers ;size:1
+                      00272 ;@ResetSysConfig T1DAT1                    Allocated to registers ;size:1
+                      00273 ;@ResetSysConfig T1DAT2                    Allocated to registers ;size:1
+                      00274 ;@ResetSysConfig TM0CR                     Allocated to registers ;size:1
+                      00275 ;@ResetSysConfig T1CR                      Allocated to registers ;size:1
+                      00276 ;@ResetSysConfig T1CNT                     Allocated to registers ;size:1
+                      00277 ;@ResetSysConfig T1LOAD                    Allocated to registers ;size:1
+                      00278 ;@ResetSysConfig T1DAT0                    Allocated to registers ;size:1
+                      00279 ;@end Allocation info for local variables in function 'ResetSysConfig';
+                      00280 ;@Allocation info for local variables in function 'SysStatusSwitchHandle'
+                      00281 ;@end Allocation info for local variables in function 'SysStatusSwitchHandle';
+                      00282 ;@Allocation info for local variables in function 'SysLoadDetect'
+                      00283 ;@SysLoadDetect load_debounceA            Allocated to registers r0x1013 ;size:1
+                      00284 ;@SysLoadDetect load_debounceB            Allocated to registers r0x1015 ;size:1
+                      00285 ;@end Allocation info for local variables in function 'SysLoadDetect';
+                      00286 ;@Allocation info for local variables in function 'SysTotalCloseTime'
+                      00287 ;@end Allocation info for local variables in function 'SysTotalCloseTime';
+                      00288 ;@Allocation info for local variables in function 'SysInit'
+                      00289 ;@end Allocation info for local variables in function 'SysInit';
+                      00290 ;@Allocation info for local variables in function 'main'
+                      00291 ;@end Allocation info for local variables in function 'main';
+                      00292 ;@Allocation info for local variables in function 'isr'
+                      00293 ;@end Allocation info for local variables in function 'isr';
+                      00294 
+                      00295 ;--------------------------------------------------------
+                      00296 ; overlayable items in internal ram 
+                      00297 ;--------------------------------------------------------
+                      00298 ;       udata_ovr
+                      00299 ;--------------------------------------------------------
+                      00300 ; reset vector 
+                      00301 ;--------------------------------------------------------
+                      00302 STARTUP code 0x0000
+0000   2800           00303         goto    _main
+                      00304 ;--------------------------------------------------------
+                      00305 ; interrupt and initialization code
+                      00306 ;--------------------------------------------------------
+                      00307 c_interrupt     code    0x8
+0008                  00308 __sdcc_interrupt
+                      00309 ;***
+                      00310 ;  pBlock Stats: dbName = I
+                      00311 ;***
+                      00312 ;entry:  _isr   ;Function start
+                      00313 ; 0 exit points
+                      00314 ;2 compiler assigned registers:
+                      00315 ;   r0x1018
+                      00316 ;   r0x1019
+                      00317 ;; Starting pCode block
+0008                  00318 _isr    ;Function start
+                      00319 ; 0 exit points
+                      00320 ;       .line   546; "ZM6070.c" __endasm;
+0008   1580           00321         movra _ABuf
+0009   1100           00322         swapar _STATUS
+000A   1580           00323         movra _StatusBuf
+                      00324         
+                      00325 ;       .line   548; "ZM6070.c" if(T0IF)
+000B   3000           00326         JBSET   _INTFLAGbits,0
+000C   2800           00327         GOTO    _00439_DS_
+                      00328 ;       .line   550; "ZM6070.c" T0IF = 0;
+000D   3C00           00329         BCLR    _INTFLAGbits,0
+                      00330 ;       .line   551; "ZM6070.c" T0CNT += 61;
+000E   0B3D           00331         MOVAI   0x3d
+000F   1F80           00332         ADDRA   _T0CNT
+                      00333 ;       .line   552; "ZM6070.c" overflow = 1;
+0010   0B01           00334         MOVAI   0x01
+0011   1580           00335         MOVRA   _overflow
+0012                  00336 _00439_DS_
+                      00337 ;       .line   555; "ZM6070.c" if(KBIF)
+0012   3080           00338         JBSET   _INTFLAGbits,1
+0013   2800           00339         GOTO    _00445_DS_
+                      00340 ;       .line   557; "ZM6070.c" if((gTempBackupP1 & 0x04) != (P1 &0x04))
+0014   0B04           00341         MOVAI   0x04
+0015   1E00           00342         ANDAR   _gTempBackupP1
+0016   1580           00343         MOVRA   r0x1018
+0017   0B04           00344         MOVAI   0x04
+0018   1E00           00345         ANDAR   _P1
+0019   1580           00346         MOVRA   r0x1019
+001A   1600           00347         MOVAR   r0x1019
+001B   1000           00348         XORAR   r0x1018
+001C   3103           00349         JBSET   STATUS,2
+001D   2800           00350         GOTO    _00456_DS_
+001E   2800           00351         GOTO    _00441_DS_
+001F                  00352 _00456_DS_
+                      00353 ;       .line   559; "ZM6070.c" gPinStatus |= 0x02;
+001F   3880           00354         BSET    _gPinStatus,1
+0020                  00355 _00441_DS_
+                      00356 ;       .line   561; "ZM6070.c" if((gTempBackupP1 & 0x10) != (P1 &0x10))
+0020   0B10           00357         MOVAI   0x10
+0021   1E00           00358         ANDAR   _gTempBackupP1
+0022   1580           00359         MOVRA   r0x1018
+0023   0B10           00360         MOVAI   0x10
+0024   1E00           00361         ANDAR   _P1
+0025   1580           00362         MOVRA   r0x1019
+0026   1600           00363         MOVAR   r0x1019
+0027   1000           00364         XORAR   r0x1018
+0028   3103           00365         JBSET   STATUS,2
+0029   2800           00366         GOTO    _00457_DS_
+002A   2800           00367         GOTO    _00443_DS_
+002B                  00368 _00457_DS_
+                      00369 ;       .line   563; "ZM6070.c" gPinStatus |= 0x01;
+002B   3800           00370         BSET    _gPinStatus,0
+002C                  00371 _00443_DS_
+                      00372 ;       .line   565; "ZM6070.c" gTempBackupP1 = P1;
+002C   1600           00373         MOVAR   _P1
+002D   1580           00374         MOVRA   _gTempBackupP1
+                      00375 ;       .line   566; "ZM6070.c" KBIF = 0;
+002E   3C80           00376         BCLR    _INTFLAGbits,1
+002F                  00377 _00445_DS_
+                      00378 ;       .line   573; "ZM6070.c" __endasm;     
+002F   1100           00379         swapar _StatusBuf
+0030   1580           00380         movra _STATUS
+0031   1180           00381         swapr _ABuf
+0032   1100           00382         swapar _ABuf
+                      00383         
+0033                  00384 END_OF_INTERRUPT
+0033   000D           00385         RETIE   
+                      00386 
+                      00387 ;--------------------------------------------------------
+                      00388 ; code
+                      00389 ;--------------------------------------------------------
+                      00390 code_ZM6070     code
+                      00391 ;***
+                      00392 ;  pBlock Stats: dbName = M
+                      00393 ;***
+                      00394 ;entry:  _main  ;Function start
+                      00395 ; 2 exit points
+                      00396 ;has an exit
+                      00397 ;functions called:
+                      00398 ;   _SysInit
+                      00399 ;   _SysTotalCloseTime
+                      00400 ;   _SysLoadDetect
+                      00401 ;   _SysStatusSwitchHandle
+                      00402 ;   _SysInit
+                      00403 ;   _SysTotalCloseTime
+                      00404 ;   _SysLoadDetect
+                      00405 ;   _SysStatusSwitchHandle
+                      00406 ;; Starting pCode block
+0000                  00407 _main   ;Function start
+                      00408 ; 2 exit points
+                      00409 ;       .line   515; "ZM6070.c" SysInit();    
+0000   2000           00410         CALL    _SysInit
+0001                  00411 _00433_DS_
+                      00412 ;       .line   521; "ZM6070.c" overflow = 0;
+0001   1D80           00413         CLRR    _overflow
+                      00414 ;       .line   526; "ZM6070.c" SysTotalCloseTime();
+0002   2000           00415         CALL    _SysTotalCloseTime
+                      00416 ;       .line   528; "ZM6070.c" SysLoadDetect();
+0003   2000           00417         CALL    _SysLoadDetect
+                      00418 ;       .line   530; "ZM6070.c" SysStatusSwitchHandle();
+0004   2000           00419         CALL    _SysStatusSwitchHandle
+0005                  00420 _00429_DS_
+                      00421 ;       .line   533; "ZM6070.c" SysClrWdt(); 
+0005   000E           00422         clrwdt
+                      00423 ;       .line   534; "ZM6070.c" }while(overflow == 0);
+0006   0B00           00424         MOVAI   0x00
+0007   1700           00425         ORAR    _overflow
+0008   3503           00426         JBCLR   STATUS,2
+0009   2800           00427         GOTO    _00429_DS_
+000A   2800           00428         GOTO    _00433_DS_
+000B   000C           00429         RETURN  
+                      00430 ; exit point of _main
+                      00431 
+                      00432 ;***
+                      00433 ;  pBlock Stats: dbName = C
+                      00434 ;***
+                      00435 ;entry:  _SysInit       ;Function start
+                      00436 ; 2 exit points
+                      00437 ;has an exit
+                      00438 ;; Starting pCode block
+000C                  00439 _SysInit        ;Function start
+                      00440 ; 2 exit points
+                      00441 ;       .line   484; "ZM6070.c" DDR1 = 0xD4;     //  1 as input
+000C   0BD4           00442         MOVAI   0xd4
+000D   1580           00443         MOVRA   _DDR1
+                      00444 ;       .line   485; "ZM6070.c" P1 = 0x00;
+000E   1D80           00445         CLRR    _P1
+                      00446 ;       .line   488; "ZM6070.c" T0CR = 0x07;
+000F   0B07           00447         MOVAI   0x07
+0010   1580           00448         MOVRA   _T0CR
+                      00449 ;       .line   489; "ZM6070.c" T0CNT = 61;
+0011   0B3D           00450         MOVAI   0x3d
+0012   1580           00451         MOVRA   _T0CNT
+                      00452 ;       .line   490; "ZM6070.c" T0IE = 1;
+0013   3800           00453         BSET    _INTECONbits,0
+                      00454 ;       .line   492; "ZM6070.c" gTempBackupP1 = P1;
+0014   1600           00455         MOVAR   _P1
+0015   1580           00456         MOVRA   _gTempBackupP1
+                      00457 ;       .line   495; "ZM6070.c" KBIM=0;
+0016   1D80           00458         CLRR    _KBIM
+                      00459 ;       .line   496; "ZM6070.c" KBIM1 = 1;
+0017   3880           00460         BSET    _KBIMbits,1
+                      00461 ;       .line   497; "ZM6070.c" KBIM3 = 1;
+0018   3980           00462         BSET    _KBIMbits,3
+                      00463 ;       .line   498; "ZM6070.c" KBIE = 1;
+0019   3880           00464         BSET    _INTECONbits,1
+                      00465 ;       .line   501; "ZM6070.c" gSysLoadStatus = SYS_LOAD_NONE;
+001A   1D80           00466         CLRR    _gSysLoadStatus
+                      00467 ;       .line   502; "ZM6070.c" gPreSysLoadStatus = SYS_LOAD_NONE;
+001B   1D80           00468         CLRR    _gPreSysLoadStatus
+                      00469 ;       .line   503; "ZM6070.c" gSleepCnt = 0;
+001C   1D80           00470         CLRR    _gSleepCnt
+001D   1D80           00471         CLRR    (_gSleepCnt + 1)
+                      00472 ;       .line   504; "ZM6070.c" gPinStatus = 0;
+001E   1D80           00473         CLRR    _gPinStatus
+                      00474 ;       .line   505; "ZM6070.c" gTotalCloseTimeA = 0;
+001F   1D80           00475         CLRR    _gTotalCloseTimeA
+                      00476 ;       .line   506; "ZM6070.c" gTotalCloseTimeB = 0;
+0020   1D80           00477         CLRR    _gTotalCloseTimeB
+                      00478 ;       .line   508; "ZM6070.c" GIE = 1;
+0021   3B80           00479         BSET    _INTECONbits,7
+0022   000C           00480         RETURN  
+                      00481 ; exit point of _SysInit
+                      00482 
+                      00483 ;***
+                      00484 ;  pBlock Stats: dbName = C
+                      00485 ;***
+                      00486 ;entry:  _SysTotalCloseTime     ;Function start
+                      00487 ; 2 exit points
+                      00488 ;has an exit
+                      00489 ;; Starting pCode block
+0023                  00490 _SysTotalCloseTime      ;Function start
+                      00491 ; 2 exit points
+                      00492 ;       .line   432; "ZM6070.c" if((gSysLoadStatus == SYS_LOAD_NONE) || (gPreSysLoadStatus != gSysLoadStatus))
+0023   0B00           00493         MOVAI   0x00
+0024   1700           00494         ORAR    _gSysLoadStatus
+0025   3503           00495         JBCLR   STATUS,2
+0026   2800           00496         GOTO    _00400_DS_
+0027   1600           00497         MOVAR   _gSysLoadStatus
+0028   1000           00498         XORAR   _gPreSysLoadStatus
+0029   3103           00499         JBSET   STATUS,2
+002A   2800           00500         GOTO    _00400_DS_
+002B   2800           00501         GOTO    _00401_DS_
+                      00502 ;;unsigned compare: left < lit(0x14=20), size=1
+002C                  00503 _00400_DS_
+                      00504 ;       .line   434; "ZM6070.c" if(gTotalCloseTimeA < SYS_INTERVAL_CLOSE_TO_OPEN)
+002C   0B14           00505         MOVAI   0x14
+002D   1200           00506         RSUBAR  _gTotalCloseTimeA
+002E   3403           00507         JBCLR   STATUS,0
+002F   2800           00508         GOTO    _00388_DS_
+                      00509 ;;genSkipc:3195: created from rifx:00DE608C
+                      00510 ;       .line   435; "ZM6070.c" gTotalCloseTimeA++;
+0030   1980           00511         INCR    _gTotalCloseTimeA
+                      00512 ;;unsigned compare: left < lit(0x14=20), size=1
+0031                  00513 _00388_DS_
+                      00514 ;       .line   436; "ZM6070.c" if(gTotalCloseTimeB < SYS_INTERVAL_CLOSE_TO_OPEN)
+0031   0B14           00515         MOVAI   0x14
+0032   1200           00516         RSUBAR  _gTotalCloseTimeB
+0033   3403           00517         JBCLR   STATUS,0
+0034   2800           00518         GOTO    _00404_DS_
+                      00519 ;;genSkipc:3195: created from rifx:00DE608C
+                      00520 ;       .line   437; "ZM6070.c" gTotalCloseTimeB++;
+0035   1980           00521         INCR    _gTotalCloseTimeB
+0036   2800           00522         GOTO    _00404_DS_
+0037                  00523 _00401_DS_
+                      00524 ;       .line   439; "ZM6070.c" else if(gSysLoadStatus == SYS_LOAD_A_ON)
+0037   1600           00525         MOVAR   _gSysLoadStatus
+0038   0801           00526         XORAI   0x01
+0039   3103           00527         JBSET   STATUS,2
+003A   2800           00528         GOTO    _00398_DS_
+                      00529 ;;unsigned compare: left < lit(0x14=20), size=1
+                      00530 ;       .line   441; "ZM6070.c" if(gTotalCloseTimeB < SYS_INTERVAL_CLOSE_TO_OPEN)
+003B   0B14           00531         MOVAI   0x14
+003C   1200           00532         RSUBAR  _gTotalCloseTimeB
+003D   3403           00533         JBCLR   STATUS,0
+003E   2800           00534         GOTO    _00404_DS_
+                      00535 ;;genSkipc:3195: created from rifx:00DE608C
+                      00536 ;       .line   442; "ZM6070.c" gTotalCloseTimeB++;
+003F   1980           00537         INCR    _gTotalCloseTimeB
+0040   2800           00538         GOTO    _00404_DS_
+0041                  00539 _00398_DS_
+                      00540 ;       .line   444; "ZM6070.c" else if(gSysLoadStatus == SYS_LOAD_B_ON)
+0041   1600           00541         MOVAR   _gSysLoadStatus
+0042   0802           00542         XORAI   0x02
+0043   3103           00543         JBSET   STATUS,2
+0044   2800           00544         GOTO    _00404_DS_
+                      00545 ;;unsigned compare: left < lit(0x14=20), size=1
+                      00546 ;       .line   446; "ZM6070.c" if(gTotalCloseTimeA < SYS_INTERVAL_CLOSE_TO_OPEN)
+0045   0B14           00547         MOVAI   0x14
+0046   1200           00548         RSUBAR  _gTotalCloseTimeA
+0047   3403           00549         JBCLR   STATUS,0
+0048   2800           00550         GOTO    _00404_DS_
+                      00551 ;;genSkipc:3195: created from rifx:00DE608C
+                      00552 ;       .line   447; "ZM6070.c" gTotalCloseTimeA++;
+0049   1980           00553         INCR    _gTotalCloseTimeA
+004A                  00554 _00404_DS_
+004A   000C           00555         RETURN  
+                      00556 ; exit point of _SysTotalCloseTime
+                      00557 
+                      00558 ;***
+                      00559 ;  pBlock Stats: dbName = C
+                      00560 ;***
+                      00561 ;entry:  _SysLoadDetect ;Function start
+                      00562 ; 2 exit points
+                      00563 ;has an exit
+                      00564 ;functions called:
+                      00565 ;   _ResetSysConfig
+                      00566 ;   _ResetSysConfig
+                      00567 ;   _ResetSysConfig
+                      00568 ;   _ResetSysConfig
+                      00569 ;6 compiler assigned registers:
+                      00570 ;   r0x1012
+                      00571 ;   r0x1013
+                      00572 ;   r0x1014
+                      00573 ;   r0x1015
+                      00574 ;   r0x1016
+                      00575 ;   r0x1017
+                      00576 ;; Starting pCode block
+004B                  00577 _SysLoadDetect  ;Function start
+                      00578 ; 2 exit points
+                      00579 ;       .line   173; "ZM6070.c" if((gSysLoadStatus == SYS_LOAD_A_ON) || (gSysLoadStatus == SYS_LOAD_BOTH_ON))
+004B   1D80           00580         CLRR    r0x1012
+004C   1600           00581         MOVAR   _gSysLoadStatus
+004D   0801           00582         XORAI   0x01
+004E   3103           00583         JBSET   STATUS,2
+004F   2800           00584         GOTO    _00357_DS_
+0050   1980           00585         INCR    r0x1012
+0051                  00586 _00357_DS_
+0051   0B00           00587         MOVAI   0x00
+0052   1700           00588         ORAR    r0x1012
+0053   3103           00589         JBSET   STATUS,2
+0054   2800           00590         GOTO    _00155_DS_
+0055   1600           00591         MOVAR   _gSysLoadStatus
+0056   0803           00592         XORAI   0x03
+0057   3103           00593         JBSET   STATUS,2
+0058   2800           00594         GOTO    _00156_DS_
+0059                  00595 _00155_DS_
+                      00596 ;       .line   175; "ZM6070.c" load_debounceA = LOAD_DEBOUNCE_TO_OFF;
+0059   0B1E           00597         MOVAI   0x1e
+005A   1580           00598         MOVRA   r0x1013
+                      00599 ;       .line   176; "ZM6070.c" gPinStatus |= 0x04;
+005B   3900           00600         BSET    _gPinStatus,2
+005C   2800           00601         GOTO    _00157_DS_
+005D                  00602 _00156_DS_
+                      00603 ;       .line   180; "ZM6070.c" load_debounceA = LOAD_DEBOUNCE_TO_ON;
+005D   0B0A           00604         MOVAI   0x0a
+005E   1580           00605         MOVRA   r0x1013
+005F                  00606 _00157_DS_
+                      00607 ;       .line   184; "ZM6070.c" if(gSysLoadStatus == SYS_LOAD_B_ON || gSysLoadStatus == SYS_LOAD_BOTH_ON)
+005F   1D80           00608         CLRR    r0x1014
+0060   1600           00609         MOVAR   _gSysLoadStatus
+0061   0802           00610         XORAI   0x02
+0062   3103           00611         JBSET   STATUS,2
+0063   2800           00612         GOTO    _00358_DS_
+0064   1980           00613         INCR    r0x1014
+0065                  00614 _00358_DS_
+0065   0B00           00615         MOVAI   0x00
+0066   1700           00616         ORAR    r0x1014
+0067   3103           00617         JBSET   STATUS,2
+0068   2800           00618         GOTO    _00159_DS_
+0069   1600           00619         MOVAR   _gSysLoadStatus
+006A   0803           00620         XORAI   0x03
+006B   3103           00621         JBSET   STATUS,2
+006C   2800           00622         GOTO    _00160_DS_
+006D                  00623 _00159_DS_
+                      00624 ;       .line   186; "ZM6070.c" load_debounceB = LOAD_DEBOUNCE_TO_OFF;
+006D   0B1E           00625         MOVAI   0x1e
+006E   1580           00626         MOVRA   r0x1015
+                      00627 ;       .line   187; "ZM6070.c" gPinStatus |= 0x08;
+006F   3980           00628         BSET    _gPinStatus,3
+0070   2800           00629         GOTO    _00161_DS_
+0071                  00630 _00160_DS_
+                      00631 ;       .line   191; "ZM6070.c" load_debounceB = LOAD_DEBOUNCE_TO_ON;
+0071   0B0A           00632         MOVAI   0x0a
+0072   1580           00633         MOVRA   r0x1015
+0073                  00634 _00161_DS_
+                      00635 ;       .line   195; "ZM6070.c" if(gPinStatus & 0x04)
+0073   3100           00636         JBSET   _gPinStatus,2
+0074   2800           00637         GOTO    _00182_DS_
+                      00638 ;       .line   197; "ZM6070.c" if((PIN_DETECT_A == 1) && ((gPinStatus & 0x01) == 0))
+0075   1D80           00639         CLRR    r0x1016
+0076   3600           00640         JBCLR   _P1bits,4
+0077   1980           00641         INCR    r0x1016
+                      00642 ;;101   MOVAR   r0x1016
+                      00643 ;;99    MOVRA   r0x1017
+                      00644 ;;100   MOVAR   r0x1017
+0078   1600           00645         MOVAR   r0x1016
+0079   0801           00646         XORAI   0x01
+007A   3103           00647         JBSET   STATUS,2
+007B   2800           00648         GOTO    _00169_DS_
+007C   3400           00649         JBCLR   _gPinStatus,0
+007D   2800           00650         GOTO    _00169_DS_
+                      00651 ;       .line   199; "ZM6070.c" if(gSysLoadStatus != SYS_LOAD_A_ON)
+007E   0B00           00652         MOVAI   0x00
+007F   1700           00653         ORAR    r0x1012
+0080   3103           00654         JBSET   STATUS,2
+0081   2800           00655         GOTO    _00166_DS_
+                      00656 ;       .line   200; "ZM6070.c" gSysLoadDetectCntA++;
+0082   1980           00657         INCR    _gSysLoadDetectCntA
+0083   2800           00658         GOTO    _00183_DS_
+                      00659 ;;unsigned compare: left < lit(0x1E=30), size=1
+0084                  00660 _00166_DS_
+                      00661 ;       .line   203; "ZM6070.c" if(gCntA_1 < LOAD_DEBOUNCE_TO_OFF)
+0084   0B1E           00662         MOVAI   0x1e
+0085   1200           00663         RSUBAR  _gCntA_1
+0086   3403           00664         JBCLR   STATUS,0
+0087   2800           00665         GOTO    _00183_DS_
+                      00666 ;;genSkipc:3195: created from rifx:00DE608C
+                      00667 ;       .line   204; "ZM6070.c" gCntA_1++;
+0088   1980           00668         INCR    _gCntA_1
+0089   2800           00669         GOTO    _00183_DS_
+008A                  00670 _00169_DS_
+                      00671 ;       .line   209; "ZM6070.c" gSysLoadDetectCntA=0;
+008A   1D80           00672         CLRR    _gSysLoadDetectCntA
+                      00673 ;       .line   210; "ZM6070.c" gCntA_1 = 0;
+008B   1D80           00674         CLRR    _gCntA_1
+008C   2800           00675         GOTO    _00183_DS_
+008D                  00676 _00182_DS_
+                      00677 ;       .line   215; "ZM6070.c" if(gPinStatus & 0x01)
+008D   3000           00678         JBSET   _gPinStatus,0
+008E   2800           00679         GOTO    _00179_DS_
+                      00680 ;       .line   217; "ZM6070.c" gSysLoadDetectCntA++;
+008F   1980           00681         INCR    _gSysLoadDetectCntA
+                      00682 ;       .line   218; "ZM6070.c" gCntA++;
+0090   1980           00683         INCR    _gCntA
+0091   2800           00684         GOTO    _00183_DS_
+0092                  00685 _00179_DS_
+                      00686 ;       .line   222; "ZM6070.c" gSysLoadDetectCntA=0;
+0092   1D80           00687         CLRR    _gSysLoadDetectCntA
+                      00688 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00689 ;;unsigned compare: left >= lit(0xB=11), size=1
+                      00690 ;       .line   223; "ZM6070.c" if(gTotalCloseTimeA > 10)
+0093   0B0B           00691         MOVAI   0x0b
+0094   1200           00692         RSUBAR  _gTotalCloseTimeA
+0095   3003           00693         JBSET   STATUS,0
+0096   2800           00694         GOTO    _00183_DS_
+                      00695 ;;genSkipc:3195: created from rifx:00DE608C
+                      00696 ;       .line   225; "ZM6070.c" if(((gPinStatus & 0x40)&&(gSysLoadStatus == SYS_LOAD_B_ON)) || gCurPortStatus !=0)
+0097   3300           00697         JBSET   _gPinStatus,6
+0098   2800           00698         GOTO    _00175_DS_
+0099   0B00           00699         MOVAI   0x00
+009A   1700           00700         ORAR    r0x1014
+009B   3103           00701         JBSET   STATUS,2
+009C   2800           00702         GOTO    _00172_DS_
+009D                  00703 _00175_DS_
+009D   0B00           00704         MOVAI   0x00
+009E   1700           00705         ORAR    _gCurPortStatus
+009F   3503           00706         JBCLR   STATUS,2
+00A0   2800           00707         GOTO    _00173_DS_
+00A1                  00708 _00172_DS_
+                      00709 ;       .line   227; "ZM6070.c" ResetSysConfig();      
+00A1   2000           00710         CALL    _ResetSysConfig
+00A2                  00711 _00173_DS_
+                      00712 ;       .line   230; "ZM6070.c" gPinStatus &= 0xBF;
+00A2   3F00           00713         BCLR    _gPinStatus,6
+00A3                  00714 _00183_DS_
+                      00715 ;       .line   235; "ZM6070.c" if(gPinStatus & 0x08)
+00A3   3180           00716         JBSET   _gPinStatus,3
+00A4   2800           00717         GOTO    _00203_DS_
+                      00718 ;       .line   237; "ZM6070.c" if((PIN_DETECT_B == 1) && ((gPinStatus & 0x02) == 0))
+00A5   1D80           00719         CLRR    r0x1012
+00A6   3500           00720         JBCLR   _P1bits,2
+00A7   1980           00721         INCR    r0x1012
+                      00722 ;;103   MOVAR   r0x1012
+                      00723 ;;102   MOVAR   r0x1014
+00A8   1600           00724         MOVAR   r0x1012
+00A9   1580           00725         MOVRA   r0x1014
+00AA   0801           00726         XORAI   0x01
+00AB   3103           00727         JBSET   STATUS,2
+00AC   2800           00728         GOTO    _00190_DS_
+00AD   3480           00729         JBCLR   _gPinStatus,1
+00AE   2800           00730         GOTO    _00190_DS_
+                      00731 ;       .line   239; "ZM6070.c" if(gSysLoadStatus != SYS_LOAD_B_ON)
+00AF   1600           00732         MOVAR   _gSysLoadStatus
+00B0   0802           00733         XORAI   0x02
+00B1   3103           00734         JBSET   STATUS,2
+00B2   2800           00735         GOTO    _00361_DS_
+00B3   2800           00736         GOTO    _00187_DS_
+00B4                  00737 _00361_DS_
+                      00738 ;       .line   240; "ZM6070.c" gSysLoadDetectCntB++;
+00B4   1980           00739         INCR    _gSysLoadDetectCntB
+00B5   2800           00740         GOTO    _00204_DS_
+                      00741 ;;unsigned compare: left < lit(0x1E=30), size=1
+00B6                  00742 _00187_DS_
+                      00743 ;       .line   243; "ZM6070.c" if(gCntB_1 < LOAD_DEBOUNCE_TO_OFF)
+00B6   0B1E           00744         MOVAI   0x1e
+00B7   1200           00745         RSUBAR  _gCntB_1
+00B8   3403           00746         JBCLR   STATUS,0
+00B9   2800           00747         GOTO    _00204_DS_
+                      00748 ;;genSkipc:3195: created from rifx:00DE608C
+                      00749 ;       .line   244; "ZM6070.c" gCntB_1++;
+00BA   1980           00750         INCR    _gCntB_1
+00BB   2800           00751         GOTO    _00204_DS_
+00BC                  00752 _00190_DS_
+                      00753 ;       .line   249; "ZM6070.c" gCntB_1  = 0;
+00BC   1D80           00754         CLRR    _gCntB_1
+                      00755 ;       .line   250; "ZM6070.c" gSysLoadDetectCntB=0;
+00BD   1D80           00756         CLRR    _gSysLoadDetectCntB
+00BE   2800           00757         GOTO    _00204_DS_
+00BF                  00758 _00203_DS_
+                      00759 ;       .line   255; "ZM6070.c" if((gPinStatus &0x02))
+00BF   3080           00760         JBSET   _gPinStatus,1
+00C0   2800           00761         GOTO    _00200_DS_
+                      00762 ;       .line   257; "ZM6070.c" gSysLoadDetectCntB++;
+00C1   1980           00763         INCR    _gSysLoadDetectCntB
+                      00764 ;       .line   258; "ZM6070.c" gCntB++;
+00C2   1980           00765         INCR    _gCntB
+00C3   2800           00766         GOTO    _00204_DS_
+00C4                  00767 _00200_DS_
+                      00768 ;       .line   262; "ZM6070.c" gSysLoadDetectCntB=0;
+00C4   1D80           00769         CLRR    _gSysLoadDetectCntB
+                      00770 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00771 ;;unsigned compare: left >= lit(0xB=11), size=1
+                      00772 ;       .line   263; "ZM6070.c" if(gTotalCloseTimeB > 10)
+00C5   0B0B           00773         MOVAI   0x0b
+00C6   1200           00774         RSUBAR  _gTotalCloseTimeB
+00C7   3003           00775         JBSET   STATUS,0
+00C8   2800           00776         GOTO    _00204_DS_
+                      00777 ;;genSkipc:3195: created from rifx:00DE608C
+                      00778 ;       .line   265; "ZM6070.c" if(((gPinStatus & 0x80)&&(gSysLoadStatus == SYS_LOAD_A_ON)) ||(gCurPortStatus !=0))
+00C9   3380           00779         JBSET   _gPinStatus,7
+00CA   2800           00780         GOTO    _00196_DS_
+00CB   1600           00781         MOVAR   _gSysLoadStatus
+00CC   0801           00782         XORAI   0x01
+00CD   3103           00783         JBSET   STATUS,2
+00CE   2800           00784         GOTO    _00196_DS_
+00CF   2800           00785         GOTO    _00193_DS_
+00D0                  00786 _00196_DS_
+00D0   0B00           00787         MOVAI   0x00
+00D1   1700           00788         ORAR    _gCurPortStatus
+00D2   3503           00789         JBCLR   STATUS,2
+00D3   2800           00790         GOTO    _00194_DS_
+00D4                  00791 _00193_DS_
+                      00792 ;       .line   267; "ZM6070.c" ResetSysConfig();
+00D4   2000           00793         CALL    _ResetSysConfig
+00D5                  00794 _00194_DS_
+                      00795 ;       .line   269; "ZM6070.c" gPinStatus &= 0x7F;
+00D5   3F80           00796         BCLR    _gPinStatus,7
+00D6                  00797 _00204_DS_
+                      00798 ;       .line   275; "ZM6070.c" gPinStatus &= 0xF0;
+00D6   0BF0           00799         MOVAI   0xf0
+00D7   1E80           00800         ANDRA   _gPinStatus
+                      00801 ;       .line   278; "ZM6070.c" if((gPinStatus & 0x10) && (gTotalCloseTimeA > 10))
+00D8   3200           00802         JBSET   _gPinStatus,4
+00D9   2800           00803         GOTO    _00208_DS_
+                      00804 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00805 ;;unsigned compare: left >= lit(0xB=11), size=1
+00DA   0B0B           00806         MOVAI   0x0b
+00DB   1200           00807         RSUBAR  _gTotalCloseTimeA
+00DC   3003           00808         JBSET   STATUS,0
+00DD   2800           00809         GOTO    _00208_DS_
+                      00810 ;;genSkipc:3195: created from rifx:00DE608C
+                      00811 ;       .line   280; "ZM6070.c" gPinStatus &= 0xEF;
+00DE   3E00           00812         BCLR    _gPinStatus,4
+                      00813 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00814 ;;unsigned compare: left >= lit(0x5=5), size=1
+                      00815 ;       .line   281; "ZM6070.c" if(gCntA > 4)
+00DF   0B05           00816         MOVAI   0x05
+00E0   1200           00817         RSUBAR  _gCntA
+00E1   3003           00818         JBSET   STATUS,0
+00E2   2800           00819         GOTO    _00208_DS_
+                      00820 ;;genSkipc:3195: created from rifx:00DE608C
+                      00821 ;       .line   282; "ZM6070.c" gPinStatus |= 0x40;
+00E3   3B00           00822         BSET    _gPinStatus,6
+00E4                  00823 _00208_DS_
+                      00824 ;       .line   285; "ZM6070.c" if((gPinStatus & 0x20) &&(gTotalCloseTimeB > 10))
+00E4   3280           00825         JBSET   _gPinStatus,5
+00E5   2800           00826         GOTO    _00213_DS_
+                      00827 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00828 ;;unsigned compare: left >= lit(0xB=11), size=1
+00E6   0B0B           00829         MOVAI   0x0b
+00E7   1200           00830         RSUBAR  _gTotalCloseTimeB
+00E8   3003           00831         JBSET   STATUS,0
+00E9   2800           00832         GOTO    _00213_DS_
+                      00833 ;;genSkipc:3195: created from rifx:00DE608C
+                      00834 ;       .line   287; "ZM6070.c" gPinStatus &= 0xDF;             
+00EA   3E80           00835         BCLR    _gPinStatus,5
+                      00836 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00837 ;;unsigned compare: left >= lit(0x5=5), size=1
+                      00838 ;       .line   288; "ZM6070.c" if(gCntB > 4)
+00EB   0B05           00839         MOVAI   0x05
+00EC   1200           00840         RSUBAR  _gCntB
+00ED   3003           00841         JBSET   STATUS,0
+00EE   2800           00842         GOTO    _00213_DS_
+                      00843 ;;genSkipc:3195: created from rifx:00DE608C
+                      00844 ;       .line   289; "ZM6070.c" gPinStatus |= 0x80;
+00EF   3B80           00845         BSET    _gPinStatus,7
+00F0                  00846 _00213_DS_
+                      00847 ;       .line   292; "ZM6070.c" if(gSysLoadDetectCntA >= load_debounceA)
+00F0   1600           00848         MOVAR   r0x1013
+00F1   1200           00849         RSUBAR  _gSysLoadDetectCntA
+00F2   3003           00850         JBSET   STATUS,0
+00F3   2800           00851         GOTO    _00240_DS_
+                      00852 ;;genSkipc:3195: created from rifx:00DE608C
+                      00853 ;       .line   294; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+00F4   1600           00854         MOVAR   _gSysLoadStatus
+00F5   1580           00855         MOVRA   _gPreSysLoadStatus
+                      00856 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00857 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      00858 ;       .line   296; "ZM6070.c" switch(gSysLoadStatus)
+00F6   0B04           00859         MOVAI   0x04
+00F7   1200           00860         RSUBAR  _gSysLoadStatus
+00F8   3403           00861         JBCLR   STATUS,0
+00F9   2800           00862         GOTO    _00224_DS_
+                      00863 ;;genSkipc:3195: created from rifx:00DE608C
+00FA   1600           00864         MOVAR   _gSysLoadStatus
+00FB   1F82           00865         ADDRA   PCL
+00FC   2800           00866         GOTO    _00215_DS_
+00FD   2800           00867         GOTO    _00216_DS_
+00FE   2800           00868         GOTO    _00217_DS_
+00FF   2800           00869         GOTO    _00222_DS_
+0100                  00870 _00215_DS_
+                      00871 ;       .line   299; "ZM6070.c" gSysLoadStatus = SYS_LOAD_A_ON;
+0100   0B01           00872         MOVAI   0x01
+0101   1580           00873         MOVRA   _gSysLoadStatus
+                      00874 ;       .line   300; "ZM6070.c" gCntA_1 = 0;
+0102   1D80           00875         CLRR    _gCntA_1
+                      00876 ;       .line   301; "ZM6070.c" break;
+0103   2800           00877         GOTO    _00224_DS_
+0104                  00878 _00216_DS_
+                      00879 ;       .line   303; "ZM6070.c" gSysLoadStatus = SYS_LOAD_NONE;
+0104   1D80           00880         CLRR    _gSysLoadStatus
+                      00881 ;       .line   304; "ZM6070.c" gTotalCloseTimeA = 0;
+0105   1D80           00882         CLRR    _gTotalCloseTimeA
+                      00883 ;       .line   305; "ZM6070.c" break;
+0106   2800           00884         GOTO    _00224_DS_
+0107                  00885 _00217_DS_
+                      00886 ;       .line   307; "ZM6070.c" gSysLoadStatus = SYS_LOAD_BOTH_ON;
+0107   0B03           00887         MOVAI   0x03
+0108   1580           00888         MOVRA   _gSysLoadStatus
+                      00889 ;;unsigned compare: left < lit(0x1E=30), size=1
+                      00890 ;       .line   308; "ZM6070.c" if(gCntB_1 >= LOAD_DEBOUNCE_TO_OFF)
+0109   0B1E           00891         MOVAI   0x1e
+010A   1200           00892         RSUBAR  _gCntB_1
+010B   3003           00893         JBSET   STATUS,0
+010C   2800           00894         GOTO    _00224_DS_
+                      00895 ;;genSkipc:3195: created from rifx:00DE608C
+                      00896 ;       .line   310; "ZM6070.c" gCntA_1 = 0;
+010D   1D80           00897         CLRR    _gCntA_1
+                      00898 ;       .line   311; "ZM6070.c" gSysLoadStatus = SYS_LOAD_A_ON;
+010E   0B01           00899         MOVAI   0x01
+010F   1580           00900         MOVRA   _gSysLoadStatus
+                      00901 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00902 ;;unsigned compare: left >= lit(0x12=18), size=1
+                      00903 ;       .line   312; "ZM6070.c" if(gTotalCloseTimeA > (SYS_INTERVAL_CLOSE_TO_OPEN-3))
+0110   0B12           00904         MOVAI   0x12
+0111   1200           00905         RSUBAR  _gTotalCloseTimeA
+0112   3003           00906         JBSET   STATUS,0
+0113   2800           00907         GOTO    _00224_DS_
+                      00908 ;;genSkipc:3195: created from rifx:00DE608C
+                      00909 ;       .line   314; "ZM6070.c" gTotalCloseTimeA -=2;
+0114   0BFE           00910         MOVAI   0xfe
+0115   1F80           00911         ADDRA   _gTotalCloseTimeA
+                      00912 ;       .line   317; "ZM6070.c" break;
+0116   2800           00913         GOTO    _00224_DS_
+0117                  00914 _00222_DS_
+                      00915 ;       .line   319; "ZM6070.c" gSysLoadStatus = SYS_LOAD_B_ON;
+0117   0B02           00916         MOVAI   0x02
+0118   1580           00917         MOVRA   _gSysLoadStatus
+                      00918 ;       .line   320; "ZM6070.c" gTotalCloseTimeA = 0;
+0119   1D80           00919         CLRR    _gTotalCloseTimeA
+                      00920 ;       .line   321; "ZM6070.c" gPinStatus |= 0x10;
+011A   3A00           00921         BSET    _gPinStatus,4
+                      00922 ;       .line   322; "ZM6070.c" gCntA = 0;
+011B   1D80           00923         CLRR    _gCntA
+                      00924 ;       .line   323; "ZM6070.c" gCntA_1 = 0;
+011C   1D80           00925         CLRR    _gCntA_1
+                      00926 ;       .line   324; "ZM6070.c" gCntB_1 = 0;
+011D   1D80           00927         CLRR    _gCntB_1
+011E                  00928 _00224_DS_
+                      00929 ;       .line   330; "ZM6070.c" gSysLoadDetectCntA = 0;
+011E   1D80           00930         CLRR    _gSysLoadDetectCntA
+                      00931 ;       .line   331; "ZM6070.c" gSysChildStatus = SYS_CHILD_STATUS_INIT;
+011F   1D80           00932         CLRR    _gSysChildStatus
+                      00933 ;       .line   333; "ZM6070.c" if(gPinStatus & 0x40)
+0120   3300           00934         JBSET   _gPinStatus,6
+0121   2800           00935         GOTO    _00237_DS_
+                      00936 ;       .line   335; "ZM6070.c" gCurPortStatus = 0;
+0122   1D80           00937         CLRR    _gCurPortStatus
+                      00938 ;       .line   336; "ZM6070.c" A_OFF_WITHOUT_B();
+0123   3E80           00939         BCLR    _P1bits,5
+                      00940 ;       .line   337; "ZM6070.c" if(gSysLoadStatus != SYS_LOAD_BOTH_ON)
+0124   1600           00941         MOVAR   _gSysLoadStatus
+0125   0803           00942         XORAI   0x03
+0126   3103           00943         JBSET   STATUS,2
+0127   2800           00944         GOTO    _00374_DS_
+0128   2800           00945         GOTO    _00240_DS_
+0129                  00946 _00374_DS_
+                      00947 ;       .line   338; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+0129   1600           00948         MOVAR   _gSysLoadStatus
+012A   1580           00949         MOVRA   _gPreSysLoadStatus
+012B   2800           00950         GOTO    _00240_DS_
+012C                  00951 _00237_DS_
+                      00952 ;       .line   342; "ZM6070.c" if((gPreSysLoadStatus == SYS_LOAD_BOTH_ON) || (gPreSysLoadStatus == SYS_LOAD_B_ON))
+012C   1600           00953         MOVAR   _gPreSysLoadStatus
+012D   0803           00954         XORAI   0x03
+012E   3103           00955         JBSET   STATUS,2
+012F   2800           00956         GOTO    _00375_DS_
+0130   2800           00957         GOTO    _00227_DS_
+0131                  00958 _00375_DS_
+0131   1600           00959         MOVAR   _gPreSysLoadStatus
+0132   0802           00960         XORAI   0x02
+0133   3103           00961         JBSET   STATUS,2
+0134   2800           00962         GOTO    _00228_DS_
+0135                  00963 _00227_DS_
+                      00964 ;       .line   343; "ZM6070.c" gTotalCloseTimeB = 0;
+0135   1D80           00965         CLRR    _gTotalCloseTimeB
+0136                  00966 _00228_DS_
+                      00967 ;       .line   344; "ZM6070.c" if(gSysLoadStatus == SYS_LOAD_B_ON)
+0136   1600           00968         MOVAR   _gSysLoadStatus
+0137   0802           00969         XORAI   0x02
+0138   3103           00970         JBSET   STATUS,2
+0139   2800           00971         GOTO    _00234_DS_
+                      00972 ;       .line   346; "ZM6070.c" gCurPortStatus = PORT_B_ON_NO_QC;
+013A   0B02           00973         MOVAI   0x02
+013B   1580           00974         MOVRA   _gCurPortStatus
+                      00975 ;       .line   347; "ZM6070.c" A_OFF_WITHOUT_B();
+013C   3E80           00976         BCLR    _P1bits,5
+                      00977 ;       .line   348; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+013D   1600           00978         MOVAR   _gSysLoadStatus
+013E   1580           00979         MOVRA   _gPreSysLoadStatus
+013F   2800           00980         GOTO    _00240_DS_
+0140                  00981 _00234_DS_
+                      00982 ;       .line   350; "ZM6070.c" else if((gSysLoadStatus == SYS_LOAD_BOTH_ON) &&(gCurPortStatus == PORT_B_ON_NO_QC))
+0140   1600           00983         MOVAR   _gSysLoadStatus
+0141   0803           00984         XORAI   0x03
+0142   3103           00985         JBSET   STATUS,2
+0143   2800           00986         GOTO    _00240_DS_
+0144   1600           00987         MOVAR   _gCurPortStatus
+0145   0802           00988         XORAI   0x02
+0146   3103           00989         JBSET   STATUS,2
+0147   2800           00990         GOTO    _00240_DS_
+                      00991 ;       .line   352; "ZM6070.c" A_OFF_WITHOUT_B();
+0148   3E80           00992         BCLR    _P1bits,5
+0149                  00993 _00240_DS_
+                      00994 ;       .line   359; "ZM6070.c" sss_buf = 0;
+0149   1D80           00995         CLRR    _sss_buf
+                      00996 ;       .line   360; "ZM6070.c" if(gSysLoadDetectCntB >= load_debounceB)
+014A   1600           00997         MOVAR   r0x1015
+014B   1200           00998         RSUBAR  _gSysLoadDetectCntB
+014C   3003           00999         JBSET   STATUS,0
+014D   2800           01000         GOTO    _00267_DS_
+                      01001 ;;genSkipc:3195: created from rifx:00DE608C
+                      01002 ;       .line   362; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+014E   1600           01003         MOVAR   _gSysLoadStatus
+014F   1580           01004         MOVRA   _gPreSysLoadStatus
+                      01005 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01006 ;;unsigned compare: left >= lit(0x4=4), size=1
+                      01007 ;       .line   364; "ZM6070.c" switch(gSysLoadStatus)
+0150   0B04           01008         MOVAI   0x04
+0151   1200           01009         RSUBAR  _gSysLoadStatus
+0152   3403           01010         JBCLR   STATUS,0
+0153   2800           01011         GOTO    _00250_DS_
+                      01012 ;;genSkipc:3195: created from rifx:00DE608C
+0154   1600           01013         MOVAR   _gSysLoadStatus
+0155   1F82           01014         ADDRA   PCL
+0156   2800           01015         GOTO    _00241_DS_
+0157   2800           01016         GOTO    _00242_DS_
+0158   2800           01017         GOTO    _00247_DS_
+0159   2800           01018         GOTO    _00248_DS_
+015A                  01019 _00241_DS_
+                      01020 ;       .line   367; "ZM6070.c" gSysLoadStatus = SYS_LOAD_B_ON;
+015A   0B02           01021         MOVAI   0x02
+015B   1580           01022         MOVRA   _gSysLoadStatus
+                      01023 ;       .line   368; "ZM6070.c" gCntB_1 = 0;
+015C   1D80           01024         CLRR    _gCntB_1
+                      01025 ;       .line   369; "ZM6070.c" break;
+015D   2800           01026         GOTO    _00250_DS_
+015E                  01027 _00242_DS_
+                      01028 ;       .line   371; "ZM6070.c" gSysLoadStatus = SYS_LOAD_BOTH_ON;
+015E   0B03           01029         MOVAI   0x03
+015F   1580           01030         MOVRA   _gSysLoadStatus
+                      01031 ;;unsigned compare: left < lit(0x1E=30), size=1
+                      01032 ;       .line   372; "ZM6070.c" if(gCntA_1 >= LOAD_DEBOUNCE_TO_OFF)
+0160   0B1E           01033         MOVAI   0x1e
+0161   1200           01034         RSUBAR  _gCntA_1
+0162   3003           01035         JBSET   STATUS,0
+0163   2800           01036         GOTO    _00250_DS_
+                      01037 ;;genSkipc:3195: created from rifx:00DE608C
+                      01038 ;       .line   374; "ZM6070.c" gCntB_1 =0;
+0164   1D80           01039         CLRR    _gCntB_1
+                      01040 ;       .line   375; "ZM6070.c" gSysLoadStatus = SYS_LOAD_B_ON;
+0165   0B02           01041         MOVAI   0x02
+0166   1580           01042         MOVRA   _gSysLoadStatus
+                      01043 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01044 ;;unsigned compare: left >= lit(0x12=18), size=1
+                      01045 ;       .line   376; "ZM6070.c" if(gTotalCloseTimeB > (SYS_INTERVAL_CLOSE_TO_OPEN-3))
+0167   0B12           01046         MOVAI   0x12
+0168   1200           01047         RSUBAR  _gTotalCloseTimeB
+0169   3003           01048         JBSET   STATUS,0
+016A   2800           01049         GOTO    _00250_DS_
+                      01050 ;;genSkipc:3195: created from rifx:00DE608C
+                      01051 ;       .line   378; "ZM6070.c" gTotalCloseTimeB -=2;
+016B   0BFE           01052         MOVAI   0xfe
+016C   1F80           01053         ADDRA   _gTotalCloseTimeB
+                      01054 ;       .line   381; "ZM6070.c" break;
+016D   2800           01055         GOTO    _00250_DS_
+016E                  01056 _00247_DS_
+                      01057 ;       .line   383; "ZM6070.c" gSysLoadStatus = SYS_LOAD_NONE;
+016E   1D80           01058         CLRR    _gSysLoadStatus
+                      01059 ;       .line   384; "ZM6070.c" gTotalCloseTimeB = 0;
+016F   1D80           01060         CLRR    _gTotalCloseTimeB
+                      01061 ;       .line   385; "ZM6070.c" break;
+0170   2800           01062         GOTO    _00250_DS_
+0171                  01063 _00248_DS_
+                      01064 ;       .line   387; "ZM6070.c" gSysLoadStatus = SYS_LOAD_A_ON;
+0171   0B01           01065         MOVAI   0x01
+0172   1580           01066         MOVRA   _gSysLoadStatus
+                      01067 ;       .line   388; "ZM6070.c" gTotalCloseTimeB = 0;
+0173   1D80           01068         CLRR    _gTotalCloseTimeB
+                      01069 ;       .line   389; "ZM6070.c" gPinStatus |= 0x20;
+0174   3A80           01070         BSET    _gPinStatus,5
+                      01071 ;       .line   390; "ZM6070.c" gCntB = 0;
+0175   1D80           01072         CLRR    _gCntB
+                      01073 ;       .line   391; "ZM6070.c" gCntB_1 = 0;
+0176   1D80           01074         CLRR    _gCntB_1
+                      01075 ;       .line   392; "ZM6070.c" gCntA_1 = 0;
+0177   1D80           01076         CLRR    _gCntA_1
+0178                  01077 _00250_DS_
+                      01078 ;       .line   398; "ZM6070.c" gSysLoadDetectCntB = 0;
+0178   1D80           01079         CLRR    _gSysLoadDetectCntB
+                      01080 ;       .line   399; "ZM6070.c" gSysChildStatus = SYS_CHILD_STATUS_INIT;
+0179   1D80           01081         CLRR    _gSysChildStatus
+                      01082 ;       .line   402; "ZM6070.c" if(gPinStatus & 0x80)
+017A   3380           01083         JBSET   _gPinStatus,7
+017B   2800           01084         GOTO    _00263_DS_
+                      01085 ;       .line   404; "ZM6070.c" gCurPortStatus = 0;
+017C   1D80           01086         CLRR    _gCurPortStatus
+                      01087 ;       .line   405; "ZM6070.c" B_OFF_WITHOUT_A();
+017D   3C80           01088         BCLR    _P1bits,1
+                      01089 ;       .line   406; "ZM6070.c" if(gSysLoadStatus != SYS_LOAD_BOTH_ON)
+017E   1600           01090         MOVAR   _gSysLoadStatus
+017F   0803           01091         XORAI   0x03
+0180   3103           01092         JBSET   STATUS,2
+0181   2800           01093         GOTO    _00381_DS_
+0182   2800           01094         GOTO    _00267_DS_
+0183                  01095 _00381_DS_
+                      01096 ;       .line   407; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+0183   1600           01097         MOVAR   _gSysLoadStatus
+0184   1580           01098         MOVRA   _gPreSysLoadStatus
+0185   2800           01099         GOTO    _00267_DS_
+0186                  01100 _00263_DS_
+                      01101 ;       .line   411; "ZM6070.c" if((gPreSysLoadStatus == SYS_LOAD_BOTH_ON) || (gPreSysLoadStatus == SYS_LOAD_A_ON))
+0186   1600           01102         MOVAR   _gPreSysLoadStatus
+0187   0803           01103         XORAI   0x03
+0188   3103           01104         JBSET   STATUS,2
+0189   2800           01105         GOTO    _00382_DS_
+018A   2800           01106         GOTO    _00253_DS_
+018B                  01107 _00382_DS_
+018B   1600           01108         MOVAR   _gPreSysLoadStatus
+018C   0801           01109         XORAI   0x01
+018D   3103           01110         JBSET   STATUS,2
+018E   2800           01111         GOTO    _00254_DS_
+018F                  01112 _00253_DS_
+                      01113 ;       .line   412; "ZM6070.c" gTotalCloseTimeA = 0;
+018F   1D80           01114         CLRR    _gTotalCloseTimeA
+0190                  01115 _00254_DS_
+                      01116 ;       .line   413; "ZM6070.c" if(gSysLoadStatus == SYS_LOAD_A_ON)
+0190   1600           01117         MOVAR   _gSysLoadStatus
+0191   0801           01118         XORAI   0x01
+0192   3103           01119         JBSET   STATUS,2
+0193   2800           01120         GOTO    _00260_DS_
+                      01121 ;       .line   415; "ZM6070.c" gCurPortStatus = PORT_A_ON_NO_QC;
+0194   0B01           01122         MOVAI   0x01
+0195   1580           01123         MOVRA   _gCurPortStatus
+                      01124 ;       .line   416; "ZM6070.c" B_OFF_WITHOUT_A();
+0196   3C80           01125         BCLR    _P1bits,1
+                      01126 ;       .line   417; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+0197   1600           01127         MOVAR   _gSysLoadStatus
+0198   1580           01128         MOVRA   _gPreSysLoadStatus
+0199   2800           01129         GOTO    _00267_DS_
+019A                  01130 _00260_DS_
+                      01131 ;       .line   419; "ZM6070.c" else if((gSysLoadStatus == SYS_LOAD_BOTH_ON) &&(gCurPortStatus == PORT_A_ON_NO_QC))
+019A   1600           01132         MOVAR   _gSysLoadStatus
+019B   0803           01133         XORAI   0x03
+019C   3103           01134         JBSET   STATUS,2
+019D   2800           01135         GOTO    _00267_DS_
+019E   1600           01136         MOVAR   _gCurPortStatus
+019F   0801           01137         XORAI   0x01
+01A0   3103           01138         JBSET   STATUS,2
+01A1   2800           01139         GOTO    _00267_DS_
+                      01140 ;       .line   421; "ZM6070.c" B_OFF_WITHOUT_A();
+01A2   3C80           01141         BCLR    _P1bits,1
+01A3                  01142 _00267_DS_
+01A3   000C           01143         RETURN  
+                      01144 ; exit point of _SysLoadDetect
+                      01145 
+                      01146 ;***
+                      01147 ;  pBlock Stats: dbName = C
+                      01148 ;***
+                      01149 ;entry:  _SysStatusSwitchHandle ;Function start
+                      01150 ; 2 exit points
+                      01151 ;has an exit
+                      01152 ;; Starting pCode block
+01A4                  01153 _SysStatusSwitchHandle  ;Function start
+                      01154 ; 2 exit points
+                      01155 ;       .line   105; "ZM6070.c" if(gSysLoadStatus != gPreSysLoadStatus)
+01A4   1600           01156         MOVAR   _gPreSysLoadStatus
+01A5   1000           01157         XORAR   _gSysLoadStatus
+01A6   3103           01158         JBSET   STATUS,2
+01A7   2800           01159         GOTO    _00150_DS_
+01A8   2800           01160         GOTO    _00132_DS_
+                      01161 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01162 ;;unsigned compare: left >= lit(0x4=4), size=1
+01A9                  01163 _00150_DS_
+                      01164 ;       .line   107; "ZM6070.c" switch(gSysLoadStatus)
+01A9   0B04           01165         MOVAI   0x04
+01AA   1200           01166         RSUBAR  _gSysLoadStatus
+01AB   3403           01167         JBCLR   STATUS,0
+01AC   2800           01168         GOTO    _00132_DS_
+                      01169 ;;genSkipc:3195: created from rifx:00DE608C
+01AD   1600           01170         MOVAR   _gSysLoadStatus
+01AE   1F82           01171         ADDRA   PCL
+01AF   2800           01172         GOTO    _00109_DS_
+01B0   2800           01173         GOTO    _00113_DS_
+01B1   2800           01174         GOTO    _00113_DS_
+01B2   2800           01175         GOTO    _00123_DS_
+01B3                  01176 _00109_DS_
+                      01177 ;       .line   110; "ZM6070.c" if(gSysChildStatus == SYS_CHILD_STATUS_INIT)
+01B3   0B00           01178         MOVAI   0x00
+01B4   1700           01179         ORAR    _gSysChildStatus
+01B5   3103           01180         JBSET   STATUS,2
+01B6   2800           01181         GOTO    _00132_DS_
+                      01182 ;       .line   112; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+01B7   1600           01183         MOVAR   _gSysLoadStatus
+01B8   1580           01184         MOVRA   _gPreSysLoadStatus
+                      01185 ;       .line   113; "ZM6070.c" gCurPortStatus=0;
+01B9   1D80           01186         CLRR    _gCurPortStatus
+                      01187 ;       .line   115; "ZM6070.c" break;
+01BA   2800           01188         GOTO    _00132_DS_
+01BB                  01189 _00113_DS_
+                      01190 ;       .line   118; "ZM6070.c" if(gSysLoadStatus == SYS_LOAD_A_ON)
+01BB   1600           01191         MOVAR   _gSysLoadStatus
+01BC   0801           01192         XORAI   0x01
+01BD   3103           01193         JBSET   STATUS,2
+01BE   2800           01194         GOTO    _00121_DS_
+                      01195 ;;unsigned compare: left < lit(0x14=20), size=1
+                      01196 ;       .line   120; "ZM6070.c" if(gTotalCloseTimeA >= SYS_INTERVAL_CLOSE_TO_OPEN)
+01BF   0B14           01197         MOVAI   0x14
+01C0   1200           01198         RSUBAR  _gTotalCloseTimeA
+01C1   3003           01199         JBSET   STATUS,0
+01C2   2800           01200         GOTO    _00115_DS_
+                      01201 ;;genSkipc:3195: created from rifx:00DE608C
+                      01202 ;       .line   122; "ZM6070.c" QC_CTL_A = 0;
+01C3   3D80           01203         BCLR    _P1bits,3
+                      01204 ;       .line   124; "ZM6070.c" gCntA = 0;
+01C4   1D80           01205         CLRR    _gCntA
+                      01206 ;       .line   125; "ZM6070.c" gPinStatus &= 0xEF;
+01C5   3E00           01207         BCLR    _gPinStatus,4
+01C6   2800           01208         GOTO    _00122_DS_
+01C7                  01209 _00115_DS_
+                      01210 ;       .line   128; "ZM6070.c" return;
+01C7   2800           01211         GOTO    _00132_DS_
+                      01212 ;;unsigned compare: left < lit(0x14=20), size=1
+01C8                  01213 _00121_DS_
+                      01214 ;       .line   132; "ZM6070.c" if(gTotalCloseTimeB >= SYS_INTERVAL_CLOSE_TO_OPEN)
+01C8   0B14           01215         MOVAI   0x14
+01C9   1200           01216         RSUBAR  _gTotalCloseTimeB
+01CA   3003           01217         JBSET   STATUS,0
+01CB   2800           01218         GOTO    _00118_DS_
+                      01219 ;;genSkipc:3195: created from rifx:00DE608C
+                      01220 ;       .line   134; "ZM6070.c" QC_CTL_B = 0;                   
+01CC   3C00           01221         BCLR    _P1bits,0
+                      01222 ;       .line   137; "ZM6070.c" gCntB = 0;
+01CD   1D80           01223         CLRR    _gCntB
+                      01224 ;       .line   138; "ZM6070.c" gPinStatus &= 0xDF;
+01CE   3E80           01225         BCLR    _gPinStatus,5
+01CF   2800           01226         GOTO    _00122_DS_
+01D0                  01227 _00118_DS_
+                      01228 ;       .line   141; "ZM6070.c" return;
+01D0   2800           01229         GOTO    _00132_DS_
+01D1                  01230 _00122_DS_
+                      01231 ;       .line   143; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;    
+01D1   1600           01232         MOVAR   _gSysLoadStatus
+01D2   1580           01233         MOVRA   _gPreSysLoadStatus
+                      01234 ;       .line   144; "ZM6070.c" gCurPortStatus =0;
+01D3   1D80           01235         CLRR    _gCurPortStatus
+                      01236 ;       .line   145; "ZM6070.c" break;
+01D4   2800           01237         GOTO    _00132_DS_
+                      01238 ;;unsigned compare: left < lit(0x14=20), size=1
+01D5                  01239 _00123_DS_
+                      01240 ;       .line   147; "ZM6070.c" if((gTotalCloseTimeA >= SYS_INTERVAL_CLOSE_TO_OPEN) && (gTotalCloseTimeB >= SYS_INTERVAL_CLOSE_TO_OPEN))
+01D5   0B14           01241         MOVAI   0x14
+01D6   1200           01242         RSUBAR  _gTotalCloseTimeA
+01D7   3003           01243         JBSET   STATUS,0
+01D8   2800           01244         GOTO    _00125_DS_
+                      01245 ;;genSkipc:3195: created from rifx:00DE608C
+                      01246 ;;unsigned compare: left < lit(0x14=20), size=1
+01D9   0B14           01247         MOVAI   0x14
+01DA   1200           01248         RSUBAR  _gTotalCloseTimeB
+01DB   3003           01249         JBSET   STATUS,0
+01DC   2800           01250         GOTO    _00125_DS_
+                      01251 ;;genSkipc:3195: created from rifx:00DE608C
+                      01252 ;       .line   151; "ZM6070.c" gCntA = 0;
+01DD   1D80           01253         CLRR    _gCntA
+                      01254 ;       .line   152; "ZM6070.c" gCntB = 0;
+01DE   1D80           01255         CLRR    _gCntB
+                      01256 ;       .line   153; "ZM6070.c" gPinStatus &= 0xCF;
+01DF   0BCF           01257         MOVAI   0xcf
+01E0   1E80           01258         ANDRA   _gPinStatus
+01E1   2800           01259         GOTO    _00126_DS_
+01E2                  01260 _00125_DS_
+                      01261 ;       .line   156; "ZM6070.c" return;
+01E2   2800           01262         GOTO    _00132_DS_
+01E3                  01263 _00126_DS_
+                      01264 ;       .line   158; "ZM6070.c" gPreSysLoadStatus = gSysLoadStatus;
+01E3   1600           01265         MOVAR   _gSysLoadStatus
+01E4   1580           01266         MOVRA   _gPreSysLoadStatus
+                      01267 ;       .line   159; "ZM6070.c" gCurPortStatus=0;
+01E5   1D80           01268         CLRR    _gCurPortStatus
+01E6                  01269 _00132_DS_
+                      01270 ;       .line   163; "ZM6070.c" }
+01E6   000C           01271         RETURN  
+                      01272 ; exit point of _SysStatusSwitchHandle
+                      01273 
+                      01274 ;***
+                      01275 ;  pBlock Stats: dbName = C
+                      01276 ;***
+                      01277 ;entry:  _ResetSysConfig        ;Function start
+                      01278 ; 2 exit points
+                      01279 ;has an exit
+                      01280 ;; Starting pCode block
+01E7                  01281 _ResetSysConfig ;Function start
+                      01282 ; 2 exit points
+                      01283 ;       .line   89; "ZM6070.c"  gTotalCloseTimeA = 0;
+01E7   1D80           01284         CLRR    _gTotalCloseTimeA
+                      01285 ;       .line   90; "ZM6070.c"  gTotalCloseTimeB = 0;
+01E8   1D80           01286         CLRR    _gTotalCloseTimeB
+                      01287 ;       .line   91; "ZM6070.c"  gSysLoadStatus = SYS_LOAD_NONE;
+01E9   1D80           01288         CLRR    _gSysLoadStatus
+                      01289 ;       .line   92; "ZM6070.c"  gPreSysLoadStatus = SYS_LOAD_NONE;
+01EA   1D80           01290         CLRR    _gPreSysLoadStatus
+                      01291 ;       .line   93; "ZM6070.c"  gCntA = 0;
+01EB   1D80           01292         CLRR    _gCntA
+                      01293 ;       .line   94; "ZM6070.c"  gCntA_1 = 0;
+01EC   1D80           01294         CLRR    _gCntA_1
+                      01295 ;       .line   95; "ZM6070.c"  gCntB = 0;
+01ED   1D80           01296         CLRR    _gCntB
+                      01297 ;       .line   96; "ZM6070.c"  gCntB_1 = 0;
+01EE   1D80           01298         CLRR    _gCntB_1
+                      01299 ;       .line   97; "ZM6070.c"  gPinStatus = 0;
+01EF   1D80           01300         CLRR    _gPinStatus
+                      01301 ;       .line   98; "ZM6070.c"  gSysLoadDetectCntA = 0;
+01F0   1D80           01302         CLRR    _gSysLoadDetectCntA
+                      01303 ;       .line   99; "ZM6070.c"  gSysLoadDetectCntB = 0;
+01F1   1D80           01304         CLRR    _gSysLoadDetectCntB
+                      01305 ;       .line   100; "ZM6070.c" gCurPortStatus=0;
+01F2   1D80           01306         CLRR    _gCurPortStatus
+01F3   000C           01307         RETURN  
+                      01308 ; exit point of _ResetSysConfig
+                      01309 
+                      01310 
+                      01311 ;       code size estimation:
+                      01312 ;         536+    0 =   536 instructions ( 1072 byte)
+                      01313 
+                      01314         end
+gpasm-2.0.0_beta2 (Nov  6 2017)ZM6070.asm         2018-6-21  20:03:13          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+DDR0                              00000045
+DDR1                              00000046
+END_OF_INTERRUPT                  00000033
+FSR                               00000004
+INDF                              00000000
+INTECON                           0000000E
+INTFLAG                           0000000F
+KBIM                              00000009
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P1                                00000006
+PCL                               00000002
+PCLATH                            0000000A
+PDCON                             0000000B
+PUCON                             0000000D
+PWMCR                             00000048
+STATUS                            00000003
+STK00                             00000016
+STK01                             00000015
+STK02                             00000014
+STK03                             00000013
+STK04                             00000012
+STK05                             00000011
+STK06                             00000010
+T0CNT                             00000001
+T0CR                              00000041
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DAT0                            0000004F
+T1DAT1                            00000049
+T1DAT2                            0000004A
+T1LOAD                            0000004E
+TM0CR                             0000004B
+_00109_DS_                        000001B3
+_00113_DS_                        000001BB
+_00115_DS_                        000001C7
+_00118_DS_                        000001D0
+_00121_DS_                        000001C8
+_00122_DS_                        000001D1
+_00123_DS_                        000001D5
+_00125_DS_                        000001E2
+_00126_DS_                        000001E3
+_00132_DS_                        000001E6
+_00150_DS_                        000001A9
+_00155_DS_                        00000059
+_00156_DS_                        0000005D
+_00157_DS_                        0000005F
+_00159_DS_                        0000006D
+_00160_DS_                        00000071
+_00161_DS_                        00000073
+_00166_DS_                        00000084
+_00169_DS_                        0000008A
+_00172_DS_                        000000A1
+_00173_DS_                        000000A2
+_00175_DS_                        0000009D
+_00179_DS_                        00000092
+_00182_DS_                        0000008D
+_00183_DS_                        000000A3
+_00187_DS_                        000000B6
+_00190_DS_                        000000BC
+_00193_DS_                        000000D4
+_00194_DS_                        000000D5
+_00196_DS_                        000000D0
+_00200_DS_                        000000C4
+_00203_DS_                        000000BF
+_00204_DS_                        000000D6
+_00208_DS_                        000000E4
+_00213_DS_                        000000F0
+_00215_DS_                        00000100
+_00216_DS_                        00000104
+_00217_DS_                        00000107
+_00222_DS_                        00000117
+_00224_DS_                        0000011E
+_00227_DS_                        00000135
+_00228_DS_                        00000136
+_00234_DS_                        00000140
+_00237_DS_                        0000012C
+_00240_DS_                        00000149
+_00241_DS_                        0000015A
+_00242_DS_                        0000015E
+_00247_DS_                        0000016E
+_00248_DS_                        00000171
+_00250_DS_                        00000178
+_00253_DS_                        0000018F
+_00254_DS_                        00000190
+_00260_DS_                        0000019A
+_00263_DS_                        00000186
+_00267_DS_                        000001A3
+_00357_DS_                        00000051
+_00358_DS_                        00000065
+_00361_DS_                        000000B4
+_00374_DS_                        00000129
+_00375_DS_                        00000131
+_00381_DS_                        00000183
+_00382_DS_                        0000018B
+_00388_DS_                        00000031
+_00398_DS_                        00000041
+_00400_DS_                        0000002C
+_00401_DS_                        00000037
+_00404_DS_                        0000004A
+_00429_DS_                        00000005
+_00433_DS_                        00000001
+_00439_DS_                        00000012
+_00441_DS_                        00000020
+_00443_DS_                        0000002C
+_00445_DS_                        0000002F
+_00456_DS_                        0000001F
+_00457_DS_                        0000002B
+_ABuf                             00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_FSR                              00000000
+_FSRbits                          00000000
+_INDF                             00000000
+_INDFbits                         00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATHbits                       00000000
+_PCLbits                          00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWMCR                            00000000
+_PWMCRbits                        00000000
+_ResetSysConfig                   000001E7
+_STATUS                           00000000
+_STATUSbits                       00000000
+_StatusBuf                        00000000
+_SysInit                          0000000C
+_SysLoadDetect                    0000004B
+_SysStatusSwitchHandle            000001A4
+_SysTotalCloseTime                00000023
+_T0CNT                            00000000
+_T0CNTbits                        00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CNTbits                        00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DAT0                           00000000
+_T1DAT0bits                       00000000
+_T1DAT1                           00000000
+_T1DAT1bits                       00000000
+_T1DAT2                           00000000
+_T1DAT2bits                       00000000
+_T1LOAD                           00000000
+_T1LOADbits                       00000000
+_TM0CR                            00000000
+_TM0CRbits                        00000000
+__30P6060                         00000001
+__sdcc_interrupt                  00000008
+_gCntA                            00000000
+_gCntA_1                          00000000
+_gCntB                            00000000
+_gCntB_1                          00000000
+_gCurPortStatus                   00000000
+_gPinStatus                       00000000
+_gPreSysLoadStatus                00000000
+_gSleepCnt                        00000000
+_gSysChildStatus                  00000000
+_gSysLoadDetectCntA               00000000
+_gSysLoadDetectCntB               00000000
+_gSysLoadStatus                   00000000
+_gTempBackupP1                    00000000
+_gTotalCloseTimeA                 00000000
+_gTotalCloseTimeB                 00000000
+_isr                              00000008
+_main                             00000000
+_overflow                         00000000
+_sss_buf                          00000000
+r0x1012                           00000000
+r0x1013                           00000001
+r0x1014                           00000002
+r0x1015                           00000003
+r0x1016                           00000004
+r0x1018                           00000005
+r0x1019                           00000006
+BUZE                              T1CR,5
+C                                 STATUS,0
+DBLCK                             PWMCR,4
+DC                                STATUS,1
+DDR00                             DDR0,0
+DDR01                             DDR0,1
+DDR02                             DDR0,2
+DDR03                             DDR0,3
+DDR10                             DDR1,0
+DDR11                             DDR1,1
+DDR12                             DDR1,2
+DDR13                             DDR1,3
+DDR14                             DDR1,4
+DDR15                             DDR1,5
+DDR16                             DDR1,6
+DDR17                             DDR1,7
+EIS                               MCR,6
+FSR0                              FSR,0
+FSR1                              FSR,1
+FSR2                              FSR,2
+FSR3                              FSR,3
+FSR4                              FSR,4
+FSR5                              FSR,5
+GIE                               INTECON,7
+INDF0                             INDF,0
+INDF1                             INDF,1
+INDF2                             INDF,2
+INDF3                             INDF,3
+INDF4                             INDF,4
+INDF5                             INDF,5
+INDF6                             INDF,6
+INDF7                             INDF,7
+INTIE                             INTECON,2
+INTIF                             INTFLAG,2
+INTOM                             T0CR,6
+KBIE                              INTECON,1
+KBIF                              INTFLAG,1
+KBIM0                             KBIM,0
+KBIM1                             KBIM,1
+KBIM2                             KBIM,2
+KBIM3                             KBIM,3
+KBIM4                             KBIM,4
+KBIM5                             KBIM,5
+KBIM6                             KBIM,6
+KBIM7                             KBIM,7
+LVDEN                             MCR,0
+LVDF                              MCR,5
+LVDSEL0                           MCR,1
+LVDSEL1                           MCR,2
+LVDSEL2                           MCR,3
+LVDSEL3                           MCR,4
+P00D                              P0,0
+P00PD                             PDCON,0
+P01D                              P0,1
+P01PD                             PDCON,1
+P02D                              P0,2
+P02PD                             PDCON,2
+P03D                              P0,3
+P03PD                             PDCON,3
+P10D                              P1,0
+P10OD                             ODCON,0
+P10PD                             PDCON,4
+P10PU                             PUCON,0
+P11D                              P1,1
+P11OD                             ODCON,1
+P11PD                             PDCON,5
+P11PU                             PUCON,1
+P12D                              P1,2
+P12OD                             ODCON,2
+P12PD                             PDCON,6
+P12PU                             PUCON,2
+P13D                              P1,3
+P13PU                             PUCON,3
+P14D                              P1,4
+P14OD                             ODCON,4
+P14PU                             PUCON,4
+P15D                              P1,5
+P15OD                             ODCON,5
+P15PU                             PUCON,5
+P16D                              P1,6
+P16OD                             ODCON,6
+P16PU                             PUCON,6
+P17D                              P1,7
+P17OD                             ODCON,7
+P17PU                             PUCON,7
+PC0                               PCL,0
+PC1                               PCL,1
+PC2                               PCL,2
+PC3                               PCL,3
+PC4                               PCL,4
+PC5                               PCL,5
+PC6                               PCL,6
+PC7                               PCL,7
+PCH0                              PCLATH,0
+PCH1                              PCLATH,1
+PD                                STATUS,3
+PMW0OE                            PWMCR,7
+PMW1E                             PWMCR,1
+PWM0E                             T1CR,6
+PWM1OE                            PWMCR,6
+PWM2E                             PWMCR,0
+PWM2OE                            PWMCR,5
+PWMINV                            PWMCR,2
+PWMMD                             PWMCR,3
+RST                               STATUS,7
+T0C0                              T0CNT,0
+T0C1                              T0CNT,1
+T0C2                              T0CNT,2
+T0C3                              T0CNT,3
+T0C4                              T0CNT,4
+T0C5                              T0CNT,5
+T0C6                              T0CNT,6
+T0C7                              T0CNT,7
+T0IE                              INTECON,0
+T0IF                              INTFLAG,0
+T0PR0                             T0CR,0
+T0PR1                             T0CR,1
+T0PR2                             T0CR,2
+T0PTA                             T0CR,3
+T0PTS                             T0CR,5
+T0SE                              T0CR,4
+T1C0                              T1CNT,0
+T1C1                              T1CNT,1
+T1C2                              T1CNT,2
+T1C3                              T1CNT,3
+T1C4                              T1CNT,4
+T1C5                              T1CNT,5
+T1C6                              T1CNT,6
+T1C7                              T1CNT,7
+T1DAT00                           T1DAT0,0
+T1DAT01                           T1DAT0,1
+T1DAT02                           T1DAT0,2
+T1DAT03                           T1DAT0,3
+T1DAT04                           T1DAT0,4
+T1DAT05                           T1DAT0,5
+T1DAT06                           T1DAT0,6
+T1DAT07                           T1DAT0,7
+T1DAT10                           T1DAT1,0
+T1DAT11                           T1DAT1,1
+T1DAT12                           T1DAT1,2
+T1DAT13                           T1DAT1,3
+T1DAT14                           T1DAT1,4
+T1DAT15                           T1DAT1,5
+T1DAT16                           T1DAT1,6
+T1DAT17                           T1DAT1,7
+T1DAT20                           T1DAT2,0
+T1DAT21                           T1DAT2,1
+T1DAT22                           T1DAT2,2
+T1DAT23                           T1DAT2,3
+T1DAT24                           T1DAT2,4
+T1DAT25                           T1DAT2,5
+T1DAT26                           T1DAT2,6
+T1DAT27                           T1DAT2,7
+T1IE                              TM0CR,1
+T1IF                              TM0CR,0
+T1LOAD0                           T1LOAD,0
+T1LOAD1                           T1LOAD,1
+T1LOAD2                           T1LOAD,2
+T1LOAD3                           T1LOAD,3
+T1LOAD4                           T1LOAD,4
+T1LOAD5                           T1LOAD,5
+T1LOAD6                           T1LOAD,6
+T1LOAD7                           T1LOAD,7
+T1PR0                             T1CR,0
+T1PR1                             T1CR,1
+T1PR2                             T1CR,2
+T1PTS0                            T1CR,3
+T1PTS1                            T1CR,4
+TBS                               TM0CR,7
+TC1EN                             T1CR,7
+TO                                STATUS,4
+WDTEN                             MCR,7
+Z                                 STATUS,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

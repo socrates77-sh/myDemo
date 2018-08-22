@@ -1,0 +1,2193 @@
+gpasm-2.0.0_beta2 (Nov  6 2017)6080_bug.asm       2018-5-3  10:21:47           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.1.0 (May  2 2018) (MINGW32)
+                      00004 ; This file was generated Thu May 03 10:21:47 2018
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC30 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "6080_bug.c"
+                      00009         list    p=0311
+                      00010         radix dec
+                      00011         include "0311.inc"
+                      00001                 LIST
+                      00002 ;mc30p6080.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00326                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _INDFbits
+                      00016         extern  _PCLbits
+                      00017         extern  _STATUSbits
+                      00018         extern  _FSRbits
+                      00019         extern  _P0bits
+                      00020         extern  _P1bits
+                      00021         extern  _MCRbits
+                      00022         extern  _KBIMbits
+                      00023         extern  _PCLATHbits
+                      00024         extern  _PDCONbits
+                      00025         extern  _ODCONbits
+                      00026         extern  _PUCONbits
+                      00027         extern  _INTECONbits
+                      00028         extern  _INTFLAGbits
+                      00029         extern  _T0CRbits
+                      00030         extern  _TM0CRbits
+                      00031         extern  _T0CNTbits
+                      00032         extern  _DDR0bits
+                      00033         extern  _DDR1bits
+                      00034         extern  _T1CRbits
+                      00035         extern  _PWMCRbits
+                      00036         extern  _T1CNTbits
+                      00037         extern  _T1LOADbits
+                      00038         extern  _T1DATA0bits
+                      00039         extern  _T1DATA1bits
+                      00040         extern  _T1DATA2bits
+                      00041         extern  _INDF
+                      00042         extern  _T0CNT
+                      00043         extern  _PCL
+                      00044         extern  _STATUS
+                      00045         extern  _FSR
+                      00046         extern  _P0
+                      00047         extern  _P1
+                      00048         extern  _MCR
+                      00049         extern  _KBIM
+                      00050         extern  _PCLATH
+                      00051         extern  _PDCON
+                      00052         extern  _ODCON
+                      00053         extern  _PUCON
+                      00054         extern  _INTECON
+                      00055         extern  _INTFLAG
+                      00056         extern  _T0CR
+                      00057         extern  _DDR0
+                      00058         extern  _DDR1
+                      00059         extern  _PWMCR
+                      00060         extern  _T1DATA1
+                      00061         extern  _T1DATA2
+                      00062         extern  _TM0CR
+                      00063         extern  _T1CR
+                      00064         extern  _T1CNT
+                      00065         extern  _T1LOAD
+                      00066         extern  _T1DATA0
+                      00067         extern  __gptrget1
+                      00068 ;--------------------------------------------------------
+                      00069 ; global declarations
+                      00070 ;--------------------------------------------------------
+                      00071         global  _Sys_Init
+                      00072         global  _int_isr
+                      00073         global  _delay640us
+                      00074         global  _SY_1
+                      00075         global  _SY_2
+                      00076         global  _mod3
+                      00077         global  _mod4
+                      00078         global  _mod5
+                      00079         global  _IC_SLEEP
+                      00080         global  _main
+                      00081         global  _Flag
+                      00082         global  _Flag1
+                      00083         global  _timcd
+                      00084         global  _ABuf
+                      00085         global  _StatusBuf
+                      00086         global  _work
+                      00087         global  _soudbuff
+                      00088         global  _buff
+                      00089         global  _time
+                      00090         global  _time1
+                      00091         global  _zstime
+                      00092         global  _wxbuff
+                      00093         global  _KeyBuff
+                      00094         global  _sleeptime
+                      00095         global  _tne5
+                      00096         global  _tne6
+                      00097         global  _SY1
+                      00098         global  _SY2
+                      00099 
+                      00100         global STK06
+                      00101         global STK05
+                      00102         global STK04
+                      00103         global STK03
+                      00104         global STK02
+                      00105         global STK01
+                      00106         global STK00
+                      00107 
+                      00108 sharebank udata_ovr 0x0010
+0008                  00109 STK06   res 1
+0008                  00110 STK05   res 1
+0009                  00111 STK04   res 1
+0009                  00112 STK03   res 1
+000A                  00113 STK02   res 1
+000A                  00114 STK01   res 1
+000B                  00115 STK00   res 1
+                      00116 
+                      00117 ;--------------------------------------------------------
+                      00118 ; global definitions
+                      00119 ;--------------------------------------------------------
+                      00120 UD_6080_bug_0   udata
+0000                  00121 _Flag   res     1
+                      00122 
+                      00123 UD_6080_bug_1   udata
+0000                  00124 _Flag1  res     1
+                      00125 
+                      00126 UD_6080_bug_2   udata
+0000                  00127 _timcd  res     2
+                      00128 
+                      00129 UD_6080_bug_3   udata
+0000                  00130 _ABuf   res     1
+                      00131 
+                      00132 UD_6080_bug_4   udata
+0000                  00133 _StatusBuf      res     1
+                      00134 
+                      00135 UD_6080_bug_5   udata
+0000                  00136 _work   res     1
+                      00137 
+                      00138 UD_6080_bug_6   udata
+0000                  00139 _soudbuff       res     1
+                      00140 
+                      00141 UD_6080_bug_7   udata
+0000                  00142 _buff   res     1
+                      00143 
+                      00144 UD_6080_bug_8   udata
+0000                  00145 _time   res     2
+                      00146 
+                      00147 UD_6080_bug_9   udata
+0000                  00148 _time1  res     2
+                      00149 
+                      00150 UD_6080_bug_10  udata
+0000                  00151 _zstime res     2
+                      00152 
+                      00153 UD_6080_bug_11  udata
+0000                  00154 _wxbuff res     2
+                      00155 
+                      00156 UD_6080_bug_12  udata
+0000                  00157 _KeyBuff        res     2
+                      00158 
+                      00159 UD_6080_bug_13  udata
+0000                  00160 _sleeptime      res     1
+                      00161 
+                      00162 UD_6080_bug_14  udata
+0000                  00163 _tne5   res     2
+                      00164 
+                      00165 UD_6080_bug_15  udata
+0000                  00166 _tne6   res     2
+                      00167 
+                      00168 ;--------------------------------------------------------
+                      00169 ; absolute symbol definitions
+                      00170 ;--------------------------------------------------------
+                      00171 ;--------------------------------------------------------
+                      00172 ; compiler-defined variables
+                      00173 ;--------------------------------------------------------
+                      00174 UDL_6080_bug_0  udata
+0000                  00175 r0x1017 res     1
+0000                  00176 r0x1016 res     1
+0001                  00177 r0x1018 res     1
+0001                  00178 r0x1019 res     1
+0002                  00179 r0x101A res     1
+                      00180 ;--------------------------------------------------------
+                      00181 ; initialized data
+                      00182 ;--------------------------------------------------------
+                      00183 
+                      00184 ID_6080_bug_0   code
+0000                  00185 _SY1
+0000   0A9A           00186         retai 0x9a
+0001   0A40           00187         retai 0x40
+0002   0A8B           00188         retai 0x8b
+0003   0A36           00189         retai 0x36
+0004   0A76           00190         retai 0x76
+0005   0A2E           00191         retai 0x2e
+0006   0A67           00192         retai 0x67
+0007   0A25           00193         retai 0x25
+0008   0A52           00194         retai 0x52
+0009   0A1C           00195         retai 0x1c
+000A   0A8D           00196         retai 0x8d
+000B   0A4D           00197         retai 0x4d
+                      00198 
+                      00199 
+                      00200 ID_6080_bug_1   code
+0000                  00201 _SY2
+0000   0ADA           00202         retai 0xda
+0001   0A18           00203         retai 0x18
+0002   0A39           00204         retai 0x39
+0003   0A18           00205         retai 0x18
+0004   0AD8           00206         retai 0xd8
+0005   0AB7           00207         retai 0xb7
+0006   0A39           00208         retai 0x39
+0007   0A18           00209         retai 0x18
+0008   0A3B           00210         retai 0x3b
+0009   0A19           00211         retai 0x19
+                      00212 
+                      00213 
+                      00214 ;@Allocation info for local variables in function 'Sys_Init'
+                      00215 ;@Sys_Init Sys_Init                  Allocated to registers ;size:2
+                      00216 ;@Sys_Init INDFbits                  Allocated to registers ;size:1
+                      00217 ;@Sys_Init PCLbits                   Allocated to registers ;size:1
+                      00218 ;@Sys_Init STATUSbits                Allocated to registers ;size:1
+                      00219 ;@Sys_Init FSRbits                   Allocated to registers ;size:1
+                      00220 ;@Sys_Init P0bits                    Allocated to registers ;size:1
+                      00221 ;@Sys_Init P1bits                    Allocated to registers ;size:1
+                      00222 ;@Sys_Init MCRbits                   Allocated to registers ;size:1
+                      00223 ;@Sys_Init KBIMbits                  Allocated to registers ;size:1
+                      00224 ;@Sys_Init PCLATHbits                Allocated to registers ;size:1
+                      00225 ;@Sys_Init PDCONbits                 Allocated to registers ;size:1
+                      00226 ;@Sys_Init ODCONbits                 Allocated to registers ;size:1
+                      00227 ;@Sys_Init PUCONbits                 Allocated to registers ;size:1
+                      00228 ;@Sys_Init INTECONbits               Allocated to registers ;size:1
+                      00229 ;@Sys_Init INTFLAGbits               Allocated to registers ;size:1
+                      00230 ;@Sys_Init T0CRbits                  Allocated to registers ;size:1
+                      00231 ;@Sys_Init TM0CRbits                 Allocated to registers ;size:1
+                      00232 ;@Sys_Init T0CNTbits                 Allocated to registers ;size:1
+                      00233 ;@Sys_Init DDR0bits                  Allocated to registers ;size:1
+                      00234 ;@Sys_Init DDR1bits                  Allocated to registers ;size:1
+                      00235 ;@Sys_Init T1CRbits                  Allocated to registers ;size:1
+                      00236 ;@Sys_Init PWMCRbits                 Allocated to registers ;size:1
+                      00237 ;@Sys_Init T1CNTbits                 Allocated to registers ;size:1
+                      00238 ;@Sys_Init T1LOADbits                Allocated to registers ;size:1
+                      00239 ;@Sys_Init T1DATA0bits               Allocated to registers ;size:1
+                      00240 ;@Sys_Init T1DATA1bits               Allocated to registers ;size:1
+                      00241 ;@Sys_Init T1DATA2bits               Allocated to registers ;size:1
+                      00242 ;@Sys_Init Flag                      Allocated to registers ;size:1
+                      00243 ;@Sys_Init Flag1                     Allocated to registers ;size:1
+                      00244 ;@Sys_Init timcd                     Allocated to registers ;size:2
+                      00245 ;@Sys_Init ABuf                      Allocated to registers ;size:1
+                      00246 ;@Sys_Init StatusBuf                 Allocated to registers ;size:1
+                      00247 ;@Sys_Init work                      Allocated to registers ;size:1
+                      00248 ;@Sys_Init soudbuff                  Allocated to registers ;size:1
+                      00249 ;@Sys_Init buff                      Allocated to registers ;size:1
+                      00250 ;@Sys_Init time                      Allocated to registers ;size:2
+                      00251 ;@Sys_Init time1                     Allocated to registers ;size:2
+                      00252 ;@Sys_Init zstime                    Allocated to registers ;size:2
+                      00253 ;@Sys_Init wxbuff                    Allocated to registers ;size:2
+                      00254 ;@Sys_Init KeyBuff                   Allocated to registers ;size:2
+                      00255 ;@Sys_Init INDF                      Allocated to registers ;size:1
+                      00256 ;@Sys_Init T0CNT                     Allocated to registers ;size:1
+                      00257 ;@Sys_Init PCL                       Allocated to registers ;size:1
+                      00258 ;@Sys_Init STATUS                    Allocated to registers ;size:1
+                      00259 ;@Sys_Init FSR                       Allocated to registers ;size:1
+                      00260 ;@Sys_Init P0                        Allocated to registers ;size:1
+                      00261 ;@Sys_Init P1                        Allocated to registers ;size:1
+                      00262 ;@Sys_Init MCR                       Allocated to registers ;size:1
+                      00263 ;@Sys_Init KBIM                      Allocated to registers ;size:1
+                      00264 ;@Sys_Init PCLATH                    Allocated to registers ;size:1
+                      00265 ;@Sys_Init PDCON                     Allocated to registers ;size:1
+                      00266 ;@Sys_Init ODCON                     Allocated to registers ;size:1
+                      00267 ;@Sys_Init PUCON                     Allocated to registers ;size:1
+                      00268 ;@Sys_Init INTECON                   Allocated to registers ;size:1
+                      00269 ;@Sys_Init INTFLAG                   Allocated to registers ;size:1
+                      00270 ;@Sys_Init T0CR                      Allocated to registers ;size:1
+                      00271 ;@Sys_Init DDR0                      Allocated to registers ;size:1
+                      00272 ;@Sys_Init DDR1                      Allocated to registers ;size:1
+                      00273 ;@Sys_Init PWMCR                     Allocated to registers ;size:1
+                      00274 ;@Sys_Init T1DATA1                   Allocated to registers ;size:1
+                      00275 ;@Sys_Init T1DATA2                   Allocated to registers ;size:1
+                      00276 ;@Sys_Init TM0CR                     Allocated to registers ;size:1
+                      00277 ;@Sys_Init T1CR                      Allocated to registers ;size:1
+                      00278 ;@Sys_Init T1CNT                     Allocated to registers ;size:1
+                      00279 ;@Sys_Init T1LOAD                    Allocated to registers ;size:1
+                      00280 ;@Sys_Init T1DATA0                   Allocated to registers ;size:1
+                      00281 ;@end Allocation info for local variables in function 'Sys_Init';
+                      00282 ;@Allocation info for local variables in function 'int_isr'
+                      00283 ;@end Allocation info for local variables in function 'int_isr';
+                      00284 ;@Allocation info for local variables in function 'delay640us'
+                      00285 ;@delay640us i1                        Allocated to registers ;size:2
+                      00286 ;@delay640us i                         Allocated to registers r0x1017 r0x1016 ;size:2
+                      00287 ;@end Allocation info for local variables in function 'delay640us';
+                      00288 ;@Allocation info for local variables in function 'SY_1'
+                      00289 ;@SY_1 i                         Allocated to registers r0x1016 ;size:1
+                      00290 ;@end Allocation info for local variables in function 'SY_1';
+                      00291 ;@Allocation info for local variables in function 'SY_2'
+                      00292 ;@SY_2 i                         Allocated to registers r0x1016 ;size:1
+                      00293 ;@end Allocation info for local variables in function 'SY_2';
+                      00294 ;@Allocation info for local variables in function 'mod3'
+                      00295 ;@mod3 i                         Allocated to registers r0x101A ;size:1
+                      00296 ;@end Allocation info for local variables in function 'mod3';
+                      00297 ;@Allocation info for local variables in function 'mod4'
+                      00298 ;@end Allocation info for local variables in function 'mod4';
+                      00299 ;@Allocation info for local variables in function 'mod5'
+                      00300 ;@mod5 i                         Allocated to registers r0x101A ;size:1
+                      00301 ;@end Allocation info for local variables in function 'mod5';
+                      00302 ;@Allocation info for local variables in function 'IC_SLEEP'
+                      00303 ;@end Allocation info for local variables in function 'IC_SLEEP';
+                      00304 ;@Allocation info for local variables in function 'main'
+                      00305 ;@end Allocation info for local variables in function 'main';
+                      00306 
+                      00307 ;--------------------------------------------------------
+                      00308 ; overlayable items in internal ram 
+                      00309 ;--------------------------------------------------------
+                      00310 ;       udata_ovr
+                      00311 ;--------------------------------------------------------
+                      00312 ; reset vector 
+                      00313 ;--------------------------------------------------------
+                      00314 STARTUP code 0x0000
+0000   2800           00315         goto    _main
+                      00316 ;--------------------------------------------------------
+                      00317 ; interrupt and initialization code
+                      00318 ;--------------------------------------------------------
+                      00319 c_interrupt     code    0x8
+0008                  00320 __sdcc_interrupt
+                      00321 ;***
+                      00322 ;  pBlock Stats: dbName = I
+                      00323 ;***
+                      00324 ;entry:  _int_isr       ;Function start
+                      00325 ; 0 exit points
+                      00326 ;; Starting pCode block
+0008                  00327 _int_isr        ;Function start
+                      00328 ; 0 exit points
+                      00329 ;       .line   73; "6080_bug.c"        __endasm;     
+0008   1580           00330         movra _ABuf
+0009   1100           00331         swapar _STATUS
+000A   1580           00332         movra _StatusBuf
+                      00333         
+                      00334 ;       .line   75; "6080_bug.c"        if(T0IF)
+000B   3000           00335         JBSET   _INTFLAGbits,0
+000C   2800           00336         GOTO    _00165_DS_
+                      00337 ;       .line   77; "6080_bug.c"        T0IF = 0;
+000D   3C00           00338         BCLR    _INTFLAGbits,0
+                      00339 ;       .line   78; "6080_bug.c"        T0CNT = 96;   
+000E   0B60           00340         MOVAI   0x60
+000F   1580           00341         MOVRA   _T0CNT
+                      00342 ;       .line   79; "6080_bug.c"        if((!CHRG)&&STDBY)
+0010   3700           00343         JBCLR   _P1bits,6
+0011   2800           00344         GOTO    _00135_DS_
+0012   3380           00345         JBSET   _P1bits,7
+0013   2800           00346         GOTO    _00135_DS_
+                      00347 ;       .line   81; "6080_bug.c"        timcd++;
+0014   1980           00348         INCR    _timcd
+0015   3503           00349         JBCLR   STATUS,2
+0016   1980           00350         INCR    (_timcd + 1)
+                      00351 ;;unsigned compare: left < lit(0xF3C=3900), size=2
+                      00352 ;       .line   82; "6080_bug.c"        if(timcd<3900)
+0017   0B0F           00353         MOVAI   0x0f
+0018   1200           00354         RSUBAR  (_timcd + 1)
+0019   3103           00355         JBSET   STATUS,2
+001A   2800           00356         GOTO    _00267_DS_
+001B   0B3C           00357         MOVAI   0x3c
+001C   1200           00358         RSUBAR  _timcd
+001D                  00359 _00267_DS_
+001D   3403           00360         JBCLR   STATUS,0
+001E   2800           00361         GOTO    _00110_DS_
+                      00362 ;;genSkipc:3195: created from rifx:00DE608C
+                      00363 ;       .line   84; "6080_bug.c"        flag_cd = 1;   
+001F   3880           00364         BSET    _Flag1,1
+0020   2800           00365         GOTO    _00111_DS_
+0021                  00366 _00110_DS_
+                      00367 ;       .line   88; "6080_bug.c"        timcd = 3900;
+0021   0B3C           00368         MOVAI   0x3c
+0022   1580           00369         MOVRA   _timcd
+0023   0B0F           00370         MOVAI   0x0f
+0024   1580           00371         MOVRA   (_timcd + 1)
+                      00372 ;       .line   89; "6080_bug.c"        flag_cd = 0;
+0025   3C80           00373         BCLR    _Flag1,1
+0026                  00374 _00111_DS_
+                      00375 ;       .line   91; "6080_bug.c"        LED1 = 1;
+0026   3800           00376         BSET    _P0bits,0
+                      00377 ;       .line   92; "6080_bug.c"        LED2 = 0;
+0027   3D00           00378         BCLR    _P0bits,2
+                      00379 ;       .line   93; "6080_bug.c"        LVDEN = 1;
+0028   3800           00380         BSET    _MCRbits,0
+                      00381 ;       .line   94; "6080_bug.c"        FALG_LVD = 0;
+0029   3C00           00382         BCLR    _Flag1,0
+002A   2800           00383         GOTO    _00136_DS_
+002B                  00384 _00135_DS_
+                      00385 ;       .line   96; "6080_bug.c"        else if((!STDBY)&&CHRG)
+002B   3780           00386         JBCLR   _P1bits,7
+002C   2800           00387         GOTO    _00131_DS_
+002D   3300           00388         JBSET   _P1bits,6
+002E   2800           00389         GOTO    _00131_DS_
+                      00390 ;       .line   98; "6080_bug.c"        LED1 = 0;
+002F   3C00           00391         BCLR    _P0bits,0
+                      00392 ;       .line   99; "6080_bug.c"        LED2 = 1;   
+0030   3900           00393         BSET    _P0bits,2
+                      00394 ;       .line   100; "6080_bug.c"       FALG_LVD = 0;LVDEN = 1;                 
+0031   3C00           00395         BCLR    _Flag1,0
+0032   3800           00396         BSET    _MCRbits,0
+0033   2800           00397         GOTO    _00136_DS_
+0034                  00398 _00131_DS_
+                      00399 ;       .line   104; "6080_bug.c"       timcd = 0;
+0034   1D80           00400         CLRR    _timcd
+0035   1D80           00401         CLRR    (_timcd + 1)
+                      00402 ;       .line   105; "6080_bug.c"       flag_cd = 0;                    
+0036   3C80           00403         BCLR    _Flag1,1
+                      00404 ;       .line   106; "6080_bug.c"       if(flag_kai || FLAG_SOUND) 
+0037   3500           00405         JBCLR   _Flag,2
+0038   2800           00406         GOTO    _00127_DS_
+0039   3200           00407         JBSET   _Flag,4
+003A   2800           00408         GOTO    _00136_DS_
+003B                  00409 _00127_DS_
+                      00410 ;       .line   108; "6080_bug.c"       zstime++;
+003B   1980           00411         INCR    _zstime
+003C   3503           00412         JBCLR   STATUS,2
+003D   1980           00413         INCR    (_zstime + 1)
+                      00414 ;       .line   109; "6080_bug.c"       if(LVDF)
+003E   3280           00415         JBSET   _MCRbits,5
+003F   2800           00416         GOTO    _00113_DS_
+                      00417 ;       .line   111; "6080_bug.c"       FALG_LVD = 1;
+0040   3800           00418         BSET    _Flag1,0
+                      00419 ;       .line   112; "6080_bug.c"       LVDEN = 0;                              
+0041   3C00           00420         BCLR    _MCRbits,0
+0042                  00421 _00113_DS_
+                      00422 ;       .line   114; "6080_bug.c"       if(FALG_LVD)
+0042   3000           00423         JBSET   _Flag1,0
+0043   2800           00424         GOTO    _00125_DS_
+                      00425 ;       .line   116; "6080_bug.c"       LED2 = 0;
+0044   3D00           00426         BCLR    _P0bits,2
+                      00427 ;;unsigned compare: left < lit(0xC35=3125), size=2
+                      00428 ;       .line   117; "6080_bug.c"       if(zstime>=3125)zstime = 0;
+0045   0B0C           00429         MOVAI   0x0c
+0046   1200           00430         RSUBAR  (_zstime + 1)
+0047   3103           00431         JBSET   STATUS,2
+0048   2800           00432         GOTO    _00268_DS_
+0049   0B35           00433         MOVAI   0x35
+004A   1200           00434         RSUBAR  _zstime
+004B                  00435 _00268_DS_
+004B   3003           00436         JBSET   STATUS,0
+004C   2800           00437         GOTO    _00115_DS_
+                      00438 ;;genSkipc:3195: created from rifx:00DE608C
+004D   1D80           00439         CLRR    _zstime
+004E   1D80           00440         CLRR    (_zstime + 1)
+                      00441 ;;unsigned compare: left < lit(0x61A=1562), size=2
+004F                  00442 _00115_DS_
+                      00443 ;       .line   118; "6080_bug.c"       if(zstime<1562)LED1 = 1;                                                                
+004F   0B06           00444         MOVAI   0x06
+0050   1200           00445         RSUBAR  (_zstime + 1)
+0051   3103           00446         JBSET   STATUS,2
+0052   2800           00447         GOTO    _00269_DS_
+0053   0B1A           00448         MOVAI   0x1a
+0054   1200           00449         RSUBAR  _zstime
+0055                  00450 _00269_DS_
+0055   3403           00451         JBCLR   STATUS,0
+0056   2800           00452         GOTO    _00117_DS_
+                      00453 ;;genSkipc:3195: created from rifx:00DE608C
+0057   3800           00454         BSET    _P0bits,0
+0058   2800           00455         GOTO    _00136_DS_
+0059                  00456 _00117_DS_
+                      00457 ;       .line   119; "6080_bug.c"       else LED1 = 0; 
+0059   3C00           00458         BCLR    _P0bits,0
+005A   2800           00459         GOTO    _00136_DS_
+005B                  00460 _00125_DS_
+                      00461 ;       .line   123; "6080_bug.c"       LED1 = 0;
+005B   3C00           00462         BCLR    _P0bits,0
+                      00463 ;;unsigned compare: left < lit(0x1250=4688), size=2
+                      00464 ;       .line   124; "6080_bug.c"       if(zstime>=4688)zstime = 0;
+005C   0B12           00465         MOVAI   0x12
+005D   1200           00466         RSUBAR  (_zstime + 1)
+005E   3103           00467         JBSET   STATUS,2
+005F   2800           00468         GOTO    _00270_DS_
+0060   0B50           00469         MOVAI   0x50
+0061   1200           00470         RSUBAR  _zstime
+0062                  00471 _00270_DS_
+0062   3003           00472         JBSET   STATUS,0
+0063   2800           00473         GOTO    _00120_DS_
+                      00474 ;;genSkipc:3195: created from rifx:00DE608C
+0064   1D80           00475         CLRR    _zstime
+0065   1D80           00476         CLRR    (_zstime + 1)
+                      00477 ;;unsigned compare: left < lit(0x928=2344), size=2
+0066                  00478 _00120_DS_
+                      00479 ;       .line   125; "6080_bug.c"       if(zstime<2344)LED2 = 1;                                                                                                         
+0066   0B09           00480         MOVAI   0x09
+0067   1200           00481         RSUBAR  (_zstime + 1)
+0068   3103           00482         JBSET   STATUS,2
+0069   2800           00483         GOTO    _00271_DS_
+006A   0B28           00484         MOVAI   0x28
+006B   1200           00485         RSUBAR  _zstime
+006C                  00486 _00271_DS_
+006C   3403           00487         JBCLR   STATUS,0
+006D   2800           00488         GOTO    _00122_DS_
+                      00489 ;;genSkipc:3195: created from rifx:00DE608C
+006E   3900           00490         BSET    _P0bits,2
+006F   2800           00491         GOTO    _00136_DS_
+0070                  00492 _00122_DS_
+                      00493 ;       .line   126; "6080_bug.c"       else LED2 = 0; 
+0070   3D00           00494         BCLR    _P0bits,2
+0071                  00495 _00136_DS_
+                      00496 ;       .line   133; "6080_bug.c"       if(!flag_cd)
+0071   3480           00497         JBCLR   _Flag1,1
+0072   2800           00498         GOTO    _00165_DS_
+                      00499 ;       .line   135; "6080_bug.c"       if(!KEY2)
+0073   3600           00500         JBCLR   _P1bits,4
+0074   2800           00501         GOTO    _00160_DS_
+                      00502 ;       .line   137; "6080_bug.c"       buff++;
+0075   1980           00503         INCR    _buff
+                      00504 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00505 ;;unsigned compare: left >= lit(0x30=48), size=1
+                      00506 ;       .line   138; "6080_bug.c"       if(buff>47)
+0076   0B30           00507         MOVAI   0x30
+0077   1200           00508         RSUBAR  _buff
+0078   3003           00509         JBSET   STATUS,0
+0079   2800           00510         GOTO    _00165_DS_
+                      00511 ;;genSkipc:3195: created from rifx:00DE608C
+                      00512 ;       .line   140; "6080_bug.c"       buff = 48;
+007A   0B30           00513         MOVAI   0x30
+007B   1580           00514         MOVRA   _buff
+                      00515 ;       .line   141; "6080_bug.c"       FLAG_SOUND = 1;                                                         
+007C   3A00           00516         BSET    _Flag,4
+                      00517 ;       .line   142; "6080_bug.c"       flag_640us = 1;
+007D   3880           00518         BSET    _Flag,1
+                      00519 ;       .line   143; "6080_bug.c"       time1++;
+007E   1980           00520         INCR    _time1
+007F   3503           00521         JBCLR   STATUS,2
+0080   1980           00522         INCR    (_time1 + 1)
+                      00523 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00524 ;;unsigned compare: left >= lit(0x351B=13595), size=2
+                      00525 ;       .line   144; "6080_bug.c"       if(time1>13594)
+0081   0B35           00526         MOVAI   0x35
+0082   1200           00527         RSUBAR  (_time1 + 1)
+0083   3103           00528         JBSET   STATUS,2
+0084   2800           00529         GOTO    _00273_DS_
+0085   0B1B           00530         MOVAI   0x1b
+0086   1200           00531         RSUBAR  _time1
+0087                  00532 _00273_DS_
+0087   3003           00533         JBSET   STATUS,0
+0088   2800           00534         GOTO    _00142_DS_
+                      00535 ;;genSkipc:3195: created from rifx:00DE608C
+                      00536 ;       .line   146; "6080_bug.c"       time1 = 13594;
+0089   0B1A           00537         MOVAI   0x1a
+008A   1580           00538         MOVRA   _time1
+008B   0B35           00539         MOVAI   0x35
+008C   1580           00540         MOVRA   (_time1 + 1)
+                      00541 ;       .line   147; "6080_bug.c"       FLAG_1 = 0;
+008D   3F00           00542         BCLR    _Flag,6
+                      00543 ;       .line   148; "6080_bug.c"       FLAG_2 = 1;
+008E   3B80           00544         BSET    _Flag,7
+008F   2800           00545         GOTO    _00143_DS_
+                      00546 ;;unsigned compare: left < lit(0x1A8D=6797), size=2
+0090                  00547 _00142_DS_
+                      00548 ;       .line   150; "6080_bug.c"       else if(time1<6797)
+0090   0B1A           00549         MOVAI   0x1a
+0091   1200           00550         RSUBAR  (_time1 + 1)
+0092   3103           00551         JBSET   STATUS,2
+0093   2800           00552         GOTO    _00274_DS_
+0094   0B8D           00553         MOVAI   0x8d
+0095   1200           00554         RSUBAR  _time1
+0096                  00555 _00274_DS_
+0096   3403           00556         JBCLR   STATUS,0
+0097   2800           00557         GOTO    _00139_DS_
+                      00558 ;;genSkipc:3195: created from rifx:00DE608C
+                      00559 ;       .line   152; "6080_bug.c"       FLAG_1 = 0;
+0098   3F00           00560         BCLR    _Flag,6
+                      00561 ;       .line   153; "6080_bug.c"       FLAG_2 = 0;
+0099   3F80           00562         BCLR    _Flag,7
+009A   2800           00563         GOTO    _00143_DS_
+009B                  00564 _00139_DS_
+                      00565 ;       .line   157; "6080_bug.c"       FLAG_1 = 1;
+009B   3B00           00566         BSET    _Flag,6
+                      00567 ;       .line   158; "6080_bug.c"       FLAG_2 = 0;
+009C   3F80           00568         BCLR    _Flag,7
+009D                  00569 _00143_DS_
+                      00570 ;       .line   160; "6080_bug.c"       time++;                                 
+009D   1980           00571         INCR    _time
+009E   3503           00572         JBCLR   STATUS,2
+009F   1980           00573         INCR    (_time + 1)
+                      00574 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00575 ;;unsigned compare: left >= lit(0xD5=213), size=2
+                      00576 ;       .line   161; "6080_bug.c"       if(time>212)time = 0;
+00A0   0B00           00577         MOVAI   0x00
+00A1   1200           00578         RSUBAR  (_time + 1)
+00A2   3103           00579         JBSET   STATUS,2
+00A3   2800           00580         GOTO    _00275_DS_
+00A4   0BD5           00581         MOVAI   0xd5
+00A5   1200           00582         RSUBAR  _time
+00A6                  00583 _00275_DS_
+00A6   3003           00584         JBSET   STATUS,0
+00A7   2800           00585         GOTO    _00148_DS_
+                      00586 ;;genSkipc:3195: created from rifx:00DE608C
+00A8   1D80           00587         CLRR    _time
+00A9   1D80           00588         CLRR    (_time + 1)
+00AA   2800           00589         GOTO    _00149_DS_
+                      00590 ;;unsigned compare: left < lit(0x6A=106), size=2
+00AB                  00591 _00148_DS_
+                      00592 ;       .line   162; "6080_bug.c"       else if(time<106)LED = 1;
+00AB   0B00           00593         MOVAI   0x00
+00AC   1200           00594         RSUBAR  (_time + 1)
+00AD   3103           00595         JBSET   STATUS,2
+00AE   2800           00596         GOTO    _00276_DS_
+00AF   0B6A           00597         MOVAI   0x6a
+00B0   1200           00598         RSUBAR  _time
+00B1                  00599 _00276_DS_
+00B1   3403           00600         JBCLR   STATUS,0
+00B2   2800           00601         GOTO    _00145_DS_
+                      00602 ;;genSkipc:3195: created from rifx:00DE608C
+00B3   3800           00603         BSET    _P1bits,0
+00B4   2800           00604         GOTO    _00149_DS_
+00B5                  00605 _00145_DS_
+                      00606 ;       .line   163; "6080_bug.c"       else LED = 0;                   
+00B5   3C00           00607         BCLR    _P1bits,0
+00B6                  00608 _00149_DS_
+                      00609 ;       .line   164; "6080_bug.c"       OUT = 0;                                                                                                                                                                  
+00B6   3C80           00610         BCLR    _P1bits,1
+00B7   2800           00611         GOTO    _00165_DS_
+00B8                  00612 _00160_DS_
+                      00613 ;       .line   169; "6080_bug.c"       if(soudbuff == 1)time1 = 0;
+00B8   1600           00614         MOVAR   _soudbuff
+00B9   0801           00615         XORAI   0x01
+00BA   3103           00616         JBSET   STATUS,2
+00BB   2800           00617         GOTO    _00155_DS_
+00BC   1D80           00618         CLRR    _time1
+00BD   1D80           00619         CLRR    (_time1 + 1)
+00BE   2800           00620         GOTO    _00156_DS_
+00BF                  00621 _00155_DS_
+                      00622 ;       .line   170; "6080_bug.c"       else if(soudbuff == 2)time1 = 6797;                                                                     
+00BF   1600           00623         MOVAR   _soudbuff
+00C0   0802           00624         XORAI   0x02
+00C1   3103           00625         JBSET   STATUS,2
+00C2   2800           00626         GOTO    _00156_DS_
+00C3   0B8D           00627         MOVAI   0x8d
+00C4   1580           00628         MOVRA   _time1
+00C5   0B1A           00629         MOVAI   0x1a
+00C6   1580           00630         MOVRA   (_time1 + 1)
+00C7                  00631 _00156_DS_
+                      00632 ;       .line   171; "6080_bug.c"       buff = 0;
+00C7   1D80           00633         CLRR    _buff
+                      00634 ;       .line   172; "6080_bug.c"       FLAG_SOUND = 0;                         
+00C8   3E00           00635         BCLR    _Flag,4
+                      00636 ;       .line   173; "6080_bug.c"       OUT = 1;                                        
+00C9   3880           00637         BSET    _P1bits,1
+                      00638 ;       .line   174; "6080_bug.c"       time = 0;
+00CA   1D80           00639         CLRR    _time
+00CB   1D80           00640         CLRR    (_time + 1)
+                      00641 ;       .line   175; "6080_bug.c"       if(!flag_kai)LED = 0;
+00CC   3500           00642         JBCLR   _Flag,2
+00CD   2800           00643         GOTO    _00158_DS_
+00CE   3C00           00644         BCLR    _P1bits,0
+00CF                  00645 _00158_DS_
+                      00646 ;       .line   176; "6080_bug.c"       BZV = 0;
+00CF   3D00           00647         BCLR    _P1bits,2
+                      00648 ;       .line   177; "6080_bug.c"       T1DATA0 = 0;                                                                                            
+00D0   1D80           00649         CLRR    _T1DATA0
+00D1                  00650 _00165_DS_
+                      00651 ;       .line   181; "6080_bug.c"       if(T1IF)
+00D1   3000           00652         JBSET   _TM0CRbits,0
+00D2   2800           00653         GOTO    _00192_DS_
+                      00654 ;       .line   183; "6080_bug.c"       T1IF = 0;
+00D3   3C00           00655         BCLR    _TM0CRbits,0
+                      00656 ;       .line   184; "6080_bug.c"       flag_pwm = 1;
+00D4   3800           00657         BSET    _Flag,0
+                      00658 ;       .line   185; "6080_bug.c"       if(!FLAG_SOUND)
+00D5   3600           00659         JBCLR   _Flag,4
+00D6   2800           00660         GOTO    _00192_DS_
+                      00661 ;       .line   187; "6080_bug.c"       flag_256us = 1;                                 
+00D7   3A80           00662         BSET    _Flag,5
+                      00663 ;       .line   188; "6080_bug.c"       wxbuff++; 
+00D8   1980           00664         INCR    _wxbuff
+00D9   3503           00665         JBCLR   STATUS,2
+00DA   1980           00666         INCR    (_wxbuff + 1)
+                      00667 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00668 ;;unsigned compare: left >= lit(0x4C4C=19532), size=2
+                      00669 ;       .line   189; "6080_bug.c"       if(wxbuff>19531)wxbuff = 19531;
+00DB   0B4C           00670         MOVAI   0x4c
+00DC   1200           00671         RSUBAR  (_wxbuff + 1)
+00DD   3103           00672         JBSET   STATUS,2
+00DE   2800           00673         GOTO    _00277_DS_
+00DF   0B4C           00674         MOVAI   0x4c
+00E0   1200           00675         RSUBAR  _wxbuff
+00E1                  00676 _00277_DS_
+00E1   3003           00677         JBSET   STATUS,0
+00E2   2800           00678         GOTO    _00167_DS_
+                      00679 ;;genSkipc:3195: created from rifx:00DE608C
+00E3   0B4B           00680         MOVAI   0x4b
+00E4   1580           00681         MOVRA   _wxbuff
+00E5   0B4C           00682         MOVAI   0x4c
+00E6   1580           00683         MOVRA   (_wxbuff + 1)
+00E7                  00684 _00167_DS_
+                      00685 ;       .line   190; "6080_bug.c"       if(!flag_cd)
+00E7   3480           00686         JBCLR   _Flag1,1
+00E8   2800           00687         GOTO    _00192_DS_
+                      00688 ;       .line   192; "6080_bug.c"       if(!KEY1)
+00E9   3680           00689         JBCLR   _P1bits,5
+00EA   2800           00690         GOTO    _00185_DS_
+                      00691 ;       .line   194; "6080_bug.c"       KeyBuff++;
+00EB   1980           00692         INCR    _KeyBuff
+00EC   3503           00693         JBCLR   STATUS,2
+00ED   1980           00694         INCR    (_KeyBuff + 1)
+                      00695 ;;unsigned compare: left < lit(0x16E3=5859), size=2
+                      00696 ;       .line   195; "6080_bug.c"       if(KeyBuff>=5859&&KeyBuff<6000)  // ³¤°´1.5Ãë
+00EE   0B16           00697         MOVAI   0x16
+00EF   1200           00698         RSUBAR  (_KeyBuff + 1)
+00F0   3103           00699         JBSET   STATUS,2
+00F1   2800           00700         GOTO    _00278_DS_
+00F2   0BE3           00701         MOVAI   0xe3
+00F3   1200           00702         RSUBAR  _KeyBuff
+00F4                  00703 _00278_DS_
+00F4   3003           00704         JBSET   STATUS,0
+00F5   2800           00705         GOTO    _00169_DS_
+                      00706 ;;genSkipc:3195: created from rifx:00DE608C
+                      00707 ;;unsigned compare: left < lit(0x1770=6000), size=2
+00F6   0B17           00708         MOVAI   0x17
+00F7   1200           00709         RSUBAR  (_KeyBuff + 1)
+00F8   3103           00710         JBSET   STATUS,2
+00F9   2800           00711         GOTO    _00279_DS_
+00FA   0B70           00712         MOVAI   0x70
+00FB   1200           00713         RSUBAR  _KeyBuff
+00FC                  00714 _00279_DS_
+00FC   3403           00715         JBCLR   STATUS,0
+00FD   2800           00716         GOTO    _00169_DS_
+                      00717 ;;genSkipc:3195: created from rifx:00DE608C
+                      00718 ;       .line   197; "6080_bug.c"       flag_kai = 0;
+00FE   3D00           00719         BCLR    _Flag,2
+                      00720 ;       .line   198; "6080_bug.c"       work = 1;                               
+00FF   0B01           00721         MOVAI   0x01
+0100   1580           00722         MOVRA   _work
+                      00723 ;       .line   199; "6080_bug.c"       KeyBuff = 6000;
+0101   0B70           00724         MOVAI   0x70
+0102   1580           00725         MOVRA   _KeyBuff
+0103   0B17           00726         MOVAI   0x17
+0104   1580           00727         MOVRA   (_KeyBuff + 1)
+                      00728 ;       .line   200; "6080_bug.c"       wxbuff = 0;
+0105   1D80           00729         CLRR    _wxbuff
+0106   1D80           00730         CLRR    (_wxbuff + 1)
+                      00731 ;       .line   201; "6080_bug.c"       FLAG_CHANGE = 1;
+0107   3980           00732         BSET    _Flag,3
+                      00733 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00734 ;;unsigned compare: left >= lit(0x1B59=7001), size=2
+0108                  00735 _00169_DS_
+                      00736 ;       .line   203; "6080_bug.c"       if(KeyBuff>7000)KeyBuff = 7000;                         
+0108   0B1B           00737         MOVAI   0x1b
+0109   1200           00738         RSUBAR  (_KeyBuff + 1)
+010A   3103           00739         JBSET   STATUS,2
+010B   2800           00740         GOTO    _00280_DS_
+010C   0B59           00741         MOVAI   0x59
+010D   1200           00742         RSUBAR  _KeyBuff
+010E                  00743 _00280_DS_
+010E   3003           00744         JBSET   STATUS,0
+010F   2800           00745         GOTO    _00192_DS_
+                      00746 ;;genSkipc:3195: created from rifx:00DE608C
+0110   0B58           00747         MOVAI   0x58
+0111   1580           00748         MOVRA   _KeyBuff
+0112   0B1B           00749         MOVAI   0x1b
+0113   1580           00750         MOVRA   (_KeyBuff + 1)
+0114   2800           00751         GOTO    _00192_DS_
+                      00752 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00753 ;;unsigned compare: left >= lit(0x77=119), size=2
+0115                  00754 _00185_DS_
+                      00755 ;       .line   207; "6080_bug.c"       if(KeyBuff>118&&KeyBuff<5859)
+0115   0B00           00756         MOVAI   0x00
+0116   1200           00757         RSUBAR  (_KeyBuff + 1)
+0117   3103           00758         JBSET   STATUS,2
+0118   2800           00759         GOTO    _00281_DS_
+0119   0B77           00760         MOVAI   0x77
+011A   1200           00761         RSUBAR  _KeyBuff
+011B                  00762 _00281_DS_
+011B   3003           00763         JBSET   STATUS,0
+011C   2800           00764         GOTO    _00182_DS_
+                      00765 ;;genSkipc:3195: created from rifx:00DE608C
+                      00766 ;;unsigned compare: left < lit(0x16E3=5859), size=2
+011D   0B16           00767         MOVAI   0x16
+011E   1200           00768         RSUBAR  (_KeyBuff + 1)
+011F   3103           00769         JBSET   STATUS,2
+0120   2800           00770         GOTO    _00282_DS_
+0121   0BE3           00771         MOVAI   0xe3
+0122   1200           00772         RSUBAR  _KeyBuff
+0123                  00773 _00282_DS_
+0123   3403           00774         JBCLR   STATUS,0
+0124   2800           00775         GOTO    _00182_DS_
+                      00776 ;;genSkipc:3195: created from rifx:00DE608C
+                      00777 ;       .line   209; "6080_bug.c"       if(!flag_kai)
+0125   3500           00778         JBCLR   _Flag,2
+0126   2800           00779         GOTO    _00179_DS_
+                      00780 ;       .line   211; "6080_bug.c"       flag_kai = 1;                                                                                                                                                                                                                    
+0127   3900           00781         BSET    _Flag,2
+0128   2800           00782         GOTO    _00180_DS_
+                      00783 ;;unsigned compare: left < lit(0x2DC7=11719), size=2
+0129                  00784 _00179_DS_
+                      00785 ;       .line   215; "6080_bug.c"       if(wxbuff<11719)
+0129   0B2D           00786         MOVAI   0x2d
+012A   1200           00787         RSUBAR  (_wxbuff + 1)
+012B   3103           00788         JBSET   STATUS,2
+012C   2800           00789         GOTO    _00283_DS_
+012D   0BC7           00790         MOVAI   0xc7
+012E   1200           00791         RSUBAR  _wxbuff
+012F                  00792 _00283_DS_
+012F   3403           00793         JBCLR   STATUS,0
+0130   2800           00794         GOTO    _00176_DS_
+                      00795 ;;genSkipc:3195: created from rifx:00DE608C
+                      00796 ;       .line   217; "6080_bug.c"       work++;
+0131   1980           00797         INCR    _work
+                      00798 ;;swapping arguments (AOP_TYPEs 1/3)
+                      00799 ;;unsigned compare: left >= lit(0x7=7), size=1
+                      00800 ;       .line   218; "6080_bug.c"       if(work>6)work=1;
+0132   0B07           00801         MOVAI   0x07
+0133   1200           00802         RSUBAR  _work
+0134   3003           00803         JBSET   STATUS,0
+0135   2800           00804         GOTO    _00174_DS_
+                      00805 ;;genSkipc:3195: created from rifx:00DE608C
+0136   0B01           00806         MOVAI   0x01
+0137   1580           00807         MOVRA   _work
+0138                  00808 _00174_DS_
+                      00809 ;       .line   219; "6080_bug.c"       FLAG_CHANGE = 1;
+0138   3980           00810         BSET    _Flag,3
+0139   2800           00811         GOTO    _00180_DS_
+013A                  00812 _00176_DS_
+                      00813 ;       .line   223; "6080_bug.c"       flag_kai = 0;
+013A   3D00           00814         BCLR    _Flag,2
+                      00815 ;       .line   224; "6080_bug.c"       FLAG_CHANGE = 1;
+013B   3980           00816         BSET    _Flag,3
+013C                  00817 _00180_DS_
+                      00818 ;       .line   227; "6080_bug.c"       wxbuff = 0; 
+013C   1D80           00819         CLRR    _wxbuff
+013D   1D80           00820         CLRR    (_wxbuff + 1)
+013E                  00821 _00182_DS_
+                      00822 ;       .line   229; "6080_bug.c"       KeyBuff=0;                                 
+013E   1D80           00823         CLRR    _KeyBuff
+013F   1D80           00824         CLRR    (_KeyBuff + 1)
+0140                  00825 _00192_DS_
+                      00826 ;       .line   239; "6080_bug.c"       __endasm;
+0140   1100           00827         swapar _StatusBuf
+0141   1580           00828         movra _STATUS
+0142   1180           00829         swapr _ABuf
+0143   1100           00830         swapar _ABuf
+                      00831         
+0144                  00832 END_OF_INTERRUPT
+0144   000D           00833         RETIE   
+                      00834 
+                      00835 ;--------------------------------------------------------
+                      00836 ; code
+                      00837 ;--------------------------------------------------------
+                      00838 code_6080_bug   code
+                      00839 ;***
+                      00840 ;  pBlock Stats: dbName = M
+                      00841 ;***
+                      00842 ;entry:  _main  ;Function start
+                      00843 ; 2 exit points
+                      00844 ;has an exit
+                      00845 ;functions called:
+                      00846 ;   _Sys_Init
+                      00847 ;   _SY_1
+                      00848 ;   _SY_2
+                      00849 ;   _mod3
+                      00850 ;   _mod4
+                      00851 ;   _mod5
+                      00852 ;   _IC_SLEEP
+                      00853 ;   _Sys_Init
+                      00854 ;   _SY_1
+                      00855 ;   _SY_2
+                      00856 ;   _mod3
+                      00857 ;   _mod4
+                      00858 ;   _mod5
+                      00859 ;   _IC_SLEEP
+                      00860 ;; Starting pCode block
+0000                  00861 _main   ;Function start
+                      00862 ; 2 exit points
+                      00863 ;       .line   402; "6080_bug.c"       Sys_Init();
+0000   2000           00864         CALL    _Sys_Init
+                      00865 ;       .line   403; "6080_bug.c"       flag_256us = 0;                          
+0001   3E80           00866         BCLR    _Flag,5
+                      00867 ;       .line   404; "6080_bug.c"       LED = 0;
+0002   3C00           00868         BCLR    _P1bits,0
+                      00869 ;       .line   405; "6080_bug.c"       T1DATA2 = 0;
+0003   1D80           00870         CLRR    _T1DATA2
+                      00871 ;       .line   406; "6080_bug.c"       T1DATA0 = 0;
+0004   1D80           00872         CLRR    _T1DATA0
+                      00873 ;       .line   407; "6080_bug.c"       tne5 = 0;
+0005   1D80           00874         CLRR    _tne5
+0006   1D80           00875         CLRR    (_tne5 + 1)
+                      00876 ;       .line   408; "6080_bug.c"       tne6 = 0;
+0007   1D80           00877         CLRR    _tne6
+0008   1D80           00878         CLRR    (_tne6 + 1)
+                      00879 ;       .line   409; "6080_bug.c"       BZV = 0;
+0009   3D00           00880         BCLR    _P1bits,2
+                      00881 ;       .line   410; "6080_bug.c"       OUT = 1;
+000A   3880           00882         BSET    _P1bits,1
+                      00883 ;       .line   411; "6080_bug.c"       flag_pwm = 0;     
+000B   3C00           00884         BCLR    _Flag,0
+                      00885 ;       .line   412; "6080_bug.c"       FLAG_SOUND = 0;         
+000C   3E00           00886         BCLR    _Flag,4
+                      00887 ;       .line   413; "6080_bug.c"       soudbuff = 1;
+000D   0B01           00888         MOVAI   0x01
+000E   1580           00889         MOVRA   _soudbuff
+                      00890 ;       .line   414; "6080_bug.c"       flag_640us = 0;
+000F   3C80           00891         BCLR    _Flag,1
+                      00892 ;       .line   415; "6080_bug.c"       time1 = 0; 
+0010   1D80           00893         CLRR    _time1
+0011   1D80           00894         CLRR    (_time1 + 1)
+                      00895 ;       .line   416; "6080_bug.c"       zstime = 0;
+0012   1D80           00896         CLRR    _zstime
+0013   1D80           00897         CLRR    (_zstime + 1)
+                      00898 ;       .line   417; "6080_bug.c"       work = 1;
+0014   0B01           00899         MOVAI   0x01
+0015   1580           00900         MOVRA   _work
+                      00901 ;       .line   418; "6080_bug.c"       LED1 = 0;
+0016   3C00           00902         BCLR    _P0bits,0
+                      00903 ;       .line   419; "6080_bug.c"       LED2 = 0;
+0017   3D00           00904         BCLR    _P0bits,2
+                      00905 ;       .line   420; "6080_bug.c"       flag_kai = 0;     
+0018   3D00           00906         BCLR    _Flag,2
+                      00907 ;       .line   421; "6080_bug.c"       LVDEN = 1;      
+0019   3800           00908         BSET    _MCRbits,0
+                      00909 ;       .line   422; "6080_bug.c"       FALG_LVD = 0;
+001A   3C00           00910         BCLR    _Flag1,0
+                      00911 ;       .line   423; "6080_bug.c"       flag_cd = 0;                    
+001B   3C80           00912         BCLR    _Flag1,1
+001C                  00913 _00450_DS_
+                      00914 ;       .line   426; "6080_bug.c"       if(FLAG_SOUND)
+001C   3200           00915         JBSET   _Flag,4
+001D   2800           00916         GOTO    _00447_DS_
+                      00917 ;       .line   428; "6080_bug.c"       PWMCR = 0x00;
+001E   1D80           00918         CLRR    _PWMCR
+                      00919 ;       .line   429; "6080_bug.c"       if(soudbuff == 1)
+001F   1600           00920         MOVAR   _soudbuff
+0020   0801           00921         XORAI   0x01
+0021   3103           00922         JBSET   STATUS,2
+0022   2800           00923         GOTO    _00396_DS_
+                      00924 ;       .line   431; "6080_bug.c"       SY_1();                                                                                                                                                                     
+0023   2000           00925         CALL    _SY_1
+0024   2800           00926         GOTO    _00450_DS_
+0025                  00927 _00396_DS_
+                      00928 ;       .line   433; "6080_bug.c"       else if(soudbuff == 2)
+0025   1600           00929         MOVAR   _soudbuff
+0026   0802           00930         XORAI   0x02
+0027   3103           00931         JBSET   STATUS,2
+0028   2800           00932         GOTO    _00393_DS_
+                      00933 ;       .line   435; "6080_bug.c"       SY_2();                                                                                                     
+0029   2000           00934         CALL    _SY_2
+002A   2800           00935         GOTO    _00450_DS_
+002B                  00936 _00393_DS_
+                      00937 ;       .line   437; "6080_bug.c"       else if(soudbuff == 3)
+002B   1600           00938         MOVAR   _soudbuff
+002C   0803           00939         XORAI   0x03
+002D   3103           00940         JBSET   STATUS,2
+002E   2800           00941         GOTO    _00390_DS_
+                      00942 ;       .line   439; "6080_bug.c"       T1CR = 0xc4;
+002F   0BC4           00943         MOVAI   0xc4
+0030   1580           00944         MOVRA   _T1CR
+                      00945 ;       .line   440; "6080_bug.c"       mod3();                                 
+0031   2000           00946         CALL    _mod3
+0032   2800           00947         GOTO    _00450_DS_
+0033                  00948 _00390_DS_
+                      00949 ;       .line   442; "6080_bug.c"       else if(soudbuff == 4)
+0033   1600           00950         MOVAR   _soudbuff
+0034   0804           00951         XORAI   0x04
+0035   3103           00952         JBSET   STATUS,2
+0036   2800           00953         GOTO    _00387_DS_
+                      00954 ;       .line   444; "6080_bug.c"       T1CR = 0xc4;
+0037   0BC4           00955         MOVAI   0xc4
+0038   1580           00956         MOVRA   _T1CR
+                      00957 ;       .line   445; "6080_bug.c"       mod4();                                                                 
+0039   2000           00958         CALL    _mod4
+003A   2800           00959         GOTO    _00450_DS_
+003B                  00960 _00387_DS_
+                      00961 ;       .line   447; "6080_bug.c"       else if(soudbuff == 5)
+003B   1600           00962         MOVAR   _soudbuff
+003C   0805           00963         XORAI   0x05
+003D   3103           00964         JBSET   STATUS,2
+003E   2800           00965         GOTO    _00450_DS_
+                      00966 ;       .line   449; "6080_bug.c"       T1CR = 0xc4;                                    
+003F   0BC4           00967         MOVAI   0xc4
+0040   1580           00968         MOVRA   _T1CR
+                      00969 ;       .line   450; "6080_bug.c"       mod5();                                                                 
+0041   2000           00970         CALL    _mod5
+0042   2800           00971         GOTO    _00450_DS_
+0043                  00972 _00447_DS_
+                      00973 ;       .line   455; "6080_bug.c"       T1CR = 0xc2;//1100 0100 1/4*16*2 = 8us                          
+0043   0BC2           00974         MOVAI   0xc2
+0044   1580           00975         MOVRA   _T1CR
+                      00976 ;       .line   456; "6080_bug.c"       T1LOAD = 128;
+0045   0B80           00977         MOVAI   0x80
+0046   1580           00978         MOVRA   _T1LOAD
+                      00979 ;       .line   457; "6080_bug.c"       PWMCR = 0xa1;
+0047   0BA1           00980         MOVAI   0xa1
+0048   1580           00981         MOVRA   _PWMCR
+                      00982 ;       .line   458; "6080_bug.c"       FLAG_CHANGE = 0;                
+0049   3D80           00983         BCLR    _Flag,3
+                      00984 ;       .line   459; "6080_bug.c"       if(!flag_kai)
+004A   3500           00985         JBCLR   _Flag,2
+004B   2800           00986         GOTO    _00444_DS_
+                      00987 ;       .line   461; "6080_bug.c"       T1DATA2 = 0;                                                                                            
+004C   1D80           00988         CLRR    _T1DATA2
+                      00989 ;       .line   462; "6080_bug.c"       zstime = 0;
+004D   1D80           00990         CLRR    _zstime
+004E   1D80           00991         CLRR    (_zstime + 1)
+                      00992 ;       .line   463; "6080_bug.c"       if(KEY1 && KeyBuff == 0&&KEY2&&buff == 0&&CHRG&&STDBY)
+004F   3280           00993         JBSET   _P1bits,5
+0050   2800           00994         GOTO    _00403_DS_
+0051   1600           00995         MOVAR   _KeyBuff
+0052   1700           00996         ORAR    (_KeyBuff + 1)
+0053   3103           00997         JBSET   STATUS,2
+0054   2800           00998         GOTO    _00403_DS_
+0055   3200           00999         JBSET   _P1bits,4
+0056   2800           01000         GOTO    _00403_DS_
+0057   0B00           01001         MOVAI   0x00
+0058   1700           01002         ORAR    _buff
+0059   3103           01003         JBSET   STATUS,2
+005A   2800           01004         GOTO    _00403_DS_
+005B   3300           01005         JBSET   _P1bits,6
+005C   2800           01006         GOTO    _00403_DS_
+005D   3380           01007         JBSET   _P1bits,7
+005E   2800           01008         GOTO    _00403_DS_
+                      01009 ;       .line   465; "6080_bug.c"       if(flag_256us)
+005F   3280           01010         JBSET   _Flag,5
+0060   2800           01011         GOTO    _00450_DS_
+                      01012 ;       .line   467; "6080_bug.c"       flag_256us = 0;
+0061   3E80           01013         BCLR    _Flag,5
+                      01014 ;       .line   468; "6080_bug.c"       LED1 = 0;
+0062   3C00           01015         BCLR    _P0bits,0
+                      01016 ;       .line   469; "6080_bug.c"       LED2 = 0; 
+0063   3D00           01017         BCLR    _P0bits,2
+                      01018 ;       .line   470; "6080_bug.c"       sleeptime++;
+0064   1980           01019         INCR    _sleeptime
+                      01020 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01021 ;;unsigned compare: left >= lit(0xFB=251), size=1
+                      01022 ;       .line   471; "6080_bug.c"       if(sleeptime>250)
+0065   0BFB           01023         MOVAI   0xfb
+0066   1200           01024         RSUBAR  _sleeptime
+0067   3003           01025         JBSET   STATUS,0
+0068   2800           01026         GOTO    _00450_DS_
+                      01027 ;;genSkipc:3195: created from rifx:00DE608C
+                      01028 ;       .line   473; "6080_bug.c"       sleeptime = 251;
+0069   0BFB           01029         MOVAI   0xfb
+006A   1580           01030         MOVRA   _sleeptime
+                      01031 ;       .line   474; "6080_bug.c"       IC_SLEEP();
+006B   2000           01032         CALL    _IC_SLEEP
+006C   2800           01033         GOTO    _00450_DS_
+006D                  01034 _00403_DS_
+                      01035 ;       .line   478; "6080_bug.c"       else sleeptime = 0;                     
+006D   1D80           01036         CLRR    _sleeptime
+006E   2800           01037         GOTO    _00450_DS_
+006F                  01038 _00444_DS_
+                      01039 ;       .line   482; "6080_bug.c"       sleeptime = 0;                          
+006F   1D80           01040         CLRR    _sleeptime
+                      01041 ;       .line   483; "6080_bug.c"       if(work == 1)T1DATA2 = 128;
+0070   1600           01042         MOVAR   _work
+0071   0801           01043         XORAI   0x01
+0072   3103           01044         JBSET   STATUS,2
+0073   2800           01045         GOTO    _00441_DS_
+0074   0B80           01046         MOVAI   0x80
+0075   1580           01047         MOVRA   _T1DATA2
+0076   2800           01048         GOTO    _00450_DS_
+0077                  01049 _00441_DS_
+                      01050 ;       .line   484; "6080_bug.c"       else if(work == 2)T1DATA2 = 64;
+0077   1600           01051         MOVAR   _work
+0078   0802           01052         XORAI   0x02
+0079   3103           01053         JBSET   STATUS,2
+007A   2800           01054         GOTO    _00438_DS_
+007B   0B40           01055         MOVAI   0x40
+007C   1580           01056         MOVRA   _T1DATA2
+007D   2800           01057         GOTO    _00450_DS_
+007E                  01058 _00438_DS_
+                      01059 ;       .line   485; "6080_bug.c"       else if(work == 3)T1DATA2 = 26;
+007E   1600           01060         MOVAR   _work
+007F   0803           01061         XORAI   0x03
+0080   3103           01062         JBSET   STATUS,2
+0081   2800           01063         GOTO    _00435_DS_
+0082   0B1A           01064         MOVAI   0x1a
+0083   1580           01065         MOVRA   _T1DATA2
+0084   2800           01066         GOTO    _00450_DS_
+0085                  01067 _00435_DS_
+                      01068 ;       .line   486; "6080_bug.c"       else if(work == 4)T1DATA2 = 6;
+0085   1600           01069         MOVAR   _work
+0086   0804           01070         XORAI   0x04
+0087   3103           01071         JBSET   STATUS,2
+0088   2800           01072         GOTO    _00432_DS_
+0089   0B06           01073         MOVAI   0x06
+008A   1580           01074         MOVRA   _T1DATA2
+008B   2800           01075         GOTO    _00450_DS_
+008C                  01076 _00432_DS_
+                      01077 ;       .line   487; "6080_bug.c"       else if(work == 5)
+008C   1600           01078         MOVAR   _work
+008D   0805           01079         XORAI   0x05
+008E   3103           01080         JBSET   STATUS,2
+008F   2800           01081         GOTO    _00429_DS_
+                      01082 ;       .line   489; "6080_bug.c"       tne6 = 0;
+0090   1D80           01083         CLRR    _tne6
+0091   1D80           01084         CLRR    (_tne6 + 1)
+                      01085 ;       .line   490; "6080_bug.c"       if(flag_256us)
+0092   3280           01086         JBSET   _Flag,5
+0093   2800           01087         GOTO    _00450_DS_
+                      01088 ;       .line   492; "6080_bug.c"       flag_256us = 0;
+0094   3E80           01089         BCLR    _Flag,5
+                      01090 ;       .line   493; "6080_bug.c"       tne5++;
+0095   1980           01091         INCR    _tne5
+0096   3503           01092         JBCLR   STATUS,2
+0097   1980           01093         INCR    (_tne5 + 1)
+                      01094 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01095 ;;unsigned compare: left >= lit(0x6A9=1705), size=2
+                      01096 ;       .line   494; "6080_bug.c"       if(tne5>1704)tne5 = 0;
+0098   0B06           01097         MOVAI   0x06
+0099   1200           01098         RSUBAR  (_tne5 + 1)
+009A   3103           01099         JBSET   STATUS,2
+009B   2800           01100         GOTO    _00511_DS_
+009C   0BA9           01101         MOVAI   0xa9
+009D   1200           01102         RSUBAR  _tne5
+009E                  01103 _00511_DS_
+009E   3003           01104         JBSET   STATUS,0
+009F   2800           01105         GOTO    _00414_DS_
+                      01106 ;;genSkipc:3195: created from rifx:00DE608C
+00A0   1D80           01107         CLRR    _tne5
+00A1   1D80           01108         CLRR    (_tne5 + 1)
+00A2   2800           01109         GOTO    _00450_DS_
+                      01110 ;;unsigned compare: left < lit(0x354=852), size=2
+00A3                  01111 _00414_DS_
+                      01112 ;       .line   495; "6080_bug.c"       else if(tne5<852)
+00A3   0B03           01113         MOVAI   0x03
+00A4   1200           01114         RSUBAR  (_tne5 + 1)
+00A5   3103           01115         JBSET   STATUS,2
+00A6   2800           01116         GOTO    _00512_DS_
+00A7   0B54           01117         MOVAI   0x54
+00A8   1200           01118         RSUBAR  _tne5
+00A9                  01119 _00512_DS_
+00A9   3403           01120         JBCLR   STATUS,0
+00AA   2800           01121         GOTO    _00411_DS_
+                      01122 ;;genSkipc:3195: created from rifx:00DE608C
+                      01123 ;       .line   496; "6080_bug.c"       T1DATA2 = 96;                                                                           
+00AB   0B60           01124         MOVAI   0x60
+00AC   1580           01125         MOVRA   _T1DATA2
+00AD   2800           01126         GOTO    _00450_DS_
+00AE                  01127 _00411_DS_
+                      01128 ;       .line   497; "6080_bug.c"       else T1DATA2 = 0;                                       
+00AE   1D80           01129         CLRR    _T1DATA2
+00AF   2800           01130         GOTO    _00450_DS_
+00B0                  01131 _00429_DS_
+                      01132 ;       .line   500; "6080_bug.c"       else if(work == 6)
+00B0   1600           01133         MOVAR   _work
+00B1   0806           01134         XORAI   0x06
+00B2   3103           01135         JBSET   STATUS,2
+00B3   2800           01136         GOTO    _00450_DS_
+                      01137 ;       .line   502; "6080_bug.c"       tne5 = 0;
+00B4   1D80           01138         CLRR    _tne5
+00B5   1D80           01139         CLRR    (_tne5 + 1)
+                      01140 ;       .line   503; "6080_bug.c"       if(flag_256us)
+00B6   3280           01141         JBSET   _Flag,5
+00B7   2800           01142         GOTO    _00450_DS_
+                      01143 ;       .line   505; "6080_bug.c"       flag_256us = 0;
+00B8   3E80           01144         BCLR    _Flag,5
+                      01145 ;       .line   506; "6080_bug.c"       tne6++;
+00B9   1980           01146         INCR    _tne6
+00BA   3503           01147         JBCLR   STATUS,2
+00BB   1980           01148         INCR    (_tne6 + 1)
+                      01149 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01150 ;;unsigned compare: left >= lit(0x215=533), size=2
+                      01151 ;       .line   507; "6080_bug.c"       if(tne6>532)tne6 = 0;
+00BC   0B02           01152         MOVAI   0x02
+00BD   1200           01153         RSUBAR  (_tne6 + 1)
+00BE   3103           01154         JBSET   STATUS,2
+00BF   2800           01155         GOTO    _00513_DS_
+00C0   0B15           01156         MOVAI   0x15
+00C1   1200           01157         RSUBAR  _tne6
+00C2                  01158 _00513_DS_
+00C2   3003           01159         JBSET   STATUS,0
+00C3   2800           01160         GOTO    _00422_DS_
+                      01161 ;;genSkipc:3195: created from rifx:00DE608C
+00C4   1D80           01162         CLRR    _tne6
+00C5   1D80           01163         CLRR    (_tne6 + 1)
+00C6   2800           01164         GOTO    _00450_DS_
+                      01165 ;;unsigned compare: left < lit(0x10A=266), size=2
+00C7                  01166 _00422_DS_
+                      01167 ;       .line   508; "6080_bug.c"       else if(tne6<266)
+00C7   0B01           01168         MOVAI   0x01
+00C8   1200           01169         RSUBAR  (_tne6 + 1)
+00C9   3103           01170         JBSET   STATUS,2
+00CA   2800           01171         GOTO    _00514_DS_
+00CB   0B0A           01172         MOVAI   0x0a
+00CC   1200           01173         RSUBAR  _tne6
+00CD                  01174 _00514_DS_
+00CD   3403           01175         JBCLR   STATUS,0
+00CE   2800           01176         GOTO    _00419_DS_
+                      01177 ;;genSkipc:3195: created from rifx:00DE608C
+                      01178 ;       .line   509; "6080_bug.c"       T1DATA2 = 96;                                                                           
+00CF   0B60           01179         MOVAI   0x60
+00D0   1580           01180         MOVRA   _T1DATA2
+00D1   2800           01181         GOTO    _00450_DS_
+00D2                  01182 _00419_DS_
+                      01183 ;       .line   510; "6080_bug.c"       else T1DATA2 = 0;                                       
+00D2   1D80           01184         CLRR    _T1DATA2
+00D3   2800           01185         GOTO    _00450_DS_
+00D4   000C           01186         RETURN  
+                      01187 ; exit point of _main
+                      01188 
+                      01189 ;***
+                      01190 ;  pBlock Stats: dbName = C
+                      01191 ;***
+                      01192 ;entry:  _IC_SLEEP      ;Function start
+                      01193 ; 2 exit points
+                      01194 ;has an exit
+                      01195 ;; Starting pCode block
+00D5                  01196 _IC_SLEEP       ;Function start
+                      01197 ; 2 exit points
+                      01198 ;       .line   377; "6080_bug.c"       GIE = 0;
+00D5   3F80           01199         BCLR    _INTECONbits,7
+                      01200 ;       .line   378; "6080_bug.c"       T0IE = 0;
+00D6   3C00           01201         BCLR    _INTECONbits,0
+                      01202 ;       .line   379; "6080_bug.c"       T1IE = 0;
+00D7   3C80           01203         BCLR    _TM0CRbits,1
+                      01204 ;       .line   380; "6080_bug.c"       INTIE = 0;
+00D8   3D00           01205         BCLR    _INTECONbits,2
+                      01206 ;       .line   381; "6080_bug.c"       KBIM = 0xf0;//12
+00D9   0BF0           01207         MOVAI   0xf0
+00DA   1580           01208         MOVRA   _KBIM
+                      01209 ;       .line   382; "6080_bug.c"       KBIE = 1;
+00DB   3880           01210         BSET    _INTECONbits,1
+                      01211 ;       .line   383; "6080_bug.c"       INTFLAG = 0;
+00DC   1D80           01212         CLRR    _INTFLAG
+                      01213 ;       .line   384; "6080_bug.c"       LVDEN = 0;
+00DD   3C00           01214         BCLR    _MCRbits,0
+                      01215 ;       .line   388; "6080_bug.c"       __endasm;
+00DE   000B           01216         STOP
+                      01217         
+                      01218 ;       .line   389; "6080_bug.c"       LVDEN = 1; 
+00DF   3800           01219         BSET    _MCRbits,0
+                      01220 ;       .line   390; "6080_bug.c"       KBIE = 0;
+00E0   3C80           01221         BCLR    _INTECONbits,1
+                      01222 ;       .line   391; "6080_bug.c"       KBIM = 0;
+00E1   1D80           01223         CLRR    _KBIM
+                      01224 ;       .line   392; "6080_bug.c"       INTFLAG = 0;
+00E2   1D80           01225         CLRR    _INTFLAG
+                      01226 ;       .line   393; "6080_bug.c"       T0IE = 1;
+00E3   3800           01227         BSET    _INTECONbits,0
+                      01228 ;       .line   394; "6080_bug.c"       T1IE = 1;
+00E4   3880           01229         BSET    _TM0CRbits,1
+                      01230 ;       .line   395; "6080_bug.c"       FALG_LVD = 0;
+00E5   3C00           01231         BCLR    _Flag1,0
+                      01232 ;       .line   396; "6080_bug.c"       GIE = 1;
+00E6   3B80           01233         BSET    _INTECONbits,7
+00E7   000C           01234         RETURN  
+                      01235 ; exit point of _IC_SLEEP
+                      01236 
+                      01237 ;***
+                      01238 ;  pBlock Stats: dbName = C
+                      01239 ;***
+                      01240 ;entry:  _mod5  ;Function start
+                      01241 ; 2 exit points
+                      01242 ;has an exit
+                      01243 ;functions called:
+                      01244 ;   _delay640us
+                      01245 ;   _delay640us
+                      01246 ;   _delay640us
+                      01247 ;   _delay640us
+                      01248 ;2 compiler assigned registers:
+                      01249 ;   r0x101A
+                      01250 ;   STK00
+                      01251 ;; Starting pCode block
+00E8                  01252 _mod5   ;Function start
+                      01253 ; 2 exit points
+                      01254 ;       .line   351; "6080_bug.c"       for(i=0;i<181;i++)
+00E8   1D80           01255         CLRR    r0x101A
+                      01256 ;;unsigned compare: left < lit(0xB5=181), size=1
+00E9                  01257 _00371_DS_
+00E9   0BB5           01258         MOVAI   0xb5
+00EA   1200           01259         RSUBAR  r0x101A
+00EB   3403           01260         JBCLR   STATUS,0
+00EC   2800           01261         GOTO    _00374_DS_
+                      01262 ;;genSkipc:3195: created from rifx:00DE608C
+                      01263 ;       .line   353; "6080_bug.c"       T1LOAD = 32;
+00ED   0B20           01264         MOVAI   0x20
+00EE   1580           01265         MOVRA   _T1LOAD
+                      01266 ;       .line   354; "6080_bug.c"       T1DATA0 = 16;
+00EF   0B10           01267         MOVAI   0x10
+00F0   1580           01268         MOVRA   _T1DATA0
+                      01269 ;;unsigned compare: left < lit(0x34=52), size=1
+00F1                  01270 _00363_DS_
+                      01271 ;       .line   355; "6080_bug.c"       while(T1LOAD<52)
+00F1   0B34           01272         MOVAI   0x34
+00F2   1200           01273         RSUBAR  _T1LOAD
+00F3   3403           01274         JBCLR   STATUS,0
+00F4   2800           01275         GOTO    _00365_DS_
+                      01276 ;;genSkipc:3195: created from rifx:00DE608C
+                      01277 ;       .line   357; "6080_bug.c"       T1LOAD++;
+00F5   1980           01278         INCR    _T1LOAD
+                      01279 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=1, sign=0, same=0, offr=0
+                      01280 ;       .line   358; "6080_bug.c"       T1DATA0 = T1LOAD>>1;                            
+00F6   3C03           01281         BCLR    STATUS,0
+00F7   1300           01282         RRAR    _T1LOAD
+00F8   1580           01283         MOVRA   _T1DATA0
+                      01284 ;       .line   359; "6080_bug.c"       delay640us(1);
+00F9   0B01           01285         MOVAI   0x01
+00FA   1580           01286         MOVRA   STK00
+00FB   0B00           01287         MOVAI   0x00
+00FC   2000           01288         CALL    _delay640us
+                      01289 ;       .line   360; "6080_bug.c"       if(!FLAG_SOUND)return;
+00FD   3600           01290         JBCLR   _Flag,4
+00FE   2800           01291         GOTO    _00363_DS_
+00FF   2800           01292         GOTO    _00375_DS_
+0100                  01293 _00365_DS_
+                      01294 ;       .line   362; "6080_bug.c"       T1LOAD = 52;
+0100   0B34           01295         MOVAI   0x34
+0101   1580           01296         MOVRA   _T1LOAD
+                      01297 ;       .line   363; "6080_bug.c"       T1DATA0 = 26;
+0102   0B1A           01298         MOVAI   0x1a
+0103   1580           01299         MOVRA   _T1DATA0
+                      01300 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01301 ;;unsigned compare: left >= lit(0x21=33), size=1
+0104                  01302 _00368_DS_
+                      01303 ;       .line   364; "6080_bug.c"       while(T1LOAD>32)
+0104   0B21           01304         MOVAI   0x21
+0105   1200           01305         RSUBAR  _T1LOAD
+0106   3003           01306         JBSET   STATUS,0
+0107   2800           01307         GOTO    _00373_DS_
+                      01308 ;;genSkipc:3195: created from rifx:00DE608C
+                      01309 ;       .line   366; "6080_bug.c"       T1LOAD--;
+0108   1B80           01310         DECR    _T1LOAD
+                      01311 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=1, sign=0, same=0, offr=0
+                      01312 ;       .line   367; "6080_bug.c"       T1DATA0 = T1LOAD>>1;                            
+0109   3C03           01313         BCLR    STATUS,0
+010A   1300           01314         RRAR    _T1LOAD
+010B   1580           01315         MOVRA   _T1DATA0
+                      01316 ;       .line   368; "6080_bug.c"       delay640us(1);
+010C   0B01           01317         MOVAI   0x01
+010D   1580           01318         MOVRA   STK00
+010E   0B00           01319         MOVAI   0x00
+010F   2000           01320         CALL    _delay640us
+                      01321 ;       .line   369; "6080_bug.c"       if(!FLAG_SOUND)return;
+0110   3600           01322         JBCLR   _Flag,4
+0111   2800           01323         GOTO    _00368_DS_
+0112   2800           01324         GOTO    _00375_DS_
+0113                  01325 _00373_DS_
+                      01326 ;       .line   351; "6080_bug.c"       for(i=0;i<181;i++)
+0113   1980           01327         INCR    r0x101A
+0114   2800           01328         GOTO    _00371_DS_
+0115                  01329 _00374_DS_
+                      01330 ;       .line   372; "6080_bug.c"       time1 = 0;
+0115   1D80           01331         CLRR    _time1
+0116   1D80           01332         CLRR    (_time1 + 1)
+                      01333 ;       .line   373; "6080_bug.c"       soudbuff = 1;           
+0117   0B01           01334         MOVAI   0x01
+0118   1580           01335         MOVRA   _soudbuff
+0119                  01336 _00375_DS_
+0119   000C           01337         RETURN  
+                      01338 ; exit point of _mod5
+                      01339 
+                      01340 ;***
+                      01341 ;  pBlock Stats: dbName = C
+                      01342 ;***
+                      01343 ;entry:  _mod4  ;Function start
+                      01344 ; 2 exit points
+                      01345 ;has an exit
+                      01346 ;functions called:
+                      01347 ;   _delay640us
+                      01348 ;   _delay640us
+                      01349 ;1 compiler assigned register :
+                      01350 ;   STK00
+                      01351 ;; Starting pCode block
+011A                  01352 _mod4   ;Function start
+                      01353 ; 2 exit points
+                      01354 ;       .line   342; "6080_bug.c"       T1LOAD = 44;
+011A   0B2C           01355         MOVAI   0x2c
+011B   1580           01356         MOVRA   _T1LOAD
+                      01357 ;       .line   343; "6080_bug.c"       T1DATA0 = 22;           
+011C   0B16           01358         MOVAI   0x16
+011D   1580           01359         MOVRA   _T1DATA0
+                      01360 ;       .line   344; "6080_bug.c"       delay640us(6797);
+011E   0B8D           01361         MOVAI   0x8d
+011F   1580           01362         MOVRA   STK00
+0120   0B1A           01363         MOVAI   0x1a
+0121   2000           01364         CALL    _delay640us
+                      01365 ;       .line   345; "6080_bug.c"       if(!FLAG_SOUND)return;
+0122   3600           01366         JBCLR   _Flag,4
+0123   2800           01367         GOTO    _00355_DS_
+0124   2800           01368         GOTO    _00356_DS_
+0125                  01369 _00355_DS_
+                      01370 ;       .line   346; "6080_bug.c"       soudbuff = 5;                           
+0125   0B05           01371         MOVAI   0x05
+0126   1580           01372         MOVRA   _soudbuff
+0127                  01373 _00356_DS_
+0127   000C           01374         RETURN  
+                      01375 ; exit point of _mod4
+                      01376 
+                      01377 ;***
+                      01378 ;  pBlock Stats: dbName = C
+                      01379 ;***
+                      01380 ;entry:  _mod3  ;Function start
+                      01381 ; 2 exit points
+                      01382 ;has an exit
+                      01383 ;functions called:
+                      01384 ;   _delay640us
+                      01385 ;   _delay640us
+                      01386 ;   _delay640us
+                      01387 ;   _delay640us
+                      01388 ;2 compiler assigned registers:
+                      01389 ;   r0x101A
+                      01390 ;   STK00
+                      01391 ;; Starting pCode block
+0128                  01392 _mod3   ;Function start
+                      01393 ; 2 exit points
+                      01394 ;       .line   317; "6080_bug.c"       for(i=0;i<46;i++)
+0128   1D80           01395         CLRR    r0x101A
+                      01396 ;;unsigned compare: left < lit(0x2E=46), size=1
+0129                  01397 _00345_DS_
+0129   0B2E           01398         MOVAI   0x2e
+012A   1200           01399         RSUBAR  r0x101A
+012B   3403           01400         JBCLR   STATUS,0
+012C   2800           01401         GOTO    _00348_DS_
+                      01402 ;;genSkipc:3195: created from rifx:00DE608C
+                      01403 ;       .line   319; "6080_bug.c"       T1LOAD = 32;
+012D   0B20           01404         MOVAI   0x20
+012E   1580           01405         MOVRA   _T1LOAD
+                      01406 ;       .line   320; "6080_bug.c"       T1DATA0 = 16;
+012F   0B10           01407         MOVAI   0x10
+0130   1580           01408         MOVRA   _T1DATA0
+                      01409 ;;unsigned compare: left < lit(0x34=52), size=1
+0131                  01410 _00337_DS_
+                      01411 ;       .line   321; "6080_bug.c"       while(T1LOAD<52)
+0131   0B34           01412         MOVAI   0x34
+0132   1200           01413         RSUBAR  _T1LOAD
+0133   3403           01414         JBCLR   STATUS,0
+0134   2800           01415         GOTO    _00339_DS_
+                      01416 ;;genSkipc:3195: created from rifx:00DE608C
+                      01417 ;       .line   323; "6080_bug.c"       T1LOAD++;
+0135   1980           01418         INCR    _T1LOAD
+                      01419 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=1, sign=0, same=0, offr=0
+                      01420 ;       .line   324; "6080_bug.c"       T1DATA0 = T1LOAD>>1;                            
+0136   3C03           01421         BCLR    STATUS,0
+0137   1300           01422         RRAR    _T1LOAD
+0138   1580           01423         MOVRA   _T1DATA0
+                      01424 ;       .line   325; "6080_bug.c"       delay640us(4);
+0139   0B04           01425         MOVAI   0x04
+013A   1580           01426         MOVRA   STK00
+013B   0B00           01427         MOVAI   0x00
+013C   2000           01428         CALL    _delay640us
+                      01429 ;       .line   326; "6080_bug.c"       if(!FLAG_SOUND)return;
+013D   3600           01430         JBCLR   _Flag,4
+013E   2800           01431         GOTO    _00337_DS_
+013F   2800           01432         GOTO    _00349_DS_
+0140                  01433 _00339_DS_
+                      01434 ;       .line   328; "6080_bug.c"       T1LOAD = 52;
+0140   0B34           01435         MOVAI   0x34
+0141   1580           01436         MOVRA   _T1LOAD
+                      01437 ;       .line   329; "6080_bug.c"       T1DATA0 = 26;
+0142   0B1A           01438         MOVAI   0x1a
+0143   1580           01439         MOVRA   _T1DATA0
+                      01440 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01441 ;;unsigned compare: left >= lit(0x21=33), size=1
+0144                  01442 _00342_DS_
+                      01443 ;       .line   330; "6080_bug.c"       while(T1LOAD>32)
+0144   0B21           01444         MOVAI   0x21
+0145   1200           01445         RSUBAR  _T1LOAD
+0146   3003           01446         JBSET   STATUS,0
+0147   2800           01447         GOTO    _00347_DS_
+                      01448 ;;genSkipc:3195: created from rifx:00DE608C
+                      01449 ;       .line   332; "6080_bug.c"       T1LOAD--;
+0148   1B80           01450         DECR    _T1LOAD
+                      01451 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=1, sign=0, same=0, offr=0
+                      01452 ;       .line   333; "6080_bug.c"       T1DATA0 = T1LOAD>>1;                            
+0149   3C03           01453         BCLR    STATUS,0
+014A   1300           01454         RRAR    _T1LOAD
+014B   1580           01455         MOVRA   _T1DATA0
+                      01456 ;       .line   334; "6080_bug.c"       delay640us(4);
+014C   0B04           01457         MOVAI   0x04
+014D   1580           01458         MOVRA   STK00
+014E   0B00           01459         MOVAI   0x00
+014F   2000           01460         CALL    _delay640us
+                      01461 ;       .line   335; "6080_bug.c"       if(!FLAG_SOUND)return;
+0150   3600           01462         JBCLR   _Flag,4
+0151   2800           01463         GOTO    _00342_DS_
+0152   2800           01464         GOTO    _00349_DS_
+0153                  01465 _00347_DS_
+                      01466 ;       .line   317; "6080_bug.c"       for(i=0;i<46;i++)
+0153   1980           01467         INCR    r0x101A
+0154   2800           01468         GOTO    _00345_DS_
+0155                  01469 _00348_DS_
+                      01470 ;       .line   338; "6080_bug.c"       soudbuff = 4;           
+0155   0B04           01471         MOVAI   0x04
+0156   1580           01472         MOVRA   _soudbuff
+0157                  01473 _00349_DS_
+0157   000C           01474         RETURN  
+                      01475 ; exit point of _mod3
+                      01476 
+                      01477 ;***
+                      01478 ;  pBlock Stats: dbName = C
+                      01479 ;***
+                      01480 ;entry:  _SY_2  ;Function start
+                      01481 ; 2 exit points
+                      01482 ;has an exit
+                      01483 ;functions called:
+                      01484 ;   __gptrget1
+                      01485 ;   __gptrget1
+                      01486 ;   __gptrget1
+                      01487 ;   __gptrget1
+                      01488 ;6 compiler assigned registers:
+                      01489 ;   r0x1016
+                      01490 ;   r0x1017
+                      01491 ;   r0x1018
+                      01492 ;   STK01
+                      01493 ;   STK00
+                      01494 ;   r0x1019
+                      01495 ;; Starting pCode block
+0158                  01496 _SY_2   ;Function start
+                      01497 ; 2 exit points
+                      01498 ;       .line   296; "6080_bug.c"       i = 0;
+0158   1D80           01499         CLRR    r0x1016
+                      01500 ;       .line   297; "6080_bug.c"       T1CR = 0xc4;//1/4*8*2 = 8us
+0159   0BC4           01501         MOVAI   0xc4
+015A   1580           01502         MOVRA   _T1CR
+015B                  01503 _00328_DS_
+                      01504 ;       .line   300; "6080_bug.c"       T1LOAD = SY2[i];
+015B   1600           01505         MOVAR   r0x1016
+015C   0E00           01506         ADDAI   (_SY2 + 0)
+015D   1580           01507         MOVRA   r0x1017
+015E   0B00           01508         MOVAI   high (_SY2 + 0)
+015F   3403           01509         JBCLR   STATUS,0
+0160   0E01           01510         ADDAI   0x01
+0161   1580           01511         MOVRA   r0x1018
+0162   1600           01512         MOVAR   r0x1017
+0163   1580           01513         MOVRA   STK01
+0164   1600           01514         MOVAR   r0x1018
+0165   1580           01515         MOVRA   STK00
+0166   0B80           01516         MOVAI   0x80
+0167   2000           01517         CALL    __gptrget1
+0168   1580           01518         MOVRA   _T1LOAD
+                      01519 ;       .line   301; "6080_bug.c"       T1DATA0 = SY2[i+1];
+0169   1900           01520         INCAR   r0x1016
+016A   1580           01521         MOVRA   r0x1017
+016B   1600           01522         MOVAR   r0x1017
+016C   0E00           01523         ADDAI   (_SY2 + 0)
+016D   1580           01524         MOVRA   r0x1017
+016E   0B00           01525         MOVAI   high (_SY2 + 0)
+016F   3403           01526         JBCLR   STATUS,0
+0170   0E01           01527         ADDAI   0x01
+0171   1580           01528         MOVRA   r0x1019
+0172   1600           01529         MOVAR   r0x1017
+0173   1580           01530         MOVRA   STK01
+0174   1600           01531         MOVAR   r0x1019
+0175   1580           01532         MOVRA   STK00
+0176   0B80           01533         MOVAI   0x80
+0177   2000           01534         CALL    __gptrget1
+0178   1580           01535         MOVRA   _T1DATA0
+0179                  01536 _00318_DS_
+                      01537 ;       .line   302; "6080_bug.c"       while(!flag_pwm);
+0179   3000           01538         JBSET   _Flag,0
+017A   2800           01539         GOTO    _00318_DS_
+                      01540 ;       .line   303; "6080_bug.c"       flag_pwm = 0;
+017B   3C00           01541         BCLR    _Flag,0
+                      01542 ;       .line   304; "6080_bug.c"       i += 2;
+017C   1980           01543         INCR    r0x1016
+017D   1980           01544         INCR    r0x1016
+                      01545 ;;swapping arguments (AOP_TYPEs 1/2)
+                      01546 ;;unsigned compare: left >= lit(0x9=9), size=1
+                      01547 ;       .line   305; "6080_bug.c"       if(i>8)i = 0;
+017E   0B09           01548         MOVAI   0x09
+017F   1200           01549         RSUBAR  r0x1016
+0180   3003           01550         JBSET   STATUS,0
+0181   2800           01551         GOTO    _00322_DS_
+                      01552 ;;genSkipc:3195: created from rifx:00DE608C
+0182   1D80           01553         CLRR    r0x1016
+0183                  01554 _00322_DS_
+                      01555 ;       .line   306; "6080_bug.c"       if(!FLAG_SOUND)return;
+0183   3600           01556         JBCLR   _Flag,4
+0184   2800           01557         GOTO    _00324_DS_
+0185   2800           01558         GOTO    _00330_DS_
+0186                  01559 _00324_DS_
+                      01560 ;       .line   307; "6080_bug.c"       if(FLAG_2)
+0186   3380           01561         JBSET   _Flag,7
+0187   2800           01562         GOTO    _00328_DS_
+                      01563 ;       .line   309; "6080_bug.c"       soudbuff = 3;
+0188   0B03           01564         MOVAI   0x03
+0189   1580           01565         MOVRA   _soudbuff
+018A                  01566 _00330_DS_
+                      01567 ;       .line   310; "6080_bug.c"       return;
+018A   000C           01568         RETURN  
+                      01569 ; exit point of _SY_2
+                      01570 
+                      01571 ;***
+                      01572 ;  pBlock Stats: dbName = C
+                      01573 ;***
+                      01574 ;entry:  _SY_1  ;Function start
+                      01575 ; 2 exit points
+                      01576 ;has an exit
+                      01577 ;functions called:
+                      01578 ;   __gptrget1
+                      01579 ;   __gptrget1
+                      01580 ;   __gptrget1
+                      01581 ;   __gptrget1
+                      01582 ;6 compiler assigned registers:
+                      01583 ;   r0x1016
+                      01584 ;   r0x1017
+                      01585 ;   r0x1018
+                      01586 ;   STK01
+                      01587 ;   STK00
+                      01588 ;   r0x1019
+                      01589 ;; Starting pCode block
+018B                  01590 _SY_1   ;Function start
+                      01591 ; 2 exit points
+                      01592 ;       .line   266; "6080_bug.c"       i = 0;
+018B   1D80           01593         CLRR    r0x1016
+                      01594 ;       .line   267; "6080_bug.c"       T1CR = 0xc3;//1/4*8*2 = 4us
+018C   0BC3           01595         MOVAI   0xc3
+018D   1580           01596         MOVRA   _T1CR
+018E                  01597 _00311_DS_
+                      01598 ;       .line   271; "6080_bug.c"       T1LOAD = SY1[i];
+018E   1600           01599         MOVAR   r0x1016
+018F   0E00           01600         ADDAI   (_SY1 + 0)
+0190   1580           01601         MOVRA   r0x1017
+0191   0B00           01602         MOVAI   high (_SY1 + 0)
+0192   3403           01603         JBCLR   STATUS,0
+0193   0E01           01604         ADDAI   0x01
+0194   1580           01605         MOVRA   r0x1018
+0195   1600           01606         MOVAR   r0x1017
+0196   1580           01607         MOVRA   STK01
+0197   1600           01608         MOVAR   r0x1018
+0198   1580           01609         MOVRA   STK00
+0199   0B80           01610         MOVAI   0x80
+019A   2000           01611         CALL    __gptrget1
+019B   1580           01612         MOVRA   _T1LOAD
+                      01613 ;       .line   272; "6080_bug.c"       T1DATA0 = SY1[i+1];
+019C   1900           01614         INCAR   r0x1016
+019D   1580           01615         MOVRA   r0x1017
+019E   1600           01616         MOVAR   r0x1017
+019F   0E00           01617         ADDAI   (_SY1 + 0)
+01A0   1580           01618         MOVRA   r0x1017
+01A1   0B00           01619         MOVAI   high (_SY1 + 0)
+01A2   3403           01620         JBCLR   STATUS,0
+01A3   0E01           01621         ADDAI   0x01
+01A4   1580           01622         MOVRA   r0x1019
+01A5   1600           01623         MOVAR   r0x1017
+01A6   1580           01624         MOVRA   STK01
+01A7   1600           01625         MOVAR   r0x1019
+01A8   1580           01626         MOVRA   STK00
+01A9   0B80           01627         MOVAI   0x80
+01AA   2000           01628         CALL    __gptrget1
+01AB   1580           01629         MOVRA   _T1DATA0
+01AC                  01630 _00301_DS_
+                      01631 ;       .line   273; "6080_bug.c"       while(!flag_pwm);
+01AC   3000           01632         JBSET   _Flag,0
+01AD   2800           01633         GOTO    _00301_DS_
+                      01634 ;       .line   274; "6080_bug.c"       flag_pwm = 0;
+01AE   3C00           01635         BCLR    _Flag,0
+                      01636 ;       .line   275; "6080_bug.c"       i += 2;
+01AF   1980           01637         INCR    r0x1016
+01B0   1980           01638         INCR    r0x1016
+                      01639 ;;swapping arguments (AOP_TYPEs 1/2)
+                      01640 ;;unsigned compare: left >= lit(0xB=11), size=1
+                      01641 ;       .line   276; "6080_bug.c"       if(i>10)i = 0;
+01B1   0B0B           01642         MOVAI   0x0b
+01B2   1200           01643         RSUBAR  r0x1016
+01B3   3003           01644         JBSET   STATUS,0
+01B4   2800           01645         GOTO    _00305_DS_
+                      01646 ;;genSkipc:3195: created from rifx:00DE608C
+01B5   1D80           01647         CLRR    r0x1016
+01B6                  01648 _00305_DS_
+                      01649 ;       .line   277; "6080_bug.c"       if(!FLAG_SOUND)return;
+01B6   3600           01650         JBCLR   _Flag,4
+01B7   2800           01651         GOTO    _00307_DS_
+01B8   2800           01652         GOTO    _00313_DS_
+01B9                  01653 _00307_DS_
+                      01654 ;       .line   278; "6080_bug.c"       if(FLAG_1)
+01B9   3300           01655         JBSET   _Flag,6
+01BA   2800           01656         GOTO    _00311_DS_
+                      01657 ;       .line   280; "6080_bug.c"       soudbuff = 2;
+01BB   0B02           01658         MOVAI   0x02
+01BC   1580           01659         MOVRA   _soudbuff
+01BD                  01660 _00313_DS_
+                      01661 ;       .line   281; "6080_bug.c"       return;
+01BD   000C           01662         RETURN  
+                      01663 ; exit point of _SY_1
+                      01664 
+                      01665 ;***
+                      01666 ;  pBlock Stats: dbName = C
+                      01667 ;***
+                      01668 ;entry:  _delay640us    ;Function start
+                      01669 ; 2 exit points
+                      01670 ;has an exit
+                      01671 ;5 compiler assigned registers:
+                      01672 ;   r0x1016
+                      01673 ;   STK00
+                      01674 ;   r0x1017
+                      01675 ;   r0x1018
+                      01676 ;   r0x1019
+                      01677 ;; Starting pCode block
+01BE                  01678 _delay640us     ;Function start
+                      01679 ; 2 exit points
+                      01680 ;       .line   241; "6080_bug.c"       void delay640us(unsigned int i1)
+01BE   1580           01681         MOVRA   r0x1016
+01BF   1600           01682         MOVAR   STK00
+01C0   1580           01683         MOVRA   r0x1017
+01C1                  01684 _00293_DS_
+                      01685 ;       .line   245; "6080_bug.c"       while(i--)
+01C1   1600           01686         MOVAR   r0x1017
+01C2   1580           01687         MOVRA   r0x1018
+01C3   1600           01688         MOVAR   r0x1016
+01C4   1580           01689         MOVRA   r0x1019
+01C5   0BFF           01690         MOVAI   0xff
+01C6   1F80           01691         ADDRA   r0x1017
+01C7   3003           01692         JBSET   STATUS,0
+01C8   1B80           01693         DECR    r0x1016
+01C9   1600           01694         MOVAR   r0x1018
+01CA   1700           01695         ORAR    r0x1019
+01CB   3503           01696         JBCLR   STATUS,2
+01CC   2800           01697         GOTO    _00296_DS_
+01CD                  01698 _00290_DS_
+                      01699 ;       .line   247; "6080_bug.c"       while(!flag_640us)
+01CD   3480           01700         JBCLR   _Flag,1
+01CE   2800           01701         GOTO    _00292_DS_
+                      01702 ;       .line   249; "6080_bug.c"       if(!FLAG_SOUND) return;
+01CF   3600           01703         JBCLR   _Flag,4
+01D0   2800           01704         GOTO    _00290_DS_
+01D1   2800           01705         GOTO    _00296_DS_
+01D2                  01706 _00292_DS_
+                      01707 ;       .line   251; "6080_bug.c"       flag_640us=0;
+01D2   3C80           01708         BCLR    _Flag,1
+01D3   2800           01709         GOTO    _00293_DS_
+01D4                  01710 _00296_DS_
+01D4   000C           01711         RETURN  
+                      01712 ; exit point of _delay640us
+                      01713 
+                      01714 ;***
+                      01715 ;  pBlock Stats: dbName = C
+                      01716 ;***
+                      01717 ;entry:  _Sys_Init      ;Function start
+                      01718 ; 2 exit points
+                      01719 ;has an exit
+                      01720 ;; Starting pCode block
+01D5                  01721 _Sys_Init       ;Function start
+                      01722 ; 2 exit points
+                      01723 ;       .line   44; "6080_bug.c"        P1 = 0;
+01D5   1D80           01724         CLRR    _P1
+                      01725 ;       .line   45; "6080_bug.c"        DDR0 = 0xfa;//1111 1010
+01D6   0BFA           01726         MOVAI   0xfa
+01D7   1580           01727         MOVRA   _DDR0
+                      01728 ;       .line   46; "6080_bug.c"        DDR1 = 0xf8;//1111 1000   
+01D8   0BF8           01729         MOVAI   0xf8
+01D9   1580           01730         MOVRA   _DDR1
+                      01731 ;       .line   47; "6080_bug.c"        PUCON=0x07;//0000 0111
+01DA   0B07           01732         MOVAI   0x07
+01DB   1580           01733         MOVRA   _PUCON
+                      01734 ;       .line   48; "6080_bug.c"        PDCON = 0xff;
+01DC   0BFF           01735         MOVAI   0xff
+01DD   1580           01736         MOVRA   _PDCON
+                      01737 ;       .line   49; "6080_bug.c"        ODCON = 0;
+01DE   1D80           01738         CLRR    _ODCON
+                      01739 ;       .line   51; "6080_bug.c"        T0CR = 0x02;//1/4m*8*2 = 4us
+01DF   0B02           01740         MOVAI   0x02
+01E0   1580           01741         MOVRA   _T0CR
+                      01742 ;       .line   52; "6080_bug.c"        TM0CR = 0x00; 
+01E1   1D80           01743         CLRR    _TM0CR
+                      01744 ;       .line   53; "6080_bug.c"        T0CNT = 96;                     
+01E2   0B60           01745         MOVAI   0x60
+01E3   1580           01746         MOVRA   _T0CNT
+                      01747 ;       .line   54; "6080_bug.c"        KBIM = 0;
+01E4   1D80           01748         CLRR    _KBIM
+                      01749 ;       .line   55; "6080_bug.c"        T0IE = 1;
+01E5   3800           01750         BSET    _INTECONbits,0
+                      01751 ;       .line   56; "6080_bug.c"        INTFLAG = 0;
+01E6   1D80           01752         CLRR    _INTFLAG
+                      01753 ;       .line   57; "6080_bug.c"        GIE = 1;
+01E7   3B80           01754         BSET    _INTECONbits,7
+                      01755 ;       .line   58; "6080_bug.c"        MCR = 0x39;//001 1100 1
+01E8   0B39           01756         MOVAI   0x39
+01E9   1580           01757         MOVRA   _MCR
+                      01758 ;       .line   60; "6080_bug.c"        T1CR = 0xc2;//1100 0100 1/4*16*2 = 8us          
+01EA   0BC2           01759         MOVAI   0xc2
+01EB   1580           01760         MOVRA   _T1CR
+                      01761 ;       .line   61; "6080_bug.c"        T1LOAD = 128; 
+01EC   0B80           01762         MOVAI   0x80
+01ED   1580           01763         MOVRA   _T1LOAD
+                      01764 ;       .line   62; "6080_bug.c"        T1IE = 1;
+01EE   3880           01765         BSET    _TM0CRbits,1
+                      01766 ;       .line   63; "6080_bug.c"        timcd = 0;                         
+01EF   1D80           01767         CLRR    _timcd
+01F0   1D80           01768         CLRR    (_timcd + 1)
+01F1   000C           01769         RETURN  
+                      01770 ; exit point of _Sys_Init
+                      01771 
+                      01772 
+                      01773 ;       code size estimation:
+                      01774 ;         807+    0 =   807 instructions ( 1614 byte)
+                      01775 
+                      01776         end
+gpasm-2.0.0_beta2 (Nov  6 2017)6080_bug.asm       2018-5-3  10:21:47           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+BUZE                              00000005
+C                                 00000000
+DBLCK                             00000004
+DC                                00000001
+DDR0                              00000045
+DDR00                             00000000
+DDR01                             00000001
+DDR02                             00000002
+DDR03                             00000003
+DDR1                              00000046
+DDR10                             00000000
+DDR11                             00000001
+DDR12                             00000002
+DDR13                             00000003
+DDR14                             00000004
+DDR15                             00000005
+DDR16                             00000006
+DDR17                             00000007
+EIS                               00000006
+END_OF_INTERRUPT                  00000144
+FSR                               00000004
+FSR0                              00000000
+FSR1                              00000001
+FSR2                              00000002
+FSR3                              00000003
+FSR4                              00000004
+FSR5                              00000005
+GIE                               00000007
+INDF                              00000000
+INDF0                             00000000
+INDF1                             00000001
+INDF2                             00000002
+INDF3                             00000003
+INDF4                             00000004
+INDF5                             00000005
+INDF6                             00000006
+INDF7                             00000007
+INTECON                           0000000E
+INTFLAG                           0000000F
+INTIE                             00000002
+INTIF                             00000002
+INTOM                             00000006
+KBIE                              00000001
+KBIF                              00000001
+KBIM                              00000009
+KBIM0                             00000000
+KBIM1                             00000001
+KBIM2                             00000002
+KBIM3                             00000003
+KBIM4                             00000004
+KBIM5                             00000005
+KBIM6                             00000006
+KBIM7                             00000007
+LVDEN                             00000000
+LVDF                              00000005
+LVDSEL0                           00000001
+LVDSEL1                           00000002
+LVDSEL2                           00000003
+LVDSEL3                           00000004
+MCR                               00000008
+ODCON                             0000000C
+P0                                00000005
+P00D                              00000000
+P00PD                             00000000
+P01D                              00000001
+P01PD                             00000001
+P02D                              00000002
+P02PD                             00000002
+P03D                              00000003
+P03PD                             00000003
+P1                                00000006
+P10D                              00000000
+P10OD                             00000000
+P10PD                             00000004
+P10PU                             00000000
+P11D                              00000001
+P11OD                             00000001
+P11PD                             00000005
+P11PU                             00000001
+P12D                              00000002
+P12OD                             00000002
+P12PD                             00000006
+P12PU                             00000002
+P13D                              00000003
+P13PU                             00000003
+P14D                              00000004
+P14OD                             00000004
+P14PU                             00000004
+P15D                              00000005
+P15OD                             00000005
+P15PU                             00000005
+P16D                              00000006
+P16OD                             00000006
+P16PU                             00000006
+P17D                              00000007
+P17OD                             00000007
+P17PU                             00000007
+PC0                               00000000
+PC1                               00000001
+PC2                               00000002
+PC3                               00000003
+PC4                               00000004
+PC5                               00000005
+PC6                               00000006
+PC7                               00000007
+PCH0                              00000000
+PCH1                              00000001
+PCL                               00000002
+PCLATH                            0000000A
+PD                                00000003
+PDCON                             0000000B
+PMW0OE                            00000007
+PMW1E                             00000001
+PUCON                             0000000D
+PWM0E                             00000006
+PWM1OE                            00000006
+PWM2E                             00000000
+PWM2OE                            00000005
+PWMCR                             00000048
+PWMINV                            00000002
+PWMMD                             00000003
+RST                               00000007
+STATUS                            00000003
+STK00                             00000016
+STK01                             00000015
+STK02                             00000014
+STK03                             00000013
+STK04                             00000012
+STK05                             00000011
+STK06                             00000010
+T0C0                              00000000
+T0C1                              00000001
+T0C2                              00000002
+T0C3                              00000003
+T0C4                              00000004
+T0C5                              00000005
+T0C6                              00000006
+T0C7                              00000007
+T0CNT                             00000001
+T0CR                              00000041
+T0IE                              00000000
+T0IF                              00000000
+T0PR0                             00000000
+T0PR1                             00000001
+T0PR2                             00000002
+T0PTA                             00000003
+T0PTS                             00000005
+T0SE                              00000004
+T1C0                              00000000
+T1C1                              00000001
+T1C2                              00000002
+T1C3                              00000003
+T1C4                              00000004
+T1C5                              00000005
+T1C6                              00000006
+T1C7                              00000007
+T1CNT                             0000004D
+T1CR                              0000004C
+T1DAT0                            0000004F
+T1DAT00                           00000000
+T1DAT01                           00000001
+T1DAT02                           00000002
+T1DAT03                           00000003
+T1DAT04                           00000004
+T1DAT05                           00000005
+T1DAT06                           00000006
+T1DAT07                           00000007
+T1DAT1                            00000049
+T1DAT10                           00000000
+T1DAT11                           00000001
+T1DAT12                           00000002
+T1DAT13                           00000003
+T1DAT14                           00000004
+T1DAT15                           00000005
+T1DAT16                           00000006
+T1DAT17                           00000007
+T1DAT2                            0000004A
+T1DAT20                           00000000
+T1DAT21                           00000001
+T1DAT22                           00000002
+T1DAT23                           00000003
+T1DAT24                           00000004
+T1DAT25                           00000005
+T1DAT26                           00000006
+T1DAT27                           00000007
+T1IE                              00000001
+T1IF                              00000000
+T1LOAD                            0000004E
+T1LOAD0                           00000000
+T1LOAD1                           00000001
+T1LOAD2                           00000002
+T1LOAD3                           00000003
+T1LOAD4                           00000004
+T1LOAD5                           00000005
+T1LOAD6                           00000006
+T1LOAD7                           00000007
+T1PR0                             00000000
+T1PR1                             00000001
+T1PR2                             00000002
+T1PTS0                            00000003
+T1PTS1                            00000004
+TBS                               00000007
+TC1EN                             00000007
+TM0CR                             0000004B
+TO                                00000004
+WDTEN                             00000007
+Z                                 00000002
+_00110_DS_                        00000021
+_00111_DS_                        00000026
+_00113_DS_                        00000042
+_00115_DS_                        0000004F
+_00117_DS_                        00000059
+_00120_DS_                        00000066
+_00122_DS_                        00000070
+_00125_DS_                        0000005B
+_00127_DS_                        0000003B
+_00131_DS_                        00000034
+_00135_DS_                        0000002B
+_00136_DS_                        00000071
+_00139_DS_                        0000009B
+_00142_DS_                        00000090
+_00143_DS_                        0000009D
+_00145_DS_                        000000B5
+_00148_DS_                        000000AB
+_00149_DS_                        000000B6
+_00155_DS_                        000000BF
+_00156_DS_                        000000C7
+_00158_DS_                        000000CF
+_00160_DS_                        000000B8
+_00165_DS_                        000000D1
+_00167_DS_                        000000E7
+_00169_DS_                        00000108
+_00174_DS_                        00000138
+_00176_DS_                        0000013A
+_00179_DS_                        00000129
+_00180_DS_                        0000013C
+_00182_DS_                        0000013E
+_00185_DS_                        00000115
+_00192_DS_                        00000140
+_00267_DS_                        0000001D
+_00268_DS_                        0000004B
+_00269_DS_                        00000055
+_00270_DS_                        00000062
+_00271_DS_                        0000006C
+_00273_DS_                        00000087
+_00274_DS_                        00000096
+_00275_DS_                        000000A6
+_00276_DS_                        000000B1
+_00277_DS_                        000000E1
+_00278_DS_                        000000F4
+_00279_DS_                        000000FC
+_00280_DS_                        0000010E
+_00281_DS_                        0000011B
+_00282_DS_                        00000123
+_00283_DS_                        0000012F
+_00290_DS_                        000001CD
+_00292_DS_                        000001D2
+_00293_DS_                        000001C1
+_00296_DS_                        000001D4
+_00301_DS_                        000001AC
+_00305_DS_                        000001B6
+_00307_DS_                        000001B9
+_00311_DS_                        0000018E
+_00313_DS_                        000001BD
+_00318_DS_                        00000179
+_00322_DS_                        00000183
+_00324_DS_                        00000186
+_00328_DS_                        0000015B
+_00330_DS_                        0000018A
+_00337_DS_                        00000131
+_00339_DS_                        00000140
+_00342_DS_                        00000144
+_00345_DS_                        00000129
+_00347_DS_                        00000153
+_00348_DS_                        00000155
+_00349_DS_                        00000157
+_00355_DS_                        00000125
+_00356_DS_                        00000127
+_00363_DS_                        000000F1
+_00365_DS_                        00000100
+_00368_DS_                        00000104
+_00371_DS_                        000000E9
+_00373_DS_                        00000113
+_00374_DS_                        00000115
+_00375_DS_                        00000119
+_00387_DS_                        0000003B
+_00390_DS_                        00000033
+_00393_DS_                        0000002B
+_00396_DS_                        00000025
+_00403_DS_                        0000006D
+_00411_DS_                        000000AE
+_00414_DS_                        000000A3
+_00419_DS_                        000000D2
+_00422_DS_                        000000C7
+_00429_DS_                        000000B0
+_00432_DS_                        0000008C
+_00435_DS_                        00000085
+_00438_DS_                        0000007E
+_00441_DS_                        00000077
+_00444_DS_                        0000006F
+_00447_DS_                        00000043
+_00450_DS_                        0000001C
+_00511_DS_                        0000009E
+_00512_DS_                        000000A9
+_00513_DS_                        000000C2
+_00514_DS_                        000000CD
+_ABuf                             00000000
+_CONFIG0                          00002000
+_CONFIG1                          00002001
+_DDR0                             00000000
+_DDR0bits                         00000000
+_DDR1                             00000000
+_DDR1bits                         00000000
+_FSR                              00000000
+_FSRbits                          00000000
+_Flag                             00000000
+_Flag1                            00000000
+_IC_SLEEP                         000000D5
+_INDF                             00000000
+_INDFbits                         00000000
+_INTECON                          00000000
+_INTECONbits                      00000000
+_INTFLAG                          00000000
+_INTFLAGbits                      00000000
+_KBIM                             00000000
+_KBIMbits                         00000000
+_KeyBuff                          00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_ODCON                            00000000
+_ODCONbits                        00000000
+_P0                               00000000
+_P0bits                           00000000
+_P1                               00000000
+_P1bits                           00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATHbits                       00000000
+_PCLbits                          00000000
+_PDCON                            00000000
+_PDCONbits                        00000000
+_PUCON                            00000000
+_PUCONbits                        00000000
+_PWMCR                            00000000
+_PWMCRbits                        00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_SY1                              00000000
+_SY2                              00000000
+_SY_1                             0000018B
+_SY_2                             00000158
+_StatusBuf                        00000000
+_Sys_Init                         000001D5
+_T0CNT                            00000000
+_T0CNTbits                        00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T1CNT                            00000000
+_T1CNTbits                        00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA0                          00000000
+_T1DATA0bits                      00000000
+_T1DATA1                          00000000
+_T1DATA1bits                      00000000
+_T1DATA2                          00000000
+_T1DATA2bits                      00000000
+_T1LOAD                           00000000
+_T1LOADbits                       00000000
+_TM0CR                            00000000
+_TM0CRbits                        00000000
+__30P011                          00000001
+__gptrget1                        00000000
+__sdcc_interrupt                  00000008
+_buff                             00000000
+_delay640us                       000001BE
+_int_isr                          00000008
+_main                             00000000
+_mod3                             00000128
+_mod4                             0000011A
+_mod5                             000000E8
+_sleeptime                        00000000
+_soudbuff                         00000000
+_timcd                            00000000
+_time                             00000000
+_time1                            00000000
+_tne5                             00000000
+_tne6                             00000000
+_work                             00000000
+_wxbuff                           00000000
+_zstime                           00000000
+r0x1016                           00000001
+r0x1017                           00000000
+r0x1018                           00000002
+r0x1019                           00000003
+r0x101A                           00000004
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

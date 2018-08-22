@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
-; Version 1.1.0 (Dec 19 2017) (MINGW32)
-; This file was generated Tue Dec 19 17:43:41 2017
+; Version 1.1.2 (May  8 2018) (MINGW32)
+; This file was generated Wed May 23 15:03:46 2018
 ;--------------------------------------------------------
 ; MC32 port for the RISC core
 ;--------------------------------------------------------
@@ -256,6 +256,9 @@ code_fun	code
 ;; Starting pCode block
 _main	;Function start
 ; 2 exit points
+;	.line	33; "fun.c"	ram0 = (1<<1);
+	MOVAI	0x02
+	MOVRA	_ram0
 ;	.line	34; "fun.c"	ram0 = 3;
 	MOVAI	0x03
 	MOVRA	_ram0
@@ -272,17 +275,17 @@ _main	;Function start
 	MOVAR	r0x1004
 	MOVRA	STK00
 	MOVAR	_global_a
-	LCALL	_fun1
+	CALL	_fun1
 	MOVRA	_ram0
 ;	.line	40; "fun.c"	ram1 = fun2(global_a, b);  	// 0x56
 	MOVAR	r0x1004
 	MOVRA	STK00
 	MOVAR	_global_a
-	LCALL	_fun2
+	CALL	_fun2
 	MOVRA	_ram1
 _00122_DS_
 ;	.line	42; "fun.c"	while(1);
-	LGOTO	_00122_DS_
+	GOTO	_00122_DS_
 	RETURN	
 ; exit point of _main
 
@@ -310,14 +313,14 @@ _00113_DS_
 	MOVAR	r0x1001
 	RSUBAR	r0x1003
 	JBCLR	PFLAG,0
-	LGOTO	_00116_DS_
-;;genSkipc:3195: created from rifx:00DD608C
+	GOTO	_00116_DS_
+;;genSkipc:3195: created from rifx:00DE608C
 ;	.line	25; "fun.c"	b0 -= a;
 	MOVAR	r0x1001
 	RSUBRA	r0x1002
 ;	.line	24; "fun.c"	for(i=0; i<a; i++)
 	INCR	r0x1003
-	LGOTO	_00113_DS_
+	GOTO	_00113_DS_
 _00116_DS_
 ;	.line	27; "fun.c"	return b0;
 	MOVAR	r0x1002
@@ -348,14 +351,14 @@ _00105_DS_
 	MOVAR	r0x1001
 	RSUBAR	r0x1003
 	JBCLR	PFLAG,0
-	LGOTO	_00108_DS_
-;;genSkipc:3195: created from rifx:00DD608C
+	GOTO	_00108_DS_
+;;genSkipc:3195: created from rifx:00DE608C
 ;	.line	14; "fun.c"	b0 += a;
 	MOVAR	r0x1001
 	ADDRA	r0x1002
 ;	.line	13; "fun.c"	for(i=0; i<a; i++)
 	INCR	r0x1003
-	LGOTO	_00105_DS_
+	GOTO	_00105_DS_
 _00108_DS_
 ;	.line	16; "fun.c"	return b0;
 	MOVAR	r0x1002
@@ -364,6 +367,6 @@ _00108_DS_
 
 
 ;	code size estimation:
-;	   48+    0 =    48 instructions (   96 byte)
+;	   50+    0 =    50 instructions (  100 byte)
 
 	end

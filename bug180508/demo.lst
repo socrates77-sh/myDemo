@@ -1,0 +1,3280 @@
+gpasm-2.0.0_beta2 (Nov  6 2017)demo.asm           2018-5-8  18:08:20           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.1.1 (May  3 2018) (MINGW32)
+                      00004 ; This file was generated Tue May 08 18:08:20 2018
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC32 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "demo.c"
+                      00009         list    p=7311
+                      00010         radix dec
+                      00011         include "7311.inc"
+                      00001                 LIST
+                      00002 ;mc32p7311.inc    Standard Header File, Version 1.00 by Sinomcu
+                      00625                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  __divuint
+                      00016         extern  __mulint
+                      00017         extern  _INDF0bits
+                      00018         extern  _INDF1bits
+                      00019         extern  _INDF2bits
+                      00020         extern  _HIBYTEbits
+                      00021         extern  _FSR0bits
+                      00022         extern  _FSR1bits
+                      00023         extern  _PCLbits
+                      00024         extern  _PFLAGbits
+                      00025         extern  _MCRbits
+                      00026         extern  _INDF3bits
+                      00027         extern  _INTEbits
+                      00028         extern  _INTFbits
+                      00029         extern  _DRVCRbits
+                      00030         extern  _KBCRbits
+                      00031         extern  _IOP0bits
+                      00032         extern  _OEP0bits
+                      00033         extern  _PUP0bits
+                      00034         extern  _PDP0bits
+                      00035         extern  _IOP1bits
+                      00036         extern  _OEP1bits
+                      00037         extern  _PUP1bits
+                      00038         extern  _PDP1bits
+                      00039         extern  _T0CRbits
+                      00040         extern  _T0CNTbits
+                      00041         extern  _T0LOADbits
+                      00042         extern  _T0DATAbits
+                      00043         extern  _T1CRbits
+                      00044         extern  _T1CNTbits
+                      00045         extern  _T1LOADbits
+                      00046         extern  _T1DATAbits
+                      00047         extern  _T2CRbits
+                      00048         extern  _T2CNTbits
+                      00049         extern  _T2LOADbits
+                      00050         extern  _T2DATAbits
+                      00051         extern  _T3CRbits
+                      00052         extern  _T3CNTbits
+                      00053         extern  _T3LOADbits
+                      00054         extern  _PWM0DEbits
+                      00055         extern  _PWM1DEbits
+                      00056         extern  _PWM2DEbits
+                      00057         extern  _PWMCR0bits
+                      00058         extern  _PWMCR1bits
+                      00059         extern  _OSCMbits
+                      00060         extern  _LVDCRbits
+                      00061         extern  _ADCR0bits
+                      00062         extern  _ADCR1bits
+                      00063         extern  _ADCR2bits
+                      00064         extern  _ADRHbits
+                      00065         extern  _ADRLbits
+                      00066         extern  _ANSEL0bits
+                      00067         extern  _ANSEL1bits
+                      00068         extern  _OSCCALHbits
+                      00069         extern  _OSCCALLbits
+                      00070         extern  _INDF0
+                      00071         extern  _INDF1
+                      00072         extern  _INDF2
+                      00073         extern  _HIBYTE
+                      00074         extern  _FSR0
+                      00075         extern  _FSR1
+                      00076         extern  _PCL
+                      00077         extern  _PFLAG
+                      00078         extern  _MCR
+                      00079         extern  _INDF3
+                      00080         extern  _INTE
+                      00081         extern  _INTF
+                      00082         extern  _DRVCR
+                      00083         extern  _KBCR
+                      00084         extern  _IOP0
+                      00085         extern  _OEP0
+                      00086         extern  _PUP0
+                      00087         extern  _PDP0
+                      00088         extern  _IOP1
+                      00089         extern  _OEP1
+                      00090         extern  _PUP1
+                      00091         extern  _PDP1
+                      00092         extern  _T0CR
+                      00093         extern  _T0CNT
+                      00094         extern  _T0LOAD
+                      00095         extern  _T0DATA
+                      00096         extern  _T1CR
+                      00097         extern  _T1CNT
+                      00098         extern  _T1LOAD
+                      00099         extern  _T1DATA
+                      00100         extern  _T2CR
+                      00101         extern  _T2CNT
+                      00102         extern  _T2LOAD
+                      00103         extern  _T2DATA
+                      00104         extern  _T3CR
+                      00105         extern  _T3CNT
+                      00106         extern  _T3LOAD
+                      00107         extern  _PWM0DE
+                      00108         extern  _PWM1DE
+                      00109         extern  _PWM2DE
+                      00110         extern  _PWMCR0
+                      00111         extern  _PWMCR1
+                      00112         extern  _OSCM
+                      00113         extern  _LVDCR
+                      00114         extern  _ADCR0
+                      00115         extern  _ADCR1
+                      00116         extern  _ADCR2
+                      00117         extern  _ADRH
+                      00118         extern  _ADRL
+                      00119         extern  _ANSEL0
+                      00120         extern  _ANSEL1
+                      00121         extern  _OSCCALH
+                      00122         extern  _OSCCALL
+                      00123 ;--------------------------------------------------------
+                      00124 ; global declarations
+                      00125 ;--------------------------------------------------------
+                      00126         global  _Init_Sys
+                      00127         global  _Init_timer
+                      00128         global  _Clr_Ram
+                      00129         global  _DC_DET
+                      00130         global  _Charge_AD
+                      00131         global  _Voltage_AD
+                      00132         global  _Current_AD
+                      00133         global  _AD_process
+                      00134         global  _Voltage_process
+                      00135         global  _Charge_process
+                      00136         global  _Current_process
+                      00137         global  _Current_Data_process
+                      00138         global  _Voltage_Data_process
+                      00139         global  _Voltage_Data
+                      00140         global  _Current_Data
+                      00141         global  _Charge_Data
+                      00142         global  _Display_count
+                      00143         global  _Display_led
+                      00144         global  _LED_state
+                      00145         global  _Display_delay
+                      00146         global  _main
+                      00147         global  _int_isr
+                      00148         global  _Flag_l
+                      00149         global  _Flag_m
+                      00150         global  _Flag_h
+                      00151         global  _Flag1
+                      00152         global  _ABuf
+                      00153         global  _StatusBuf
+                      00154         global  _FSR_TEMP
+                      00155         global  _i
+                      00156         global  _Vol_H
+                      00157         global  _Vol_M
+                      00158         global  _Vol_L
+                      00159         global  _Voltage_L
+                      00160         global  _Voltage_M
+                      00161         global  _Voltage_H
+                      00162         global  _ad_cnt
+                      00163         global  _R_changecnt
+                      00164         global  _R_changecnt2
+                      00165         global  _ADL
+                      00166         global  _R_difference
+                      00167         global  _ADL_old
+                      00168         global  _ADL_old2
+                      00169         global  _temp
+                      00170         global  _ADL_common
+                      00171         global  _display_cnt
+                      00172         global  _R_ad_channel
+                      00173         global  _R_Charge_cnt
+                      00174         global  _R_Current_cnt
+                      00175         global  _ADH_temp
+                      00176         global  _ADL_temp
+                      00177         global  _AD_final
+                      00178         global  _AD_temp
+                      00179 
+                      00180         global STK06
+                      00181         global STK05
+                      00182         global STK04
+                      00183         global STK03
+                      00184         global STK02
+                      00185         global STK01
+                      00186         global STK00
+                      00187 
+                      00188 sharebank udata_ovr 0x0000
+0000                  00189 STK06   res 1
+0000                  00190 STK05   res 1
+0001                  00191 STK04   res 1
+0001                  00192 STK03   res 1
+0002                  00193 STK02   res 1
+0002                  00194 STK01   res 1
+0003                  00195 STK00   res 1
+                      00196 
+                      00197 ;--------------------------------------------------------
+                      00198 ; global definitions
+                      00199 ;--------------------------------------------------------
+                      00200 UD_demo_0       udata
+0000                  00201 _Flag_l res     1
+                      00202 
+                      00203 UD_demo_1       udata
+0000                  00204 _Flag_m res     1
+                      00205 
+                      00206 UD_demo_2       udata
+0000                  00207 _Flag_h res     1
+                      00208 
+                      00209 UD_demo_3       udata
+0000                  00210 _Flag1  res     1
+                      00211 
+                      00212 UD_demo_4       udata
+0000                  00213 _ABuf   res     1
+                      00214 
+                      00215 UD_demo_5       udata
+0000                  00216 _StatusBuf      res     1
+                      00217 
+                      00218 UD_demo_6       udata
+0000                  00219 _FSR_TEMP       res     1
+                      00220 
+                      00221 UD_demo_7       udata
+0000                  00222 _i      res     1
+                      00223 
+                      00224 UD_demo_8       udata
+0000                  00225 _Vol_H  res     1
+                      00226 
+                      00227 UD_demo_9       udata
+0000                  00228 _Vol_M  res     1
+                      00229 
+                      00230 UD_demo_10      udata
+0000                  00231 _Vol_L  res     1
+                      00232 
+                      00233 UD_demo_11      udata
+0000                  00234 _Voltage_L      res     1
+                      00235 
+                      00236 UD_demo_12      udata
+0000                  00237 _Voltage_M      res     1
+                      00238 
+                      00239 UD_demo_13      udata
+0000                  00240 _Voltage_H      res     1
+                      00241 
+                      00242 UD_demo_14      udata
+0000                  00243 _ad_cnt res     1
+                      00244 
+                      00245 UD_demo_15      udata
+0000                  00246 _R_changecnt    res     1
+                      00247 
+                      00248 UD_demo_16      udata
+0000                  00249 _R_changecnt2   res     1
+                      00250 
+                      00251 UD_demo_17      udata
+0000                  00252 _ADL    res     2
+                      00253 
+                      00254 UD_demo_18      udata
+0000                  00255 _R_difference   res     2
+                      00256 
+                      00257 UD_demo_19      udata
+0000                  00258 _ADL_old        res     2
+                      00259 
+                      00260 UD_demo_20      udata
+0000                  00261 _ADL_old2       res     2
+                      00262 
+                      00263 UD_demo_21      udata
+0000                  00264 _temp   res     2
+                      00265 
+                      00266 UD_demo_22      udata
+0000                  00267 _ADL_common     res     2
+                      00268 
+                      00269 UD_demo_23      udata
+0000                  00270 _display_cnt    res     1
+                      00271 
+                      00272 UD_demo_24      udata
+0000                  00273 _R_ad_channel   res     1
+                      00274 
+                      00275 UD_demo_25      udata
+0000                  00276 _R_Charge_cnt   res     1
+                      00277 
+                      00278 UD_demo_26      udata
+0000                  00279 _R_Current_cnt  res     1
+                      00280 
+                      00281 UD_demo_27      udata
+0000                  00282 _ADH_temp       res     2
+                      00283 
+                      00284 UD_demo_28      udata
+0000                  00285 _ADL_temp       res     2
+                      00286 
+                      00287 UD_demo_29      udata
+0000                  00288 _AD_final       res     2
+                      00289 
+                      00290 UD_demo_30      udata
+0000                  00291 _AD_temp        res     2
+                      00292 
+                      00293 ;--------------------------------------------------------
+                      00294 ; absolute symbol definitions
+                      00295 ;--------------------------------------------------------
+                      00296 ;--------------------------------------------------------
+                      00297 ; compiler-defined variables
+                      00298 ;--------------------------------------------------------
+                      00299 UDL_demo_0      udata
+0000                  00300 r0x1027 res     1
+0000                  00301 r0x1026 res     1
+0001                  00302 r0x1028 res     1
+                      00303 ;--------------------------------------------------------
+                      00304 ; initialized data
+                      00305 ;--------------------------------------------------------
+                      00306 
+                      00307 ;@Allocation info for local variables in function 'Init_Sys'
+                      00308 ;@Init_Sys Init_Sys                  Allocated to registers ;size:2
+                      00309 ;@Init_Sys INDF0bits                 Allocated to registers ;size:1
+                      00310 ;@Init_Sys INDF1bits                 Allocated to registers ;size:1
+                      00311 ;@Init_Sys INDF2bits                 Allocated to registers ;size:1
+                      00312 ;@Init_Sys HIBYTEbits                Allocated to registers ;size:1
+                      00313 ;@Init_Sys FSR0bits                  Allocated to registers ;size:1
+                      00314 ;@Init_Sys FSR1bits                  Allocated to registers ;size:1
+                      00315 ;@Init_Sys PCLbits                   Allocated to registers ;size:1
+                      00316 ;@Init_Sys PFLAGbits                 Allocated to registers ;size:1
+                      00317 ;@Init_Sys MCRbits                   Allocated to registers ;size:1
+                      00318 ;@Init_Sys INDF3bits                 Allocated to registers ;size:1
+                      00319 ;@Init_Sys INTEbits                  Allocated to registers ;size:1
+                      00320 ;@Init_Sys INTFbits                  Allocated to registers ;size:1
+                      00321 ;@Init_Sys DRVCRbits                 Allocated to registers ;size:1
+                      00322 ;@Init_Sys KBCRbits                  Allocated to registers ;size:1
+                      00323 ;@Init_Sys IOP0bits                  Allocated to registers ;size:1
+                      00324 ;@Init_Sys OEP0bits                  Allocated to registers ;size:1
+                      00325 ;@Init_Sys PUP0bits                  Allocated to registers ;size:1
+                      00326 ;@Init_Sys PDP0bits                  Allocated to registers ;size:1
+                      00327 ;@Init_Sys IOP1bits                  Allocated to registers ;size:1
+                      00328 ;@Init_Sys OEP1bits                  Allocated to registers ;size:1
+                      00329 ;@Init_Sys PUP1bits                  Allocated to registers ;size:1
+                      00330 ;@Init_Sys PDP1bits                  Allocated to registers ;size:1
+                      00331 ;@Init_Sys T0CRbits                  Allocated to registers ;size:1
+                      00332 ;@Init_Sys T0CNTbits                 Allocated to registers ;size:1
+                      00333 ;@Init_Sys T0LOADbits                Allocated to registers ;size:1
+                      00334 ;@Init_Sys T0DATAbits                Allocated to registers ;size:1
+                      00335 ;@Init_Sys T1CRbits                  Allocated to registers ;size:1
+                      00336 ;@Init_Sys T1CNTbits                 Allocated to registers ;size:1
+                      00337 ;@Init_Sys T1LOADbits                Allocated to registers ;size:1
+                      00338 ;@Init_Sys T1DATAbits                Allocated to registers ;size:1
+                      00339 ;@Init_Sys T2CRbits                  Allocated to registers ;size:1
+                      00340 ;@Init_Sys T2CNTbits                 Allocated to registers ;size:1
+                      00341 ;@Init_Sys T2LOADbits                Allocated to registers ;size:1
+                      00342 ;@Init_Sys T2DATAbits                Allocated to registers ;size:1
+                      00343 ;@Init_Sys T3CRbits                  Allocated to registers ;size:1
+                      00344 ;@Init_Sys T3CNTbits                 Allocated to registers ;size:1
+                      00345 ;@Init_Sys T3LOADbits                Allocated to registers ;size:1
+                      00346 ;@Init_Sys PWM0DEbits                Allocated to registers ;size:1
+                      00347 ;@Init_Sys PWM1DEbits                Allocated to registers ;size:1
+                      00348 ;@Init_Sys PWM2DEbits                Allocated to registers ;size:1
+                      00349 ;@Init_Sys PWMCR0bits                Allocated to registers ;size:1
+                      00350 ;@Init_Sys PWMCR1bits                Allocated to registers ;size:1
+                      00351 ;@Init_Sys OSCMbits                  Allocated to registers ;size:1
+                      00352 ;@Init_Sys LVDCRbits                 Allocated to registers ;size:1
+                      00353 ;@Init_Sys ADCR0bits                 Allocated to registers ;size:1
+                      00354 ;@Init_Sys ADCR1bits                 Allocated to registers ;size:1
+                      00355 ;@Init_Sys ADCR2bits                 Allocated to registers ;size:1
+                      00356 ;@Init_Sys ADRHbits                  Allocated to registers ;size:1
+                      00357 ;@Init_Sys ADRLbits                  Allocated to registers ;size:1
+                      00358 ;@Init_Sys ANSEL0bits                Allocated to registers ;size:1
+                      00359 ;@Init_Sys ANSEL1bits                Allocated to registers ;size:1
+                      00360 ;@Init_Sys OSCCALHbits               Allocated to registers ;size:1
+                      00361 ;@Init_Sys OSCCALLbits               Allocated to registers ;size:1
+                      00362 ;@Init_Sys Flag_l                    Allocated to registers ;size:1
+                      00363 ;@Init_Sys Flag_m                    Allocated to registers ;size:1
+                      00364 ;@Init_Sys Flag_h                    Allocated to registers ;size:1
+                      00365 ;@Init_Sys Flag1                     Allocated to registers ;size:1
+                      00366 ;@Init_Sys ABuf                      Allocated to registers ;size:1
+                      00367 ;@Init_Sys StatusBuf                 Allocated to registers ;size:1
+                      00368 ;@Init_Sys FSR_TEMP                  Allocated to registers ;size:1
+                      00369 ;@Init_Sys i                         Allocated to registers ;size:1
+                      00370 ;@Init_Sys Vol_H                     Allocated to registers ;size:1
+                      00371 ;@Init_Sys Vol_M                     Allocated to registers ;size:1
+                      00372 ;@Init_Sys Vol_L                     Allocated to registers ;size:1
+                      00373 ;@Init_Sys Voltage_L                 Allocated to registers ;size:1
+                      00374 ;@Init_Sys Voltage_M                 Allocated to registers ;size:1
+                      00375 ;@Init_Sys Voltage_H                 Allocated to registers ;size:1
+                      00376 ;@Init_Sys ad_cnt                    Allocated to registers ;size:1
+                      00377 ;@Init_Sys R_changecnt               Allocated to registers ;size:1
+                      00378 ;@Init_Sys R_changecnt2              Allocated to registers ;size:1
+                      00379 ;@Init_Sys ADL                       Allocated to registers ;size:2
+                      00380 ;@Init_Sys R_difference              Allocated to registers ;size:2
+                      00381 ;@Init_Sys ADL_old                   Allocated to registers ;size:2
+                      00382 ;@Init_Sys ADL_old2                  Allocated to registers ;size:2
+                      00383 ;@Init_Sys temp                      Allocated to registers ;size:2
+                      00384 ;@Init_Sys ADL_common                Allocated to registers ;size:2
+                      00385 ;@Init_Sys display_cnt               Allocated to registers ;size:1
+                      00386 ;@Init_Sys R_ad_channel              Allocated to registers ;size:1
+                      00387 ;@Init_Sys R_Charge_cnt              Allocated to registers ;size:1
+                      00388 ;@Init_Sys R_Current_cnt             Allocated to registers ;size:1
+                      00389 ;@Init_Sys ADH_temp                  Allocated to registers ;size:2
+                      00390 ;@Init_Sys ADL_temp                  Allocated to registers ;size:2
+                      00391 ;@Init_Sys AD_final                  Allocated to registers ;size:2
+                      00392 ;@Init_Sys AD_temp                   Allocated to registers ;size:2
+                      00393 ;@Init_Sys INDF0                     Allocated to registers ;size:1
+                      00394 ;@Init_Sys INDF1                     Allocated to registers ;size:1
+                      00395 ;@Init_Sys INDF2                     Allocated to registers ;size:1
+                      00396 ;@Init_Sys HIBYTE                    Allocated to registers ;size:1
+                      00397 ;@Init_Sys FSR0                      Allocated to registers ;size:1
+                      00398 ;@Init_Sys FSR1                      Allocated to registers ;size:1
+                      00399 ;@Init_Sys PCL                       Allocated to registers ;size:1
+                      00400 ;@Init_Sys PFLAG                     Allocated to registers ;size:1
+                      00401 ;@Init_Sys MCR                       Allocated to registers ;size:1
+                      00402 ;@Init_Sys INDF3                     Allocated to registers ;size:1
+                      00403 ;@Init_Sys INTE                      Allocated to registers ;size:1
+                      00404 ;@Init_Sys INTF                      Allocated to registers ;size:1
+                      00405 ;@Init_Sys DRVCR                     Allocated to registers ;size:1
+                      00406 ;@Init_Sys KBCR                      Allocated to registers ;size:1
+                      00407 ;@Init_Sys IOP0                      Allocated to registers ;size:1
+                      00408 ;@Init_Sys OEP0                      Allocated to registers ;size:1
+                      00409 ;@Init_Sys PUP0                      Allocated to registers ;size:1
+                      00410 ;@Init_Sys PDP0                      Allocated to registers ;size:1
+                      00411 ;@Init_Sys IOP1                      Allocated to registers ;size:1
+                      00412 ;@Init_Sys OEP1                      Allocated to registers ;size:1
+                      00413 ;@Init_Sys PUP1                      Allocated to registers ;size:1
+                      00414 ;@Init_Sys PDP1                      Allocated to registers ;size:1
+                      00415 ;@Init_Sys T0CR                      Allocated to registers ;size:1
+                      00416 ;@Init_Sys T0CNT                     Allocated to registers ;size:1
+                      00417 ;@Init_Sys T0LOAD                    Allocated to registers ;size:1
+                      00418 ;@Init_Sys T0DATA                    Allocated to registers ;size:1
+                      00419 ;@Init_Sys T1CR                      Allocated to registers ;size:1
+                      00420 ;@Init_Sys T1CNT                     Allocated to registers ;size:1
+                      00421 ;@Init_Sys T1LOAD                    Allocated to registers ;size:1
+                      00422 ;@Init_Sys T1DATA                    Allocated to registers ;size:1
+                      00423 ;@Init_Sys T2CR                      Allocated to registers ;size:1
+                      00424 ;@Init_Sys T2CNT                     Allocated to registers ;size:1
+                      00425 ;@Init_Sys T2LOAD                    Allocated to registers ;size:1
+                      00426 ;@Init_Sys T2DATA                    Allocated to registers ;size:1
+                      00427 ;@Init_Sys T3CR                      Allocated to registers ;size:1
+                      00428 ;@Init_Sys T3CNT                     Allocated to registers ;size:1
+                      00429 ;@Init_Sys T3LOAD                    Allocated to registers ;size:1
+                      00430 ;@Init_Sys PWM0DE                    Allocated to registers ;size:1
+                      00431 ;@Init_Sys PWM1DE                    Allocated to registers ;size:1
+                      00432 ;@Init_Sys PWM2DE                    Allocated to registers ;size:1
+                      00433 ;@Init_Sys PWMCR0                    Allocated to registers ;size:1
+                      00434 ;@Init_Sys PWMCR1                    Allocated to registers ;size:1
+                      00435 ;@Init_Sys OSCM                      Allocated to registers ;size:1
+                      00436 ;@Init_Sys LVDCR                     Allocated to registers ;size:1
+                      00437 ;@Init_Sys ADCR0                     Allocated to registers ;size:1
+                      00438 ;@Init_Sys ADCR1                     Allocated to registers ;size:1
+                      00439 ;@Init_Sys ADCR2                     Allocated to registers ;size:1
+                      00440 ;@Init_Sys ADRH                      Allocated to registers ;size:1
+                      00441 ;@Init_Sys ADRL                      Allocated to registers ;size:1
+                      00442 ;@Init_Sys ANSEL0                    Allocated to registers ;size:1
+                      00443 ;@Init_Sys ANSEL1                    Allocated to registers ;size:1
+                      00444 ;@Init_Sys OSCCALH                   Allocated to registers ;size:1
+                      00445 ;@Init_Sys OSCCALL                   Allocated to registers ;size:1
+                      00446 ;@end Allocation info for local variables in function 'Init_Sys';
+                      00447 ;@Allocation info for local variables in function 'Init_timer'
+                      00448 ;@end Allocation info for local variables in function 'Init_timer';
+                      00449 ;@Allocation info for local variables in function 'Clr_Ram'
+                      00450 ;@end Allocation info for local variables in function 'Clr_Ram';
+                      00451 ;@Allocation info for local variables in function 'DC_DET'
+                      00452 ;@end Allocation info for local variables in function 'DC_DET';
+                      00453 ;@Allocation info for local variables in function 'Charge_AD'
+                      00454 ;@end Allocation info for local variables in function 'Charge_AD';
+                      00455 ;@Allocation info for local variables in function 'Voltage_AD'
+                      00456 ;@end Allocation info for local variables in function 'Voltage_AD';
+                      00457 ;@Allocation info for local variables in function 'Current_AD'
+                      00458 ;@end Allocation info for local variables in function 'Current_AD';
+                      00459 ;@Allocation info for local variables in function 'AD_process'
+                      00460 ;@end Allocation info for local variables in function 'AD_process';
+                      00461 ;@Allocation info for local variables in function 'Voltage_process'
+                      00462 ;@end Allocation info for local variables in function 'Voltage_process';
+                      00463 ;@Allocation info for local variables in function 'Charge_process'
+                      00464 ;@end Allocation info for local variables in function 'Charge_process';
+                      00465 ;@Allocation info for local variables in function 'Current_process'
+                      00466 ;@end Allocation info for local variables in function 'Current_process';
+                      00467 ;@Allocation info for local variables in function 'Current_Data_process'
+                      00468 ;@end Allocation info for local variables in function 'Current_Data_process';
+                      00469 ;@Allocation info for local variables in function 'Voltage_Data_process'
+                      00470 ;@end Allocation info for local variables in function 'Voltage_Data_process';
+                      00471 ;@Allocation info for local variables in function 'Voltage_Data'
+                      00472 ;@end Allocation info for local variables in function 'Voltage_Data';
+                      00473 ;@Allocation info for local variables in function 'Current_Data'
+                      00474 ;@end Allocation info for local variables in function 'Current_Data';
+                      00475 ;@Allocation info for local variables in function 'Charge_Data'
+                      00476 ;@end Allocation info for local variables in function 'Charge_Data';
+                      00477 ;@Allocation info for local variables in function 'Display_count'
+                      00478 ;@end Allocation info for local variables in function 'Display_count';
+                      00479 ;@Allocation info for local variables in function 'Display_led'
+                      00480 ;@end Allocation info for local variables in function 'Display_led';
+                      00481 ;@Allocation info for local variables in function 'LED_state'
+                      00482 ;@end Allocation info for local variables in function 'LED_state';
+                      00483 ;@Allocation info for local variables in function 'Display_delay'
+                      00484 ;@Display_delay delay1                    Allocated to registers r0x1027 r0x1026 ;size:2
+                      00485 ;@end Allocation info for local variables in function 'Display_delay';
+                      00486 ;@Allocation info for local variables in function 'main'
+                      00487 ;@end Allocation info for local variables in function 'main';
+                      00488 ;@Allocation info for local variables in function 'int_isr'
+                      00489 ;@end Allocation info for local variables in function 'int_isr';
+                      00490 
+                      00491 ;--------------------------------------------------------
+                      00492 ; overlayable items in internal ram 
+                      00493 ;--------------------------------------------------------
+                      00494 ;       udata_ovr
+                      00495 ;--------------------------------------------------------
+                      00496 ; reset vector 
+                      00497 ;--------------------------------------------------------
+                      00498 STARTUP code 0x0000
+0000   A000           00499         goto    _main
+                      00500 ;--------------------------------------------------------
+                      00501 ; interrupt and initialization code
+                      00502 ;--------------------------------------------------------
+                      00503 c_interrupt     code    0x8
+0008                  00504 __sdcc_interrupt
+                      00505 ;***
+                      00506 ;  pBlock Stats: dbName = I
+                      00507 ;***
+                      00508 ;entry:  _int_isr       ;Function start
+                      00509 ; 0 exit points
+                      00510 ;2 compiler assigned registers:
+                      00511 ;   r0x1028
+                      00512 ;   r0x1029
+                      00513 ;; Starting pCode block
+0008                  00514 _int_isr        ;Function start
+                      00515 ; 0 exit points
+                      00516 ;       .line   596; "demo.c"   __endasm;
+0008   5600           00517         movra _ABuf
+0009   4400           00518         swapar _PFLAG
+000A   5600           00519         movra _StatusBuf
+                      00520         
+                      00521 ;       .line   598; "demo.c"   if(T0IF)
+000B   E000           00522         JBSET   _INTFbits,0
+000C   A000           00523         GOTO    _00442_DS_
+                      00524 ;       .line   600; "demo.c"   T0IF  = 0;
+000D   D000           00525         BCLR    _INTFbits,0
+                      00526 ;       .line   601; "demo.c"   F_1S=1;  
+000E   C800           00527         BSET    _Flag1,4
+                      00528 ;       .line   602; "demo.c"   if(F_flash)
+000F   EE00           00529         JBSET   _Flag1,7
+0010   A000           00530         GOTO    _00442_DS_
+                      00531 ;       .line   604; "demo.c"   P_RED=!P_RED;      
+0011   7600           00532         CLRR    r0x1028
+0012   F800           00533         JBCLR   _IOP0bits,4
+0013   6600           00534         INCR    r0x1028
+0014   5800           00535         MOVAR   r0x1028
+0015   3C00           00536         MOVAI   0x00
+0016   F587           00537         JBCLR   PFLAG,2
+0017   3C01           00538         MOVAI   0x01
+0018   5600           00539         MOVRA   r0x1028
+                      00540 ;;1     MOVRA   r0x1029
+                      00541 ;;99    MOVAR   r0x1029
+0019   4C00           00542         RRAR    r0x1028
+001A   E187           00543         JBSET   PFLAG,0
+001B   D800           00544         BCLR    _IOP0bits,4
+001C   F187           00545         JBCLR   PFLAG,0
+001D   C800           00546         BSET    _IOP0bits,4
+001E                  00547 _00442_DS_
+                      00548 ;       .line   607; "demo.c"   if(T1IF)
+001E   E200           00549         JBSET   _INTFbits,1
+001F   A000           00550         GOTO    _00538_DS_
+                      00551 ;       .line   609; "demo.c"   T1IF  = 0;
+0020   D200           00552         BCLR    _INTFbits,1
+                      00553 ;       .line   610; "demo.c"   OEP1&=0x08;
+0021   3C08           00554         MOVAI   0x08
+0022   7A00           00555         ANDRA   _OEP1
+                      00556 ;       .line   611; "demo.c"   IOP1&=0x08;
+0023   3C08           00557         MOVAI   0x08
+0024   7A00           00558         ANDRA   _IOP1
+                      00559 ;       .line   612; "demo.c"   display_cnt++;
+0025   6600           00560         INCR    _display_cnt
+                      00561 ;       .line   613; "demo.c"   if(display_cnt==1)
+0026   5800           00562         MOVAR   _display_cnt
+0027   3901           00563         XORAI   0x01
+0028   E587           00564         JBSET   PFLAG,2
+0029   A000           00565         GOTO    _00446_DS_
+                      00566 ;       .line   615; "demo.c"   if(Flag_l0){ValueL_A1;}                 
+002A   E000           00567         JBSET   _Flag_l,0
+002B   A000           00568         GOTO    _00446_DS_
+002C   3C08           00569         MOVAI   0x08
+002D   5600           00570         MOVRA   _OEP1
+002E   CA00           00571         BSET    _OEP1bits,5
+002F   C200           00572         BSET    _OEP1bits,1
+0030   CA00           00573         BSET    _IOP1bits,5
+0031   D200           00574         BCLR    _IOP1bits,1
+0032                  00575 _00446_DS_
+                      00576 ;       .line   617; "demo.c"   if(display_cnt==2)
+0032   5800           00577         MOVAR   _display_cnt
+0033   3902           00578         XORAI   0x02
+0034   E587           00579         JBSET   PFLAG,2
+0035   A000           00580         GOTO    _00450_DS_
+                      00581 ;       .line   619; "demo.c"   if(Flag_l1){ValueL_B1;}                 
+0036   E200           00582         JBSET   _Flag_l,1
+0037   A000           00583         GOTO    _00450_DS_
+0038   3C08           00584         MOVAI   0x08
+0039   5600           00585         MOVRA   _OEP1
+003A   CC00           00586         BSET    _OEP1bits,6
+003B   C200           00587         BSET    _OEP1bits,1
+003C   CC00           00588         BSET    _IOP1bits,6
+003D   D200           00589         BCLR    _IOP1bits,1
+003E                  00590 _00450_DS_
+                      00591 ;       .line   621; "demo.c"   if(display_cnt==3)
+003E   5800           00592         MOVAR   _display_cnt
+003F   3903           00593         XORAI   0x03
+0040   E587           00594         JBSET   PFLAG,2
+0041   A000           00595         GOTO    _00454_DS_
+                      00596 ;       .line   623; "demo.c"   if(Flag_l2){ValueL_C1;}                 
+0042   E400           00597         JBSET   _Flag_l,2
+0043   A000           00598         GOTO    _00454_DS_
+0044   3C08           00599         MOVAI   0x08
+0045   5600           00600         MOVRA   _OEP1
+0046   C400           00601         BSET    _OEP1bits,2
+0047   C200           00602         BSET    _OEP1bits,1
+0048   C400           00603         BSET    _IOP1bits,2
+0049   D200           00604         BCLR    _IOP1bits,1
+004A                  00605 _00454_DS_
+                      00606 ;       .line   625; "demo.c"   if(display_cnt==4)
+004A   5800           00607         MOVAR   _display_cnt
+004B   3904           00608         XORAI   0x04
+004C   E587           00609         JBSET   PFLAG,2
+004D   A000           00610         GOTO    _00458_DS_
+                      00611 ;       .line   627; "demo.c"   if(Flag_l3){ValueL_D1;}                 
+004E   E600           00612         JBSET   _Flag_l,3
+004F   A000           00613         GOTO    _00458_DS_
+0050   3C08           00614         MOVAI   0x08
+0051   5600           00615         MOVRA   _OEP1
+0052   C200           00616         BSET    _OEP1bits,1
+0053   CE00           00617         BSET    _OEP1bits,7
+0054   C200           00618         BSET    _IOP1bits,1
+0055   DE00           00619         BCLR    _IOP1bits,7
+0056                  00620 _00458_DS_
+                      00621 ;       .line   629; "demo.c"   if(display_cnt==5)
+0056   5800           00622         MOVAR   _display_cnt
+0057   3905           00623         XORAI   0x05
+0058   E587           00624         JBSET   PFLAG,2
+0059   A000           00625         GOTO    _00462_DS_
+                      00626 ;       .line   631; "demo.c"   if(Flag_l4){ValueL_E1;}                 
+005A   E800           00627         JBSET   _Flag_l,4
+005B   A000           00628         GOTO    _00462_DS_
+005C   3C08           00629         MOVAI   0x08
+005D   5600           00630         MOVRA   _OEP1
+005E   CE00           00631         BSET    _OEP1bits,7
+005F   C200           00632         BSET    _OEP1bits,1
+0060   CE00           00633         BSET    _IOP1bits,7
+0061   D200           00634         BCLR    _IOP1bits,1
+0062                  00635 _00462_DS_
+                      00636 ;       .line   633; "demo.c"   if(display_cnt==6)
+0062   5800           00637         MOVAR   _display_cnt
+0063   3906           00638         XORAI   0x06
+0064   E587           00639         JBSET   PFLAG,2
+0065   A000           00640         GOTO    _00466_DS_
+                      00641 ;       .line   635; "demo.c"   if(Flag_l5){ValueL_F1;}                 
+0066   EA00           00642         JBSET   _Flag_l,5
+0067   A000           00643         GOTO    _00466_DS_
+0068   3C08           00644         MOVAI   0x08
+0069   5600           00645         MOVRA   _OEP1
+006A   C200           00646         BSET    _OEP1bits,1
+006B   C400           00647         BSET    _OEP1bits,2
+006C   C200           00648         BSET    _IOP1bits,1
+006D   D400           00649         BCLR    _IOP1bits,2
+006E                  00650 _00466_DS_
+                      00651 ;       .line   637; "demo.c"   if(display_cnt==7)
+006E   5800           00652         MOVAR   _display_cnt
+006F   3907           00653         XORAI   0x07
+0070   E587           00654         JBSET   PFLAG,2
+0071   A000           00655         GOTO    _00470_DS_
+                      00656 ;       .line   639; "demo.c"   if(Flag_l6){ValueL_G1;}                 
+0072   EC00           00657         JBSET   _Flag_l,6
+0073   A000           00658         GOTO    _00470_DS_
+0074   3C08           00659         MOVAI   0x08
+0075   5600           00660         MOVRA   _OEP1
+0076   CA00           00661         BSET    _OEP1bits,5
+0077   C400           00662         BSET    _OEP1bits,2
+0078   CA00           00663         BSET    _IOP1bits,5
+0079   D400           00664         BCLR    _IOP1bits,2
+007A                  00665 _00470_DS_
+                      00666 ;       .line   641; "demo.c"   if(display_cnt==8)
+007A   5800           00667         MOVAR   _display_cnt
+007B   3908           00668         XORAI   0x08
+007C   E587           00669         JBSET   PFLAG,2
+007D   A000           00670         GOTO    _00474_DS_
+                      00671 ;       .line   643; "demo.c"   if(Flag_m0){ValueM_A2;}                 
+007E   E000           00672         JBSET   _Flag_m,0
+007F   A000           00673         GOTO    _00474_DS_
+0080   3C08           00674         MOVAI   0x08
+0081   5600           00675         MOVRA   _OEP1
+0082   C400           00676         BSET    _OEP1bits,2
+0083   CE00           00677         BSET    _OEP1bits,7
+0084   C400           00678         BSET    _IOP1bits,2
+0085   DE00           00679         BCLR    _IOP1bits,7
+0086                  00680 _00474_DS_
+                      00681 ;       .line   645; "demo.c"   if(display_cnt==9)
+0086   5800           00682         MOVAR   _display_cnt
+0087   3909           00683         XORAI   0x09
+0088   E587           00684         JBSET   PFLAG,2
+0089   A000           00685         GOTO    _00478_DS_
+                      00686 ;       .line   647; "demo.c"   if(Flag_m1){ValueM_B2;}                 
+008A   E200           00687         JBSET   _Flag_m,1
+008B   A000           00688         GOTO    _00478_DS_
+008C   3C08           00689         MOVAI   0x08
+008D   5600           00690         MOVRA   _OEP1
+008E   CC00           00691         BSET    _OEP1bits,6
+008F   C400           00692         BSET    _OEP1bits,2
+0090   CC00           00693         BSET    _IOP1bits,6
+0091   D400           00694         BCLR    _IOP1bits,2
+0092                  00695 _00478_DS_
+                      00696 ;       .line   649; "demo.c"   if(display_cnt==10)
+0092   5800           00697         MOVAR   _display_cnt
+0093   390A           00698         XORAI   0x0a
+0094   E587           00699         JBSET   PFLAG,2
+0095   A000           00700         GOTO    _00482_DS_
+                      00701 ;       .line   651; "demo.c"   if(Flag_m2){ValueM_C2;}                 
+0096   E400           00702         JBSET   _Flag_m,2
+0097   A000           00703         GOTO    _00482_DS_
+0098   3C08           00704         MOVAI   0x08
+0099   5600           00705         MOVRA   _OEP1
+009A   CE00           00706         BSET    _OEP1bits,7
+009B   C400           00707         BSET    _OEP1bits,2
+009C   CE00           00708         BSET    _IOP1bits,7
+009D   D400           00709         BCLR    _IOP1bits,2
+009E                  00710 _00482_DS_
+                      00711 ;       .line   653; "demo.c"   if(display_cnt==11)
+009E   5800           00712         MOVAR   _display_cnt
+009F   390B           00713         XORAI   0x0b
+00A0   E587           00714         JBSET   PFLAG,2
+00A1   A000           00715         GOTO    _00486_DS_
+                      00716 ;       .line   655; "demo.c"   if(Flag_m3){ValueM_D2;}                 
+00A2   E600           00717         JBSET   _Flag_m,3
+00A3   A000           00718         GOTO    _00486_DS_
+00A4   3C08           00719         MOVAI   0x08
+00A5   5600           00720         MOVRA   _OEP1
+00A6   CC00           00721         BSET    _OEP1bits,6
+00A7   CE00           00722         BSET    _OEP1bits,7
+00A8   CC00           00723         BSET    _IOP1bits,6
+00A9   DE00           00724         BCLR    _IOP1bits,7
+00AA                  00725 _00486_DS_
+                      00726 ;       .line   657; "demo.c"   if(display_cnt==12)
+00AA   5800           00727         MOVAR   _display_cnt
+00AB   390C           00728         XORAI   0x0c
+00AC   E587           00729         JBSET   PFLAG,2
+00AD   A000           00730         GOTO    _00490_DS_
+                      00731 ;       .line   659; "demo.c"   if(Flag_m4){ValueM_E2;}                 
+00AE   E800           00732         JBSET   _Flag_m,4
+00AF   A000           00733         GOTO    _00490_DS_
+00B0   3C08           00734         MOVAI   0x08
+00B1   5600           00735         MOVRA   _OEP1
+00B2   C200           00736         BSET    _OEP1bits,1
+00B3   CC00           00737         BSET    _OEP1bits,6
+00B4   C200           00738         BSET    _IOP1bits,1
+00B5   DC00           00739         BCLR    _IOP1bits,6
+00B6                  00740 _00490_DS_
+                      00741 ;       .line   661; "demo.c"   if(display_cnt==13)
+00B6   5800           00742         MOVAR   _display_cnt
+00B7   390D           00743         XORAI   0x0d
+00B8   E587           00744         JBSET   PFLAG,2
+00B9   A000           00745         GOTO    _00494_DS_
+                      00746 ;       .line   663; "demo.c"   if(Flag_m5){ValueM_F2;}                 
+00BA   EA00           00747         JBSET   _Flag_m,5
+00BB   A000           00748         GOTO    _00494_DS_
+00BC   3C08           00749         MOVAI   0x08
+00BD   5600           00750         MOVRA   _OEP1
+00BE   CE00           00751         BSET    _OEP1bits,7
+00BF   CC00           00752         BSET    _OEP1bits,6
+00C0   CE00           00753         BSET    _IOP1bits,7
+00C1   DC00           00754         BCLR    _IOP1bits,6
+00C2                  00755 _00494_DS_
+                      00756 ;       .line   665; "demo.c"   if(display_cnt==14)
+00C2   5800           00757         MOVAR   _display_cnt
+00C3   390E           00758         XORAI   0x0e
+00C4   E587           00759         JBSET   PFLAG,2
+00C5   A000           00760         GOTO    _00498_DS_
+                      00761 ;       .line   667; "demo.c"   if(Flag_m6){ValueM_G2;}                 
+00C6   EC00           00762         JBSET   _Flag_m,6
+00C7   A000           00763         GOTO    _00498_DS_
+00C8   3C08           00764         MOVAI   0x08
+00C9   5600           00765         MOVRA   _OEP1
+00CA   C400           00766         BSET    _OEP1bits,2
+00CB   CC00           00767         BSET    _OEP1bits,6
+00CC   C400           00768         BSET    _IOP1bits,2
+00CD   DC00           00769         BCLR    _IOP1bits,6
+00CE                  00770 _00498_DS_
+                      00771 ;       .line   669; "demo.c"   if(display_cnt==15)
+00CE   5800           00772         MOVAR   _display_cnt
+00CF   390F           00773         XORAI   0x0f
+00D0   E587           00774         JBSET   PFLAG,2
+00D1   A000           00775         GOTO    _00503_DS_
+                      00776 ;       .line   671; "demo.c"   if((Current_flag==0)||F_Current_0)
+00D2   E400           00777         JBSET   _Flag1,2
+00D3   A000           00778         GOTO    _00499_DS_
+00D4   EC00           00779         JBSET   _Flag1,6
+00D5   A000           00780         GOTO    _00503_DS_
+00D6                  00781 _00499_DS_
+                      00782 ;       .line   672; "demo.c"   {ValueM_DP2;}                   
+00D6   3C08           00783         MOVAI   0x08
+00D7   5600           00784         MOVRA   _OEP1
+00D8   CC00           00785         BSET    _OEP1bits,6
+00D9   CA00           00786         BSET    _OEP1bits,5
+00DA   CC00           00787         BSET    _IOP1bits,6
+00DB   DA00           00788         BCLR    _IOP1bits,5
+00DC                  00789 _00503_DS_
+                      00790 ;       .line   675; "demo.c"   if(display_cnt==16)
+00DC   5800           00791         MOVAR   _display_cnt
+00DD   3910           00792         XORAI   0x10
+00DE   E587           00793         JBSET   PFLAG,2
+00DF   A000           00794         GOTO    _00507_DS_
+                      00795 ;       .line   677; "demo.c"   if(Flag_h0){ValueH_A3;}                 
+00E0   E000           00796         JBSET   _Flag_h,0
+00E1   A000           00797         GOTO    _00507_DS_
+00E2   3C08           00798         MOVAI   0x08
+00E3   5600           00799         MOVRA   _OEP1
+00E4   C800           00800         BSET    _OEP1bits,4
+00E5   CC00           00801         BSET    _OEP1bits,6
+00E6   C800           00802         BSET    _IOP1bits,4
+00E7   DC00           00803         BCLR    _IOP1bits,6
+00E8                  00804 _00507_DS_
+                      00805 ;       .line   679; "demo.c"   if(display_cnt==17)
+00E8   5800           00806         MOVAR   _display_cnt
+00E9   3911           00807         XORAI   0x11
+00EA   E587           00808         JBSET   PFLAG,2
+00EB   A000           00809         GOTO    _00511_DS_
+                      00810 ;       .line   681; "demo.c"   if(Flag_h1){ValueH_B3;}                 
+00EC   E200           00811         JBSET   _Flag_h,1
+00ED   A000           00812         GOTO    _00511_DS_
+00EE   3C08           00813         MOVAI   0x08
+00EF   5600           00814         MOVRA   _OEP1
+00F0   C800           00815         BSET    _OEP1bits,4
+00F1   CE00           00816         BSET    _OEP1bits,7
+00F2   C800           00817         BSET    _IOP1bits,4
+00F3   DE00           00818         BCLR    _IOP1bits,7
+00F4                  00819 _00511_DS_
+                      00820 ;       .line   683; "demo.c"   if(display_cnt==18)
+00F4   5800           00821         MOVAR   _display_cnt
+00F5   3912           00822         XORAI   0x12
+00F6   E587           00823         JBSET   PFLAG,2
+00F7   A000           00824         GOTO    _00515_DS_
+                      00825 ;       .line   685; "demo.c"   if(Flag_h2){ValueH_C3;}                 
+00F8   E400           00826         JBSET   _Flag_h,2
+00F9   A000           00827         GOTO    _00515_DS_
+00FA   3C08           00828         MOVAI   0x08
+00FB   5600           00829         MOVRA   _OEP1
+00FC   C400           00830         BSET    _OEP1bits,2
+00FD   C800           00831         BSET    _OEP1bits,4
+00FE   C400           00832         BSET    _IOP1bits,2
+00FF   D800           00833         BCLR    _IOP1bits,4
+0100                  00834 _00515_DS_
+                      00835 ;       .line   687; "demo.c"   if(display_cnt==19)
+0100   5800           00836         MOVAR   _display_cnt
+0101   3913           00837         XORAI   0x13
+0102   E587           00838         JBSET   PFLAG,2
+0103   A000           00839         GOTO    _00519_DS_
+                      00840 ;       .line   689; "demo.c"   if(Flag_h3){ValueH_D3;}                 
+0104   E600           00841         JBSET   _Flag_h,3
+0105   A000           00842         GOTO    _00519_DS_
+0106   3C08           00843         MOVAI   0x08
+0107   5600           00844         MOVRA   _OEP1
+0108   C800           00845         BSET    _OEP1bits,4
+0109   C200           00846         BSET    _OEP1bits,1
+010A   C800           00847         BSET    _IOP1bits,4
+010B   D200           00848         BCLR    _IOP1bits,1
+010C                  00849 _00519_DS_
+                      00850 ;       .line   691; "demo.c"   if(display_cnt==20)
+010C   5800           00851         MOVAR   _display_cnt
+010D   3914           00852         XORAI   0x14
+010E   E587           00853         JBSET   PFLAG,2
+010F   A000           00854         GOTO    _00523_DS_
+                      00855 ;       .line   693; "demo.c"   if(Flag_h4){ValueH_E3;}                 
+0110   E800           00856         JBSET   _Flag_h,4
+0111   A000           00857         GOTO    _00523_DS_
+0112   3C08           00858         MOVAI   0x08
+0113   5600           00859         MOVRA   _OEP1
+0114   C800           00860         BSET    _OEP1bits,4
+0115   C400           00861         BSET    _OEP1bits,2
+0116   C800           00862         BSET    _IOP1bits,4
+0117   D400           00863         BCLR    _IOP1bits,2
+0118                  00864 _00523_DS_
+                      00865 ;       .line   695; "demo.c"   if(display_cnt==21)
+0118   5800           00866         MOVAR   _display_cnt
+0119   3915           00867         XORAI   0x15
+011A   E587           00868         JBSET   PFLAG,2
+011B   A000           00869         GOTO    _00527_DS_
+                      00870 ;       .line   697; "demo.c"   if(Flag_h5){ValueH_F3;}                 
+011C   EA00           00871         JBSET   _Flag_h,5
+011D   A000           00872         GOTO    _00527_DS_
+011E   3C08           00873         MOVAI   0x08
+011F   5600           00874         MOVRA   _OEP1
+0120   CC00           00875         BSET    _OEP1bits,6
+0121   C800           00876         BSET    _OEP1bits,4
+0122   CC00           00877         BSET    _IOP1bits,6
+0123   D800           00878         BCLR    _IOP1bits,4
+0124                  00879 _00527_DS_
+                      00880 ;       .line   699; "demo.c"   if(display_cnt==22)
+0124   5800           00881         MOVAR   _display_cnt
+0125   3916           00882         XORAI   0x16
+0126   E587           00883         JBSET   PFLAG,2
+0127   A000           00884         GOTO    _00531_DS_
+                      00885 ;       .line   701; "demo.c"   if(Flag_h6){ValueH_G3;}                 
+0128   EC00           00886         JBSET   _Flag_h,6
+0129   A000           00887         GOTO    _00531_DS_
+012A   3C08           00888         MOVAI   0x08
+012B   5600           00889         MOVRA   _OEP1
+012C   CE00           00890         BSET    _OEP1bits,7
+012D   C800           00891         BSET    _OEP1bits,4
+012E   CE00           00892         BSET    _IOP1bits,7
+012F   D800           00893         BCLR    _IOP1bits,4
+0130                  00894 _00531_DS_
+                      00895 ;       .line   703; "demo.c"   if(display_cnt==23)
+0130   5800           00896         MOVAR   _display_cnt
+0131   3917           00897         XORAI   0x17
+0132   E587           00898         JBSET   PFLAG,2
+0133   A000           00899         GOTO    _00538_DS_
+                      00900 ;       .line   705; "demo.c"   if(Current_flag&&(F_Current_0==0))
+0134   E400           00901         JBSET   _Flag1,2
+0135   A000           00902         GOTO    _00533_DS_
+0136   FC00           00903         JBCLR   _Flag1,6
+0137   A000           00904         GOTO    _00533_DS_
+                      00905 ;       .line   707; "demo.c"   ValueH_DP3;                                     
+0138   3C08           00906         MOVAI   0x08
+0139   5600           00907         MOVRA   _OEP1
+013A   C800           00908         BSET    _OEP1bits,4
+013B   CA00           00909         BSET    _OEP1bits,5
+013C   C800           00910         BSET    _IOP1bits,4
+013D   DA00           00911         BCLR    _IOP1bits,5
+013E                  00912 _00533_DS_
+                      00913 ;       .line   709; "demo.c"   display_cnt=0;                          
+013E   7600           00914         CLRR    _display_cnt
+013F                  00915 _00538_DS_
+                      00916 ;       .line   720; "demo.c"   __endasm;
+013F   4400           00917         swapar _StatusBuf
+0140   5600           00918         movra _PFLAG
+0141   4600           00919         swapr _ABuf
+0142   4400           00920         swapar _ABuf
+                      00921         
+0143                  00922 END_OF_INTERRUPT
+0143   000D           00923         RETIE   
+                      00924 
+                      00925 ;--------------------------------------------------------
+                      00926 ; code
+                      00927 ;--------------------------------------------------------
+                      00928 code_demo       code
+                      00929 ;***
+                      00930 ;  pBlock Stats: dbName = M
+                      00931 ;***
+                      00932 ;entry:  _main  ;Function start
+                      00933 ; 2 exit points
+                      00934 ;has an exit
+                      00935 ;functions called:
+                      00936 ;   _Clr_Ram
+                      00937 ;   _Init_Sys
+                      00938 ;   _Display_led
+                      00939 ;   _Init_timer
+                      00940 ;   _DC_DET
+                      00941 ;   _Voltage_AD
+                      00942 ;   _AD_process
+                      00943 ;   _Voltage_process
+                      00944 ;   _Voltage_Data_process
+                      00945 ;   _Voltage_Data
+                      00946 ;   _LED_state
+                      00947 ;   _Display_count
+                      00948 ;   _Display_led
+                      00949 ;   _Current_AD
+                      00950 ;   _AD_process
+                      00951 ;   _Current_process
+                      00952 ;   _Current_Data_process
+                      00953 ;   _Current_Data
+                      00954 ;   _Display_count
+                      00955 ;   _Display_led
+                      00956 ;   _Voltage_AD
+                      00957 ;   _AD_process
+                      00958 ;   _Voltage_process
+                      00959 ;   _Voltage_Data_process
+                      00960 ;   _Voltage_Data
+                      00961 ;   _LED_state
+                      00962 ;   _Display_count
+                      00963 ;   _Display_led
+                      00964 ;   _Charge_AD
+                      00965 ;   _AD_process
+                      00966 ;   _Charge_process
+                      00967 ;   _Voltage_Data_process
+                      00968 ;   _Charge_Data
+                      00969 ;   _Display_count
+                      00970 ;   _Display_led
+                      00971 ;   _Clr_Ram
+                      00972 ;   _Init_Sys
+                      00973 ;   _Display_led
+                      00974 ;   _Init_timer
+                      00975 ;   _DC_DET
+                      00976 ;   _Voltage_AD
+                      00977 ;   _AD_process
+                      00978 ;   _Voltage_process
+                      00979 ;   _Voltage_Data_process
+                      00980 ;   _Voltage_Data
+                      00981 ;   _LED_state
+                      00982 ;   _Display_count
+                      00983 ;   _Display_led
+                      00984 ;   _Current_AD
+                      00985 ;   _AD_process
+                      00986 ;   _Current_process
+                      00987 ;   _Current_Data_process
+                      00988 ;   _Current_Data
+                      00989 ;   _Display_count
+                      00990 ;   _Display_led
+                      00991 ;   _Voltage_AD
+                      00992 ;   _AD_process
+                      00993 ;   _Voltage_process
+                      00994 ;   _Voltage_Data_process
+                      00995 ;   _Voltage_Data
+                      00996 ;   _LED_state
+                      00997 ;   _Display_count
+                      00998 ;   _Display_led
+                      00999 ;   _Charge_AD
+                      01000 ;   _AD_process
+                      01001 ;   _Charge_process
+                      01002 ;   _Voltage_Data_process
+                      01003 ;   _Charge_Data
+                      01004 ;   _Display_count
+                      01005 ;   _Display_led
+                      01006 ;; Starting pCode block
+0000                  01007 _main   ;Function start
+                      01008 ; 2 exit points
+                      01009 ;       .line   510; "demo.c"   Clr_Ram(); 
+0000   8000           01010         CALL    _Clr_Ram
+                      01011 ;       .line   511; "demo.c"   Init_Sys();
+0001   8000           01012         CALL    _Init_Sys
+                      01013 ;       .line   512; "demo.c"   Display_led();
+0002   8000           01014         CALL    _Display_led
+                      01015 ;       .line   513; "demo.c"   Init_timer();
+0003   8000           01016         CALL    _Init_timer
+0004                  01017 _00434_DS_
+                      01018 ;       .line   517; "demo.c"   if(F_1S)
+0004   E800           01019         JBSET   _Flag1,4
+0005   A000           01020         GOTO    _00434_DS_
+                      01021 ;       .line   519; "demo.c"   F_1S=0;
+0006   D800           01022         BCLR    _Flag1,4
+                      01023 ;       .line   520; "demo.c"   DC_DET();       
+0007   8000           01024         CALL    _DC_DET
+                      01025 ;       .line   521; "demo.c"   if(Voltage_flag)                  
+0008   E200           01026         JBSET   _Flag1,1
+0009   A000           01027         GOTO    _00429_DS_
+                      01028 ;       .line   523; "demo.c"   R_Current_cnt=0;
+000A   7600           01029         CLRR    _R_Current_cnt
+                      01030 ;       .line   524; "demo.c"   F_Current_0=0;
+000B   DC00           01031         BCLR    _Flag1,6
+                      01032 ;       .line   525; "demo.c"   Voltage_AD();
+000C   8000           01033         CALL    _Voltage_AD
+                      01034 ;       .line   526; "demo.c"   AD_process();
+000D   8000           01035         CALL    _AD_process
+                      01036 ;       .line   527; "demo.c"   Voltage_process();  
+000E   8000           01037         CALL    _Voltage_process
+                      01038 ;       .line   528; "demo.c"   Voltage_Data_process();
+000F   8000           01039         CALL    _Voltage_Data_process
+                      01040 ;       .line   529; "demo.c"   Voltage_Data();
+0010   8000           01041         CALL    _Voltage_Data
+                      01042 ;       .line   530; "demo.c"   LED_state();
+0011   8000           01043         CALL    _LED_state
+                      01044 ;       .line   531; "demo.c"   Display_count();                        
+0012   8000           01045         CALL    _Display_count
+                      01046 ;       .line   532; "demo.c"   Display_led();
+0013   8000           01047         CALL    _Display_led
+0014   A000           01048         GOTO    _00434_DS_
+0015                  01049 _00429_DS_
+                      01050 ;       .line   536; "demo.c"   if(Current_flag)
+0015   E400           01051         JBSET   _Flag1,2
+0016   A000           01052         GOTO    _00426_DS_
+                      01053 ;       .line   538; "demo.c"   R_ad_channel++;
+0017   6600           01054         INCR    _R_ad_channel
+                      01055 ;;unsigned compare: left < lit(0x3=3), size=1
+                      01056 ;       .line   539; "demo.c"   if(R_ad_channel<3)
+0018   3C03           01057         MOVAI   0x03
+0019   4800           01058         RSUBAR  _R_ad_channel
+001A   F187           01059         JBCLR   PFLAG,0
+001B   A000           01060         GOTO    _00423_DS_
+                      01061 ;;genSkipc:3195: created from rifx:00DE608C
+                      01062 ;       .line   541; "demo.c"   Current_AD();
+001C   8000           01063         CALL    _Current_AD
+                      01064 ;       .line   542; "demo.c"   AD_process();
+001D   8000           01065         CALL    _AD_process
+                      01066 ;       .line   543; "demo.c"   Current_process();  
+001E   8000           01067         CALL    _Current_process
+                      01068 ;       .line   544; "demo.c"   Current_Data_process();
+001F   8000           01069         CALL    _Current_Data_process
+                      01070 ;       .line   545; "demo.c"   Current_Data();
+0020   8000           01071         CALL    _Current_Data
+                      01072 ;       .line   546; "demo.c"   if(F_Current_0==0)
+0021   FC00           01073         JBCLR   _Flag1,6
+0022   A000           01074         GOTO    _00434_DS_
+                      01075 ;       .line   548; "demo.c"   Display_count();                        
+0023   8000           01076         CALL    _Display_count
+                      01077 ;       .line   549; "demo.c"   Display_led();
+0024   8000           01078         CALL    _Display_led
+0025   A000           01079         GOTO    _00434_DS_
+0026                  01080 _00423_DS_
+                      01081 ;       .line   554; "demo.c"   Voltage_AD();
+0026   8000           01082         CALL    _Voltage_AD
+                      01083 ;       .line   555; "demo.c"   R_ad_channel=0;
+0027   7600           01084         CLRR    _R_ad_channel
+                      01085 ;       .line   556; "demo.c"   AD_process();
+0028   8000           01086         CALL    _AD_process
+                      01087 ;       .line   557; "demo.c"   Voltage_process();  
+0029   8000           01088         CALL    _Voltage_process
+                      01089 ;       .line   558; "demo.c"   Voltage_Data_process();
+002A   8000           01090         CALL    _Voltage_Data_process
+                      01091 ;       .line   559; "demo.c"   Voltage_Data();
+002B   8000           01092         CALL    _Voltage_Data
+                      01093 ;       .line   560; "demo.c"   LED_state();
+002C   8000           01094         CALL    _LED_state
+                      01095 ;       .line   561; "demo.c"   if(F_Current_0)
+002D   EC00           01096         JBSET   _Flag1,6
+002E   A000           01097         GOTO    _00434_DS_
+                      01098 ;       .line   563; "demo.c"   Display_count();                        
+002F   8000           01099         CALL    _Display_count
+                      01100 ;       .line   564; "demo.c"   Display_led();
+0030   8000           01101         CALL    _Display_led
+0031   A000           01102         GOTO    _00434_DS_
+0032                  01103 _00426_DS_
+                      01104 ;       .line   571; "demo.c"   Charge_AD();
+0032   8000           01105         CALL    _Charge_AD
+                      01106 ;       .line   572; "demo.c"   AD_process();  
+0033   8000           01107         CALL    _AD_process
+                      01108 ;       .line   573; "demo.c"   Charge_process();
+0034   8000           01109         CALL    _Charge_process
+                      01110 ;       .line   574; "demo.c"   Voltage_Data_process();
+0035   8000           01111         CALL    _Voltage_Data_process
+                      01112 ;       .line   575; "demo.c"   Charge_Data();
+0036   8000           01113         CALL    _Charge_Data
+                      01114 ;       .line   576; "demo.c"   Display_count();                        
+0037   8000           01115         CALL    _Display_count
+                      01116 ;       .line   577; "demo.c"   Display_led();
+0038   8000           01117         CALL    _Display_led
+0039   A000           01118         GOTO    _00434_DS_
+003A   000C           01119         RETURN  
+                      01120 ; exit point of _main
+                      01121 
+                      01122 ;***
+                      01123 ;  pBlock Stats: dbName = C
+                      01124 ;***
+                      01125 ;entry:  _Display_delay ;Function start
+                      01126 ; 2 exit points
+                      01127 ;has an exit
+                      01128 ;3 compiler assigned registers:
+                      01129 ;   r0x1026
+                      01130 ;   STK00
+                      01131 ;   r0x1027
+                      01132 ;; Starting pCode block
+003B                  01133 _Display_delay  ;Function start
+                      01134 ; 2 exit points
+                      01135 ;       .line   496; "demo.c"   void Display_delay(uint delay1)
+003B   5600           01136         MOVRA   r0x1026
+003C   5800           01137         MOVAR   STK00
+003D   5600           01138         MOVRA   r0x1027
+                      01139 ;       .line   498; "demo.c"   for(temp=0;temp<delay1;temp++)
+003E   7600           01140         CLRR    _temp
+003F   7600           01141         CLRR    (_temp + 1)
+0040                  01142 _00403_DS_
+0040   5800           01143         MOVAR   r0x1026
+0041   4800           01144         RSUBAR  (_temp + 1)
+0042   E587           01145         JBSET   PFLAG,2
+0043   A000           01146         GOTO    _00413_DS_
+0044   5800           01147         MOVAR   r0x1027
+0045   4800           01148         RSUBAR  _temp
+0046                  01149 _00413_DS_
+0046   F187           01150         JBCLR   PFLAG,0
+0047   A000           01151         GOTO    _00407_DS_
+                      01152 ;;genSkipc:3195: created from rifx:00DE608C
+0048   6600           01153         INCR    _temp
+0049   F587           01154         JBCLR   PFLAG,2
+004A   6600           01155         INCR    (_temp + 1)
+004B   A000           01156         GOTO    _00403_DS_
+004C                  01157 _00407_DS_
+004C   000C           01158         RETURN  
+                      01159 ; exit point of _Display_delay
+                      01160 
+                      01161 ;***
+                      01162 ;  pBlock Stats: dbName = C
+                      01163 ;***
+                      01164 ;entry:  _LED_state     ;Function start
+                      01165 ; 2 exit points
+                      01166 ;has an exit
+                      01167 ;; Starting pCode block
+004D                  01168 _LED_state      ;Function start
+                      01169 ; 2 exit points
+                      01170 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01171 ;;unsigned compare: left >= lit(0x95=149), size=2
+                      01172 ;       .line   460; "demo.c"   if((ADL>148)||(ADL<109))
+004D   3C00           01173         MOVAI   0x00
+004E   4800           01174         RSUBAR  (_ADL + 1)
+004F   E587           01175         JBSET   PFLAG,2
+0050   A000           01176         GOTO    _00394_DS_
+0051   3C95           01177         MOVAI   0x95
+0052   4800           01178         RSUBAR  _ADL
+0053                  01179 _00394_DS_
+0053   F187           01180         JBCLR   PFLAG,0
+0054   A000           01181         GOTO    _00380_DS_
+                      01182 ;;genSkipc:3195: created from rifx:00DE608C
+                      01183 ;;unsigned compare: left < lit(0x6D=109), size=2
+0055   3C00           01184         MOVAI   0x00
+0056   4800           01185         RSUBAR  (_ADL + 1)
+0057   E587           01186         JBSET   PFLAG,2
+0058   A000           01187         GOTO    _00395_DS_
+0059   3C6D           01188         MOVAI   0x6d
+005A   4800           01189         RSUBAR  _ADL
+005B                  01190 _00395_DS_
+005B   F187           01191         JBCLR   PFLAG,0
+005C   A000           01192         GOTO    _00381_DS_
+                      01193 ;;genSkipc:3195: created from rifx:00DE608C
+005D                  01194 _00380_DS_
+                      01195 ;       .line   462; "demo.c"   P_GREEN=ON;
+005D   C600           01196         BSET    _IOP1bits,3
+                      01197 ;       .line   463; "demo.c"   P_BULE=OFF;
+005E   D600           01198         BCLR    _IOP0bits,3
+                      01199 ;       .line   464; "demo.c"   F_flash=1;      
+005F   CE00           01200         BSET    _Flag1,7
+0060   A000           01201         GOTO    _00384_DS_
+                      01202 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01203 ;;unsigned compare: left >= lit(0x84=132), size=2
+0061                  01204 _00381_DS_
+                      01205 ;       .line   466; "demo.c"   else if(ADL>131)
+0061   3C00           01206         MOVAI   0x00
+0062   4800           01207         RSUBAR  (_ADL + 1)
+0063   E587           01208         JBSET   PFLAG,2
+0064   A000           01209         GOTO    _00396_DS_
+0065   3C84           01210         MOVAI   0x84
+0066   4800           01211         RSUBAR  _ADL
+0067                  01212 _00396_DS_
+0067   E187           01213         JBSET   PFLAG,0
+0068   A000           01214         GOTO    _00378_DS_
+                      01215 ;;genSkipc:3195: created from rifx:00DE608C
+                      01216 ;       .line   468; "demo.c"   P_BULE=OFF;
+0069   D600           01217         BCLR    _IOP0bits,3
+                      01218 ;       .line   469; "demo.c"   P_RED=OFF;
+006A   D800           01219         BCLR    _IOP0bits,4
+                      01220 ;       .line   470; "demo.c"   P_GREEN=OFF;
+006B   D600           01221         BCLR    _IOP1bits,3
+                      01222 ;       .line   471; "demo.c"   F_flash=0;      
+006C   DE00           01223         BCLR    _Flag1,7
+006D   A000           01224         GOTO    _00384_DS_
+                      01225 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01226 ;;unsigned compare: left >= lit(0x77=119), size=2
+006E                  01227 _00378_DS_
+                      01228 ;       .line   473; "demo.c"   else if(ADL>118)
+006E   3C00           01229         MOVAI   0x00
+006F   4800           01230         RSUBAR  (_ADL + 1)
+0070   E587           01231         JBSET   PFLAG,2
+0071   A000           01232         GOTO    _00397_DS_
+0072   3C77           01233         MOVAI   0x77
+0073   4800           01234         RSUBAR  _ADL
+0074                  01235 _00397_DS_
+0074   E187           01236         JBSET   PFLAG,0
+0075   A000           01237         GOTO    _00375_DS_
+                      01238 ;;genSkipc:3195: created from rifx:00DE608C
+                      01239 ;       .line   475; "demo.c"   P_GREEN=ON;
+0076   C600           01240         BSET    _IOP1bits,3
+                      01241 ;       .line   476; "demo.c"   P_RED=OFF;
+0077   D800           01242         BCLR    _IOP0bits,4
+                      01243 ;       .line   477; "demo.c"   P_BULE=ON;
+0078   C600           01244         BSET    _IOP0bits,3
+                      01245 ;       .line   478; "demo.c"   F_flash=0;      
+0079   DE00           01246         BCLR    _Flag1,7
+007A   A000           01247         GOTO    _00384_DS_
+                      01248 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01249 ;;unsigned compare: left >= lit(0x6D=109), size=2
+007B                  01250 _00375_DS_
+                      01251 ;       .line   480; "demo.c"   else if(ADL>108)
+007B   3C00           01252         MOVAI   0x00
+007C   4800           01253         RSUBAR  (_ADL + 1)
+007D   E587           01254         JBSET   PFLAG,2
+007E   A000           01255         GOTO    _00398_DS_
+007F   3C6D           01256         MOVAI   0x6d
+0080   4800           01257         RSUBAR  _ADL
+0081                  01258 _00398_DS_
+0081   E187           01259         JBSET   PFLAG,0
+0082   A000           01260         GOTO    _00384_DS_
+                      01261 ;;genSkipc:3195: created from rifx:00DE608C
+                      01262 ;       .line   482; "demo.c"   P_BULE=OFF;
+0083   D600           01263         BCLR    _IOP0bits,3
+                      01264 ;       .line   483; "demo.c"   P_GREEN=ON;
+0084   C600           01265         BSET    _IOP1bits,3
+                      01266 ;       .line   484; "demo.c"   P_RED=ON;
+0085   C800           01267         BSET    _IOP0bits,4
+                      01268 ;       .line   485; "demo.c"   F_flash=0;      
+0086   DE00           01269         BCLR    _Flag1,7
+0087                  01270 _00384_DS_
+0087   000C           01271         RETURN  
+                      01272 ; exit point of _LED_state
+                      01273 
+                      01274 ;***
+                      01275 ;  pBlock Stats: dbName = C
+                      01276 ;***
+                      01277 ;entry:  _Display_led   ;Function start
+                      01278 ; 2 exit points
+                      01279 ;has an exit
+                      01280 ;; Starting pCode block
+0088                  01281 _Display_led    ;Function start
+                      01282 ; 2 exit points
+                      01283 ;       .line   412; "demo.c"   if(Voltage_L==1){ValueL_1;}             
+0088   5800           01284         MOVAR   _Voltage_L
+0089   3901           01285         XORAI   0x01
+008A   E587           01286         JBSET   PFLAG,2
+008B   A000           01287         GOTO    _00300_DS_
+                      01288 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+008C   3C06           01289         MOVAI   0x06
+008D   5600           01290         MOVRA   (_Flag_l + 0)
+008E                  01291 _00300_DS_
+                      01292 ;       .line   413; "demo.c"   if(Voltage_L==2){ValueL_2;} 
+008E   5800           01293         MOVAR   _Voltage_L
+008F   3902           01294         XORAI   0x02
+0090   E587           01295         JBSET   PFLAG,2
+0091   A000           01296         GOTO    _00302_DS_
+                      01297 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0092   3C5B           01298         MOVAI   0x5b
+0093   5600           01299         MOVRA   (_Flag_l + 0)
+0094                  01300 _00302_DS_
+                      01301 ;       .line   414; "demo.c"   if(Voltage_L==3){ValueL_3;}             
+0094   5800           01302         MOVAR   _Voltage_L
+0095   3903           01303         XORAI   0x03
+0096   E587           01304         JBSET   PFLAG,2
+0097   A000           01305         GOTO    _00304_DS_
+                      01306 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0098   3C4F           01307         MOVAI   0x4f
+0099   5600           01308         MOVRA   (_Flag_l + 0)
+009A                  01309 _00304_DS_
+                      01310 ;       .line   415; "demo.c"   if(Voltage_L==4){ValueL_4;}             
+009A   5800           01311         MOVAR   _Voltage_L
+009B   3904           01312         XORAI   0x04
+009C   E587           01313         JBSET   PFLAG,2
+009D   A000           01314         GOTO    _00306_DS_
+                      01315 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+009E   3C66           01316         MOVAI   0x66
+009F   5600           01317         MOVRA   (_Flag_l + 0)
+00A0                  01318 _00306_DS_
+                      01319 ;       .line   416; "demo.c"   if(Voltage_L==5){ValueL_5;}             
+00A0   5800           01320         MOVAR   _Voltage_L
+00A1   3905           01321         XORAI   0x05
+00A2   E587           01322         JBSET   PFLAG,2
+00A3   A000           01323         GOTO    _00308_DS_
+                      01324 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00A4   3C6D           01325         MOVAI   0x6d
+00A5   5600           01326         MOVRA   (_Flag_l + 0)
+00A6                  01327 _00308_DS_
+                      01328 ;       .line   417; "demo.c"   if(Voltage_L==6){ValueL_6;}             
+00A6   5800           01329         MOVAR   _Voltage_L
+00A7   3906           01330         XORAI   0x06
+00A8   E587           01331         JBSET   PFLAG,2
+00A9   A000           01332         GOTO    _00310_DS_
+                      01333 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00AA   3C7D           01334         MOVAI   0x7d
+00AB   5600           01335         MOVRA   (_Flag_l + 0)
+00AC                  01336 _00310_DS_
+                      01337 ;       .line   418; "demo.c"   if(Voltage_L==7){ValueL_7;}             
+00AC   5800           01338         MOVAR   _Voltage_L
+00AD   3907           01339         XORAI   0x07
+00AE   E587           01340         JBSET   PFLAG,2
+00AF   A000           01341         GOTO    _00312_DS_
+                      01342 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00B0   3C07           01343         MOVAI   0x07
+00B1   5600           01344         MOVRA   (_Flag_l + 0)
+00B2                  01345 _00312_DS_
+                      01346 ;       .line   419; "demo.c"   if(Voltage_L==8){ValueL_8;}             
+00B2   5800           01347         MOVAR   _Voltage_L
+00B3   3908           01348         XORAI   0x08
+00B4   E587           01349         JBSET   PFLAG,2
+00B5   A000           01350         GOTO    _00314_DS_
+                      01351 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00B6   3C7F           01352         MOVAI   0x7f
+00B7   5600           01353         MOVRA   (_Flag_l + 0)
+00B8                  01354 _00314_DS_
+                      01355 ;       .line   420; "demo.c"   if(Voltage_L==9){ValueL_9;}     
+00B8   5800           01356         MOVAR   _Voltage_L
+00B9   3909           01357         XORAI   0x09
+00BA   E587           01358         JBSET   PFLAG,2
+00BB   A000           01359         GOTO    _00316_DS_
+                      01360 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00BC   3C6F           01361         MOVAI   0x6f
+00BD   5600           01362         MOVRA   (_Flag_l + 0)
+00BE                  01363 _00316_DS_
+                      01364 ;       .line   421; "demo.c"   if(Voltage_L==0){ValueL_0;}     
+00BE   3C00           01365         MOVAI   0x00
+00BF   5C00           01366         ORAR    _Voltage_L
+00C0   E587           01367         JBSET   PFLAG,2
+00C1   A000           01368         GOTO    _00318_DS_
+                      01369 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00C2   3C3F           01370         MOVAI   0x3f
+00C3   5600           01371         MOVRA   (_Flag_l + 0)
+00C4                  01372 _00318_DS_
+                      01373 ;       .line   422; "demo.c"   if(Voltage_L==10){ValueL_A;} 
+00C4   5800           01374         MOVAR   _Voltage_L
+00C5   390A           01375         XORAI   0x0a
+00C6   E587           01376         JBSET   PFLAG,2
+00C7   A000           01377         GOTO    _00320_DS_
+                      01378 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00C8   3C77           01379         MOVAI   0x77
+00C9   5600           01380         MOVRA   (_Flag_l + 0)
+00CA                  01381 _00320_DS_
+                      01382 ;       .line   424; "demo.c"   if(Voltage_M==1){ValueM_1;}             
+00CA   5800           01383         MOVAR   _Voltage_M
+00CB   3901           01384         XORAI   0x01
+00CC   E587           01385         JBSET   PFLAG,2
+00CD   A000           01386         GOTO    _00322_DS_
+                      01387 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00CE   3C06           01388         MOVAI   0x06
+00CF   5600           01389         MOVRA   (_Flag_m + 0)
+00D0                  01390 _00322_DS_
+                      01391 ;       .line   425; "demo.c"   if(Voltage_M==2){ValueM_2;} 
+00D0   5800           01392         MOVAR   _Voltage_M
+00D1   3902           01393         XORAI   0x02
+00D2   E587           01394         JBSET   PFLAG,2
+00D3   A000           01395         GOTO    _00324_DS_
+                      01396 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00D4   3C5B           01397         MOVAI   0x5b
+00D5   5600           01398         MOVRA   (_Flag_m + 0)
+00D6                  01399 _00324_DS_
+                      01400 ;       .line   426; "demo.c"   if(Voltage_M==3){ValueM_3;}             
+00D6   5800           01401         MOVAR   _Voltage_M
+00D7   3903           01402         XORAI   0x03
+00D8   E587           01403         JBSET   PFLAG,2
+00D9   A000           01404         GOTO    _00326_DS_
+                      01405 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00DA   3C4F           01406         MOVAI   0x4f
+00DB   5600           01407         MOVRA   (_Flag_m + 0)
+00DC                  01408 _00326_DS_
+                      01409 ;       .line   427; "demo.c"   if(Voltage_M==4){ValueM_4;}             
+00DC   5800           01410         MOVAR   _Voltage_M
+00DD   3904           01411         XORAI   0x04
+00DE   E587           01412         JBSET   PFLAG,2
+00DF   A000           01413         GOTO    _00328_DS_
+                      01414 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00E0   3C66           01415         MOVAI   0x66
+00E1   5600           01416         MOVRA   (_Flag_m + 0)
+00E2                  01417 _00328_DS_
+                      01418 ;       .line   428; "demo.c"   if(Voltage_M==5){ValueM_5;}             
+00E2   5800           01419         MOVAR   _Voltage_M
+00E3   3905           01420         XORAI   0x05
+00E4   E587           01421         JBSET   PFLAG,2
+00E5   A000           01422         GOTO    _00330_DS_
+                      01423 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00E6   3C6D           01424         MOVAI   0x6d
+00E7   5600           01425         MOVRA   (_Flag_m + 0)
+00E8                  01426 _00330_DS_
+                      01427 ;       .line   429; "demo.c"   if(Voltage_M==6){ValueM_6;}             
+00E8   5800           01428         MOVAR   _Voltage_M
+00E9   3906           01429         XORAI   0x06
+00EA   E587           01430         JBSET   PFLAG,2
+00EB   A000           01431         GOTO    _00332_DS_
+                      01432 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00EC   3C7D           01433         MOVAI   0x7d
+00ED   5600           01434         MOVRA   (_Flag_m + 0)
+00EE                  01435 _00332_DS_
+                      01436 ;       .line   430; "demo.c"   if(Voltage_M==7){ValueM_7;}             
+00EE   5800           01437         MOVAR   _Voltage_M
+00EF   3907           01438         XORAI   0x07
+00F0   E587           01439         JBSET   PFLAG,2
+00F1   A000           01440         GOTO    _00334_DS_
+                      01441 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00F2   3C07           01442         MOVAI   0x07
+00F3   5600           01443         MOVRA   (_Flag_m + 0)
+00F4                  01444 _00334_DS_
+                      01445 ;       .line   431; "demo.c"   if(Voltage_M==8){ValueM_8;}             
+00F4   5800           01446         MOVAR   _Voltage_M
+00F5   3908           01447         XORAI   0x08
+00F6   E587           01448         JBSET   PFLAG,2
+00F7   A000           01449         GOTO    _00336_DS_
+                      01450 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00F8   3C7F           01451         MOVAI   0x7f
+00F9   5600           01452         MOVRA   (_Flag_m + 0)
+00FA                  01453 _00336_DS_
+                      01454 ;       .line   432; "demo.c"   if(Voltage_M==9){ValueM_9;}     
+00FA   5800           01455         MOVAR   _Voltage_M
+00FB   3909           01456         XORAI   0x09
+00FC   E587           01457         JBSET   PFLAG,2
+00FD   A000           01458         GOTO    _00338_DS_
+                      01459 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+00FE   3C6F           01460         MOVAI   0x6f
+00FF   5600           01461         MOVRA   (_Flag_m + 0)
+0100                  01462 _00338_DS_
+                      01463 ;       .line   433; "demo.c"   if(Voltage_M==0){ValueM_0;}                     
+0100   3C00           01464         MOVAI   0x00
+0101   5C00           01465         ORAR    _Voltage_M
+0102   E587           01466         JBSET   PFLAG,2
+0103   A000           01467         GOTO    _00340_DS_
+                      01468 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0104   3C3F           01469         MOVAI   0x3f
+0105   5600           01470         MOVRA   (_Flag_m + 0)
+0106                  01471 _00340_DS_
+                      01472 ;       .line   435; "demo.c"   if(Voltage_H==1){ValueH_1;}             
+0106   5800           01473         MOVAR   _Voltage_H
+0107   3901           01474         XORAI   0x01
+0108   E587           01475         JBSET   PFLAG,2
+0109   A000           01476         GOTO    _00342_DS_
+                      01477 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+010A   3C06           01478         MOVAI   0x06
+010B   5600           01479         MOVRA   (_Flag_h + 0)
+010C                  01480 _00342_DS_
+                      01481 ;       .line   436; "demo.c"   if(Voltage_H==2){ValueH_2;} 
+010C   5800           01482         MOVAR   _Voltage_H
+010D   3902           01483         XORAI   0x02
+010E   E587           01484         JBSET   PFLAG,2
+010F   A000           01485         GOTO    _00344_DS_
+                      01486 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0110   3C5B           01487         MOVAI   0x5b
+0111   5600           01488         MOVRA   (_Flag_h + 0)
+0112                  01489 _00344_DS_
+                      01490 ;       .line   437; "demo.c"   if(Voltage_H==3){ValueH_3;}             
+0112   5800           01491         MOVAR   _Voltage_H
+0113   3903           01492         XORAI   0x03
+0114   E587           01493         JBSET   PFLAG,2
+0115   A000           01494         GOTO    _00346_DS_
+                      01495 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0116   3C4F           01496         MOVAI   0x4f
+0117   5600           01497         MOVRA   (_Flag_h + 0)
+0118                  01498 _00346_DS_
+                      01499 ;       .line   438; "demo.c"   if(Voltage_H==4){ValueH_4;}             
+0118   5800           01500         MOVAR   _Voltage_H
+0119   3904           01501         XORAI   0x04
+011A   E587           01502         JBSET   PFLAG,2
+011B   A000           01503         GOTO    _00348_DS_
+                      01504 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+011C   3C66           01505         MOVAI   0x66
+011D   5600           01506         MOVRA   (_Flag_h + 0)
+011E                  01507 _00348_DS_
+                      01508 ;       .line   439; "demo.c"   if(Voltage_H==5){ValueH_5;}             
+011E   5800           01509         MOVAR   _Voltage_H
+011F   3905           01510         XORAI   0x05
+0120   E587           01511         JBSET   PFLAG,2
+0121   A000           01512         GOTO    _00350_DS_
+                      01513 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0122   3C6D           01514         MOVAI   0x6d
+0123   5600           01515         MOVRA   (_Flag_h + 0)
+0124                  01516 _00350_DS_
+                      01517 ;       .line   440; "demo.c"   if(Voltage_H==6){ValueH_6;}             
+0124   5800           01518         MOVAR   _Voltage_H
+0125   3906           01519         XORAI   0x06
+0126   E587           01520         JBSET   PFLAG,2
+0127   A000           01521         GOTO    _00352_DS_
+                      01522 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0128   3C7D           01523         MOVAI   0x7d
+0129   5600           01524         MOVRA   (_Flag_h + 0)
+012A                  01525 _00352_DS_
+                      01526 ;       .line   441; "demo.c"   if(Voltage_H==7){ValueH_7;}             
+012A   5800           01527         MOVAR   _Voltage_H
+012B   3907           01528         XORAI   0x07
+012C   E587           01529         JBSET   PFLAG,2
+012D   A000           01530         GOTO    _00354_DS_
+                      01531 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+012E   3C07           01532         MOVAI   0x07
+012F   5600           01533         MOVRA   (_Flag_h + 0)
+0130                  01534 _00354_DS_
+                      01535 ;       .line   442; "demo.c"   if(Voltage_H==8){ValueH_8;}             
+0130   5800           01536         MOVAR   _Voltage_H
+0131   3908           01537         XORAI   0x08
+0132   E587           01538         JBSET   PFLAG,2
+0133   A000           01539         GOTO    _00356_DS_
+                      01540 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0134   3C7F           01541         MOVAI   0x7f
+0135   5600           01542         MOVRA   (_Flag_h + 0)
+0136                  01543 _00356_DS_
+                      01544 ;       .line   443; "demo.c"   if(Voltage_H==9){ValueH_9;}
+0136   5800           01545         MOVAR   _Voltage_H
+0137   3909           01546         XORAI   0x09
+0138   E587           01547         JBSET   PFLAG,2
+0139   A000           01548         GOTO    _00358_DS_
+                      01549 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+013A   3C6F           01550         MOVAI   0x6f
+013B   5600           01551         MOVRA   (_Flag_h + 0)
+013C                  01552 _00358_DS_
+                      01553 ;       .line   444; "demo.c"   if(Current_flag&&(F_Current_0==0))
+013C   E400           01554         JBSET   _Flag1,2
+013D   A000           01555         GOTO    _00364_DS_
+013E   FC00           01556         JBCLR   _Flag1,6
+013F   A000           01557         GOTO    _00364_DS_
+                      01558 ;       .line   446; "demo.c"   if(Voltage_H==0){ValueH_00;}
+0140   3C00           01559         MOVAI   0x00
+0141   5C00           01560         ORAR    _Voltage_H
+0142   E587           01561         JBSET   PFLAG,2
+0143   A000           01562         GOTO    _00367_DS_
+                      01563 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+0144   3C3F           01564         MOVAI   0x3f
+0145   5600           01565         MOVRA   (_Flag_h + 0)
+0146   A000           01566         GOTO    _00367_DS_
+0147                  01567 _00364_DS_
+                      01568 ;       .line   450; "demo.c"   if(Voltage_H==0){ValueH_0;}
+0147   3C00           01569         MOVAI   0x00
+0148   5C00           01570         ORAR    _Voltage_H
+0149   E587           01571         JBSET   PFLAG,2
+014A   A000           01572         GOTO    _00367_DS_
+                      01573 ;;gen.c:6374: size=0/1, offset=0, AOP_TYPE(res)=8
+014B   7600           01574         CLRR    (_Flag_h + 0)
+014C                  01575 _00367_DS_
+014C   000C           01576         RETURN  
+                      01577 ; exit point of _Display_led
+                      01578 
+                      01579 ;***
+                      01580 ;  pBlock Stats: dbName = C
+                      01581 ;***
+                      01582 ;entry:  _Display_count ;Function start
+                      01583 ; 2 exit points
+                      01584 ;has an exit
+                      01585 ;; Starting pCode block
+014D                  01586 _Display_count  ;Function start
+                      01587 ; 2 exit points
+                      01588 ;       .line   373; "demo.c"   Vol_L=0;
+014D   7600           01589         CLRR    _Vol_L
+                      01590 ;       .line   374; "demo.c"   Vol_M=0;
+014E   7600           01591         CLRR    _Vol_M
+                      01592 ;       .line   375; "demo.c"   Vol_H=0;
+014F   7600           01593         CLRR    _Vol_H
+0150                  01594 _00290_DS_
+                      01595 ;       .line   376; "demo.c"   for(ADL;ADL>0;ADL--)
+0150   5800           01596         MOVAR   _ADL
+0151   5C00           01597         ORAR    (_ADL + 1)
+0152   F587           01598         JBCLR   PFLAG,2
+0153   A000           01599         GOTO    _00293_DS_
+                      01600 ;       .line   378; "demo.c"   Vol_L++;
+0154   6600           01601         INCR    _Vol_L
+                      01602 ;       .line   379; "demo.c"   if(Vol_L==10)
+0155   5800           01603         MOVAR   _Vol_L
+0156   390A           01604         XORAI   0x0a
+0157   E587           01605         JBSET   PFLAG,2
+0158   A000           01606         GOTO    _00292_DS_
+                      01607 ;       .line   381; "demo.c"   Vol_L=0;
+0159   7600           01608         CLRR    _Vol_L
+                      01609 ;       .line   382; "demo.c"   Vol_M++;
+015A   6600           01610         INCR    _Vol_M
+                      01611 ;       .line   383; "demo.c"   if(Vol_M==10)
+015B   5800           01612         MOVAR   _Vol_M
+015C   390A           01613         XORAI   0x0a
+015D   E587           01614         JBSET   PFLAG,2
+015E   A000           01615         GOTO    _00292_DS_
+                      01616 ;       .line   385; "demo.c"   Vol_M=0;
+015F   7600           01617         CLRR    _Vol_M
+                      01618 ;       .line   386; "demo.c"   Vol_H++;                                                
+0160   6600           01619         INCR    _Vol_H
+0161                  01620 _00292_DS_
+                      01621 ;       .line   376; "demo.c"   for(ADL;ADL>0;ADL--)
+0161   3CFF           01622         MOVAI   0xff
+0162   7E00           01623         ADDRA   _ADL
+0163   E187           01624         JBSET   PFLAG,0
+0164   6E00           01625         DECR    (_ADL + 1)
+0165   A000           01626         GOTO    _00290_DS_
+0166                  01627 _00293_DS_
+                      01628 ;       .line   391; "demo.c"   if(Current_flag&&(F_Current_0==0))
+0166   E400           01629         JBSET   _Flag1,2
+0167   A000           01630         GOTO    _00287_DS_
+0168   FC00           01631         JBCLR   _Flag1,6
+0169   A000           01632         GOTO    _00287_DS_
+                      01633 ;       .line   394; "demo.c"   Voltage_L=10;
+016A   3C0A           01634         MOVAI   0x0a
+016B   5600           01635         MOVRA   _Voltage_L
+                      01636 ;       .line   395; "demo.c"   Voltage_M=Vol_L;
+016C   5800           01637         MOVAR   _Vol_L
+016D   5600           01638         MOVRA   _Voltage_M
+                      01639 ;       .line   396; "demo.c"   Voltage_H=Vol_M;
+016E   5800           01640         MOVAR   _Vol_M
+016F   5600           01641         MOVRA   _Voltage_H
+0170   A000           01642         GOTO    _00294_DS_
+0171                  01643 _00287_DS_
+                      01644 ;       .line   401; "demo.c"   Voltage_L=Vol_L;
+0171   5800           01645         MOVAR   _Vol_L
+0172   5600           01646         MOVRA   _Voltage_L
+                      01647 ;       .line   402; "demo.c"   Voltage_M=Vol_M;
+0173   5800           01648         MOVAR   _Vol_M
+0174   5600           01649         MOVRA   _Voltage_M
+                      01650 ;       .line   403; "demo.c"   Voltage_H=Vol_H;
+0175   5800           01651         MOVAR   _Vol_H
+0176   5600           01652         MOVRA   _Voltage_H
+0177                  01653 _00294_DS_
+0177   000C           01654         RETURN  
+                      01655 ; exit point of _Display_count
+                      01656 
+                      01657 ;***
+                      01658 ;  pBlock Stats: dbName = C
+                      01659 ;***
+                      01660 ;entry:  _Charge_Data   ;Function start
+                      01661 ; 2 exit points
+                      01662 ;has an exit
+                      01663 ;; Starting pCode block
+0178                  01664 _Charge_Data    ;Function start
+                      01665 ; 2 exit points
+                      01666 ;       .line   365; "demo.c"   }
+0178   000C           01667         RETURN  
+                      01668 ; exit point of _Charge_Data
+                      01669 
+                      01670 ;***
+                      01671 ;  pBlock Stats: dbName = C
+                      01672 ;***
+                      01673 ;entry:  _Current_Data  ;Function start
+                      01674 ; 2 exit points
+                      01675 ;has an exit
+                      01676 ;; Starting pCode block
+0179                  01677 _Current_Data   ;Function start
+                      01678 ; 2 exit points
+                      01679 ;;unsigned compare: left < lit(0x4=4), size=2
+                      01680 ;       .line   341; "demo.c"   if(ADL<4)
+0179   3C00           01681         MOVAI   0x00
+017A   4800           01682         RSUBAR  (_ADL + 1)
+017B   E587           01683         JBSET   PFLAG,2
+017C   A000           01684         GOTO    _00273_DS_
+017D   3C04           01685         MOVAI   0x04
+017E   4800           01686         RSUBAR  _ADL
+017F                  01687 _00273_DS_
+017F   F187           01688         JBCLR   PFLAG,0
+0180   A000           01689         GOTO    _00265_DS_
+                      01690 ;;genSkipc:3195: created from rifx:00DE608C
+                      01691 ;       .line   343; "demo.c"   ADL=0;
+0181   7600           01692         CLRR    _ADL
+0182   7600           01693         CLRR    (_ADL + 1)
+                      01694 ;       .line   344; "demo.c"   R_Current_cnt++;
+0183   6600           01695         INCR    _R_Current_cnt
+                      01696 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01697 ;;unsigned compare: left >= lit(0x5=5), size=1
+                      01698 ;       .line   345; "demo.c"   if(R_Current_cnt>4)
+0184   3C05           01699         MOVAI   0x05
+0185   4800           01700         RSUBAR  _R_Current_cnt
+0186   E187           01701         JBSET   PFLAG,0
+0187   A000           01702         GOTO    _00267_DS_
+                      01703 ;;genSkipc:3195: created from rifx:00DE608C
+                      01704 ;       .line   347; "demo.c"   R_Current_cnt=0;
+0188   7600           01705         CLRR    _R_Current_cnt
+                      01706 ;       .line   348; "demo.c"   F_Current_0=1;
+0189   CC00           01707         BSET    _Flag1,6
+018A   A000           01708         GOTO    _00267_DS_
+018B                  01709 _00265_DS_
+                      01710 ;       .line   354; "demo.c"   R_Current_cnt=0;
+018B   7600           01711         CLRR    _R_Current_cnt
+                      01712 ;       .line   355; "demo.c"   F_Current_0=0;
+018C   DC00           01713         BCLR    _Flag1,6
+018D                  01714 _00267_DS_
+018D   000C           01715         RETURN  
+                      01716 ; exit point of _Current_Data
+                      01717 
+                      01718 ;***
+                      01719 ;  pBlock Stats: dbName = C
+                      01720 ;***
+                      01721 ;entry:  _Voltage_Data  ;Function start
+                      01722 ; 2 exit points
+                      01723 ;has an exit
+                      01724 ;; Starting pCode block
+018E                  01725 _Voltage_Data   ;Function start
+                      01726 ; 2 exit points
+                      01727 ;       .line   334; "demo.c"   }
+018E   000C           01728         RETURN  
+                      01729 ; exit point of _Voltage_Data
+                      01730 
+                      01731 ;***
+                      01732 ;  pBlock Stats: dbName = C
+                      01733 ;***
+                      01734 ;entry:  _Voltage_Data_process  ;Function start
+                      01735 ; 2 exit points
+                      01736 ;has an exit
+                      01737 ;; Starting pCode block
+018F                  01738 _Voltage_Data_process   ;Function start
+                      01739 ; 2 exit points
+                      01740 ;       .line   279; "demo.c"   if(ADL_old2>ADL)
+018F   5800           01741         MOVAR   (_ADL_old2 + 1)
+0190   4800           01742         RSUBAR  (_ADL + 1)
+0191   E587           01743         JBSET   PFLAG,2
+0192   A000           01744         GOTO    _00250_DS_
+0193   5800           01745         MOVAR   _ADL_old2
+0194   4800           01746         RSUBAR  _ADL
+0195                  01747 _00250_DS_
+0195   F187           01748         JBCLR   PFLAG,0
+0196   A000           01749         GOTO    _00219_DS_
+                      01750 ;;genSkipc:3195: created from rifx:00DE608C
+                      01751 ;       .line   281; "demo.c"   R_difference=ADL_old2-ADL;
+0197   5800           01752         MOVAR   _ADL
+0198   4800           01753         RSUBAR  _ADL_old2
+0199   5600           01754         MOVRA   _R_difference
+019A   5800           01755         MOVAR   (_ADL + 1)
+019B   E187           01756         JBSET   PFLAG,0
+019C   6400           01757         INCAR   (_ADL + 1)
+019D   4800           01758         RSUBAR  (_ADL_old2 + 1)
+019E   5600           01759         MOVRA   (_R_difference + 1)
+                      01760 ;       .line   282; "demo.c"   F_plus=0;                       
+019F   DA00           01761         BCLR    _Flag1,5
+01A0   A000           01762         GOTO    _00220_DS_
+01A1                  01763 _00219_DS_
+                      01764 ;       .line   286; "demo.c"   R_difference=ADL-ADL_old2;
+01A1   5800           01765         MOVAR   _ADL_old2
+01A2   4800           01766         RSUBAR  _ADL
+01A3   5600           01767         MOVRA   _R_difference
+01A4   5800           01768         MOVAR   (_ADL_old2 + 1)
+01A5   E187           01769         JBSET   PFLAG,0
+01A6   6400           01770         INCAR   (_ADL_old2 + 1)
+01A7   4800           01771         RSUBAR  (_ADL + 1)
+01A8   5600           01772         MOVRA   (_R_difference + 1)
+                      01773 ;       .line   287; "demo.c"   F_plus=1;   
+01A9   CA00           01774         BSET    _Flag1,5
+01AA                  01775 _00220_DS_
+                      01776 ;       .line   289; "demo.c"   if(R_difference==0)
+01AA   5800           01777         MOVAR   _R_difference
+01AB   5C00           01778         ORAR    (_R_difference + 1)
+01AC   E587           01779         JBSET   PFLAG,2
+01AD   A000           01780         GOTO    _00234_DS_
+                      01781 ;       .line   291; "demo.c"   R_changecnt2=0;                 
+01AE   7600           01782         CLRR    _R_changecnt2
+01AF   A000           01783         GOTO    _00235_DS_
+                      01784 ;;unsigned compare: left < lit(0x2=2), size=2
+01B0                  01785 _00234_DS_
+                      01786 ;       .line   293; "demo.c"   else if(R_difference<2)
+01B0   3C00           01787         MOVAI   0x00
+01B1   4800           01788         RSUBAR  (_R_difference + 1)
+01B2   E587           01789         JBSET   PFLAG,2
+01B3   A000           01790         GOTO    _00251_DS_
+01B4   3C02           01791         MOVAI   0x02
+01B5   4800           01792         RSUBAR  _R_difference
+01B6                  01793 _00251_DS_
+01B6   F187           01794         JBCLR   PFLAG,0
+01B7   A000           01795         GOTO    _00231_DS_
+                      01796 ;;genSkipc:3195: created from rifx:00DE608C
+                      01797 ;       .line   295; "demo.c"   R_changecnt2++;
+01B8   6600           01798         INCR    _R_changecnt2
+                      01799 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01800 ;;unsigned compare: left >= lit(0x6=6), size=1
+                      01801 ;       .line   296; "demo.c"   if(R_changecnt2>5)
+01B9   3C06           01802         MOVAI   0x06
+01BA   4800           01803         RSUBAR  _R_changecnt2
+01BB   E187           01804         JBSET   PFLAG,0
+01BC   A000           01805         GOTO    _00222_DS_
+                      01806 ;;genSkipc:3195: created from rifx:00DE608C
+                      01807 ;       .line   298; "demo.c"   R_changecnt2=0;
+01BD   7600           01808         CLRR    _R_changecnt2
+                      01809 ;       .line   299; "demo.c"   ADL_old2=ADL;
+01BE   5800           01810         MOVAR   _ADL
+01BF   5600           01811         MOVRA   _ADL_old2
+01C0   5800           01812         MOVAR   (_ADL + 1)
+01C1   5600           01813         MOVRA   (_ADL_old2 + 1)
+01C2   A000           01814         GOTO    _00235_DS_
+01C3                  01815 _00222_DS_
+                      01816 ;       .line   303; "demo.c"   ADL=ADL_old2;
+01C3   5800           01817         MOVAR   _ADL_old2
+01C4   5600           01818         MOVRA   _ADL
+01C5   5800           01819         MOVAR   (_ADL_old2 + 1)
+01C6   5600           01820         MOVRA   (_ADL + 1)
+01C7   A000           01821         GOTO    _00235_DS_
+                      01822 ;;unsigned compare: left < lit(0x6=6), size=2
+01C8                  01823 _00231_DS_
+                      01824 ;       .line   306; "demo.c"   else if(R_difference<6)
+01C8   3C00           01825         MOVAI   0x00
+01C9   4800           01826         RSUBAR  (_R_difference + 1)
+01CA   E587           01827         JBSET   PFLAG,2
+01CB   A000           01828         GOTO    _00253_DS_
+01CC   3C06           01829         MOVAI   0x06
+01CD   4800           01830         RSUBAR  _R_difference
+01CE                  01831 _00253_DS_
+01CE   F187           01832         JBCLR   PFLAG,0
+01CF   A000           01833         GOTO    _00228_DS_
+                      01834 ;;genSkipc:3195: created from rifx:00DE608C
+                      01835 ;       .line   308; "demo.c"   R_changecnt2=0;
+01D0   7600           01836         CLRR    _R_changecnt2
+                      01837 ;       .line   309; "demo.c"   if(F_plus)
+01D1   EA00           01838         JBSET   _Flag1,5
+01D2   A000           01839         GOTO    _00225_DS_
+                      01840 ;       .line   311; "demo.c"   ADL=ADL_old2++;
+01D3   5800           01841         MOVAR   _ADL_old2
+01D4   5600           01842         MOVRA   _ADL
+01D5   5800           01843         MOVAR   (_ADL_old2 + 1)
+01D6   5600           01844         MOVRA   (_ADL + 1)
+01D7   6600           01845         INCR    _ADL_old2
+01D8   F587           01846         JBCLR   PFLAG,2
+01D9   6600           01847         INCR    (_ADL_old2 + 1)
+01DA   A000           01848         GOTO    _00235_DS_
+01DB                  01849 _00225_DS_
+                      01850 ;       .line   315; "demo.c"   ADL=ADL_old2--;
+01DB   5800           01851         MOVAR   _ADL_old2
+01DC   5600           01852         MOVRA   _ADL
+01DD   5800           01853         MOVAR   (_ADL_old2 + 1)
+01DE   5600           01854         MOVRA   (_ADL + 1)
+01DF   3CFF           01855         MOVAI   0xff
+01E0   7E00           01856         ADDRA   _ADL_old2
+01E1   E187           01857         JBSET   PFLAG,0
+01E2   6E00           01858         DECR    (_ADL_old2 + 1)
+01E3   A000           01859         GOTO    _00235_DS_
+01E4                  01860 _00228_DS_
+                      01861 ;       .line   322; "demo.c"   R_changecnt2=0;
+01E4   7600           01862         CLRR    _R_changecnt2
+                      01863 ;       .line   323; "demo.c"   ADL_old2=ADL;
+01E5   5800           01864         MOVAR   _ADL
+01E6   5600           01865         MOVRA   _ADL_old2
+01E7   5800           01866         MOVAR   (_ADL + 1)
+01E8   5600           01867         MOVRA   (_ADL_old2 + 1)
+01E9                  01868 _00235_DS_
+                      01869 ;       .line   325; "demo.c"   ADL_old2=ADL;
+01E9   5800           01870         MOVAR   _ADL
+01EA   5600           01871         MOVRA   _ADL_old2
+01EB   5800           01872         MOVAR   (_ADL + 1)
+01EC   5600           01873         MOVRA   (_ADL_old2 + 1)
+01ED   000C           01874         RETURN  
+                      01875 ; exit point of _Voltage_Data_process
+                      01876 
+                      01877 ;***
+                      01878 ;  pBlock Stats: dbName = C
+                      01879 ;***
+                      01880 ;entry:  _Current_Data_process  ;Function start
+                      01881 ; 2 exit points
+                      01882 ;has an exit
+                      01883 ;; Starting pCode block
+01EE                  01884 _Current_Data_process   ;Function start
+                      01885 ; 2 exit points
+                      01886 ;       .line   226; "demo.c"   if(ADL_old>ADL)
+01EE   5800           01887         MOVAR   (_ADL_old + 1)
+01EF   4800           01888         RSUBAR  (_ADL + 1)
+01F0   E587           01889         JBSET   PFLAG,2
+01F1   A000           01890         GOTO    _00210_DS_
+01F2   5800           01891         MOVAR   _ADL_old
+01F3   4800           01892         RSUBAR  _ADL
+01F4                  01893 _00210_DS_
+01F4   F187           01894         JBCLR   PFLAG,0
+01F5   A000           01895         GOTO    _00179_DS_
+                      01896 ;;genSkipc:3195: created from rifx:00DE608C
+                      01897 ;       .line   228; "demo.c"   R_difference=ADL_old-ADL;
+01F6   5800           01898         MOVAR   _ADL
+01F7   4800           01899         RSUBAR  _ADL_old
+01F8   5600           01900         MOVRA   _R_difference
+01F9   5800           01901         MOVAR   (_ADL + 1)
+01FA   E187           01902         JBSET   PFLAG,0
+01FB   6400           01903         INCAR   (_ADL + 1)
+01FC   4800           01904         RSUBAR  (_ADL_old + 1)
+01FD   5600           01905         MOVRA   (_R_difference + 1)
+                      01906 ;       .line   229; "demo.c"   F_plus=0;                       
+01FE   DA00           01907         BCLR    _Flag1,5
+01FF   A000           01908         GOTO    _00180_DS_
+0200                  01909 _00179_DS_
+                      01910 ;       .line   233; "demo.c"   R_difference=ADL-ADL_old;
+0200   5800           01911         MOVAR   _ADL_old
+0201   4800           01912         RSUBAR  _ADL
+0202   5600           01913         MOVRA   _R_difference
+0203   5800           01914         MOVAR   (_ADL_old + 1)
+0204   E187           01915         JBSET   PFLAG,0
+0205   6400           01916         INCAR   (_ADL_old + 1)
+0206   4800           01917         RSUBAR  (_ADL + 1)
+0207   5600           01918         MOVRA   (_R_difference + 1)
+                      01919 ;       .line   234; "demo.c"   F_plus=1;   
+0208   CA00           01920         BSET    _Flag1,5
+0209                  01921 _00180_DS_
+                      01922 ;       .line   236; "demo.c"   if(R_difference==0)
+0209   5800           01923         MOVAR   _R_difference
+020A   5C00           01924         ORAR    (_R_difference + 1)
+020B   E587           01925         JBSET   PFLAG,2
+020C   A000           01926         GOTO    _00194_DS_
+                      01927 ;       .line   238; "demo.c"   R_changecnt=0;          
+020D   7600           01928         CLRR    _R_changecnt
+020E   A000           01929         GOTO    _00195_DS_
+                      01930 ;;unsigned compare: left < lit(0x2=2), size=2
+020F                  01931 _00194_DS_
+                      01932 ;       .line   240; "demo.c"   else if(R_difference<2)
+020F   3C00           01933         MOVAI   0x00
+0210   4800           01934         RSUBAR  (_R_difference + 1)
+0211   E587           01935         JBSET   PFLAG,2
+0212   A000           01936         GOTO    _00211_DS_
+0213   3C02           01937         MOVAI   0x02
+0214   4800           01938         RSUBAR  _R_difference
+0215                  01939 _00211_DS_
+0215   F187           01940         JBCLR   PFLAG,0
+0216   A000           01941         GOTO    _00191_DS_
+                      01942 ;;genSkipc:3195: created from rifx:00DE608C
+                      01943 ;       .line   242; "demo.c"   R_changecnt++;
+0217   6600           01944         INCR    _R_changecnt
+                      01945 ;;swapping arguments (AOP_TYPEs 1/3)
+                      01946 ;;unsigned compare: left >= lit(0x6=6), size=1
+                      01947 ;       .line   243; "demo.c"   if(R_changecnt>5)
+0218   3C06           01948         MOVAI   0x06
+0219   4800           01949         RSUBAR  _R_changecnt
+021A   E187           01950         JBSET   PFLAG,0
+021B   A000           01951         GOTO    _00182_DS_
+                      01952 ;;genSkipc:3195: created from rifx:00DE608C
+                      01953 ;       .line   245; "demo.c"   R_changecnt=0;
+021C   7600           01954         CLRR    _R_changecnt
+                      01955 ;       .line   246; "demo.c"   ADL_old=ADL;
+021D   5800           01956         MOVAR   _ADL
+021E   5600           01957         MOVRA   _ADL_old
+021F   5800           01958         MOVAR   (_ADL + 1)
+0220   5600           01959         MOVRA   (_ADL_old + 1)
+0221   A000           01960         GOTO    _00195_DS_
+0222                  01961 _00182_DS_
+                      01962 ;       .line   250; "demo.c"   ADL=ADL_old;
+0222   5800           01963         MOVAR   _ADL_old
+0223   5600           01964         MOVRA   _ADL
+0224   5800           01965         MOVAR   (_ADL_old + 1)
+0225   5600           01966         MOVRA   (_ADL + 1)
+0226   A000           01967         GOTO    _00195_DS_
+                      01968 ;;unsigned compare: left < lit(0x6=6), size=2
+0227                  01969 _00191_DS_
+                      01970 ;       .line   253; "demo.c"   else if(R_difference<6)
+0227   3C00           01971         MOVAI   0x00
+0228   4800           01972         RSUBAR  (_R_difference + 1)
+0229   E587           01973         JBSET   PFLAG,2
+022A   A000           01974         GOTO    _00213_DS_
+022B   3C06           01975         MOVAI   0x06
+022C   4800           01976         RSUBAR  _R_difference
+022D                  01977 _00213_DS_
+022D   F187           01978         JBCLR   PFLAG,0
+022E   A000           01979         GOTO    _00188_DS_
+                      01980 ;;genSkipc:3195: created from rifx:00DE608C
+                      01981 ;       .line   255; "demo.c"   R_changecnt=0;
+022F   7600           01982         CLRR    _R_changecnt
+                      01983 ;       .line   256; "demo.c"   if(F_plus)
+0230   EA00           01984         JBSET   _Flag1,5
+0231   A000           01985         GOTO    _00185_DS_
+                      01986 ;       .line   258; "demo.c"   ADL=ADL_old++;
+0232   5800           01987         MOVAR   _ADL_old
+0233   5600           01988         MOVRA   _ADL
+0234   5800           01989         MOVAR   (_ADL_old + 1)
+0235   5600           01990         MOVRA   (_ADL + 1)
+0236   6600           01991         INCR    _ADL_old
+0237   F587           01992         JBCLR   PFLAG,2
+0238   6600           01993         INCR    (_ADL_old + 1)
+0239   A000           01994         GOTO    _00195_DS_
+023A                  01995 _00185_DS_
+                      01996 ;       .line   262; "demo.c"   ADL=ADL_old--;
+023A   5800           01997         MOVAR   _ADL_old
+023B   5600           01998         MOVRA   _ADL
+023C   5800           01999         MOVAR   (_ADL_old + 1)
+023D   5600           02000         MOVRA   (_ADL + 1)
+023E   3CFF           02001         MOVAI   0xff
+023F   7E00           02002         ADDRA   _ADL_old
+0240   E187           02003         JBSET   PFLAG,0
+0241   6E00           02004         DECR    (_ADL_old + 1)
+0242   A000           02005         GOTO    _00195_DS_
+0243                  02006 _00188_DS_
+                      02007 ;       .line   268; "demo.c"   R_changecnt=0;
+0243   7600           02008         CLRR    _R_changecnt
+                      02009 ;       .line   269; "demo.c"   ADL_old=ADL;
+0244   5800           02010         MOVAR   _ADL
+0245   5600           02011         MOVRA   _ADL_old
+0246   5800           02012         MOVAR   (_ADL + 1)
+0247   5600           02013         MOVRA   (_ADL_old + 1)
+0248                  02014 _00195_DS_
+                      02015 ;       .line   271; "demo.c"   ADL_old=ADL;
+0248   5800           02016         MOVAR   _ADL
+0249   5600           02017         MOVRA   _ADL_old
+024A   5800           02018         MOVAR   (_ADL + 1)
+024B   5600           02019         MOVRA   (_ADL_old + 1)
+024C   000C           02020         RETURN  
+                      02021 ; exit point of _Current_Data_process
+                      02022 
+                      02023 ;***
+                      02024 ;  pBlock Stats: dbName = C
+                      02025 ;***
+                      02026 ;entry:  _Current_process       ;Function start
+                      02027 ; 2 exit points
+                      02028 ;has an exit
+                      02029 ;functions called:
+                      02030 ;   __mulint
+                      02031 ;   __mulint
+                      02032 ;3 compiler assigned registers:
+                      02033 ;   STK02
+                      02034 ;   STK01
+                      02035 ;   STK00
+                      02036 ;; Starting pCode block
+024D                  02037 _Current_process        ;Function start
+                      02038 ; 2 exit points
+                      02039 ;       .line   216; "demo.c"   ADL=ADL*5;      
+024D   5800           02040         MOVAR   _ADL
+024E   5600           02041         MOVRA   STK02
+024F   5800           02042         MOVAR   (_ADL + 1)
+0250   5600           02043         MOVRA   STK01
+0251   3C05           02044         MOVAI   0x05
+0252   5600           02045         MOVRA   STK00
+0253   3C00           02046         MOVAI   0x00
+0254   8000           02047         CALL    __mulint
+0255   5600           02048         MOVRA   (_ADL + 1)
+0256   5800           02049         MOVAR   STK00
+0257   5600           02050         MOVRA   _ADL
+                      02051 ;       .line   217; "demo.c"   ADL=ADL>>5;
+0258   4400           02052         SWAPAR  _ADL
+0259   3E0F           02053         ANDAI   0x0f
+025A   5600           02054         MOVRA   _ADL
+025B   4400           02055         SWAPAR  (_ADL + 1)
+025C   5600           02056         MOVRA   (_ADL + 1)
+025D   3EF0           02057         ANDAI   0xf0
+025E   5E00           02058         ORRA    _ADL
+025F   4200           02059         XORRA   (_ADL + 1)
+                      02060 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+0260   D187           02061         BCLR    PFLAG,0
+0261   4E00           02062         RRR     (_ADL + 1)
+0262   4E00           02063         RRR     _ADL
+0263   000C           02064         RETURN  
+                      02065 ; exit point of _Current_process
+                      02066 
+                      02067 ;***
+                      02068 ;  pBlock Stats: dbName = C
+                      02069 ;***
+                      02070 ;entry:  _Charge_process        ;Function start
+                      02071 ; 2 exit points
+                      02072 ;has an exit
+                      02073 ;functions called:
+                      02074 ;   __mulint
+                      02075 ;   __mulint
+                      02076 ;3 compiler assigned registers:
+                      02077 ;   STK02
+                      02078 ;   STK01
+                      02079 ;   STK00
+                      02080 ;; Starting pCode block
+0264                  02081 _Charge_process ;Function start
+                      02082 ; 2 exit points
+                      02083 ;       .line   206; "demo.c"   ADL=ADL*5;      
+0264   5800           02084         MOVAR   _ADL
+0265   5600           02085         MOVRA   STK02
+0266   5800           02086         MOVAR   (_ADL + 1)
+0267   5600           02087         MOVRA   STK01
+0268   3C05           02088         MOVAI   0x05
+0269   5600           02089         MOVRA   STK00
+026A   3C00           02090         MOVAI   0x00
+026B   8000           02091         CALL    __mulint
+026C   5600           02092         MOVRA   (_ADL + 1)
+026D   5800           02093         MOVAR   STK00
+026E   5600           02094         MOVRA   _ADL
+                      02095 ;       .line   207; "demo.c"   ADL=ADL>>6;
+026F   4400           02096         SWAPAR  _ADL
+0270   3E0F           02097         ANDAI   0x0f
+0271   5600           02098         MOVRA   _ADL
+0272   4400           02099         SWAPAR  (_ADL + 1)
+0273   5600           02100         MOVRA   (_ADL + 1)
+0274   3EF0           02101         ANDAI   0xf0
+0275   5E00           02102         ORRA    _ADL
+0276   4200           02103         XORRA   (_ADL + 1)
+                      02104 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+0277   D187           02105         BCLR    PFLAG,0
+0278   4E00           02106         RRR     (_ADL + 1)
+0279   4E00           02107         RRR     _ADL
+                      02108 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+027A   D187           02109         BCLR    PFLAG,0
+027B   4E00           02110         RRR     (_ADL + 1)
+027C   4E00           02111         RRR     _ADL
+027D   000C           02112         RETURN  
+                      02113 ; exit point of _Charge_process
+                      02114 
+                      02115 ;***
+                      02116 ;  pBlock Stats: dbName = C
+                      02117 ;***
+                      02118 ;entry:  _Voltage_process       ;Function start
+                      02119 ; 2 exit points
+                      02120 ;has an exit
+                      02121 ;functions called:
+                      02122 ;   __divuint
+                      02123 ;   __divuint
+                      02124 ;3 compiler assigned registers:
+                      02125 ;   STK02
+                      02126 ;   STK01
+                      02127 ;   STK00
+                      02128 ;; Starting pCode block
+027E                  02129 _Voltage_process        ;Function start
+                      02130 ; 2 exit points
+                      02131 ;       .line   197; "demo.c"   ADL=ADL/5;
+027E   3C05           02132         MOVAI   0x05
+027F   5600           02133         MOVRA   STK02
+0280   3C00           02134         MOVAI   0x00
+0281   5600           02135         MOVRA   STK01
+0282   5800           02136         MOVAR   _ADL
+0283   5600           02137         MOVRA   STK00
+0284   5800           02138         MOVAR   (_ADL + 1)
+0285   8000           02139         CALL    __divuint
+0286   5600           02140         MOVRA   (_ADL + 1)
+0287   5800           02141         MOVAR   STK00
+0288   5600           02142         MOVRA   _ADL
+0289   000C           02143         RETURN  
+                      02144 ; exit point of _Voltage_process
+                      02145 
+                      02146 ;***
+                      02147 ;  pBlock Stats: dbName = C
+                      02148 ;***
+                      02149 ;entry:  _AD_process    ;Function start
+                      02150 ; 2 exit points
+                      02151 ;has an exit
+                      02152 ;; Starting pCode block
+028A                  02153 _AD_process     ;Function start
+                      02154 ; 2 exit points
+                      02155 ;       .line   151; "demo.c"   ADL_common=0;
+028A   7600           02156         CLRR    _ADL_common
+028B   7600           02157         CLRR    (_ADL_common + 1)
+                      02158 ;       .line   152; "demo.c"   ad_cnt=0;
+028C   7600           02159         CLRR    _ad_cnt
+                      02160 ;;unsigned compare: left < lit(0x2=2), size=1
+028D                  02161 _00150_DS_
+                      02162 ;       .line   153; "demo.c"   for(ad_cnt;ad_cnt<2;ad_cnt++)//更换通道前两次丢掉
+028D   3C02           02163         MOVAI   0x02
+028E   4800           02164         RSUBAR  _ad_cnt
+028F   F187           02165         JBCLR   PFLAG,0
+0290   A000           02166         GOTO    _00153_DS_
+                      02167 ;;genSkipc:3195: created from rifx:00DE608C
+                      02168 ;       .line   155; "demo.c"   if(ADEOC)
+0291   E200           02169         JBSET   _ADCR0bits,1
+0292   A000           02170         GOTO    _00152_DS_
+                      02171 ;       .line   157; "demo.c"   ADEOC=0;
+0293   D200           02172         BCLR    _ADCR0bits,1
+                      02173 ;       .line   158; "demo.c"   ADIF=0;
+0294   DC00           02174         BCLR    _INTFbits,6
+0295                  02175 _00152_DS_
+                      02176 ;       .line   153; "demo.c"   for(ad_cnt;ad_cnt<2;ad_cnt++)//更换通道前两次丢掉
+0295   6600           02177         INCR    _ad_cnt
+0296   A000           02178         GOTO    _00150_DS_
+0297                  02179 _00153_DS_
+                      02180 ;       .line   161; "demo.c"   ad_cnt=0;
+0297   7600           02181         CLRR    _ad_cnt
+                      02182 ;;unsigned compare: left < lit(0x8=8), size=1
+0298                  02183 _00158_DS_
+                      02184 ;       .line   162; "demo.c"   for(ad_cnt;ad_cnt<8;ad_cnt++)//8*16次，保存10位
+0298   3C08           02185         MOVAI   0x08
+0299   4800           02186         RSUBAR  _ad_cnt
+029A   F187           02187         JBCLR   PFLAG,0
+029B   A000           02188         GOTO    _00161_DS_
+                      02189 ;;genSkipc:3195: created from rifx:00DE608C
+                      02190 ;       .line   164; "demo.c"   ADH_temp=0;
+029C   7600           02191         CLRR    _ADH_temp
+029D   7600           02192         CLRR    (_ADH_temp + 1)
+                      02193 ;       .line   165; "demo.c"   ADL_temp=0;
+029E   7600           02194         CLRR    _ADL_temp
+029F   7600           02195         CLRR    (_ADL_temp + 1)
+                      02196 ;       .line   166; "demo.c"   AD_final=0;
+02A0   7600           02197         CLRR    _AD_final
+02A1   7600           02198         CLRR    (_AD_final + 1)
+                      02199 ;       .line   167; "demo.c"   AD_temp=0;
+02A2   7600           02200         CLRR    _AD_temp
+02A3   7600           02201         CLRR    (_AD_temp + 1)
+                      02202 ;       .line   168; "demo.c"   i=0;
+02A4   7600           02203         CLRR    _i
+                      02204 ;;unsigned compare: left < lit(0x10=16), size=1
+02A5                  02205 _00154_DS_
+                      02206 ;       .line   169; "demo.c"   for(i;i<16;i)
+02A5   3C10           02207         MOVAI   0x10
+02A6   4800           02208         RSUBAR  _i
+02A7   F187           02209         JBCLR   PFLAG,0
+02A8   A000           02210         GOTO    _00157_DS_
+                      02211 ;;genSkipc:3195: created from rifx:00DE608C
+                      02212 ;       .line   171; "demo.c"   if(ADEOC)
+02A9   E200           02213         JBSET   _ADCR0bits,1
+02AA   A000           02214         GOTO    _00154_DS_
+                      02215 ;       .line   173; "demo.c"   ADEOC=0;
+02AB   D200           02216         BCLR    _ADCR0bits,1
+                      02217 ;       .line   174; "demo.c"   ADIF=0;                         
+02AC   DC00           02218         BCLR    _INTFbits,6
+                      02219 ;       .line   175; "demo.c"   ADH_temp=ADRH;
+02AD   5800           02220         MOVAR   _ADRH
+02AE   5600           02221         MOVRA   _ADH_temp
+02AF   7600           02222         CLRR    (_ADH_temp + 1)
+                      02223 ;       .line   176; "demo.c"   ADL_temp=ADRL;
+02B0   5800           02224         MOVAR   _ADRL
+02B1   5600           02225         MOVRA   _ADL_temp
+02B2   7600           02226         CLRR    (_ADL_temp + 1)
+                      02227 ;       .line   177; "demo.c"   ADH_temp=ADH_temp<<4;
+02B3   4400           02228         SWAPAR  (_ADH_temp + 1)
+02B4   3EF0           02229         ANDAI   0xf0
+02B5   5600           02230         MOVRA   (_ADH_temp + 1)
+02B6   4400           02231         SWAPAR  _ADH_temp
+02B7   5600           02232         MOVRA   _ADH_temp
+02B8   3E0F           02233         ANDAI   0x0f
+02B9   5E00           02234         ORRA    (_ADH_temp + 1)
+02BA   4200           02235         XORRA   _ADH_temp
+                      02236 ;       .line   178; "demo.c"   AD_temp=ADH_temp+ADL_temp;
+02BB   5800           02237         MOVAR   _ADL_temp
+02BC   7C00           02238         ADDAR   _ADH_temp
+02BD   5600           02239         MOVRA   _AD_temp
+02BE   5800           02240         MOVAR   (_ADH_temp + 1)
+02BF   5600           02241         MOVRA   (_AD_temp + 1)
+02C0   5800           02242         MOVAR   (_ADL_temp + 1)
+02C1   F187           02243         JBCLR   PFLAG,0
+02C2   6000           02244         JZAR    (_ADL_temp + 1)
+02C3   7E00           02245         ADDRA   (_AD_temp + 1)
+                      02246 ;       .line   179; "demo.c"   AD_final=AD_temp+AD_final;
+02C4   5800           02247         MOVAR   _AD_final
+02C5   7C00           02248         ADDAR   _AD_temp
+02C6   5600           02249         MOVRA   _AD_final
+02C7   5800           02250         MOVAR   (_AD_temp + 1)
+02C8   F187           02251         JBCLR   PFLAG,0
+02C9   6000           02252         JZAR    (_AD_temp + 1)
+02CA   7E00           02253         ADDRA   (_AD_final + 1)
+                      02254 ;       .line   180; "demo.c"   i++;
+02CB   6600           02255         INCR    _i
+                      02256 ;       .line   169; "demo.c"   for(i;i<16;i)
+02CC   A000           02257         GOTO    _00154_DS_
+02CD                  02258 _00157_DS_
+                      02259 ;       .line   183; "demo.c"   AD_final=AD_final>>6;
+02CD   4400           02260         SWAPAR  _AD_final
+02CE   3E0F           02261         ANDAI   0x0f
+02CF   5600           02262         MOVRA   _AD_final
+02D0   4400           02263         SWAPAR  (_AD_final + 1)
+02D1   5600           02264         MOVRA   (_AD_final + 1)
+02D2   3EF0           02265         ANDAI   0xf0
+02D3   5E00           02266         ORRA    _AD_final
+02D4   4200           02267         XORRA   (_AD_final + 1)
+                      02268 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+02D5   D187           02269         BCLR    PFLAG,0
+02D6   4E00           02270         RRR     (_AD_final + 1)
+02D7   4E00           02271         RRR     _AD_final
+                      02272 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+02D8   D187           02273         BCLR    PFLAG,0
+02D9   4E00           02274         RRR     (_AD_final + 1)
+02DA   4E00           02275         RRR     _AD_final
+                      02276 ;       .line   184; "demo.c"   AD_final=AD_final&0x3ff;        
+02DB   3C03           02277         MOVAI   0x03
+02DC   7A00           02278         ANDRA   (_AD_final + 1)
+                      02279 ;       .line   185; "demo.c"   ADL_common=AD_final+ADL_common;
+02DD   5800           02280         MOVAR   _ADL_common
+02DE   7C00           02281         ADDAR   _AD_final
+02DF   5600           02282         MOVRA   _ADL_common
+02E0   5800           02283         MOVAR   (_AD_final + 1)
+02E1   F187           02284         JBCLR   PFLAG,0
+02E2   6000           02285         JZAR    (_AD_final + 1)
+02E3   7E00           02286         ADDRA   (_ADL_common + 1)
+                      02287 ;       .line   162; "demo.c"   for(ad_cnt;ad_cnt<8;ad_cnt++)//8*16次，保存10位
+02E4   6600           02288         INCR    _ad_cnt
+02E5   A000           02289         GOTO    _00158_DS_
+                      02290 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=0, offr=0
+02E6                  02291 _00161_DS_
+                      02292 ;       .line   187; "demo.c"   ADL=ADL_common>>3;
+02E6   D187           02293         BCLR    PFLAG,0
+02E7   4C00           02294         RRAR    (_ADL_common + 1)
+02E8   5600           02295         MOVRA   (_ADL + 1)
+02E9   4C00           02296         RRAR    _ADL_common
+02EA   5600           02297         MOVRA   _ADL
+                      02298 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+02EB   D187           02299         BCLR    PFLAG,0
+02EC   4E00           02300         RRR     (_ADL + 1)
+02ED   4E00           02301         RRR     _ADL
+                      02302 ;;shiftRight_Left2ResultLit:5216: shCount=1, size=2, sign=0, same=1, offr=0
+02EE   D187           02303         BCLR    PFLAG,0
+02EF   4E00           02304         RRR     (_ADL + 1)
+02F0   4E00           02305         RRR     _ADL
+02F1   000C           02306         RETURN  
+                      02307 ; exit point of _AD_process
+                      02308 
+                      02309 ;***
+                      02310 ;  pBlock Stats: dbName = C
+                      02311 ;***
+                      02312 ;entry:  _Current_AD    ;Function start
+                      02313 ; 2 exit points
+                      02314 ;has an exit
+                      02315 ;; Starting pCode block
+02F2                  02316 _Current_AD     ;Function start
+                      02317 ; 2 exit points
+                      02318 ;       .line   140; "demo.c"   ANSEL0=0x01;
+02F2   3C01           02319         MOVAI   0x01
+02F3   5600           02320         MOVRA   _ANSEL0
+                      02321 ;       .line   141; "demo.c"   ADCR0=0x09;
+02F4   3C09           02322         MOVAI   0x09
+02F5   5600           02323         MOVRA   _ADCR0
+                      02324 ;       .line   142; "demo.c"   ADCR1=0xe2; 
+02F6   3CE2           02325         MOVAI   0xe2
+02F7   5600           02326         MOVRA   _ADCR1
+                      02327 ;       .line   143; "demo.c"   ADCR2=0x0f;                                         
+02F8   3C0F           02328         MOVAI   0x0f
+02F9   5600           02329         MOVRA   _ADCR2
+02FA   000C           02330         RETURN  
+                      02331 ; exit point of _Current_AD
+                      02332 
+                      02333 ;***
+                      02334 ;  pBlock Stats: dbName = C
+                      02335 ;***
+                      02336 ;entry:  _Voltage_AD    ;Function start
+                      02337 ; 2 exit points
+                      02338 ;has an exit
+                      02339 ;; Starting pCode block
+02FB                  02340 _Voltage_AD     ;Function start
+                      02341 ; 2 exit points
+                      02342 ;       .line   133; "demo.c"   ANSEL0=0x00;
+02FB   7600           02343         CLRR    _ANSEL0
+                      02344 ;       .line   134; "demo.c"   ADCR0=0xb9;
+02FC   3CB9           02345         MOVAI   0xb9
+02FD   5600           02346         MOVRA   _ADCR0
+                      02347 ;       .line   135; "demo.c"   ADCR1=0xe2; 
+02FE   3CE2           02348         MOVAI   0xe2
+02FF   5600           02349         MOVRA   _ADCR1
+                      02350 ;       .line   136; "demo.c"   ADCR2=0x0f;                                         
+0300   3C0F           02351         MOVAI   0x0f
+0301   5600           02352         MOVRA   _ADCR2
+0302   000C           02353         RETURN  
+                      02354 ; exit point of _Voltage_AD
+                      02355 
+                      02356 ;***
+                      02357 ;  pBlock Stats: dbName = C
+                      02358 ;***
+                      02359 ;entry:  _Charge_AD     ;Function start
+                      02360 ; 2 exit points
+                      02361 ;has an exit
+                      02362 ;; Starting pCode block
+0303                  02363 _Charge_AD      ;Function start
+                      02364 ; 2 exit points
+                      02365 ;       .line   126; "demo.c"   ANSEL0=0x02;
+0303   3C02           02366         MOVAI   0x02
+0304   5600           02367         MOVRA   _ANSEL0
+                      02368 ;       .line   127; "demo.c"   ADCR0=0x19;
+0305   3C19           02369         MOVAI   0x19
+0306   5600           02370         MOVRA   _ADCR0
+                      02371 ;       .line   128; "demo.c"   ADCR1=0xe2; 
+0307   3CE2           02372         MOVAI   0xe2
+0308   5600           02373         MOVRA   _ADCR1
+                      02374 ;       .line   129; "demo.c"   ADCR2=0x0f;                                         
+0309   3C0F           02375         MOVAI   0x0f
+030A   5600           02376         MOVRA   _ADCR2
+030B   000C           02377         RETURN  
+                      02378 ; exit point of _Charge_AD
+                      02379 
+                      02380 ;***
+                      02381 ;  pBlock Stats: dbName = C
+                      02382 ;***
+                      02383 ;entry:  _DC_DET        ;Function start
+                      02384 ; 2 exit points
+                      02385 ;has an exit
+                      02386 ;; Starting pCode block
+030C                  02387 _DC_DET ;Function start
+                      02388 ; 2 exit points
+                      02389 ;       .line   87; "demo.c"    if(Device_flag==0)
+030C   F600           02390         JBCLR   _Flag1,3
+030D   A000           02391         GOTO    _00127_DS_
+                      02392 ;       .line   89; "demo.c"    if(P_DC==0)
+030E   F400           02393         JBCLR   _IOP0bits,2
+030F   A000           02394         GOTO    _00118_DS_
+                      02395 ;       .line   91; "demo.c"    Voltage_flag=1;
+0310   C200           02396         BSET    _Flag1,1
+                      02397 ;       .line   92; "demo.c"    Device_flag=0;
+0311   D600           02398         BCLR    _Flag1,3
+                      02399 ;       .line   93; "demo.c"    Current_flag=0;
+0312   D400           02400         BCLR    _Flag1,2
+                      02401 ;       .line   94; "demo.c"    R_Charge_cnt=0;
+0313   7600           02402         CLRR    _R_Charge_cnt
+0314   A000           02403         GOTO    _00129_DS_
+0315                  02404 _00118_DS_
+                      02405 ;       .line   98; "demo.c"    Device_flag=1;
+0315   C600           02406         BSET    _Flag1,3
+0316   A000           02407         GOTO    _00129_DS_
+0317                  02408 _00127_DS_
+                      02409 ;       .line   103; "demo.c"   Voltage_flag=0;
+0317   D200           02410         BCLR    _Flag1,1
+                      02411 ;       .line   104; "demo.c"   R_Charge_cnt++;
+0318   6600           02412         INCR    _R_Charge_cnt
+                      02413 ;;swapping arguments (AOP_TYPEs 1/3)
+                      02414 ;;unsigned compare: left >= lit(0x7=7), size=1
+                      02415 ;       .line   105; "demo.c"   if(R_Charge_cnt>6)
+0319   3C07           02416         MOVAI   0x07
+031A   4800           02417         RSUBAR  _R_Charge_cnt
+031B   E187           02418         JBSET   PFLAG,0
+031C   A000           02419         GOTO    _00121_DS_
+                      02420 ;;genSkipc:3195: created from rifx:00DE608C
+                      02421 ;       .line   107; "demo.c"   R_Charge_cnt=0;
+031D   7600           02422         CLRR    _R_Charge_cnt
+                      02423 ;       .line   108; "demo.c"   Current_flag=1;
+031E   C400           02424         BSET    _Flag1,2
+031F                  02425 _00121_DS_
+                      02426 ;       .line   110; "demo.c"   if(Current_flag)
+031F   E400           02427         JBSET   _Flag1,2
+0320   A000           02428         GOTO    _00129_DS_
+                      02429 ;       .line   112; "demo.c"   if(P_DC==0)
+0321   F400           02430         JBCLR   _IOP0bits,2
+0322   A000           02431         GOTO    _00129_DS_
+                      02432 ;       .line   114; "demo.c"   Device_flag=0;
+0323   D600           02433         BCLR    _Flag1,3
+                      02434 ;       .line   115; "demo.c"   R_Charge_cnt=0;
+0324   7600           02435         CLRR    _R_Charge_cnt
+0325                  02436 _00129_DS_
+0325   000C           02437         RETURN  
+                      02438 ; exit point of _DC_DET
+                      02439 
+                      02440 ;***
+                      02441 ;  pBlock Stats: dbName = C
+                      02442 ;***
+                      02443 ;entry:  _Clr_Ram       ;Function start
+                      02444 ; 2 exit points
+                      02445 ;has an exit
+                      02446 ;; Starting pCode block
+0326                  02447 _Clr_Ram        ;Function start
+                      02448 ; 2 exit points
+                      02449 ;       .line   79; "demo.c"    __endasm;
+0326                  02450 ClrRam:
+0326   3C00           02451         movai 0x00
+                      02452         ;movra FSR
+0327                  02453 ClrRam_Loop:
+                      02454         ;clrr INDF
+                      02455         ;incr FSR
+0327   3CFF           02456         movai 0xff
+                      02457         ;rsubar FSR
+0328   5600           02458         movra _FSR_TEMP
+0329   6600           02459         incr _FSR_TEMP
+032A   6A00           02460         djzr _FSR_TEMP
+032B   A000           02461         goto ClrRam_Loop
+                      02462         
+032C   000C           02463         RETURN  
+                      02464 ; exit point of _Clr_Ram
+                      02465 
+                      02466 ;***
+                      02467 ;  pBlock Stats: dbName = C
+                      02468 ;***
+                      02469 ;entry:  _Init_timer    ;Function start
+                      02470 ; 2 exit points
+                      02471 ;has an exit
+                      02472 ;; Starting pCode block
+032D                  02473 _Init_timer     ;Function start
+                      02474 ; 2 exit points
+                      02475 ;       .line   47; "demo.c"    T0LOAD  = 0x50;         //1s检测刷新一次数
+032D   3C50           02476         MOVAI   0x50
+032E   5600           02477         MOVRA   _T0LOAD
+                      02478 ;       .line   48; "demo.c"    T0CNT   = 0x50;
+032F   3C50           02479         MOVAI   0x50
+0330   5600           02480         MOVRA   _T0CNT
+                      02481 ;       .line   49; "demo.c"    T0CR    = 0x97;         //16us一个指令
+0331   3C97           02482         MOVAI   0x97
+0332   5600           02483         MOVRA   _T0CR
+                      02484 ;       .line   50; "demo.c"    T0IE    = 1;
+0333   C000           02485         BSET    _INTEbits,0
+                      02486 ;       .line   51; "demo.c"    T1LOAD  = 0x10;         //1ms刷新一段
+0334   3C10           02487         MOVAI   0x10
+0335   5600           02488         MOVRA   _T1LOAD
+                      02489 ;       .line   52; "demo.c"    T1CNT   = 0x10;
+0336   3C10           02490         MOVAI   0x10
+0337   5600           02491         MOVRA   _T1CNT
+                      02492 ;       .line   53; "demo.c"    T1CR    = 0x84;         
+0338   3C84           02493         MOVAI   0x84
+0339   5600           02494         MOVRA   _T1CR
+                      02495 ;       .line   54; "demo.c"    T1IE    = 1;        
+033A   C200           02496         BSET    _INTEbits,1
+                      02497 ;       .line   55; "demo.c"    GIE     = 1;            //1开总中断                         
+033B   CE00           02498         BSET    _MCRbits,7
+033C   000C           02499         RETURN  
+                      02500 ; exit point of _Init_timer
+                      02501 
+                      02502 ;***
+                      02503 ;  pBlock Stats: dbName = C
+                      02504 ;***
+                      02505 ;entry:  _Init_Sys      ;Function start
+                      02506 ; 2 exit points
+                      02507 ;has an exit
+                      02508 ;; Starting pCode block
+033D                  02509 _Init_Sys       ;Function start
+                      02510 ; 2 exit points
+                      02511 ;       .line   26; "demo.c"    OEP0=0xf8;
+033D   3CF8           02512         MOVAI   0xf8
+033E   5600           02513         MOVRA   _OEP0
+                      02514 ;       .line   27; "demo.c"    OEP1=0xfd;
+033F   3CFD           02515         MOVAI   0xfd
+0340   5600           02516         MOVRA   _OEP1
+                      02517 ;       .line   28; "demo.c"    IOP0=0x00;
+0341   7600           02518         CLRR    _IOP0
+                      02519 ;       .line   29; "demo.c"    IOP1=0x00;
+0342   7600           02520         CLRR    _IOP1
+                      02521 ;       .line   30; "demo.c"    PUP1=0x02;
+0343   3C02           02522         MOVAI   0x02
+0344   5600           02523         MOVRA   _PUP1
+                      02524 ;       .line   31; "demo.c"    PDP1=0x00;
+0345   7600           02525         CLRR    _PDP1
+                      02526 ;       .line   32; "demo.c"    PDP0=0x00;  
+0346   7600           02527         CLRR    _PDP0
+                      02528 ;       .line   33; "demo.c"    DRVCR=0x80;     
+0347   3C80           02529         MOVAI   0x80
+0348   5600           02530         MOVRA   _DRVCR
+                      02531 ;       .line   35; "demo.c"    Voltage_L=8;
+0349   3C08           02532         MOVAI   0x08
+034A   5600           02533         MOVRA   _Voltage_L
+                      02534 ;       .line   36; "demo.c"    Voltage_M=8;
+034B   3C08           02535         MOVAI   0x08
+034C   5600           02536         MOVRA   _Voltage_M
+                      02537 ;       .line   37; "demo.c"    Voltage_H=8;    
+034D   3C08           02538         MOVAI   0x08
+034E   5600           02539         MOVRA   _Voltage_H
+034F   000C           02540         RETURN  
+                      02541 ; exit point of _Init_Sys
+                      02542 
+                      02543 
+                      02544 ;       code size estimation:
+                      02545 ;        1151+    0 =  1151 instructions ( 2302 byte)
+                      02546 
+                      02547         end
+gpasm-2.0.0_beta2 (Nov  6 2017)demo.asm           2018-5-8  18:08:20           PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B0
+ADCR1                             000001B1
+ADCR2                             000001B2
+ADRH                              000001B4
+ADRL                              000001B5
+ANSEL0                            000001B6
+ANSEL1                            000001B7
+ClrRam                            00000326
+ClrRam_Loop                       00000327
+DRVCR                             0000018C
+END_OF_INTERRUPT                  00000143
+FSR0                              00000184
+FSR1                              00000185
+HIBYTE                            00000183
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+KBCR                              0000018E
+LVDCR                             000001AF
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OSCCALH                           000001FB
+OSCCALL                           000001FC
+OSCM                              000001AE
+PCL                               00000186
+PDP0                              00000193
+PDP1                              00000197
+PFLAG                             00000187
+PUP0                              00000192
+PUP1                              00000196
+PWM0DE                            000001A8
+PWM1DE                            000001A9
+PWM2DE                            000001AA
+PWMCR0                            000001AC
+PWMCR1                            000001AD
+STK00                             00000006
+STK01                             00000005
+STK02                             00000004
+STK03                             00000003
+STK04                             00000002
+STK05                             00000001
+STK06                             00000000
+T0CNT                             00000199
+T0CR                              00000198
+T0DATA                            0000019B
+T0LOAD                            0000019A
+T1CNT                             0000019D
+T1CR                              0000019C
+T1DATA                            0000019F
+T1LOAD                            0000019E
+T2CNT                             000001A1
+T2CR                              000001A0
+T2DATA                            000001A3
+T2LOAD                            000001A2
+T3CNT                             000001A5
+T3CR                              000001A4
+T3LOAD                            000001A6
+_00118_DS_                        00000315
+_00121_DS_                        0000031F
+_00127_DS_                        00000317
+_00129_DS_                        00000325
+_00150_DS_                        0000028D
+_00152_DS_                        00000295
+_00153_DS_                        00000297
+_00154_DS_                        000002A5
+_00157_DS_                        000002CD
+_00158_DS_                        00000298
+_00161_DS_                        000002E6
+_00179_DS_                        00000200
+_00180_DS_                        00000209
+_00182_DS_                        00000222
+_00185_DS_                        0000023A
+_00188_DS_                        00000243
+_00191_DS_                        00000227
+_00194_DS_                        0000020F
+_00195_DS_                        00000248
+_00210_DS_                        000001F4
+_00211_DS_                        00000215
+_00213_DS_                        0000022D
+_00219_DS_                        000001A1
+_00220_DS_                        000001AA
+_00222_DS_                        000001C3
+_00225_DS_                        000001DB
+_00228_DS_                        000001E4
+_00231_DS_                        000001C8
+_00234_DS_                        000001B0
+_00235_DS_                        000001E9
+_00250_DS_                        00000195
+_00251_DS_                        000001B6
+_00253_DS_                        000001CE
+_00265_DS_                        0000018B
+_00267_DS_                        0000018D
+_00273_DS_                        0000017F
+_00287_DS_                        00000171
+_00290_DS_                        00000150
+_00292_DS_                        00000161
+_00293_DS_                        00000166
+_00294_DS_                        00000177
+_00300_DS_                        0000008E
+_00302_DS_                        00000094
+_00304_DS_                        0000009A
+_00306_DS_                        000000A0
+_00308_DS_                        000000A6
+_00310_DS_                        000000AC
+_00312_DS_                        000000B2
+_00314_DS_                        000000B8
+_00316_DS_                        000000BE
+_00318_DS_                        000000C4
+_00320_DS_                        000000CA
+_00322_DS_                        000000D0
+_00324_DS_                        000000D6
+_00326_DS_                        000000DC
+_00328_DS_                        000000E2
+_00330_DS_                        000000E8
+_00332_DS_                        000000EE
+_00334_DS_                        000000F4
+_00336_DS_                        000000FA
+_00338_DS_                        00000100
+_00340_DS_                        00000106
+_00342_DS_                        0000010C
+_00344_DS_                        00000112
+_00346_DS_                        00000118
+_00348_DS_                        0000011E
+_00350_DS_                        00000124
+_00352_DS_                        0000012A
+_00354_DS_                        00000130
+_00356_DS_                        00000136
+_00358_DS_                        0000013C
+_00364_DS_                        00000147
+_00367_DS_                        0000014C
+_00375_DS_                        0000007B
+_00378_DS_                        0000006E
+_00380_DS_                        0000005D
+_00381_DS_                        00000061
+_00384_DS_                        00000087
+_00394_DS_                        00000053
+_00395_DS_                        0000005B
+_00396_DS_                        00000067
+_00397_DS_                        00000074
+_00398_DS_                        00000081
+_00403_DS_                        00000040
+_00407_DS_                        0000004C
+_00413_DS_                        00000046
+_00423_DS_                        00000026
+_00426_DS_                        00000032
+_00429_DS_                        00000015
+_00434_DS_                        00000004
+_00442_DS_                        0000001E
+_00446_DS_                        00000032
+_00450_DS_                        0000003E
+_00454_DS_                        0000004A
+_00458_DS_                        00000056
+_00462_DS_                        00000062
+_00466_DS_                        0000006E
+_00470_DS_                        0000007A
+_00474_DS_                        00000086
+_00478_DS_                        00000092
+_00482_DS_                        0000009E
+_00486_DS_                        000000AA
+_00490_DS_                        000000B6
+_00494_DS_                        000000C2
+_00498_DS_                        000000CE
+_00499_DS_                        000000D6
+_00503_DS_                        000000DC
+_00507_DS_                        000000E8
+_00511_DS_                        000000F4
+_00515_DS_                        00000100
+_00519_DS_                        0000010C
+_00523_DS_                        00000118
+_00527_DS_                        00000124
+_00531_DS_                        00000130
+_00533_DS_                        0000013E
+_00538_DS_                        0000013F
+_ABuf                             00000000
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADCR2                            00000000
+_ADCR2bits                        00000000
+_ADH_temp                         00000000
+_ADL                              00000000
+_ADL_common                       00000000
+_ADL_old                          00000000
+_ADL_old2                         00000000
+_ADL_temp                         00000000
+_ADRH                             00000000
+_ADRHbits                         00000000
+_ADRL                             00000000
+_ADRLbits                         00000000
+_AD_final                         00000000
+_AD_process                       0000028A
+_AD_temp                          00000000
+_ANSEL0                           00000000
+_ANSEL0bits                       00000000
+_ANSEL1                           00000000
+_ANSEL1bits                       00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_Charge_AD                        00000303
+_Charge_Data                      00000178
+_Charge_process                   00000264
+_Clr_Ram                          00000326
+_Current_AD                       000002F2
+_Current_Data                     00000179
+_Current_Data_process             000001EE
+_Current_process                  0000024D
+_DC_DET                           0000030C
+_DRVCR                            00000000
+_DRVCRbits                        00000000
+_Display_count                    0000014D
+_Display_delay                    0000003B
+_Display_led                      00000088
+_FSR0                             00000000
+_FSR0bits                         00000000
+_FSR1                             00000000
+_FSR1bits                         00000000
+_FSR_TEMP                         00000000
+_Flag1                            00000000
+_Flag_h                           00000000
+_Flag_l                           00000000
+_Flag_m                           00000000
+_HIBYTE                           00000000
+_HIBYTEbits                       00000000
+_INDF0                            00000000
+_INDF0bits                        00000000
+_INDF1                            00000000
+_INDF1bits                        00000000
+_INDF2                            00000000
+_INDF2bits                        00000000
+_INDF3                            00000000
+_INDF3bits                        00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_Init_Sys                         0000033D
+_Init_timer                       0000032D
+_KBCR                             00000000
+_KBCRbits                         00000000
+_LED_state                        0000004D
+_LVDCR                            00000000
+_LVDCRbits                        00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OSCCALH                          00000000
+_OSCCALHbits                      00000000
+_OSCCALL                          00000000
+_OSCCALLbits                      00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PCLbits                          00000000
+_PDP0                             00000000
+_PDP0bits                         00000000
+_PDP1                             00000000
+_PDP1bits                         00000000
+_PFLAG                            00000000
+_PFLAGbits                        00000000
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PWM0DE                           00000000
+_PWM0DEbits                       00000000
+_PWM1DE                           00000000
+_PWM1DEbits                       00000000
+_PWM2DE                           00000000
+_PWM2DEbits                       00000000
+_PWMCR0                           00000000
+_PWMCR0bits                       00000000
+_PWMCR1                           00000000
+_PWMCR1bits                       00000000
+_R_Charge_cnt                     00000000
+_R_Current_cnt                    00000000
+_R_ad_channel                     00000000
+_R_changecnt                      00000000
+_R_changecnt2                     00000000
+_R_difference                     00000000
+_StatusBuf                        00000000
+_T0CNT                            00000000
+_T0CNTbits                        00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0DATAbits                       00000000
+_T0LOAD                           00000000
+_T0LOADbits                       00000000
+_T1CNT                            00000000
+_T1CNTbits                        00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1DATAbits                       00000000
+_T1LOAD                           00000000
+_T1LOADbits                       00000000
+_T2CNT                            00000000
+_T2CNTbits                        00000000
+_T2CR                             00000000
+_T2CRbits                         00000000
+_T2DATA                           00000000
+_T2DATAbits                       00000000
+_T2LOAD                           00000000
+_T2LOADbits                       00000000
+_T3CNT                            00000000
+_T3CNTbits                        00000000
+_T3CR                             00000000
+_T3CRbits                         00000000
+_T3LOAD                           00000000
+_T3LOADbits                       00000000
+_Vol_H                            00000000
+_Vol_L                            00000000
+_Vol_M                            00000000
+_Voltage_AD                       000002FB
+_Voltage_Data                     0000018E
+_Voltage_Data_process             0000018F
+_Voltage_H                        00000000
+_Voltage_L                        00000000
+_Voltage_M                        00000000
+_Voltage_process                  0000027E
+__32P7311                         00000001
+__divuint                         00000000
+__mulint                          00000000
+__sdcc_interrupt                  00000008
+_ad_cnt                           00000000
+_display_cnt                      00000000
+_i                                00000000
+_int_isr                          00000008
+_main                             00000000
+_temp                             00000000
+r0x1026                           00000001
+r0x1027                           00000000
+r0x1028                           00000002
+ADCHS0                            ADCR0,4
+ADCHS1                            ADCR0,5
+ADCHS2                            ADCR0,6
+ADCHS3                            ADCR0,7
+ADCKS0                            ADCR1,5
+ADCKS1                            ADCR1,6
+ADCKS2                            ADCR1,7
+ADEOC                             ADCR0,1
+ADIE                              INTE,6
+ADIF                              INTF,6
+ADLEN                             ADCR0,3
+ADON                              ADCR0,0
+ADR0                              ADRL,0
+ADR1                              ADRL,1
+ADR10                             ADRH,6
+ADR11                             ADRH,7
+ADR2                              ADRL,2
+ADR3                              ADRL,3
+ADR4                              ADRH,0
+ADR5                              ADRH,1
+ADR6                              ADRH,2
+ADR7                              ADRH,3
+ADR8                              ADRH,4
+ADR9                              ADRH,5
+ADSMP0                            ADCR2,0
+ADSMP1                            ADCR2,1
+ADSMP2                            ADCR2,2
+ADSMP3                            ADCR2,3
+ADTST                             ADCR1,4
+BUZ0OE                            T0CR,5
+BUZ1OE                            T1CR,5
+BUZ2OE                            T2CR,5
+C                                 PFLAG,0
+CLKS                              OSCM,2
+DC                                PFLAG,1
+DRVS                              DRVCR,7
+FPWM1INV                          PWMCR0,5
+FPWMEN                            PWMCR0,7
+FPWMF0                            PWMCR0,0
+FPWMF1                            PWMCR0,1
+FPWMR0                            PWMCR0,2
+FPWMR1                            PWMCR0,3
+FSR00                             FSR0,0
+FSR01                             FSR0,1
+FSR02                             FSR0,2
+FSR03                             FSR0,3
+FSR04                             FSR0,4
+FSR05                             FSR0,5
+FSR06                             FSR0,6
+FSR07                             FSR0,7
+FSR10                             FSR1,0
+FSR11                             FSR1,1
+FSR12                             FSR1,2
+FSR13                             FSR1,3
+FSR14                             FSR1,4
+FSR15                             FSR1,5
+FSR16                             FSR1,6
+FSR17                             FSR1,7
+GIE                               MCR,7
+HFEN                              OSCM,0
+HIBYTE0                           HIBYTE,0
+HIBYTE1                           HIBYTE,1
+HIBYTE2                           HIBYTE,2
+HIBYTE3                           HIBYTE,3
+HIBYTE4                           HIBYTE,4
+HIBYTE5                           HIBYTE,5
+HIBYTE6                           HIBYTE,6
+HIBYTE7                           HIBYTE,7
+INDF00                            INDF0,0
+INDF01                            INDF0,1
+INDF02                            INDF0,2
+INDF03                            INDF0,3
+INDF04                            INDF0,4
+INDF05                            INDF0,5
+INDF06                            INDF0,6
+INDF07                            INDF0,7
+INDF10                            INDF1,0
+INDF11                            INDF1,1
+INDF12                            INDF1,2
+INDF13                            INDF1,3
+INDF14                            INDF1,4
+INDF15                            INDF1,5
+INDF16                            INDF1,6
+INDF17                            INDF1,7
+INDF20                            INDF2,0
+INDF21                            INDF2,1
+INDF22                            INDF2,2
+INDF23                            INDF2,3
+INDF24                            INDF2,4
+INDF25                            INDF2,5
+INDF26                            INDF2,6
+INDF27                            INDF2,7
+INDF30                            INDF3,0
+INDF31                            INDF3,1
+INDF32                            INDF3,2
+INDF33                            INDF3,3
+INDF34                            INDF3,4
+INDF35                            INDF3,5
+INDF36                            INDF3,6
+INDF37                            INDF3,7
+INT0IE                            INTE,2
+INT0IF                            INTF,2
+INT1IE                            INTE,3
+INT1IF                            INTF,3
+KBCR0                             KBCR,0
+KBCR1                             KBCR,1
+KBCR2                             KBCR,2
+KBCR3                             KBCR,3
+KBCR4                             KBCR,4
+KBCR5                             KBCR,5
+KBCR6                             KBCR,6
+KBCR7                             KBCR,7
+KBIE                              INTE,4
+KBIF                              INTF,4
+LDRVS                             DRVCR,6
+LFEN                              OSCM,1
+LVDEN                             LVDCR,7
+LVDF                              LVDCR,0
+LVDS0                             LVDCR,3
+LVDS1                             LVDCR,4
+LVDS2                             LVDCR,5
+LVDS3                             LVDCR,6
+MINT00                            MCR,0
+MINT01                            MCR,1
+MINT10                            MCR,2
+MINT11                            MCR,3
+OSCCAL0                           OSCCALL,0
+OSCCAL1                           OSCCALL,1
+OSCCAL10                          OSCCALH,2
+OSCCAL2                           OSCCALL,2
+OSCCAL3                           OSCCALL,3
+OSCCAL4                           OSCCALL,4
+OSCCAL5                           OSCCALL,5
+OSCCAL6                           OSCCALL,6
+OSCCAL7                           OSCCALL,7
+OSCCAL8                           OSCCALH,0
+OSCCAL9                           OSCCALH,1
+P00ANS                            ANSEL0,0
+P00D                              IOP0,0
+P00OE                             OEP0,0
+P00PD                             PDP0,0
+P00PU                             PUP0,0
+P01D                              IOP0,1
+P01OE                             OEP0,1
+P01PD                             PDP0,1
+P01PU                             PUP0,1
+P02ANS                            ANSEL0,1
+P02D                              IOP0,2
+P02OE                             OEP0,2
+P02PD                             PDP0,2
+P02PU                             PUP0,2
+P03ANS                            ANSEL0,2
+P03D                              IOP0,3
+P03OE                             OEP0,3
+P03PD                             PDP0,3
+P03PU                             PUP0,3
+P04ANS                            ANSEL0,3
+P04D                              IOP0,4
+P04OE                             OEP0,4
+P04PD                             PDP0,4
+P04PU                             PUP0,4
+P05ANS                            ANSEL0,4
+P05D                              IOP0,5
+P05OE                             OEP0,5
+P05PD                             PDP0,5
+P05PU                             PUP0,5
+P10ANS                            ANSEL0,5
+P10D                              IOP1,0
+P10OE                             OEP1,0
+P10PD                             PDP1,0
+P10PU                             PUP1,0
+P11ANS                            ANSEL0,6
+P11D                              IOP1,1
+P11OE                             OEP1,1
+P11PD                             PDP1,1
+P11PU                             PUP1,1
+P12ANS                            ANSEL0,7
+P12D                              IOP1,2
+P12OE                             OEP1,2
+P12PD                             PDP1,2
+P12PU                             PUP1,2
+P13D                              IOP1,3
+P13OE                             OEP1,3
+P13PD                             PDP1,3
+P13PU                             PUP1,3
+P14ANS                            ANSEL1,0
+P14D                              IOP1,4
+P14OE                             OEP1,4
+P14PD                             PDP1,4
+P14PU                             PUP1,4
+P15ANS                            ANSEL1,1
+P15D                              IOP1,5
+P15OE                             OEP1,5
+P15PD                             PDP1,5
+P15PU                             PUP1,5
+P16D                              IOP1,6
+P16OE                             OEP1,6
+P16PD                             PDP1,6
+P16PU                             PUP1,6
+P17D                              IOP1,7
+P17OE                             OEP1,7
+P17PD                             PDP1,7
+P17PU                             PUP1,7
+PC0                               PCL,0
+PC1                               PCL,1
+PC2                               PCL,2
+PC3                               PCL,3
+PC4                               PCL,4
+PC5                               PCL,5
+PC6                               PCL,6
+PC7                               PCL,7
+PD                                MCR,4
+PDLYS0                            DRVCR,2
+PDLYS1                            DRVCR,3
+PDRVS0                            DRVCR,4
+PDRVS1                            DRVCR,5
+PMODE0                            PWMCR1,0
+PMODE1                            PWMCR1,1
+PMODE2                            PWMCR1,2
+PSPDS0                            DRVCR,0
+PSPDS1                            DRVCR,1
+PWM0DE0                           PWM0DE,0
+PWM0DE1                           PWM0DE,1
+PWM0DE2                           PWM0DE,2
+PWM0INV                           PWMCR0,4
+PWM0OE                            T0CR,6
+PWM1DE0                           PWM1DE,0
+PWM1DE1                           PWM1DE,1
+PWM1DE2                           PWM1DE,2
+PWM1OE                            T1CR,6
+PWM2DE0                           PWM2DE,0
+PWM2DE1                           PWM2DE,1
+PWM2DE2                           PWM2DE,2
+PWM2INV                           PWMCR0,6
+PWM2OE                            T2CR,6
+RESS0                             ADCR1,3
+STBH                              OSCM,4
+STBL                              OSCM,5
+T0C0                              T0CNT,0
+T0C1                              T0CNT,1
+T0C2                              T0CNT,2
+T0C3                              T0CNT,3
+T0C4                              T0CNT,4
+T0C5                              T0CNT,5
+T0C6                              T0CNT,6
+T0C7                              T0CNT,7
+T0DATA0                           T0DATA,0
+T0DATA1                           T0DATA,1
+T0DATA2                           T0DATA,2
+T0DATA3                           T0DATA,3
+T0DATA4                           T0DATA,4
+T0DATA5                           T0DATA,5
+T0DATA6                           T0DATA,6
+T0DATA7                           T0DATA,7
+T0IE                              INTE,0
+T0IF                              INTF,0
+T0LOAD0                           T0LOAD,0
+T0LOAD1                           T0LOAD,1
+T0LOAD2                           T0LOAD,2
+T0LOAD3                           T0LOAD,3
+T0LOAD4                           T0LOAD,4
+T0LOAD5                           T0LOAD,5
+T0LOAD6                           T0LOAD,6
+T0LOAD7                           T0LOAD,7
+T0PR0                             T0CR,0
+T0PR1                             T0CR,1
+T0PR2                             T0CR,2
+T0PTS0                            T0CR,3
+T0PTS1                            T0CR,4
+T1C0                              T1CNT,0
+T1C1                              T1CNT,1
+T1C2                              T1CNT,2
+T1C3                              T1CNT,3
+T1C4                              T1CNT,4
+T1C5                              T1CNT,5
+T1C6                              T1CNT,6
+T1C7                              T1CNT,7
+T1DATA0                           T1DATA,0
+T1DATA1                           T1DATA,1
+T1DATA2                           T1DATA,2
+T1DATA3                           T1DATA,3
+T1DATA4                           T1DATA,4
+T1DATA5                           T1DATA,5
+T1DATA6                           T1DATA,6
+T1DATA7                           T1DATA,7
+T1IE                              INTE,1
+T1IF                              INTF,1
+T1LOAD0                           T1LOAD,0
+T1LOAD1                           T1LOAD,1
+T1LOAD2                           T1LOAD,2
+T1LOAD3                           T1LOAD,3
+T1LOAD4                           T1LOAD,4
+T1LOAD5                           T1LOAD,5
+T1LOAD6                           T1LOAD,6
+T1LOAD7                           T1LOAD,7
+T1PR0                             T1CR,0
+T1PR1                             T1CR,1
+T1PR2                             T1CR,2
+T1PTS0                            T1CR,3
+T1PTS1                            T1CR,4
+T2C0                              T2CNT,0
+T2C1                              T2CNT,1
+T2C2                              T2CNT,2
+T2C3                              T2CNT,3
+T2C4                              T2CNT,4
+T2C5                              T2CNT,5
+T2C6                              T2CNT,6
+T2C7                              T2CNT,7
+T2DATA0                           T2DATA,0
+T2DATA1                           T2DATA,1
+T2DATA2                           T2DATA,2
+T2DATA3                           T2DATA,3
+T2DATA4                           T2DATA,4
+T2DATA5                           T2DATA,5
+T2DATA6                           T2DATA,6
+T2DATA7                           T2DATA,7
+T2IE                              INTE,5
+T2IF                              INTF,5
+T2LOAD0                           T2LOAD,0
+T2LOAD1                           T2LOAD,1
+T2LOAD2                           T2LOAD,2
+T2LOAD3                           T2LOAD,3
+T2LOAD4                           T2LOAD,4
+T2LOAD5                           T2LOAD,5
+T2LOAD6                           T2LOAD,6
+T2LOAD7                           T2LOAD,7
+T2PR0                             T2CR,0
+T2PR1                             T2CR,1
+T2PR2                             T2CR,2
+T2PTS0                            T2CR,3
+T2PTS1                            T2CR,4
+T3C0                              T3CNT,0
+T3C1                              T3CNT,1
+T3C2                              T3CNT,2
+T3C3                              T3CNT,3
+T3C4                              T3CNT,4
+T3C5                              T3CNT,5
+T3C6                              T3CNT,6
+T3C7                              T3CNT,7
+T3IE                              INTE,7
+T3IF                              INTF,7
+T3LOAD0                           T3LOAD,0
+T3LOAD1                           T3LOAD,1
+T3LOAD2                           T3LOAD,2
+T3LOAD3                           T3LOAD,3
+T3LOAD4                           T3LOAD,4
+T3LOAD5                           T3LOAD,5
+T3LOAD6                           T3LOAD,6
+T3LOAD7                           T3LOAD,7
+T3PR0                             T3CR,0
+T3PR1                             T3CR,1
+T3PR2                             T3CR,2
+T3PTS0                            T3CR,3
+T3PTS1                            T3CR,4
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+TC2EN                             T2CR,7
+TC3EN                             T3CR,7
+TMRCKS0                           PWMCR1,3
+TMRCKS1                           PWMCR1,4
+TO                                MCR,5
+VRS0                              ADCR1,0
+VRS1                              ADCR1,1
+VRS2                              ADCR1,2
+Z                                 PFLAG,2
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

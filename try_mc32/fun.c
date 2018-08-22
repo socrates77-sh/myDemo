@@ -30,7 +30,7 @@ uchar fun2(uchar a, uchar b)
 void main(void)
 {
    	uchar b;
-   	
+   	ram0 = (1<<1);
    	ram0 = 3;
    	ram1 = 0x5f;
    	global_a = ram0;

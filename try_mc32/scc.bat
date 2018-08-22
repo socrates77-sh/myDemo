@@ -1,19 +1,20 @@
 @echo off
 set SDCC_HOME=e:\tools\sn-sdcc
 set GPUTILS_HOME=e:\tools\snutils
+set SNLIB=e:\tools\snlib
 PATH=%SDCC_HOME%;%SDCC_HOME%\bin;%GPUTILS_HOME%\gpasm;%GPUTILS_HOME%\gplink
 
 
 set GPASM_ARG=-p p16f87 -I"%GPUTILS_HOME%\header"
-set GPLINK_ARG=-s %SDCC_HOME%\share\lkr\mc32p7010.lkr ^
-%SDCC_HOME%\share\lib\mc32p7010.lib ^
+set GPLINK_ARG=-s %SDCC_HOME%\share\lkr\3221.lkr ^
+%SDCC_HOME%\share\lib\3221.lib ^
 -w -m -c
 
 set SDCC_ARG=-V --verbose --use-non-free -mmc32 -p3221 ^
--I"%SDCC_HOME%\share\include" ^
--Wa"-I%SDCC_HOME%\share\header" ^
--Wl"-s%SDCC_HOME%\share\lkr\mc32p7010.lkr" ^
--Wl"-I%SDCC_HOME%\share\lib"
+-I"%SNLIB%\share\include" ^
+-Wa"-I%SNLIB%\share\header" ^
+-Wl"-s%SNLIB%\share\lkr\3221.lkr" ^
+-Wl"-I%SNLIB%\share\lib"
 
 @echo on
 

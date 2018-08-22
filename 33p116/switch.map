@@ -1,0 +1,48 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Map File - Created 2018-5-3  11:33:18
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                  STARTUP       code   00000000    program   0x000004
+              ID_switch_0       code   0x000002    program   0x0001a2
+              code_switch       code   0x0000d3    program   0x000078
+                sharebank      udata   00000000       data   0x000007
+             UDL_switch_0      udata   0x000007       data   0x000001
+         UD_abs_switch_20      udata   0x000020       data   0x000001
+         UD_abs_switch_21      udata   0x000021       data   0x000001
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            0x000002    0x0000d2
+                            00000000    0x000001
+                            0x0000d3    0x00010e
+ 
+                            271 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+                    STK06   00000000       data     extern switch.asm
+                    STK05   0x000001       data     extern switch.asm
+                    STK04   0x000002       data     extern switch.asm
+                    STK03   0x000003       data     extern switch.asm
+                    STK02   0x000004       data     extern switch.asm
+                    STK01   0x000005       data     extern switch.asm
+                    STK00   0x000006       data     extern switch.asm
+                    _ram0   0x000020       data     extern switch.asm
+                    _ram1   0x000021       data     extern switch.asm
+                  r0x1000   0x000007       data     static switch.asm
+                     _rom   0x000002    program     extern switch.asm
+                    _main   0x0000d3    program     extern switch.asm
+               _00119_DS_   0x0000d6    program     static switch.asm
+               _00117_DS_   0x0000e2    program     static switch.asm
+                    _fun1   0x0000e5    program     extern switch.asm
+               _00105_DS_   0x0000fc    program     static switch.asm
+               _00106_DS_   0x000100    program     static switch.asm
+               _00107_DS_   0x000104    program     static switch.asm
+               _00108_DS_   0x000108    program     static switch.asm
+               _00109_DS_   0x00010c    program     static switch.asm
+               _00111_DS_   0x00010e    program     static switch.asm
+ 

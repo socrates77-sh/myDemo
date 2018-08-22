@@ -1,0 +1,633 @@
+gpasm-2.0.0_beta2 (Nov  6 2017)1.asm              2018-3-19  12:13:44          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SN-SDCC : SinoMCU ANSI-C Compiler
+                      00003 ; Version 1.1.0 (Dec 19 2017) (MINGW32)
+                      00004 ; This file was generated Mon Mar 19 12:13:43 2018
+                      00005 ;--------------------------------------------------------
+                      00006 ; MC32 port for the RISC core
+                      00007 ;--------------------------------------------------------
+                      00008 ;       .file   "1.c"
+                      00009         list    p=4K7323
+                      00010         radix dec
+                      00011         include "4K7323.inc"
+                      00001                 LIST
+                      00002 ;4K7323.inc    Standard Header File, Version 1.00 by Sinomcu
+Message[301]: Processor-header file mismatch.  Verify selected processor.
+                      00341                 LIST
+                      00012 ;--------------------------------------------------------
+                      00013 ; external declarations
+                      00014 ;--------------------------------------------------------
+                      00015         extern  _PFLAGbits
+                      00016         extern  _MCRbits
+                      00017         extern  _INTEbits
+                      00018         extern  _INTFbits
+                      00019         extern  _OSCMbits
+                      00020         extern  _IOP0bits
+                      00021         extern  _OEP0bits
+                      00022         extern  _PUP0bits
+                      00023         extern  _IOP1bits
+                      00024         extern  _OEP1bits
+                      00025         extern  _PUP1bits
+                      00026         extern  _IOP2bits
+                      00027         extern  _OEP2bits
+                      00028         extern  _PUP2bits
+                      00029         extern  _T0CRbits
+                      00030         extern  _T1CRbits
+                      00031         extern  _T2CRbits
+                      00032         extern  _T3CRbits
+                      00033         extern  _PWMCR0bits
+                      00034         extern  _PWMCR1bits
+                      00035         extern  _ADCR0bits
+                      00036         extern  _ADCR1bits
+                      00037         extern  _ANSELbits
+                      00038         extern  _LEDCR0bits
+                      00039         extern  _LEDCR1bits
+                      00040         extern  _LCDCR0bits
+                      00041         extern  _LCDCR1bits
+                      00042         extern  _LCDIOS0bits
+                      00043         extern  _LCDIOS1bits
+                      00044         extern  _LCDIOS2bits
+                      00045         extern  _INDF
+                      00046         extern  _INDF0
+                      00047         extern  _INDF1
+                      00048         extern  _INDF2
+                      00049         extern  _HIBYTE
+                      00050         extern  _FSR
+                      00051         extern  _FSR0
+                      00052         extern  _FSR1
+                      00053         extern  _PCL
+                      00054         extern  _STATUS
+                      00055         extern  _PFLAG
+                      00056         extern  _MCR
+                      00057         extern  _INDF3
+                      00058         extern  _INTE
+                      00059         extern  _INTF
+                      00060         extern  _OSCM
+                      00061         extern  _IOP0
+                      00062         extern  _OEP0
+                      00063         extern  _PUP0
+                      00064         extern  _IOP1
+                      00065         extern  _OEP1
+                      00066         extern  _PUP1
+                      00067         extern  _IOP2
+                      00068         extern  _OEP2
+                      00069         extern  _PUP2
+                      00070         extern  _T0CR
+                      00071         extern  _T0CNT
+                      00072         extern  _T0LOAD
+                      00073         extern  _T0DATA
+                      00074         extern  _T1CR
+                      00075         extern  _T1CNT
+                      00076         extern  _T1LOAD
+                      00077         extern  _T1DATA
+                      00078         extern  _T2CR
+                      00079         extern  _T2CNT
+                      00080         extern  _T2LOAD
+                      00081         extern  _T2DATA
+                      00082         extern  _T3CR
+                      00083         extern  _T3CNT
+                      00084         extern  _T3LOAD
+                      00085         extern  _PWM0DE
+                      00086         extern  _PWM1DE
+                      00087         extern  _PWM2DE
+                      00088         extern  _PWMCR0
+                      00089         extern  _PWMCR1
+                      00090         extern  _ADCR0
+                      00091         extern  _ADCR1
+                      00092         extern  _ADRH
+                      00093         extern  _ADRL
+                      00094         extern  _ANSEL
+                      00095         extern  _LEDCR0
+                      00096         extern  _LEDCR1
+                      00097         extern  _LCDCR0
+                      00098         extern  _LCDCR1
+                      00099         extern  _LCDIOS0
+                      00100         extern  _LCDIOS1
+                      00101         extern  _LCDIOS2
+                      00102 ;--------------------------------------------------------
+                      00103 ; global declarations
+                      00104 ;--------------------------------------------------------
+                      00105         global  _main
+                      00106         global  _Sub_IoInitial
+                      00107 
+                      00108         global STK06
+                      00109         global STK05
+                      00110         global STK04
+                      00111         global STK03
+                      00112         global STK02
+                      00113         global STK01
+                      00114         global STK00
+                      00115 
+                      00116 sharebank udata_ovr 0x0000
+0000                  00117 STK06   res 1
+0000                  00118 STK05   res 1
+0001                  00119 STK04   res 1
+0001                  00120 STK03   res 1
+0002                  00121 STK02   res 1
+0002                  00122 STK01   res 1
+0003                  00123 STK00   res 1
+                      00124 
+                      00125 ;--------------------------------------------------------
+                      00126 ; global definitions
+                      00127 ;--------------------------------------------------------
+                      00128 ;--------------------------------------------------------
+                      00129 ; absolute symbol definitions
+                      00130 ;--------------------------------------------------------
+                      00131 ;--------------------------------------------------------
+                      00132 ; compiler-defined variables
+                      00133 ;--------------------------------------------------------
+                      00134 ;--------------------------------------------------------
+                      00135 ; initialized data
+                      00136 ;--------------------------------------------------------
+                      00137 
+                      00138 ;@Allocation info for local variables in function 'main'
+                      00139 ;@main main                      Allocated to registers ;size:2
+                      00140 ;@main Sub_IoInitial             Allocated to registers ;size:2
+                      00141 ;@main PFLAGbits                 Allocated to registers ;size:1
+                      00142 ;@main MCRbits                   Allocated to registers ;size:1
+                      00143 ;@main INTEbits                  Allocated to registers ;size:1
+                      00144 ;@main INTFbits                  Allocated to registers ;size:1
+                      00145 ;@main OSCMbits                  Allocated to registers ;size:1
+                      00146 ;@main IOP0bits                  Allocated to registers ;size:1
+                      00147 ;@main OEP0bits                  Allocated to registers ;size:1
+                      00148 ;@main PUP0bits                  Allocated to registers ;size:1
+                      00149 ;@main IOP1bits                  Allocated to registers ;size:1
+                      00150 ;@main OEP1bits                  Allocated to registers ;size:1
+                      00151 ;@main PUP1bits                  Allocated to registers ;size:1
+                      00152 ;@main IOP2bits                  Allocated to registers ;size:1
+                      00153 ;@main OEP2bits                  Allocated to registers ;size:1
+                      00154 ;@main PUP2bits                  Allocated to registers ;size:1
+                      00155 ;@main T0CRbits                  Allocated to registers ;size:1
+                      00156 ;@main T1CRbits                  Allocated to registers ;size:1
+                      00157 ;@main T2CRbits                  Allocated to registers ;size:1
+                      00158 ;@main T3CRbits                  Allocated to registers ;size:1
+                      00159 ;@main PWMCR0bits                Allocated to registers ;size:1
+                      00160 ;@main PWMCR1bits                Allocated to registers ;size:1
+                      00161 ;@main ADCR0bits                 Allocated to registers ;size:1
+                      00162 ;@main ADCR1bits                 Allocated to registers ;size:1
+                      00163 ;@main ANSELbits                 Allocated to registers ;size:1
+                      00164 ;@main LEDCR0bits                Allocated to registers ;size:1
+                      00165 ;@main LEDCR1bits                Allocated to registers ;size:1
+                      00166 ;@main LCDCR0bits                Allocated to registers ;size:1
+                      00167 ;@main LCDCR1bits                Allocated to registers ;size:1
+                      00168 ;@main LCDIOS0bits               Allocated to registers ;size:1
+                      00169 ;@main LCDIOS1bits               Allocated to registers ;size:1
+                      00170 ;@main LCDIOS2bits               Allocated to registers ;size:1
+                      00171 ;@main INDF                      Allocated to registers ;size:1
+                      00172 ;@main INDF0                     Allocated to registers ;size:1
+                      00173 ;@main INDF1                     Allocated to registers ;size:1
+                      00174 ;@main INDF2                     Allocated to registers ;size:1
+                      00175 ;@main HIBYTE                    Allocated to registers ;size:1
+                      00176 ;@main FSR                       Allocated to registers ;size:1
+                      00177 ;@main FSR0                      Allocated to registers ;size:1
+                      00178 ;@main FSR1                      Allocated to registers ;size:1
+                      00179 ;@main PCL                       Allocated to registers ;size:1
+                      00180 ;@main STATUS                    Allocated to registers ;size:1
+                      00181 ;@main PFLAG                     Allocated to registers ;size:1
+                      00182 ;@main MCR                       Allocated to registers ;size:1
+                      00183 ;@main INDF3                     Allocated to registers ;size:1
+                      00184 ;@main INTE                      Allocated to registers ;size:1
+                      00185 ;@main INTF                      Allocated to registers ;size:1
+                      00186 ;@main OSCM                      Allocated to registers ;size:1
+                      00187 ;@main IOP0                      Allocated to registers ;size:1
+                      00188 ;@main OEP0                      Allocated to registers ;size:1
+                      00189 ;@main PUP0                      Allocated to registers ;size:1
+                      00190 ;@main IOP1                      Allocated to registers ;size:1
+                      00191 ;@main OEP1                      Allocated to registers ;size:1
+                      00192 ;@main PUP1                      Allocated to registers ;size:1
+                      00193 ;@main IOP2                      Allocated to registers ;size:1
+                      00194 ;@main OEP2                      Allocated to registers ;size:1
+                      00195 ;@main PUP2                      Allocated to registers ;size:1
+                      00196 ;@main T0CR                      Allocated to registers ;size:1
+                      00197 ;@main T0CNT                     Allocated to registers ;size:1
+                      00198 ;@main T0LOAD                    Allocated to registers ;size:1
+                      00199 ;@main T0DATA                    Allocated to registers ;size:1
+                      00200 ;@main T1CR                      Allocated to registers ;size:1
+                      00201 ;@main T1CNT                     Allocated to registers ;size:1
+                      00202 ;@main T1LOAD                    Allocated to registers ;size:1
+                      00203 ;@main T1DATA                    Allocated to registers ;size:1
+                      00204 ;@main T2CR                      Allocated to registers ;size:1
+                      00205 ;@main T2CNT                     Allocated to registers ;size:1
+                      00206 ;@main T2LOAD                    Allocated to registers ;size:1
+                      00207 ;@main T2DATA                    Allocated to registers ;size:1
+                      00208 ;@main T3CR                      Allocated to registers ;size:1
+                      00209 ;@main T3CNT                     Allocated to registers ;size:1
+                      00210 ;@main T3LOAD                    Allocated to registers ;size:1
+                      00211 ;@main PWM0DE                    Allocated to registers ;size:1
+                      00212 ;@main PWM1DE                    Allocated to registers ;size:1
+                      00213 ;@main PWM2DE                    Allocated to registers ;size:1
+                      00214 ;@main PWMCR0                    Allocated to registers ;size:1
+                      00215 ;@main PWMCR1                    Allocated to registers ;size:1
+                      00216 ;@main ADCR0                     Allocated to registers ;size:1
+                      00217 ;@main ADCR1                     Allocated to registers ;size:1
+                      00218 ;@main ADRH                      Allocated to registers ;size:1
+                      00219 ;@main ADRL                      Allocated to registers ;size:1
+                      00220 ;@main ANSEL                     Allocated to registers ;size:1
+                      00221 ;@main LEDCR0                    Allocated to registers ;size:1
+                      00222 ;@main LEDCR1                    Allocated to registers ;size:1
+                      00223 ;@main LCDCR0                    Allocated to registers ;size:1
+                      00224 ;@main LCDCR1                    Allocated to registers ;size:1
+                      00225 ;@main LCDIOS0                   Allocated to registers ;size:1
+                      00226 ;@main LCDIOS1                   Allocated to registers ;size:1
+                      00227 ;@main LCDIOS2                   Allocated to registers ;size:1
+                      00228 ;@end Allocation info for local variables in function 'main';
+                      00229 ;@Allocation info for local variables in function 'Sub_IoInitial'
+                      00230 ;@end Allocation info for local variables in function 'Sub_IoInitial';
+                      00231 
+                      00232 ;--------------------------------------------------------
+                      00233 ; overlayable items in internal ram 
+                      00234 ;--------------------------------------------------------
+                      00235 ;       udata_ovr
+                      00236 ;--------------------------------------------------------
+                      00237 ; reset vector 
+                      00238 ;--------------------------------------------------------
+                      00239 STARTUP code 0x0000
+0000   A000           00240         goto    _main
+                      00241 ;--------------------------------------------------------
+                      00242 ; code
+                      00243 ;--------------------------------------------------------
+                      00244 code_1  code
+                      00245 ;***
+                      00246 ;  pBlock Stats: dbName = M
+                      00247 ;***
+                      00248 ;entry:  _main  ;Function start
+                      00249 ; 2 exit points
+                      00250 ;has an exit
+                      00251 ;functions called:
+                      00252 ;   _Sub_IoInitial
+                      00253 ;   _Sub_IoInitial
+                      00254 ;; Starting pCode block
+0000                  00255 _main   ;Function start
+                      00256 ; 2 exit points
+                      00257 ;       .line   5; "1.c"        Sub_IoInitial();
+0000   8000           00258         CALL    _Sub_IoInitial
+0001   000C           00259         RETURN  
+                      00260 ; exit point of _main
+                      00261 
+                      00262 ;***
+                      00263 ;  pBlock Stats: dbName = C
+                      00264 ;***
+                      00265 ;entry:  _Sub_IoInitial ;Function start
+                      00266 ; 2 exit points
+                      00267 ;has an exit
+                      00268 ;functions called:
+                      00269 ;   _DisableBuzzer
+                      00270 ;   _DisableBuzzer
+                      00271 ;; Starting pCode block
+0002                  00272 _Sub_IoInitial  ;Function start
+                      00273 ; 2 exit points
+                      00274 ;       .line   12; "1.c"       IOP0=0XFF;//P0  = 0xFF; //1111 1111B;  //0=low; 1=high;
+0002   3CFF           00275         MOVAI   0xff
+0003   5600           00276         MOVRA   _IOP0
+                      00277 ;       .line   13; "1.c"       OEP0=0X00;//P0M = 0x00; //0000 0000B;  //1=Output,0=input
+0004   7600           00278         CLRR    _OEP0
+                      00279 ;       .line   14; "1.c"       PUP0=0XFF;//P0UR = 0xFF; //1111 1111B; //1=Enable,0=Disable Pull High
+0005   3CFF           00280         MOVAI   0xff
+0006   5600           00281         MOVRA   _PUP0
+                      00282 ;       .line   15; "1.c"       IOP0=0XFF;//P0  = 0xFF; //1111 1111B;  //0=low; 1=high
+0007   3CFF           00283         MOVAI   0xff
+0008   5600           00284         MOVRA   _IOP0
+                      00285 ;       .line   17; "1.c"       IOP1=0XFF;//P1  = 0xFF; //0000 0000B;  //0=low; 1=high;24c02(FP13:SCL, FP12:SDA = high.)
+0009   3CFF           00286         MOVAI   0xff
+000A   5600           00287         MOVRA   _IOP1
+                      00288 ;       .line   18; "1.c"       OEP1=0XBC;//P1M = 0x00; //0000 0000B;  //1=Output,0=input
+000B   3CBC           00289         MOVAI   0xbc
+000C   5600           00290         MOVRA   _OEP1
+                      00291 ;       .line   19; "1.c"       PUP1=0X43;//P1UR = 0xFF;//1111 1111B;  //1=Enable,0=Disable Pull High
+000D   3C43           00292         MOVAI   0x43
+000E   5600           00293         MOVRA   _PUP1
+                      00294 ;       .line   20; "1.c"       IOP1=0XFF;//P1  = 0xFF; //1111 1111B;  //0=low; 1=high
+000F   3CFF           00295         MOVAI   0xff
+0010   5600           00296         MOVRA   _IOP1
+                      00297 ;       .line   22; "1.c"       IOP2=0XFF;//P4  = 0x1F; //0001 1111B;  //0=low; 1=high;24c02(FP43:SCL, FP42:SDA = high.)
+0011   3CFF           00298         MOVAI   0xff
+0012   5600           00299         MOVRA   _IOP2
+                      00300 ;       .line   23; "1.c"       OEP2=0X0A;//P4M = 0x3F; //0011 1111B;  //1=Output,0=input
+0013   3C0A           00301         MOVAI   0x0a
+0014   5600           00302         MOVRA   _OEP2
+                      00303 ;       .line   24; "1.c"       PUP2=0XF5;//P4UR = 0xC0;//1100 0000B;  //1=Enable,0=Disable Pull High
+0015   3CF5           00304         MOVAI   0xf5
+0016   5600           00305         MOVRA   _PUP2
+                      00306 ;       .line   25; "1.c"       IOP2=0XFF;//P4  = 0x1F; //0001 1111B;  //0=low; 1=high
+0017   3CFF           00307         MOVAI   0xff
+0018   5600           00308         MOVRA   _IOP2
+                      00309 ;       .line   32; "1.c"       DisableBuzzer();
+Error[113]  : Symbol not previously defined (_DisableBuzzer).
+0019   8000           00310         CALL    _DisableBuzzer
+001A   000C           00311         RETURN  
+                      00312 ; exit point of _Sub_IoInitial
+                      00313 
+                      00314 
+                      00315 ;       code size estimation:
+                      00316 ;          27+    0 =    27 instructions (   54 byte)
+                      00317 
+                      00318         end
+gpasm-2.0.0_beta2 (Nov  6 2017)1.asm              2018-3-19  12:13:44          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+ADCR0                             000001B8
+ADCR1                             000001B9
+ADRH                              000001BC
+ADRL                              000001BD
+ANSEL                             000001BE
+FSR                               00000184
+FSR0                              00000184
+FSR1                              00000185
+HIBYTE                            00000183
+INDF                              00000180
+INDF0                             00000180
+INDF1                             00000181
+INDF2                             00000182
+INDF3                             00000189
+INTE                              0000018A
+INTF                              0000018B
+IOP0                              00000190
+IOP1                              00000194
+IOP2                              00000198
+LCDCR0                            000001C2
+LCDCR1                            000001C3
+LCDIOS0                           000001C4
+LCDIOS1                           000001C5
+LCDIOS2                           000001C6
+LEDCR0                            000001C0
+LEDCR1                            000001C1
+MCR                               00000188
+OEP0                              00000191
+OEP1                              00000195
+OEP2                              00000199
+OSCM                              0000018C
+PCL                               00000186
+PFLAG                             00000187
+PUP0                              00000192
+PUP1                              00000196
+PUP2                              0000019A
+PWM0DE                            000001B0
+PWM1DE                            000001B1
+PWM2DE                            000001B2
+PWMCR0                            000001B4
+PWMCR1                            000001B5
+STATUS                            00000187
+STK00                             00000006
+STK01                             00000005
+STK02                             00000004
+STK03                             00000003
+STK04                             00000002
+STK05                             00000001
+STK06                             00000000
+T0CNT                             000001A1
+T0CR                              000001A0
+T0DATA                            000001A3
+T0LOAD                            000001A2
+T1CNT                             000001A5
+T1CR                              000001A4
+T1DATA                            000001A7
+T1LOAD                            000001A6
+T2CNT                             000001A9
+T2CR                              000001A8
+T2DATA                            000001AB
+T2LOAD                            000001AA
+T3CNT                             000001AD
+T3CR                              000001AC
+T3LOAD                            000001AE
+_ADCR0                            00000000
+_ADCR0bits                        00000000
+_ADCR1                            00000000
+_ADCR1bits                        00000000
+_ADRH                             00000000
+_ADRL                             00000000
+_ANSEL                            00000000
+_ANSELbits                        00000000
+_CONFIG0                          00008000
+_CONFIG1                          00008001
+_FSR                              00000000
+_FSR0                             00000000
+_FSR1                             00000000
+_HIBYTE                           00000000
+_INDF                             00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INDF3                            00000000
+_INTE                             00000000
+_INTEbits                         00000000
+_INTF                             00000000
+_INTFbits                         00000000
+_IOP0                             00000000
+_IOP0bits                         00000000
+_IOP1                             00000000
+_IOP1bits                         00000000
+_IOP2                             00000000
+_IOP2bits                         00000000
+_LCDCR0                           00000000
+_LCDCR0bits                       00000000
+_LCDCR1                           00000000
+_LCDCR1bits                       00000000
+_LCDIOS0                          00000000
+_LCDIOS0bits                      00000000
+_LCDIOS1                          00000000
+_LCDIOS1bits                      00000000
+_LCDIOS2                          00000000
+_LCDIOS2bits                      00000000
+_LEDCR0                           00000000
+_LEDCR0bits                       00000000
+_LEDCR1                           00000000
+_LEDCR1bits                       00000000
+_MCR                              00000000
+_MCRbits                          00000000
+_OEP0                             00000000
+_OEP0bits                         00000000
+_OEP1                             00000000
+_OEP1bits                         00000000
+_OEP2                             00000000
+_OEP2bits                         00000000
+_OSCM                             00000000
+_OSCMbits                         00000000
+_PCL                              00000000
+_PFLAG                            00000000
+_PFLAGbits                        00000000
+_PUP0                             00000000
+_PUP0bits                         00000000
+_PUP1                             00000000
+_PUP1bits                         00000000
+_PUP2                             00000000
+_PUP2bits                         00000000
+_PWM0DE                           00000000
+_PWM1DE                           00000000
+_PWM2DE                           00000000
+_PWMCR0                           00000000
+_PWMCR0bits                       00000000
+_PWMCR1                           00000000
+_PWMCR1bits                       00000000
+_STATUS                           00000000
+_Sub_IoInitial                    00000002
+_T0CNT                            00000000
+_T0CR                             00000000
+_T0CRbits                         00000000
+_T0DATA                           00000000
+_T0LOAD                           00000000
+_T1CNT                            00000000
+_T1CR                             00000000
+_T1CRbits                         00000000
+_T1DATA                           00000000
+_T1LOAD                           00000000
+_T2CNT                            00000000
+_T2CR                             00000000
+_T2CRbits                         00000000
+_T2DATA                           00000000
+_T2LOAD                           00000000
+_T3CNT                            00000000
+_T3CR                             00000000
+_T3CRbits                         00000000
+_T3LOAD                           00000000
+__4K7323                          00000001
+_main                             00000000
+ADEOC                             ADCR0,1
+ADIE                              INTE,6
+ADIF                              INTF,6
+ADON                              ADCR0,0
+ADRSEL                            ADCR1,7
+BUZ0OE                            T0CR,5
+BUZ1OE                            T1CR,5
+BUZ2OE                            T2CR,5
+C                                 PFLAG,0
+CLKS                              OSCM,2
+DC                                PFLAG,1
+DISPS                             LCDCR0,7
+DRVPS                             LEDCR1,7
+FPWM1INV                          PWMCR0,5
+FPWMEN                            PWMCR0,7
+GIE                               MCR,7
+HFEN                              OSCM,0
+INT0IE                            INTE,2
+INT0IF                            INTF,2
+INT1IE                            INTE,3
+INT1IF                            INTF,3
+LCDBS                             LCDCR1,4
+LCDCKS                            LCDCR1,2
+LCDEN                             LCDCR0,5
+LCDM                              LCDCR1,3
+LCDSPEED                          LCDCR0,2
+LEDCKS                            LEDCR1,6
+LEDEN                             LEDCR0,7
+LFEN                              OSCM,1
+P00D                              IOP0,0
+P00OE                             OEP0,0
+P00PU                             PUP0,0
+P01D                              IOP0,1
+P01OE                             OEP0,1
+P01PU                             PUP0,1
+P02D                              IOP0,2
+P02OE                             OEP0,2
+P02PU                             PUP0,2
+P03D                              IOP0,3
+P03OE                             OEP0,3
+P03PU                             PUP0,3
+P04D                              IOP0,4
+P04OE                             OEP0,4
+P04PU                             PUP0,4
+P05D                              IOP0,5
+P05OE                             OEP0,5
+P05PU                             PUP0,5
+P06ANS                            ANSEL,6
+P06D                              IOP0,6
+P06OE                             OEP0,6
+P07D                              IOP0,7
+P07OE                             OEP0,7
+P10D                              IOP1,0
+P10OE                             OEP1,0
+P10PU                             PUP1,0
+P11D                              IOP1,1
+P11OE                             OEP1,1
+P11PU                             PUP1,1
+P12D                              IOP1,2
+P12OE                             OEP1,2
+P12PU                             PUP1,2
+P13ANS                            ANSEL,7
+P13D                              IOP1,3
+P13OE                             OEP1,3
+P13PU                             PUP1,3
+P14ANS                            ANSEL,0
+P14D                              IOP1,4
+P14OE                             OEP1,4
+P14PU                             PUP1,4
+P15ANS                            ANSEL,1
+P15D                              IOP1,5
+P15OE                             OEP1,5
+P15PU                             PUP1,5
+P16ANS                            ANSEL,2
+P16D                              IOP1,6
+P16OE                             OEP1,6
+P16PU                             PUP1,6
+P17ANS                            ANSEL,3
+P17D                              IOP1,7
+P17OE                             OEP1,7
+P17PU                             PUP1,7
+P20D                              IOP2,0
+P20OE                             OEP2,0
+P20PU                             PUP2,0
+P21D                              IOP2,1
+P21OE                             OEP2,1
+P21PU                             PUP2,1
+P22D                              IOP2,2
+P22OE                             OEP2,2
+P22PU                             PUP2,2
+P23ANS                            ANSEL,4
+P23D                              IOP2,3
+P23OE                             OEP2,3
+P23PU                             PUP2,3
+P24ANS                            ANSEL,5
+P24D                              IOP2,4
+P24OE                             OEP2,4
+P24PU                             PUP2,4
+P25D                              IOP2,5
+P25OE                             OEP2,5
+P25PU                             PUP2,5
+P26D                              IOP2,6
+P26OE                             OEP2,6
+P26PU                             PUP2,6
+P27D                              IOP2,7
+P27OE                             OEP2,7
+P27PU                             PUP2,7
+PD                                MCR,4
+PWM0INV                           PWMCR0,4
+PWM0OE                            T0CR,6
+PWM1OE                            T1CR,6
+PWM2INV                           PWMCR0,6
+PWM2OE                            T2CR,6
+SEGIOS1                           LCDIOS2,0
+SEGIOS10                          LCDIOS1,1
+SEGIOS2                           LCDIOS2,1
+SEGIOS3                           LCDIOS2,2
+SEGIOS4                           LCDIOS2,3
+SEGIOS6                           LCDIOS2,5
+SEGIOS7                           LCDIOS2,6
+SEGIOS8                           LCDIOS2,7
+SEGIOS9                           LCDIOS1,0
+STBH                              OSCM,4
+STBL                              OSCM,5
+T0IE                              INTE,0
+T0IF                              INTF,0
+T1IE                              INTE,1
+T1IF                              INTF,1
+T2IE                              INTE,5
+T2IF                              INTF,5
+TC0EN                             T0CR,7
+TC1EN                             T1CR,7
+TC2EN                             T2CR,7
+TC3EN                             T3CR,7
+TO                                MCR,5
+Z                                 PFLAG,2
+
+Errors   :     1
+Warnings :     0 reported,     0 suppressed
+Messages :     1 reported,     0 suppressed
+
+

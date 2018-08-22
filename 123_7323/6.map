@@ -1,0 +1,38 @@
+gplink-2.0.0_beta2 (Nov  6 2017)
+Map File - Created 2018-3-19  17:40:26
+ 
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                  STARTUP       code   00000000    program   0x000002
+                   code_6       code   0x000001    program   0x000016
+                sharebank      udata   00000000       data   0x000007
+                   UD_6_0      udata   0x000007       data   0x000001
+                   UD_6_1      udata   0x000008       data   0x000001
+                  UDL_6_0      udata   0x000009       data   0x000001
+ 
+                              Program Memory Usage
+                               Start         End
+                           ---------   ---------
+                            00000000    00000000
+                            0x000001    0x00000b
+ 
+                            12 program addresses used
+ 
+                              Symbols
+                     Name    Address   Location    Storage File
+                ---------  ---------  ---------  --------- ---------
+                    STK06   00000000       data     extern 6.asm
+                    STK05   0x000001       data     extern 6.asm
+                    STK04   0x000002       data     extern 6.asm
+                    STK03   0x000003       data     extern 6.asm
+                    STK02   0x000004       data     extern 6.asm
+                    STK01   0x000005       data     extern 6.asm
+                    STK00   0x000006       data     extern 6.asm
+                    _data   0x000007       data     extern 6.asm
+                    _flag   0x000008       data     extern 6.asm
+                  r0x1002   0x000009       data     static 6.asm
+                    _main   0x000001    program     extern 6.asm
+               _00106_DS_   0x00000a    program     static 6.asm
+               _00108_DS_   0x00000b    program     static 6.asm
+ 
